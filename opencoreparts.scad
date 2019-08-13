@@ -8,16 +8,31 @@ difference() {
     screwholes(x,y);
     if (panel=="bottom") {
         //front left motor hole
-        motorholes(35+extrusionincrease,87.75+extrusionincrease,-paneldepth);
+        motorholes(leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-paneldepth);
         //rear left motor hole
-        motorholes(35+extrusionincrease,87.75+255.04+extrusionincrease,-paneldepth)  ;
+        motorholes(leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth)  ;
         //right motor hole
-        motorholes(455+extrusionincrease,215.25+extrusionincrease,-paneldepth) ;
+        motorholes(leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth) ;
         }
     if (panel=="front") {
-    translate ([windowwidth/2+Xwindowspacing,windowheight/2+Zwindowspacingbottom,0]) rounded_rectangle([windowwidth,windowheight,paneldepth], panelcornerrounding);
+    translate ([windowwidth/2+Xwindowspacing,windowheight/2+Zwindowspacingbottom,-epsilon/2])
+    rounded_rectangle([windowwidth,windowheight,paneldepth+epsilon*2], panelcornerrounding);
     }
 }
+}
+
+
+
+module leadscrews() {
+//Front left leadscrew
+translate ([leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,couplerheight])  
+cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
+//back left leadscrew
+translate ([leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,couplerheight])  
+cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
+//right leadscrew
+translate ([leadscrewX2+extrusionincrease,leadscrewY3+extrusionincrease,couplerheight])  
+cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
 }
 
 
@@ -53,32 +68,28 @@ module horizontalYextrusions()
         
 }  
 
+//Z Tower Extrusions
 module Ztowerextrusions()
 {
-    //Tower Extrusions
-
 //Front left tower
-translate (frontleft_tower) 
-//translate ([extrusion,extrusion*2+97.4,0]) 
+translate ([extrusion,extrusion*2+97.4,0]) 
 rotate([90,0,0]) 
 aluminiumextrusion(ztowerextrusions,0);
 
 //back left tower
-//translate ([extrusion,extrusion*2+90+180+paneldepth,000]) 
-translate (backleft_tower) 
+translate ([extrusion,extrusion+305.4,0]) 
 rotate([90,0,0]) 
 aluminiumextrusion(ztowerextrusions,0);
 
 //right tower
-//translate ([horizontalX,224.9+extrusion+extrusionincrease,0])
-translate (right_tower)
+translate ([horizontalX,224.9+extrusion+extrusionincrease,0])
 rotate([90,0,0]) 
 aluminiumextrusion(ztowerextrusions,0);
 }
 
 module corneruprights()
 {
-    // Front Left Z
+// Front Left Z
 translate ([0,extrusion,extrusion]) 
 rotate([90,0,0]) 
 aluminiumextrusion(corneruprightZ,0);
@@ -98,7 +109,7 @@ aluminiumextrusion(corneruprightZ,0);
 
 module Xextrusions()
 {
-    //Top Front X
+//Top Front X
 translate ([extrusion,extrusion,corneruprightZ+extrusion]) 
 rotate([0,0,-90]) 
 aluminiumextrusion(horizontalX,0);
@@ -176,18 +187,6 @@ if ($preview)   {
 
 }
 
-module leadscrews() {
-    //Front left leadscrew
-translate ([35+extrusionincrease,87.75,25])  
-cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
-//back left leadscrew
-translate ([35+extrusionincrease,87.75+255.04,25])  
-cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
-//right leadscrew
-translate ([455+extrusionincrease,215.25,25])  
-cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
-}
-
 
 
 module motorholes(x,y,z) {
@@ -208,9 +207,7 @@ screwholesX=5;
 screwholesY=5;
 holefromedge=50;
 
-
 gapX=(x-100)/(screwholesX-1);
-
 gapY=(y-100)/(screwholesY-1);
 
 //cube([x,y,z]);
@@ -278,9 +275,8 @@ module corexy_belt() {
 
 module rail(lengthrail)
 {
-
             rail = MGN12;
-           length = 400;
+            length = 400;
             screw = rail_screw(rail);
             nut = screw_nut(screw);
             washer = screw_washer(screw);

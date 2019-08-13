@@ -7,7 +7,7 @@ $preview=true;
 $fullrender=false;
 
 // BOM FRAME COMPONENTS					
-extrusion=15;     // extrusion size for all extrusions.
+extrusion=40;     // extrusion size for all extrusions.
 screwM=3; //M3 hardware for panels
 
 extrusionincrease=extrusion-15; // because design is based on 1515
@@ -27,21 +27,28 @@ railXlength=400;
 railYlength=400;
 railZlength=400;
 
-epsilon=0.01;
+epsilon=0.1;
 
 horizontalX=bedX+extrusionincrease+160;
-echo("bedX are ", bedX);
+echo("bedX is ", bedX);
 echo("extrusionincrease are ", extrusionincrease);
 
 //rods/motors/motorholes/couplers
-backleft_tower=[extrusion,extrusion+305.4,0];
-frontleft_tower=[extrusion,extrusion*2+97.4,0];
-right_tower=[horizontalX,224.9+extrusion+extrusionincrease,0];
+backleft_tower=0; //unused atm
+frontleft_tower=0; //unused atm
+right_tower=0; //unused atm
 echo("ztowerextrusions are ", ztowerextrusions);
 
+leadscrewX1=35; //until I can find a better name
+leadscrewX2=455; //until I can find a better name
+leadscrewY1=87.75; //ditto
+leadscrewY2=342.79; //ditto
+leadscrewY3=215.25; //ditto
+
+couplerheight=30;  //arbitary height increase for couplers
 
 
-
+// NOTE , I'm using this BOM system initially to ensure I cover everything for the 1515 RC2 model. I understand the names,quantities etc can change.
 
 // BOM Item Name: 15x15x445 (Misumi HFS3-1515-445 )
 // BOM Quantity: 3
@@ -86,7 +93,7 @@ Xextrusions();
 // BOM Quantity: 1
 // BOM Link: http://railco.re/1515corners
 // Notes: 4 Spare corners after ordering
-cornercube=extrusion; //1515 and 2020 these are the same
+cornercube=extrusion; //1515 and 2020 these are the same. 3030 and 4040 will need to look at corner braces perhaps?
 cornercubes();
 
 // BOM Item Name: HDPE Side Panels
@@ -141,7 +148,7 @@ panel(panelX,panelZ,paneldepth);
 leadscrewheight=ztowerextrusions+5; // (3) BOM
 echo(leadscrewheight, "mm TR8*4 leadscrew");
 leadscrewwidth=8;
-tr8=4;  //pitch
+tr8=4;  //pitch - currently unused
 leadscrews();
 
 // BOM Item Name: TR8*4 anti-backlash nut (B-ABN84)
@@ -155,10 +162,11 @@ leadscrews();
 // BOM Quantity: 6
 // BOM Link: http://railco.re/motion
 // Notes: MGN 12H-L400MM
-sheet=3;
-translate ([extrusion*2,extrusion*1.5+97.4,(Zheight+115)/2+30]) rotate([90,-90,90]) rail();
-translate ([extrusion*2,extrusion*0.5+305.4,(Zheight+115)/2+30]) rotate([90,-90,90])  rail(railZlength);
-translate ([horizontalX,224.9+extrusion*0.5+extrusionincrease,(Zheight+115)/2+30]) rotate([-90,-90,90]) rail(railZlength);
+sheet=3;  //removing this breaks nopheads stuff. Find out why.
+
+translate ([extrusion*2,extrusion*1.5+97.4,(Zheight+115)/2+couplerheight]) rotate([90,-90,90]) rail();
+translate ([extrusion*2,extrusion*0.5+305.4,(Zheight+115)/2+couplerheight]) rotate([90,-90,90])  rail(railZlength);
+translate ([horizontalX,224.9+extrusion*0.5+extrusionincrease,(Zheight+115)/2+couplerheight]) rotate([-90,-90,90]) rail(railZlength);
 
 translate ([panelX/2,horizontalY+extrusion,corneruprightZ+extrusion*1.5]) rotate([90, 0, 0]) rail(railXlength);
 translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail(railXlength);
