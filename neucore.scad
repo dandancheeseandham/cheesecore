@@ -7,7 +7,7 @@ $preview=true;
 $fullrender=false;
 
 // BOM FRAME COMPONENTS					
-extrusion=40;     // extrusion size for all extrusions.
+extrusion=15;     // extrusion size for all extrusions.
 screwM=3; //M3 hardware for panels
 
 extrusionincrease=extrusion-15; // because design is based on 1515
