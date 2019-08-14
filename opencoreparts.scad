@@ -3,13 +3,13 @@ include <config.scad>
 
 module leadscrews() {
 //Front left leadscrew
-translate ([leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,couplerheight])  
+translate ([leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,couplerheight])
 cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
 //back left leadscrew
-translate ([leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,couplerheight])  
+translate ([leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,couplerheight])
 cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
 //right leadscrew
-translate ([leadscrewX2+extrusionincrease,leadscrewY3+extrusionincrease,couplerheight])  
+translate ([leadscrewX2+extrusionincrease,leadscrewY3+extrusionincrease,couplerheight])
 cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
 }
 
@@ -24,146 +24,27 @@ rounded_rectangle([bedplateX,bedplateY,beddepth], bedcornerrounding);
 }
 
 
-module horizontalYextrusions() 
-{
-        // Bottom Left Y
-        translate ([0,extrusion,0]) 
-        rotate([0,0,0]) 
-        aluminiumextrusion(horizontalY,0);
-        // Bottom Right Y
-        translate ([horizontalX+extrusion,extrusion,0]) 
-        rotate([0,0,0]) 
-        aluminiumextrusion(horizontalY,0);
-        // Top Left Y
-        translate ([0,extrusion,corneruprightZ+extrusion]) 
-        rotate([0,0,0]) 
-        aluminiumextrusion(horizontalY,0);
-        // Bottom Right Y
-        translate ([horizontalX+extrusion,extrusion,corneruprightZ+extrusion])
-        rotate([0,0,0]) 
-        aluminiumextrusion(horizontalY,0);    
-        echo("horizontalY are ", horizontalY , "mm");
-        
-}  
 
 //Z Tower Extrusions
 module Ztowerextrusions()
 {
 //Front left tower
-translate ([extrusion,extrusion*2+towerY1,0]) 
-rotate([90,0,0]) 
+translate ([extrusion,extrusion*2+towerY1,0])
+rotate([90,0,0])
 aluminiumextrusion(ztowerextrusions,0);
 
 //back left tower
-translate ([extrusion,extrusion+towerY2,0]) 
-rotate([90,0,0]) 
+translate ([extrusion,extrusion+towerY2,0])
+rotate([90,0,0])
 aluminiumextrusion(ztowerextrusions,0);
 
 //right tower
 translate ([horizontalX,towerY3+extrusion+extrusionincrease,0])
-rotate([90,0,0]) 
+rotate([90,0,0])
 aluminiumextrusion(ztowerextrusions,0);
 }
 
-module corneruprights()
-{
-// Front Left Z
-translate ([0,extrusion,extrusion]) 
-rotate([90,0,0]) 
-aluminiumextrusion(corneruprightZ,0);
-// Front Right Z
-translate ([horizontalX+extrusion,extrusion,extrusion]) 
-rotate([90,0,0]) 
-aluminiumextrusion(corneruprightZ,0);
-// Rear Right Z
-translate ([horizontalX+extrusion,horizontalY+extrusion*2,extrusion]) 
-rotate([90,0,0]) 
-aluminiumextrusion(corneruprightZ,0);
-// Rear Left Z
-translate ([0,horizontalY+extrusion*2,extrusion]) 
-rotate([90,0,0]) 
-aluminiumextrusion(corneruprightZ,0);
-}
 
-module Xextrusions()
-{
-//Top Front X
-translate ([extrusion,extrusion,corneruprightZ+extrusion]) 
-rotate([0,0,-90]) 
-aluminiumextrusion(horizontalX,0);
-//Top Rear X
-translate ([horizontalX+extrusion,horizontalY+extrusion,corneruprightZ+extrusion]) 
-rotate([0,0,90]) 
-aluminiumextrusion(horizontalX,0);
-//Bottom Rear X
-translate ([horizontalX+extrusion,horizontalY+extrusion,0]) 
-rotate([0,0,90]) 
-aluminiumextrusion(horizontalX,0);
-//Bottom Front X
-translate ([extrusion,extrusion,0]) 
-rotate([0,0,-90]) 
-aluminiumextrusion(horizontalX,0);
-}
-
-////////////////////////
-// BOM: Corner Cubes
-////////////////////////
-
-module cornercubes()
-{
-//Bottom Front Left Corner Cube
-color("Black")  
-rotate([90,00,270]) 
-translate ([-extrusion,0,-extrusion]) 
-cornercube();
-//Bottom Back Left Corner Cube
-color("Black") 
-translate ([extrusion,horizontalY+extrusion*2,extrusion]) 
-rotate([180,90,0]) 
-cornercube();
-//Bottom Front Right Corner Cube
-color("Black")  
-translate ([horizontalX+extrusion,extrusion,0]) 
-rotate([90,0,0]) 
-cornercube();
-//Bottom Back Right Corner Cube
-color("Black") 
-translate ([horizontalX+extrusion,horizontalY+extrusion*2,extrusion]) 
-rotate([180,0,0]) 
-cornercube();
-
-//Top Front Left Corner Cube
-color("Black") 
-translate ([extrusion,0,corneruprightZ+extrusion]) 
-rotate([270,270,90]) 
-cornercube();
-//Top Back Left Corner Cube
-color("Black") 
-translate ([0,horizontalY+extrusion,corneruprightZ+extrusion]) 
-rotate([0,270,270]) 
-cornercube();
-//Top Front Right Corner Cube
-color("Black")  
-translate ([horizontalX+extrusion,0,corneruprightZ+extrusion]) 
-rotate([0,0,0]) 
-cornercube();
-//Top Back Right Corner Cube
-color("Black") 
-translate ([horizontalX+extrusion,horizontalY+extrusion,corneruprightZ+extrusion*2]) 
-rotate([270,0,0]) 
-cornercube();
-// ** END CORNER CUBES
-
-module cornercube() {
-if ($preview)   {
-    cube(cornercube);
-    }  
-    else {
-    import("Corner_Cube_XL.stl");
-    }
-}
-
-}
 
 
 
@@ -267,8 +148,5 @@ module rail(lengthrail)
                 translate_z(-sheet)
                     vflip()
                         nut_and_washer(nut, true);
-         
-     }
-     
 
-     
+     }

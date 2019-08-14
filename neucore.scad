@@ -4,6 +4,7 @@ include <lib.scad>
 include <extrusion.scad>
 include <opencoreparts.scad>
 use <side_panels.scad>
+include <frame.scad>
 include <config.scad>
 
 $preview=false;
@@ -30,40 +31,12 @@ echo("ztowerextrusions are ", ztowerextrusions);
 ztowerextrusions=fullZsize+(2*extrusion+extrusionincrease);
 Ztowerextrusions();
 
-// BOM Item Name: 15x15x425 (Misumi HFS3-1515-425 )
-// BOM Quantity: 4
-// BOM Link: http://railco.re/misumi
-// Notes: Misumi pre-cut (Horizontal Y)
-horizontalYextrusions();
-
-// BOM Item Name: 15x15x415 (Misumi HFS3-1515-415 )
-// BOM Quantity: 4
-// BOM Link: http://railco.re/misumi
-// Notes: Misumi pre-cut (Corner Uprights)
-corneruprights();
-
-// BOM Item Name: 15x15x460 (Misumi HFS3-1515-460 )
-// BOM Quantity: 4
-// BOM Link: http://railco.re/misumi
-// Notes: Misumi pre-cut (Horizontal X)
-//horizontalX=460;  // Misumi pre-cut (Horizontal X)
-
-// Manaul attempt at BOM generation :)
-echo("BOM Item Name: Quantity 4: 15x15x",horizontalX," (Misumi HFS3-1515-",horizontalX," )");
-Xextrusions();
 
 
-
-// BOM Item Name: 15x15 Corners (8)
-// BOM Quantity: 1
-// BOM Link: http://railco.re/1515corners
-// Notes: 4 Spare corners after ordering
-cornercube=extrusion; //1515 and 2020 these are the same. 3030 and 4040 will need to look at corner braces perhaps?
-cornercubes();
 
 
 //////////////////////////
-// BOM MOTION COMPONENTS					
+// BOM MOTION COMPONENTS
 //////////////////////////
 
 // BOM Item Name: 450mm TR8*4 leadscrew (400 will work)
@@ -72,7 +45,7 @@ cornercubes();
 // Notes: DXFs available from here via
 
 // Choose one of three
-// leadscrewheight=ztowerextrusions-15; // (1) real height 
+// leadscrewheight=ztowerextrusions-15; // (1) real height
 // leadscrewheight=ztowerextrusions-45; // (2) "will work"
 leadscrewheight=ztowerextrusions+5; // (3) BOM
 echo(leadscrewheight, "mm TR8*4 leadscrew");
@@ -83,7 +56,7 @@ leadscrews();
 // BOM Item Name: TR8*4 anti-backlash nut (B-ABN84)
 // BOM Quantity: 3
 // BOM Link: http://railco.re/motion
-// Notes: 
+// Notes:
 
 
 
@@ -109,7 +82,7 @@ translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([90, 0, 90]) rail(rail
 // BOM Item Name: Gt2 smooth idlers 5mm ID
 // BOM Quantity: 2
 // BOM Link: http://railco.re/motion
-// Notes: 
+// Notes:
 
 // BOM Item Name: Gt2 20 tooth idlers 5mm ID
 // BOM Quantity: 6
@@ -122,10 +95,10 @@ translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([90, 0, 90]) rail(rail
 // Notes: For shimming the bearings
 
 // BOM Item Name: GT2 Belt (5m)
-// BOM Quantity: 1 
+// BOM Quantity: 1
 // BOM Link: http://railco.re/motion
 // Notes: X/Y Motion belts (4400mm total, 2200mm per side)
-translate ([250,200,corneruprightZ+50]) rotate ([0,0,90])  corexy_belt()
+translate ([250,200,corneruprightZ+50]) rotate ([0,0,90])  corexy_belt();
 
 
 
@@ -139,14 +112,14 @@ translate ([250,200,corneruprightZ+50]) rotate ([0,0,90])  corexy_belt()
 // BOM Item Name: 24v PSU 350w PSU (needs to be 200w or greater with AC bed)
 // BOM Quantity: 1
 // BOM Link: http://railco.re/sidepanels
-// Notes: DAny 24v PSU > 200W works with the AC bed.            
-//rotate([90,0,90])  
-// translate(panelY-100,panelZ-100,paneldepth) 
+// Notes: DAny 24v PSU > 200W works with the AC bed.
+//rotate([90,0,90])
+// translate(panelY-100,panelZ-100,paneldepth)
 translate ([50,-320,0]) psu(S_250_48);
 
 
 //random extras
-translate ([panelX/2,panelY/2,300]) bed(); 
+translate ([panelX/2,panelY/2,300]) bed();
 
 translate([panelY+40,panelZ-100,280]) rotate([90,90,90])  psu(S_250_48);
 translate([panelY+40,panelZ-300,330]) rotate([90,0,90])  pcb(DuetE);
@@ -156,7 +129,7 @@ translate ([leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-panelde
 translate ([leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth]) NEMA(NEMA17);
 translate ([leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth]) NEMA(NEMA17);
 translate ([50,-220,0]) hot_end(E3Dv6);
-translate ([50,-150,0]) iec(IEC_fused_inlet);	
+translate ([50,-150,0]) iec(IEC_fused_inlet);
 translate ([50,-120,0]) leadnut(LSN8x8);
 //translate ([50,-320,0]) psu(S_250_48);
 
