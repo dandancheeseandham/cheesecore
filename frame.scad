@@ -1,6 +1,6 @@
 // vim: set nospell:
 include <config.scad>
-include <extrusion.scad>
+use <extrusion.scad>
 
 cornercube=extrusion; //1515 and 2020 these are the same. 3030 and 4040 will need to look at corner braces perhaps?
 
@@ -66,16 +66,13 @@ module horizontalYextrusions()
 
 }
 module cornercube() {
-if ($preview)   {
+  if ($preview)   {
     cube(cornercube);
-    }
-    else {
+  }
+  else {
     import("Corner_Cube_XL.stl");
-    }
+  }
 }
-
-
-
 
 ////////////////////////
 // BOM: Corner Cubes

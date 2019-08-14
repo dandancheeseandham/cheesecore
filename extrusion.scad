@@ -1,169 +1,44 @@
-module aluminiumextrusion(length,height)
-{
-if (extrusion==15)   {
-A1515(length,height);
-}
-if (extrusion==20)   {
-A2020(length,height);
-}
-if (extrusion==30)   {
-A3030(length,height);
-}
-if (extrusion==40)   {
-A4040(length,height);
-}
+//FIXME: this lib should not need to depend on the machine config
+include <config.scad>
+include <core.scad>
+
+module extrusion_profile(extrusion_size, slot_width) {
+  difference() {
+    // outside profile
+    rounded_square(extrusion_size, r=0.5, $fn=12);
+
+    // center hole
+    circle(d=slot_width, $fs=slot_width/4);
+
+    // slots
+    translate([extrusion_size/2-slot_width/2+epsilon,0])
+      square([slot_width, slot_width], center=true);
+    translate([-extrusion_size/2+slot_width/2-epsilon,0])
+      square([slot_width, slot_width], center=true);
+    translate([0, extrusion_size/2-slot_width/2+epsilon])
+      square([slot_width, slot_width], center=true);
+    translate([0, -extrusion_size/2+slot_width/2-epsilon])
+      square([slot_width, slot_width], center=true);
+  }
 }
 
-
-module A1515(AM_Len,AL_Ht)
-{
-    color("silver",.9)
-    translate([0,0,AL_Ht / 2])
-    rotate([90,0,0])
-    translate ([+15/2,+15/2,-AM_Len])
-    difference()
-    {
-        linear_extrude(height = AM_Len, center = false, convexity = 10)polygon(points = 
-        [[2.85,1.85],[2.85,-1.85],[3.85,-2.85],[6.4,-2.85],[6.4,-1.7],
-        [7.5,-1.7],[7.5,-7.5],[1.7,-7.5],[1.7,-6.4],[2.85,-6.4],
-        [2.85,-3.85],[1.85,-2.85],[-1.85,-2.85],[-2.85,-3.85],[-2.85,-6.4],
-        [-1.7,-6.4],[-1.7,-7.5],[-7.5,-7.5],[-7.5,-1.7],[-6.4,-1.7],
-        [-6.4,-2.85],[-3.85,-2.85],[-2.85,-1.85],[-2.85,1.85],[-3.85,2.85],
-        [-6.4,2.85],[-6.4,1.7],[-7.5,1.7],[-7.5,7.5],[-1.7,7.5],
-        [-1.7,6.4],[-2.85,6.4],[-2.85,3.85],[-1.85,2.85],[1.85,2.85],
-        [2.85,3.85],[2.85,6.4],[1.7,6.4],[1.7,7.5],[7.5,7.5],
-        [7.5,1.7],[6.4,1.7],[6.4,2.85],[3.85,2.85]]);
-        translate([0,0,-1])
-        cylinder(d=2.5,h=AM_Len + 2,$fn=16);
+module extrusion(extrusion_size, length, slot_width) {
+  color("silver", 0.9) {
+    linear_extrude(length) {
+      extrusion_profile(extrusion_size, slot_width);
     }
-}
-module A2020(AM_Len,AL_Ht)
-{
-    color("silver",.9)
-    translate([0,0,AL_Ht / 2])
-    rotate([90,0,0])
-    translate ([+20/2,+20/2,-AM_Len])
-    difference()
-    {
-        linear_extrude(height = AM_Len, center = false, convexity = 10)polygon(points = 
-        [[10,10],[3,10],[3,8],[6,8],[6,7],
-        [3,4],[-3,4],[-6,7],[-6,8],[-3,8],
-        [-3,10],[-10,10],[-10,3],[-8,3],[-8,6],
-        [-7,6],[-4,3],[-4,-3],[-7,-6],[-8,-6],
-        [-8,-3],[-10,-3],[-10,-10],[-3,-10],[-3,-8],
-        [-6,-8],[-6,-7],[-3,-4],[3,-4],[6,-7],
-        [6,-8],[3,-8],[3,-10],[10,-10],[10,-3],
-        [8,-3],[8,-6],[7,-6],[4,-3],[4,3],
-        [7,6],[8,6],[8,3],[10,3]]);
-        translate([0,0,-1])
-        cylinder(d=4.2,h=AM_Len+2,$fn=16);
-    }
-}
-module A2525(AM_Len,AL_Ht)
-{
-    color("silver",.9)
-    translate([0,0,AL_Ht / 2])
-    rotate([90,0,0])
-    translate ([+25/2,+25/2,-AM_Len])
-    difference()
-    {
-        linear_extrude(height = AM_Len, center = false, convexity = 10)polygon(points = 
-        [[12.5,12.5],[12.5,3],[10.5,3],[10.5,6],[9.5,6],
-        [6.5,3],[6.5,-3],[9.5,-6],[10.5,-6],[10.5,-3],
-        [12.5,-3],[12.5,-12.5],[3,-12.5],[3,-10.5],[6,-10.5],
-        [6,-9.5],[3,-6.5],[-3,-6.5],[-6,-9.5],[-6,-10.5],
-        [-3,-10.5],[-3,-12.5],[-12.5,-12.5],[-12.5,-3],[-10.5,-3],
-        [-10.5,-6],[-9.5,-6],[-6.5,-3],[-6.5,3],[-9.5,6],
-        [-10.5,6],[-10.5,3],[-12.5,3],[-12.5,12.5],[-3,12.5],
-        [-3,10.5],[-6,10.5],[-6,9.5],[-3,6.5],[3,6.5],
-        [6,9.5],[6,10.5],[3,10.5],[3,12.5]]);
-        translate([0,0,-1])
-        cylinder(d=6.8,h=AM_Len + 2,$fn=16);
-    }
-}
-module A3030(AM_Len,AL_Ht)
-{
-    color("silver",.9)
-    translate([0,0,AL_Ht / 2])
-    rotate([90,0,0])
-    translate ([+30/2,+30/2,-AM_Len])
-    difference()
-    {
-        linear_extrude(height = AM_Len, center = false, convexity = 10)polygon(points = 
-        [[-15,13],[-15,4],[-13,4],[-13,8.25],[-9.66,8.25],
-        [-6,4.59],[-6,-4.59],[-9.66,-8.25],[-13,-8.25],[-13,-4],
-        [-15,-4],[-15,-13],[-13,-15],[-4,-15],[-4,-13],
-        [-8.25,-13],[-8.25,-9.66],[-4.59,-6],[4.59,-6],[8.25,-9.66],
-        [8.25,-13],[4,-13],[4,-15],[13,-15],[15,-13],
-        [15,-4],[13,-4],[13,-8.25],[9.66,-8.25],[6,-4.59],
-        [6,4.59],[9.66,8.25],[13,8.25],[13,4],[15,4],
-        [15,13],[13,15],[4,15],[4,13],[8.25,13],
-        [8.25,9.66],[4.59,6],[-4.59,6],[-8.25,9.66],[-8.25,13],
-        [-4,13],[-4,15],[-13,15]]);
-        translate([0,0,-1])
-        cylinder(d=6.8,h=AM_Len + 2,$fn=16);
-    }
-}
-module A4020(AM_Len,AL_Ht0)
-{
-    color("silver",.9)
-    translate([0,0,AL_Ht / 2])
-    rotate([90,0,0])
-    difference()
-    {
-        linear_extrude(height = AM_Len, center = false, convexity = 10)polygon(points = 
-        [[-14,3],[-14,-3],[-17,-6],[-18,-6],[-18,-3],
-        [-20,-3],[-20,-10],[-13,-10],[-13,-8],[-16,-8],
-        [-16,-7],[-13,-4],[-7,-4],[-4,-7],[-4,-8],
-        [-7,-8],[-7,-10],[7,-10],[7,-8],[4,-8],
-        [4,-7],[7,-4],[13,-4],[16,-7],[16,-8],
-        [13,-8],[13,-10],[20,-10],[20,-3],[18,-3],
-        [18,-6],[17,-6],[14,-3],[14,3],[17,6],
-        [18,6],[18,3],[20,3],[20,10],[13,10],
-        [13,8],[16,8],[16,7],[13,4],[7,4],
-        [4,7],[4,8],[7,8],[7,10],[-7,10],
-        [-7,8],[-4,8],[-4,7],[-7,4],[-13,4],
-        [-16,7],[-16,8],[-13,8],[-13,10],[-20,10],
-        [-20,3],[-18,3],[-18,6],[-17,6]]);
-        translate([0,0,-1])
-        linear_extrude(height = AM_Len+2, center = false, convexity = 10)polygon(points = 
-        [[-6,3],[-3,6],[3,6],[6,3],[6,-3],
-        [3,-6],[-3,-6],[-6,-3]]);
-        translate([-10,0,-1])
-        cylinder(d=4.2,h=AM_Len + 2,$fn=16);
-        translate([10,0,-1])
-        cylinder(d=4.2,h=AM_Len + 2,$fn=16);
-    }
+  }
 }
 
-module A4040(AM_Len,AL_Ht)
-{
-    color("silver",.9)
-    translate([0,0,AL_Ht / 2])
-    rotate([90,0,0])
-    translate ([+40/2,+40/2,-AM_Len])
-
-    difference()
-    {
-        linear_extrude(height = AM_Len, center = false, convexity = 10)polygon(points = 
-        [[-18.68,18.68],[-19.4,17.75],[-19.85,16.67],[-20,15.5],[-20,4.1],
-        [-16,4.1],[-16,6.1],[-18,6.1],[-18,10.25],[-11.88,10.25],
-        [-7.5,5.87],[-7.5,-5.87],[-11.88,-10.25],[-18,-10.25],[-18,-6.1],
-        [-16,-6.1],[-16,-4.1],[-20,-4.1],[-20,-15.5],[-19.85,-16.67],
-        [-19.4,-17.75],[-18.68,-18.68],[-17.75,-19.4],[-16.67,-19.85],[-15.5,-20],
-        [-4.1,-20],[-4.1,-16],[-6.1,-16],[-6.1,-18],[-10.25,-18],
-        [-10.25,-11.88],[-5.87,-7.5],[5.87,-7.5],[10.25,-11.88],[10.25,-18],
-        [6.1,-18],[6.1,-16],[4.1,-16],[4.1,-20],[15.5,-20],
-        [16.67,-19.85],[17.75,-19.4],[18.68,-18.68],[19.4,-17.75],[19.85,-16.67],
-        [20,-15.5],[20,-4.1],[16,-4.1],[16,-6.1],[18,-6.1],
-        [18,-10.25],[11.88,-10.25],[7.5,-5.87],[7.5,5.87],[11.88,10.25],
-        [18,10.25],[18,6.1],[16,6.1],[16,4.1],[20,4.1],
-        [20,15.5],[19.85,16.67],[19.4,17.75],[18.68,18.68],[17.75,19.4],
-        [16.67,19.85],[15.5,20],[4.1,20],[4.1,16],[6.1,16],
-        [6.1,18],[10.25,18],[10.25,11.88],[5.87,7.5],[-5.87,7.5],
-        [-10.25,11.88],[-10.25,18],[-6.1,18],[-6.1,16],[-4.1,16],
-        [-4.1,20],[-15.5,20],[-16.67,19.85],[-17.75,19.4]]);
-        translate([0,0,-1])
-        cylinder(d=6.8,h=AM_Len + 2,$fn=16);
-    }
+// FIXME: Would like to phase this out in favor of extrusion() module, as
+// that module is oriented centered on the axis rather than having the axis
+// on a corner.
+module aluminiumextrusion(length,height) {
+  translate([extrusion/2, 0, extrusion/2])
+    rotate([-90,0,0])
+      extrusion(extrusion, length, 3.3);
 }
+
+translate([15,0,0]) aluminiumextrusion(100,0);
+extrusion_profile(15, 3.3);
+translate([50,0,0]) extrusion(15, 100, 3.3);

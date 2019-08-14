@@ -1,7 +1,7 @@
 // vim: set nospell:
 include <core.scad>
 include <lib.scad>
-include <extrusion.scad>
+use <extrusion.scad>
 include <opencoreparts.scad>
 use <side_panels.scad>
 include <frame.scad>
@@ -19,8 +19,6 @@ frontleft_tower=0; //unused atm
 right_tower=0; //unused atm
 echo("ztowerextrusions are ", ztowerextrusions);
 
-
-
 // NOTE , I'm using this BOM system initially to ensure I cover everything for the 1515 RC2 model. I understand the names,quantities etc can change.
 
 // BOM Item Name: 15x15x445 (Misumi HFS3-1515-445 )
@@ -30,10 +28,6 @@ echo("ztowerextrusions are ", ztowerextrusions);
 //ztowerextrusions=445;
 ztowerextrusions=fullZsize+(2*extrusion+extrusionincrease);
 Ztowerextrusions();
-
-
-
-
 
 //////////////////////////
 // BOM MOTION COMPONENTS
@@ -57,8 +51,6 @@ leadscrews();
 // BOM Quantity: 3
 // BOM Link: http://railco.re/motion
 // Notes:
-
-
 
 // BOM Item Name: 400mm MGN12H + carriage
 // BOM Quantity: 6
