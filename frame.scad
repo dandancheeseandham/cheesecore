@@ -70,46 +70,47 @@ module horizontalYextrusions()
 ////////////////////////
 // BOM: Corner Cubes
 ////////////////////////
-module orig_cornercube() {
-  translate([extrusion/2, extrusion/2, extrusion/2])
-    corner_cube(extrusion);
-}
 module corner_cubes()
 {
   //Bottom Front Left Corner Cube
   rotate([90,00,270])
-  translate ([-extrusion,0,-extrusion])
-  orig_cornercube();
+    translate ([-extrusion/2,extrusion/2,-extrusion/2])
+      corner_cube();
+
   //Bottom Back Left Corner Cube
-  translate ([extrusion,horizontalY+extrusion*2,extrusion])
-  rotate([180,90,0])
-  orig_cornercube();
+  translate ([extrusion/2,horizontalY+extrusion*1.5,extrusion/2])
+    rotate([180,90,0])
+      corner_cube();
+
   //Bottom Front Right Corner Cube
-  translate ([horizontalX+extrusion,extrusion,0])
-  rotate([90,0,0])
-  orig_cornercube();
+  translate ([horizontalX+extrusion*1.5,extrusion/2,extrusion/2])
+    rotate([90,0,0])
+      corner_cube();
+
   //Bottom Back Right Corner Cube
-  translate ([horizontalX+extrusion,horizontalY+extrusion*2,extrusion])
-  rotate([180,0,0])
-  orig_cornercube();
+  translate ([horizontalX+extrusion*1.5,horizontalY+extrusion*1.5,extrusion/2])
+    rotate([180,0,0])
+      corner_cube();
 
   //Top Front Left Corner Cube
-  translate ([extrusion,0,corneruprightZ+extrusion])
-  rotate([270,270,90])
-  orig_cornercube();
+  translate ([extrusion/2,extrusion/2,corneruprightZ+extrusion*1.5])
+    rotate([270,270,90])
+      corner_cube();
+
   //Top Back Left Corner Cube
-  translate ([0,horizontalY+extrusion,corneruprightZ+extrusion])
-  rotate([0,270,270])
-  orig_cornercube();
+  translate ([extrusion/2,horizontalY+extrusion*1.5,corneruprightZ+extrusion*1.5])
+    rotate([0,270,270])
+      corner_cube();
+
   //Top Front Right Corner Cube
-  translate ([horizontalX+extrusion,0,corneruprightZ+extrusion])
-  rotate([0,0,0])
-  orig_cornercube();
+  translate ([horizontalX+extrusion*1.5,extrusion*0.5,corneruprightZ+extrusion*1.5])
+    rotate([0,0,0])
+      corner_cube();
+
   //Top Back Right Corner Cube
-  translate ([horizontalX+extrusion,horizontalY+extrusion,corneruprightZ+extrusion*2])
-  rotate([270,0,0])
-  orig_cornercube();
-  // ** END CORNER CUBES
+  translate ([horizontalX+extrusion*1.5,horizontalY+extrusion*1.5,corneruprightZ+extrusion*1.5])
+    rotate([270,0,0])
+      corner_cube();
 }
 
 module frame() {
