@@ -41,23 +41,40 @@ Zwindowspacingbottom=35;  // 35 for ZL , 50 for ZLT
 windowwidth = panelX - (Xwindowspacing*2);
 windowheight = panelZ - (Zwindowspacingtop+Zwindowspacingbottom);
 
-module all_side_panels() {
-  //Bottom Panel
-  panel(panelX,panelY,paneldepth,"bottom");
-  //Front Panel
-  rotate([90,0,0])
-    panel(panelX,panelZ,paneldepth,"front");
-  //Left Panel
-  rotate([90,0,90])
-    panel(panelY,panelZ,paneldepth);
-  //Right panel
+module bottom_panel() {
+  translate([0,0,-paneldepth/2]) panel(panelX,panelY,paneldepth,"bottom");
+}
+
+module front_panel() {
+  translate([0,-paneldepth/2,0])
+    rotate([90,0,0])
+      panel(panelX,panelZ,paneldepth,"front");
+}
+
+module left_panel() {
+  translate([-paneldepth/2,0,0])
+    rotate([90,0,90])
+      panel(panelY,panelZ,paneldepth);
+}
+
+module right_panel() {
   translate ([panelX+paneldepth/2,0,0])
     rotate([90,0,90])
       panel(panelY,panelZ,paneldepth);
-  //Back Panel
+}
+
+module back_panel(){
   translate ([0,panelY+paneldepth/2,0])
     rotate([90,0,0])
       panel(panelX,panelZ,paneldepth);
+}
+
+module all_side_panels() {
+  bottom_panel();
+  front_panel();
+  left_panel();
+  right_panel();
+  back_panel();
 }
 
 all_side_panels();
