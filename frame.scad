@@ -2,6 +2,7 @@
 include <config.scad>
 use <extrusion.scad>
 use <corner_cube.scad>
+use <lib/mirror.scad>
 
 cornercube=extrusion; //1515 and 2020 these are the same. 3030 and 4040 will need to look at corner braces perhaps?
 
@@ -70,47 +71,12 @@ module horizontalYextrusions()
 ////////////////////////
 // BOM: Corner Cubes
 ////////////////////////
-module corner_cubes()
-{
-  //Bottom Front Left Corner Cube
-  rotate([90,00,270])
-    translate ([-extrusion/2,extrusion/2,-extrusion/2])
-      corner_cube();
-
-  //Bottom Back Left Corner Cube
-  translate ([extrusion/2,horizontalY+extrusion*1.5,extrusion/2])
-    rotate([180,90,0])
-      corner_cube();
-
-  //Bottom Front Right Corner Cube
-  translate ([horizontalX+extrusion*1.5,extrusion/2,extrusion/2])
-    rotate([90,0,0])
-      corner_cube();
-
-  //Bottom Back Right Corner Cube
-  translate ([horizontalX+extrusion*1.5,horizontalY+extrusion*1.5,extrusion/2])
-    rotate([180,0,0])
-      corner_cube();
-
-  //Top Front Left Corner Cube
-  translate ([extrusion/2,extrusion/2,corneruprightZ+extrusion*1.5])
-    rotate([270,270,90])
-      corner_cube();
-
-  //Top Back Left Corner Cube
-  translate ([extrusion/2,horizontalY+extrusion*1.5,corneruprightZ+extrusion*1.5])
-    rotate([0,270,270])
-      corner_cube();
-
-  //Top Front Right Corner Cube
-  translate ([horizontalX+extrusion*1.5,extrusion*0.5,corneruprightZ+extrusion*1.5])
-    rotate([0,0,0])
-      corner_cube();
-
-  //Top Back Right Corner Cube
-  translate ([horizontalX+extrusion*1.5,horizontalY+extrusion*1.5,corneruprightZ+extrusion*1.5])
-    rotate([270,0,0])
-      corner_cube();
+module corner_cubes() {
+  mirror_xyz() {
+    translate([horizontalX/2+extrusion/2, horizontalY/2+extrusion/2, corneruprightZ/2+extrusion/2])
+      rotate([0,0,90])
+        corner_cube();
+  }
 }
 
 module frame() {
@@ -140,7 +106,8 @@ module frame() {
   // BOM Quantity: 1
   // BOM Link: http://railco.re/1515corners
   // Notes: 4 Spare corners after ordering
-  corner_cubes();
+  translate([horizontalX/2+extrusion, horizontalY/2+extrusion, corneruprightZ/2+extrusion])
+    corner_cubes();
 }
 
 frame();
