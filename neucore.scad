@@ -56,7 +56,6 @@ leadscrews();
 // BOM Quantity: 6
 // BOM Link: http://railco.re/motion
 // Notes: MGN 12H-L400MM
-sheet=3;  //removing this breaks nopheads stuff. Find out why.
 
 translate ([extrusion*2,extrusion*1.5+towerY1,(fullZsize)/2+couplerheight]) rotate([90,-90,90]) rail();
 translate ([extrusion*2,extrusion*0.5+towerY2,(fullZsize)/2+couplerheight]) rotate([90,-90,90])  rail(railZlength);
@@ -94,37 +93,35 @@ translate ([250,200,corneruprightZ+50]) rotate ([0,0,90])  corexy_belt();
 
 
 
-
-
-//
-//BOM ELECTRONICS
-//
-
-
-// BOM Item Name: 24v PSU 350w PSU (needs to be 200w or greater with AC bed)
-// BOM Quantity: 1
-// BOM Link: http://railco.re/sidepanels
-// Notes: DAny 24v PSU > 200W works with the AC bed.
-//rotate([90,0,90])
-// translate(panelY-100,panelZ-100,paneldepth)
-translate ([50,-320,0]) psu(S_250_48);
-
-
 //random extras
 translate ([panelX/2,panelY/2,300]) bed();
 
-translate([panelY+40,panelZ-100,280]) rotate([90,90,90])  psu(S_250_48);
-translate([panelY+40,panelZ-300,330]) rotate([90,0,90])  pcb(DuetE);
-translate([panelY+40,panelZ-200,430]) rotate([90,0,90])  translate ([-100,-220,0]) pcb(Duex5);
-translate([panelY+40,panelZ-200,130]) rotate([90,0,90])  ssr_assembly(ssrs[1], M3_cap_screw, 3);
+// FIXME: we should probably position all of these onto a more convenient plane and rotation - like flat on x/y, centered about z axis
+// Then we have simplier translations here, and we can rotate/translate the whole contents as a unit when assembling the machine
+module electronics_box_contents() {
+  //
+  //BOM ELECTRONICS
+  //
+
+  // BOM Item Name: 24v PSU 350w PSU (needs to be 200w or greater with AC bed)
+  // BOM Quantity: 1
+  // BOM Link: http://railco.re/sidepanels
+  // Notes: DAny 24v PSU > 200W works with the AC bed.
+  translate([panelY+40,panelZ-100,280]) rotate([90,90,90])  psu(S_250_48);
+  translate([panelY+40,panelZ-300,330]) rotate([90,0,90])  pcb(DuetE);
+  translate([panelY+40,panelZ-200,430]) rotate([90,0,90])  translate ([-100,-220,0]) pcb(Duex5);
+  translate([panelY+40,panelZ-200,130]) rotate([90,0,90])  ssr_assembly(ssrs[1], M3_cap_screw, 3);
+  translate ([50,-220,0]) hot_end(E3Dv6);
+  translate ([50,-150,0]) iec(IEC_fused_inlet);
+  translate ([50,-120,0]) leadnut(LSN8x8);
+  //translate ([50,-320,0]) psu(S_250_48);
+}
+
+// electronics_box_contents();
+
 translate ([leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-paneldepth]) NEMA(NEMA17);
 translate ([leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth]) NEMA(NEMA17);
 translate ([leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth]) NEMA(NEMA17);
-translate ([50,-220,0]) hot_end(E3Dv6);
-translate ([50,-150,0]) iec(IEC_fused_inlet);
-translate ([50,-120,0]) leadnut(LSN8x8);
-//translate ([50,-320,0]) psu(S_250_48);
-
 
 //debug nonsense
         echo ("panelX", panelX);

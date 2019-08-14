@@ -3,11 +3,34 @@ include <config.scad>
 include <opencoreparts.scad>
 include <core.scad>
 
+module screwholes(x,y) {
+  //screwholeradius=1.75;
+  screwholeradius=(screwM+0.5)/2;
+  z=25;
+  screwholesX=5;
+  screwholesY=5;
+  holefromedge=50;
+
+  gapX=(x-100)/(screwholesX-1);
+  gapY=(y-100)/(screwholesY-1);
+
+  //cube([x,y,z]);
+
+ for (a =[0:(screwholesX-1)])
+ { translate ([holefromedge+(gapX*a),extrusion/2,-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
+  for (a =[0:(screwholesY-1)])
+ { translate ([extrusion/2,holefromedge+(gapY*a),-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
+  for (a =[0:(screwholesX-1)])
+ { translate ([holefromedge+(gapX*a),y-extrusion/2,-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
+    for (a =[0:(screwholesY-1)])
+ { translate ([x-extrusion/2,holefromedge+(gapY*a),-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
+}
+
 module panel(x,y,d,panel)
 {
 
-  difference() {
       color("Burlywood")
+  difference() {
       translate ([x/2,y/2,0])
       rounded_rectangle([x,y,d], panelcornerrounding);
       screwholes(x,y);

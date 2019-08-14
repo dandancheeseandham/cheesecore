@@ -58,28 +58,6 @@ translate ([x+15.33,y+15.39,z-2]) cylinder(25, 1.75,1.75);
 }
 
 
-module screwholes(x,y) {
-//screwholeradius=1.75;
-screwholeradius=(screwM+0.5)/2;
-z=25;
-screwholesX=5;
-screwholesY=5;
-holefromedge=50;
-
-gapX=(x-100)/(screwholesX-1);
-gapY=(y-100)/(screwholesY-1);
-
-//cube([x,y,z]);
-
- for (a =[0:(screwholesX-1)])
- { translate ([holefromedge+(gapX*a),extrusion/2,-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
-   for (a =[0:(screwholesY-1)])
- { translate ([extrusion/2,holefromedge+(gapY*a),-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
-  for (a =[0:(screwholesX-1)])
- { translate ([holefromedge+(gapX*a),y-extrusion/2,-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
-    for (a =[0:(screwholesY-1)])
- { translate ([x-extrusion/2,holefromedge+(gapY*a),-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
-}
 
 
 
@@ -142,6 +120,7 @@ module rail(lengthrail)
 
             rail_assembly(rail, length, rail_travel(rail, length) / 2);
 
+            sheet=3;  //removing this breaks nopheads stuff. Find out why.
             rail_screws(rail, length, sheet + nut_thickness(nut, true) + washer_thickness(washer));
 
             rail_hole_positions(rail, length, 0)
