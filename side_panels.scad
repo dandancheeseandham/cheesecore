@@ -28,11 +28,22 @@ module screwholes(x,y) {
 
 module panel(x,y,d,panel)
 {
+  // Define Panel Window Area (ZL match)
+  Xwindowspacing=35;
+  Zwindowspacingtop=25;  // 25 for ZL , 50 for ZLT
+  Zwindowspacingbottom=35;  // 35 for ZL , 50 for ZLT
 
-      color("Burlywood")
-  difference() {
-      translate ([x/2,y/2,0])
-      rounded_rectangle([x,y,d], panelcornerrounding);
+  windowwidth = panelX - (Xwindowspacing*2);
+  windowheight = panelZ - (Zwindowspacingtop+Zwindowspacingbottom);
+
+  panelcornerrounding=5; // Corner rounding of panels
+  screwholes=5;     // Number of screwholes // IS THIS REDUNDANT?
+
+  color("Burlywood")
+    difference() {
+      // FIXME: panel origin should be on a face, not in the center of the panel
+      translate ([x/2,y/2,d/2])
+        rounded_rectangle([x,y,d], panelcornerrounding);
       screwholes(x,y);
       if (panel=="bottom") {
           //front left motor hole
@@ -43,8 +54,8 @@ module panel(x,y,d,panel)
           motorholes(leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth) ;
           }
       if (panel=="front") {
-        translate ([windowwidth/2+Xwindowspacing,windowheight/2+Zwindowspacingbottom,-epsilon/2])
-          rounded_rectangle([windowwidth,windowheight,paneldepth+epsilon*2], panelcornerrounding);
+        translate ([windowwidth/2+Xwindowspacing,windowheight/2+Zwindowspacingbottom,paneldepth/2+epsilon])
+          rounded_rectangle([windowwidth,windowheight,paneldepth+epsilon*5], panelcornerrounding);
       }
   }
 }
@@ -53,41 +64,30 @@ module panel(x,y,d,panel)
 // BOM Quantity: 1
 // BOM Link: http://railco.re/sidepanels
 // Notes: DXFs available from here via
-panelcornerrounding=5; // Corner rounding of panels
-screwholes=5;     // Number of screwholes // IS THIS REDUNDANT?
-// Define Panel Window Area (ZL match)
-Xwindowspacing=35;
-Zwindowspacingtop=25;  // 25 for ZL , 50 for ZLT
-Zwindowspacingbottom=35;  // 35 for ZL , 50 for ZLT
-
-
-windowwidth = panelX - (Xwindowspacing*2);
-windowheight = panelZ - (Zwindowspacingtop+Zwindowspacingbottom);
 
 module bottom_panel() {
-  translate([0,0,-paneldepth/2]) panel(panelX,panelY,paneldepth,"bottom");
+  translate([0,0,-paneldepth]) panel(panelX,panelY,paneldepth,"bottom");
 }
 
 module front_panel() {
-  translate([0,-paneldepth/2,0])
-    rotate([90,0,0])
-      panel(panelX,panelZ,paneldepth,"front");
+  rotate([90,0,0])
+    panel(panelX,panelZ,paneldepth,"front");
 }
 
 module left_panel() {
-  translate([-paneldepth/2,0,0])
+  translate([-paneldepth,0,0])
     rotate([90,0,90])
       panel(panelY,panelZ,paneldepth);
 }
 
 module right_panel() {
-  translate ([panelX+paneldepth/2,0,0])
+  translate ([panelX,0,0])
     rotate([90,0,90])
       panel(panelY,panelZ,paneldepth);
 }
 
 module back_panel(){
-  translate ([0,panelY+paneldepth/2,0])
+  translate ([0,panelY+paneldepth,0])
     rotate([90,0,0])
       panel(panelX,panelZ,paneldepth);
 }
