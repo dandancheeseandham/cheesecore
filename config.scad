@@ -51,3 +51,8 @@ echo("extrusionincrease are ", extrusionincrease);
 //horizontalY=425;  // Misumi pre-cut (Horizontal Y)
 horizontalY=bedY+bedYspacing+(2*extrusionincrease);
 echo("horizontalY are ", horizontalY);
+
+paneldepth=6;     // Depth of side panels (HDPE/plywood/etc) - THIS SHOULD BE LINKED TO SCREW SIZE
+panelX=horizontalX+extrusion*2;
+panelY=horizontalY+extrusion*2;
+panelZ=corneruprightZ+extrusion*2;

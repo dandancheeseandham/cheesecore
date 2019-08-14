@@ -3,13 +3,13 @@ include <core.scad>
 include <lib.scad>
 include <extrusion.scad>
 include <opencoreparts.scad>
-include <side_panels.scad>
+use <side_panels.scad>
 include <config.scad>
 
 $preview=false;
 $fullrender=false;
 
-
+all_side_panels();
 
 
 //rods/motors/motorholes/couplers
@@ -131,9 +131,8 @@ translate ([250,200,corneruprightZ+50]) rotate ([0,0,90])  corexy_belt()
 
 
 
-                
 //
-//BOM ELECTRONICS					
+//BOM ELECTRONICS
 //
 
 
@@ -163,6 +162,5 @@ translate ([50,-120,0]) leadnut(LSN8x8);
 
 
 //debug nonsense
-        echo ("window", windowwidth);
         echo ("panelX", panelX);
         echo ("horizontalX", horizontalX);
