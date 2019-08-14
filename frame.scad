@@ -6,45 +6,32 @@ use <lib/mirror.scad>
 
 cornercube=extrusion; //1515 and 2020 these are the same. 3030 and 4040 will need to look at corner braces perhaps?
 
-module corneruprights()
-{
-// Front Left Z
-translate ([0,extrusion,extrusion])
-rotate([90,0,0])
-aluminiumextrusion(corneruprightZ,0);
-// Front Right Z
-translate ([horizontalX+extrusion,extrusion,extrusion])
-rotate([90,0,0])
-aluminiumextrusion(corneruprightZ,0);
-// Rear Right Z
-translate ([horizontalX+extrusion,horizontalY+extrusion*2,extrusion])
-rotate([90,0,0])
-aluminiumextrusion(corneruprightZ,0);
-// Rear Left Z
-translate ([0,horizontalY+extrusion*2,extrusion])
-rotate([90,0,0])
-aluminiumextrusion(corneruprightZ,0);
+module vertical_extrusions() {
+  mirror_xy() {
+    translate([horizontalX/2+extrusion/2, horizontalY/2+extrusion/2, 0])
+      extrusion(extrusion, corneruprightZ, 3.3, center=true);
+  }
 }
 
 module Xextrusions()
 {
-//Top Front X
-translate ([extrusion,extrusion,corneruprightZ+extrusion])
-rotate([0,0,-90])
-aluminiumextrusion(horizontalX,0);
-//Top Rear X
-translate ([horizontalX+extrusion,horizontalY+extrusion,corneruprightZ+extrusion])
-rotate([0,0,90])
-aluminiumextrusion(horizontalX,0);
-//Bottom Rear X
-translate ([horizontalX+extrusion,horizontalY+extrusion,0])
-rotate([0,0,90])
-aluminiumextrusion(horizontalX,0);
-//Bottom Front X
-translate ([extrusion,extrusion,0])
-rotate([0,0,-90])
-aluminiumextrusion(horizontalX,0);
-}
+  //Top Front X
+  translate ([extrusion,extrusion,corneruprightZ+extrusion])
+  rotate([0,0,-90])
+  aluminiumextrusion(horizontalX,0);
+  //Top Rear X
+  translate ([horizontalX+extrusion,horizontalY+extrusion,corneruprightZ+extrusion])
+  rotate([0,0,90])
+  aluminiumextrusion(horizontalX,0);
+  //Bottom Rear X
+  translate ([horizontalX+extrusion,horizontalY+extrusion,0])
+  rotate([0,0,90])
+  aluminiumextrusion(horizontalX,0);
+  //Bottom Front X
+  translate ([extrusion,extrusion,0])
+  rotate([0,0,-90])
+  aluminiumextrusion(horizontalX,0);
+  }
 
 module horizontalYextrusions()
 {
@@ -86,11 +73,8 @@ module frame() {
   // Notes: Misumi pre-cut (Horizontal Y)
   horizontalYextrusions();
 
-  // BOM Item Name: 15x15x415 (Misumi HFS3-1515-415 )
-  // BOM Quantity: 4
-  // BOM Link: http://railco.re/misumi
-  // Notes: Misumi pre-cut (Corner Uprights)
-  corneruprights();
+  translate([horizontalX/2+extrusion, horizontalY/2+extrusion, corneruprightZ/2+extrusion])
+    vertical_extrusions();
 
   // BOM Item Name: 15x15x460 (Misumi HFS3-1515-460 )
   // BOM Quantity: 4
