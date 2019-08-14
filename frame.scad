@@ -1,6 +1,7 @@
 // vim: set nospell:
 include <config.scad>
 use <extrusion.scad>
+use <corner_cube.scad>
 
 cornercube=extrusion; //1515 and 2020 these are the same. 3030 and 4040 will need to look at corner braces perhaps?
 
@@ -65,62 +66,49 @@ module horizontalYextrusions()
         echo("horizontalY are ", horizontalY , "mm");
 
 }
-module cornercube() {
-  if ($preview)   {
-    cube(cornercube);
-  }
-  else {
-    import("Corner_Cube_XL.stl");
-  }
-}
 
 ////////////////////////
 // BOM: Corner Cubes
 ////////////////////////
-
+module orig_cornercube() {
+  translate([extrusion/2, extrusion/2, extrusion/2])
+    corner_cube(extrusion);
+}
 module corner_cubes()
 {
   //Bottom Front Left Corner Cube
-  color("Black")
   rotate([90,00,270])
   translate ([-extrusion,0,-extrusion])
-  cornercube();
+  orig_cornercube();
   //Bottom Back Left Corner Cube
-  color("Black")
   translate ([extrusion,horizontalY+extrusion*2,extrusion])
   rotate([180,90,0])
-  cornercube();
+  orig_cornercube();
   //Bottom Front Right Corner Cube
-  color("Black")
   translate ([horizontalX+extrusion,extrusion,0])
   rotate([90,0,0])
-  cornercube();
+  orig_cornercube();
   //Bottom Back Right Corner Cube
-  color("Black")
   translate ([horizontalX+extrusion,horizontalY+extrusion*2,extrusion])
   rotate([180,0,0])
-  cornercube();
+  orig_cornercube();
 
   //Top Front Left Corner Cube
-  color("Black")
   translate ([extrusion,0,corneruprightZ+extrusion])
   rotate([270,270,90])
-  cornercube();
+  orig_cornercube();
   //Top Back Left Corner Cube
-  color("Black")
   translate ([0,horizontalY+extrusion,corneruprightZ+extrusion])
   rotate([0,270,270])
-  cornercube();
+  orig_cornercube();
   //Top Front Right Corner Cube
-  color("Black")
   translate ([horizontalX+extrusion,0,corneruprightZ+extrusion])
   rotate([0,0,0])
-  cornercube();
+  orig_cornercube();
   //Top Back Right Corner Cube
-  color("Black")
   translate ([horizontalX+extrusion,horizontalY+extrusion,corneruprightZ+extrusion*2])
   rotate([270,0,0])
-  cornercube();
+  orig_cornercube();
   // ** END CORNER CUBES
 }
 
