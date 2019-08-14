@@ -1,6 +1,7 @@
 // vim: set nospell:
 
-epsilon=0.01;  //epislon value for OpenSCAD reasons :)
+epsilon=0.01;  // epislon value for OpenSCAD reasons :)
+inch = 25.4; // convert imperial units
 
 extrusion=15;     // extrusion size for all extrusions.
 extrusionincrease=extrusion-15; // because design is based on 1515
@@ -52,7 +53,7 @@ echo("extrusionincrease are ", extrusionincrease);
 horizontalY=bedY+bedYspacing+(2*extrusionincrease);
 echo("horizontalY are ", horizontalY);
 
-paneldepth=6;     // Depth of side panels (HDPE/plywood/etc) - THIS SHOULD BE LINKED TO SCREW SIZE
+paneldepth=0.25*inch;     // Depth of side panels (HDPE/plywood/etc) - THIS SHOULD BE LINKED TO SCREW SIZE
 panelX=horizontalX+extrusion*2;
 panelY=horizontalY+extrusion*2;
 panelZ=corneruprightZ+extrusion*2;
