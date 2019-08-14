@@ -3,12 +3,13 @@ include <lib.scad>
 include <extrusion.scad>
 include <opencoreparts.scad>
 
-$preview=true;
+$preview=false;
 $fullrender=false;
 
 // BOM FRAME COMPONENTS					
 extrusion=15;     // extrusion size for all extrusions.
 screwM=3; //M3 hardware for panels
+// extrusion size, rail size and screw size for panels and anything attaching to extrusions will be linked
 
 extrusionincrease=extrusion-15; // because design is based on 1515
 
@@ -27,7 +28,7 @@ railXlength=400;
 railYlength=400;
 railZlength=400;
 
-epsilon=0.1;
+epsilon=0.01;
 
 horizontalX=bedX+extrusionincrease+160;
 echo("bedX is ", bedX);
