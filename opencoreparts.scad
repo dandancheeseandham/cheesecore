@@ -1,27 +1,5 @@
-module panel(x,y,d,panel) 
-{
-
-difference() {
-    color("Burlywood")
-    translate ([x/2,y/2,0])
-    rounded_rectangle([x,y,d], panelcornerrounding);
-    screwholes(x,y);
-    if (panel=="bottom") {
-        //front left motor hole
-        motorholes(leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-paneldepth);
-        //rear left motor hole
-        motorholes(leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth)  ;
-        //right motor hole
-        motorholes(leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth) ;
-        }
-    if (panel=="front") {
-    translate ([windowwidth/2+Xwindowspacing,windowheight/2+Zwindowspacingbottom,-epsilon/2])
-    rounded_rectangle([windowwidth,windowheight,paneldepth+epsilon*2], panelcornerrounding);
-    }
-}
-}
-
-
+// vim: set nospell:
+include <config.scad>
 
 module leadscrews() {
 //Front left leadscrew

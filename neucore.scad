@@ -1,38 +1,16 @@
+// vim: set nospell:
 include <core.scad>
 include <lib.scad>
 include <extrusion.scad>
 include <opencoreparts.scad>
+include <side_panels.scad>
+include <config.scad>
 
 $preview=false;
 $fullrender=false;
 
-// BOM FRAME COMPONENTS					
-extrusion=15;     // extrusion size for all extrusions.
-screwM=3; //M3 hardware for panels
-// extrusion size, rail size and screw size for panels and anything attaching to extrusions will be linked
-Zheight=300; // printable height 300 for ZL and 600 for ZLT
-extrusionincrease=extrusion-15; // because design is based on 1515
-
-//BED
-bedX=300;  // bed printable X
-bedY=300;  // bed printable Y
-bedplateX=bedX+25; // bed plate size X
-bedplateY=bedY+41; // bed plate size Y
-bedcornerrounding=7.5; // bed plate corner rounding
-beddepth=6.35; // depth of bed tool plate
-bedlipX=12.5; // lip of bed for mounting
-bedYspacing=125; // extra space around Y
 
 
-railXlength=400; // rail lengths will probably be linked to something else at some point?
-railYlength=400;
-railZlength=400;
-
-epsilon=0.01;  //epislon value for OpenSCAD reasons :)
-
-horizontalX=bedX+extrusionincrease+160;
-echo("bedX is ", bedX);
-echo("extrusionincrease are ", extrusionincrease);
 
 //rods/motors/motorholes/couplers
 backleft_tower=0; //unused atm
@@ -40,20 +18,7 @@ frontleft_tower=0; //unused atm
 right_tower=0; //unused atm
 echo("ztowerextrusions are ", ztowerextrusions);
 
-// I should probably get this lot below into an array of some sort.
-leadscrewX1=35; //until I can find a better name
-leadscrewX2=455; //until I can find a better name
-leadscrewY1=87.75; //ditto
-leadscrewY2=342.79; //ditto
-leadscrewY3=215.25; //ditto
-towerY1=97.4;
-towerY2=305.4;
-towerY3=224.9;
 
-
-couplerheight=30;  //an arbitary height increase during development
-Zincrease=115;
-fullZsize=Zheight+Zincrease;
 
 // NOTE , I'm using this BOM system initially to ensure I cover everything for the 1515 RC2 model. I understand the names,quantities etc can change.
 
@@ -69,17 +34,12 @@ Ztowerextrusions();
 // BOM Quantity: 4
 // BOM Link: http://railco.re/misumi
 // Notes: Misumi pre-cut (Horizontal Y)
-//horizontalY=425;  // Misumi pre-cut (Horizontal Y)
-horizontalY=bedY+bedYspacing+(2*extrusionincrease);
-echo("horizontalY are ", horizontalY);
 horizontalYextrusions();
 
 // BOM Item Name: 15x15x415 (Misumi HFS3-1515-415 )
 // BOM Quantity: 4
 // BOM Link: http://railco.re/misumi
 // Notes: Misumi pre-cut (Corner Uprights)
-//corneruprightZ=415; // Misumi pre-cut (Corner Uprights)
-corneruprightZ=fullZsize+(2*extrusionincrease);
 corneruprights();
 
 // BOM Item Name: 15x15x460 (Misumi HFS3-1515-460 )
@@ -101,42 +61,6 @@ Xextrusions();
 cornercube=extrusion; //1515 and 2020 these are the same. 3030 and 4040 will need to look at corner braces perhaps?
 cornercubes();
 
-// BOM Item Name: HDPE Side Panels
-// BOM Quantity: 1
-// BOM Link: http://railco.re/sidepanels
-// Notes: DXFs available from here via
-paneldepth=6;     // Depth of side panels (HDPE/plywood/etc) - THIS SHOULD BE LINKED TO SCREW SIZE
-panelcornerrounding=5; // Corner rounding of panels
-screwholes=5;     // Number of screwholes // IS THIS REDUNDANT?
-// Define Panel Window Area (ZL match)
-Xwindowspacing=35;
-Zwindowspacingtop=25;  // 25 for ZL , 50 for ZLT
-Zwindowspacingbottom=35;  // 35 for ZL , 50 for ZLT
-
-panelX=horizontalX+extrusion*2;
-panelY=horizontalY+extrusion*2;
-panelZ=corneruprightZ+extrusion*2;
-
-windowwidth = panelX - (Xwindowspacing*2);
-windowheight = panelZ - (Zwindowspacingtop+Zwindowspacingbottom);
-
-
-//Bottom Panel
-panel(panelX,panelY,paneldepth,"bottom");
-//Front Panel
-rotate([90,0,0])
-panel(panelX,panelZ,paneldepth,"front");
-//Left Panel
-rotate([90,0,90])  
-panel(panelY,panelZ,paneldepth);
-//Right panel
-translate ([panelX+paneldepth/2,0,0]) 
-rotate([90,0,90]) 
-panel(panelY,panelZ,paneldepth);
-//Back Panel
-translate ([0,panelY+paneldepth/2,0]) 
-rotate([90,0,0]) 
-panel(panelX,panelZ,paneldepth);
 
 //////////////////////////
 // BOM MOTION COMPONENTS					
