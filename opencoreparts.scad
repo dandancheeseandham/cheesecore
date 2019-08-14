@@ -40,8 +40,8 @@ cylinder(  leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
 
 module bed()
 {
-color([188/255,188/255,188/255]) 
-translate ([panelX/2,panelY/2,300])
+color([188/255,188/255,188/255])
+
 rounded_rectangle([bedplateX,bedplateY,beddepth], bedcornerrounding);
 }
 
@@ -72,17 +72,17 @@ module horizontalYextrusions()
 module Ztowerextrusions()
 {
 //Front left tower
-translate ([extrusion,extrusion*2+97.4,0]) 
+translate ([extrusion,extrusion*2+towerY1,0]) 
 rotate([90,0,0]) 
 aluminiumextrusion(ztowerextrusions,0);
 
 //back left tower
-translate ([extrusion,extrusion+305.4,0]) 
+translate ([extrusion,extrusion+towerY2,0]) 
 rotate([90,0,0]) 
 aluminiumextrusion(ztowerextrusions,0);
 
 //right tower
-translate ([horizontalX,224.9+extrusion+extrusionincrease,0])
+translate ([horizontalX,towerY3+extrusion+extrusionincrease,0])
 rotate([90,0,0]) 
 aluminiumextrusion(ztowerextrusions,0);
 }

@@ -10,25 +10,25 @@ $fullrender=false;
 extrusion=15;     // extrusion size for all extrusions.
 screwM=3; //M3 hardware for panels
 // extrusion size, rail size and screw size for panels and anything attaching to extrusions will be linked
-
+Zheight=300; // printable height 300 for ZL and 600 for ZLT
 extrusionincrease=extrusion-15; // because design is based on 1515
 
 //BED
 bedX=300;  // bed printable X
 bedY=300;  // bed printable Y
-bedYspacing=125; // extra space around Y
-Zheight=300; // printable height 300 for ZL and 600 for ZLT
-
 bedplateX=bedX+25; // bed plate size X
 bedplateY=bedY+41; // bed plate size Y
 bedcornerrounding=7.5; // bed plate corner rounding
 beddepth=6.35; // depth of bed tool plate
 bedlipX=12.5; // lip of bed for mounting
-railXlength=400; 
+bedYspacing=125; // extra space around Y
+
+
+railXlength=400; // rail lengths will probably be linked to something else at some point?
 railYlength=400;
 railZlength=400;
 
-epsilon=0.01;
+epsilon=0.01;  //epislon value for OpenSCAD reasons :)
 
 horizontalX=bedX+extrusionincrease+160;
 echo("bedX is ", bedX);
@@ -40,14 +40,18 @@ frontleft_tower=0; //unused atm
 right_tower=0; //unused atm
 echo("ztowerextrusions are ", ztowerextrusions);
 
+// I should probably get this lot below into an array of some sort.
 leadscrewX1=35; //until I can find a better name
 leadscrewX2=455; //until I can find a better name
 leadscrewY1=87.75; //ditto
 leadscrewY2=342.79; //ditto
 leadscrewY3=215.25; //ditto
-// I should probably get this lot into an array of some sort.
+towerY1=97.4;
+towerY2=305.4;
+towerY3=224.9;
 
-couplerheight=30;  //arbitary height increase for couplers
+
+couplerheight=30;  //an arbitary height increase during development
 Zincrease=115;
 fullZsize=Zheight+Zincrease;
 
@@ -59,7 +63,6 @@ fullZsize=Zheight+Zincrease;
 // Notes: Misumi pre-cut (For the Z tower Extrusions)
 //ztowerextrusions=445;
 ztowerextrusions=fullZsize+(2*extrusion+extrusionincrease);
-
 Ztowerextrusions();
 
 // BOM Item Name: 15x15x425 (Misumi HFS3-1515-425 )
@@ -85,6 +88,7 @@ corneruprights();
 // Notes: Misumi pre-cut (Horizontal X)
 //horizontalX=460;  // Misumi pre-cut (Horizontal X)
 
+// Manaul attempt at BOM generation :)
 echo("BOM Item Name: Quantity 4: 15x15x",horizontalX," (Misumi HFS3-1515-",horizontalX," )");
 Xextrusions();
 
@@ -165,9 +169,9 @@ leadscrews();
 // Notes: MGN 12H-L400MM
 sheet=3;  //removing this breaks nopheads stuff. Find out why.
 
-translate ([extrusion*2,extrusion*1.5+97.4,(fullZsize)/2+couplerheight]) rotate([90,-90,90]) rail();
-translate ([extrusion*2,extrusion*0.5+305.4,(fullZsize)/2+couplerheight]) rotate([90,-90,90])  rail(railZlength);
-translate ([horizontalX,224.9+extrusion*0.5+extrusionincrease,(fullZsize)/2+couplerheight]) rotate([-90,-90,90]) rail(railZlength);
+translate ([extrusion*2,extrusion*1.5+towerY1,(fullZsize)/2+couplerheight]) rotate([90,-90,90]) rail();
+translate ([extrusion*2,extrusion*0.5+towerY2,(fullZsize)/2+couplerheight]) rotate([90,-90,90])  rail(railZlength);
+translate ([horizontalX,towerY3+extrusion*0.5+extrusionincrease,(fullZsize)/2+couplerheight]) rotate([-90,-90,90]) rail(railZlength);
 
 translate ([panelX/2,horizontalY+extrusion,corneruprightZ+extrusion*1.5]) rotate([90, 0, 0]) rail(railXlength);
 translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail(railXlength);
@@ -200,31 +204,41 @@ translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([90, 0, 90]) rail(rail
 translate ([250,200,corneruprightZ+50]) rotate ([0,0,90])  corexy_belt()
 
 
-bed();
 
-//debug
-        echo ("window", windowwidth);
-        echo ("panelX", panelX);
-        echo ("horizontalX", horizontalX);
-                echo ("horizontalX", horizontalX);
+
+
                 
 //
 //BOM ELECTRONICS					
 //
 
 
-// BOM Item Name: 450mm TR8*4 leadscrew (400 will work)
-// BOM Quantity: 3
+// BOM Item Name: 24v PSU 350w PSU (needs to be 200w or greater with AC bed)
+// BOM Quantity: 1
 // BOM Link: http://railco.re/sidepanels
-// Notes: DXFs available from here via              
-                
-translate ([-100,-100,0]) pcb(DuetE);
-translate ([-100,-220,0]) pcb(Duex5);
-translate ([0,-220,0]) ssr_assembly(ssrs[1], M3_cap_screw, 3);
+// Notes: DAny 24v PSU > 200W works with the AC bed.            
+//rotate([90,0,90])  
+// translate(panelY-100,panelZ-100,paneldepth) 
+translate ([50,-320,0]) psu(S_250_48);
+
+
+//random extras
+translate ([panelX/2,panelY/2,300]) bed(); 
+
+translate([panelY+40,panelZ-100,280]) rotate([90,90,90])  psu(S_250_48);
+translate([panelY+40,panelZ-300,330]) rotate([90,0,90])  pcb(DuetE);
+translate([panelY+40,panelZ-200,430]) rotate([90,0,90])  translate ([-100,-220,0]) pcb(Duex5);
+translate([panelY+40,panelZ-200,130]) rotate([90,0,90])  ssr_assembly(ssrs[1], M3_cap_screw, 3);
 translate ([leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-paneldepth]) NEMA(NEMA17);
 translate ([leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth]) NEMA(NEMA17);
 translate ([leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth]) NEMA(NEMA17);
 translate ([50,-220,0]) hot_end(E3Dv6);
 translate ([50,-150,0]) iec(IEC_fused_inlet);	
 translate ([50,-120,0]) leadnut(LSN8x8);
-translate ([50,-320,0]) psu(S_250_48);
+//translate ([50,-320,0]) psu(S_250_48);
+
+
+//debug nonsense
+        echo ("window", windowwidth);
+        echo ("panelX", panelX);
+        echo ("horizontalX", horizontalX);
