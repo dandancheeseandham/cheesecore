@@ -7,7 +7,7 @@ $preview=true;
 $fullrender=false;
 
 // BOM FRAME COMPONENTS					
-extrusion=40;     // extrusion size for all extrusions.
+extrusion=15;     // extrusion size for all extrusions.
 screwM=3; //M3 hardware for panels
 
 extrusionincrease=extrusion-15; // because design is based on 1515
@@ -44,9 +44,11 @@ leadscrewX2=455; //until I can find a better name
 leadscrewY1=87.75; //ditto
 leadscrewY2=342.79; //ditto
 leadscrewY3=215.25; //ditto
+// I should probably get this lot into an array of some sort.
 
 couplerheight=30;  //arbitary height increase for couplers
-
+Zincrease=115;
+fullZsize=Zheight+Zincrease;
 
 // NOTE , I'm using this BOM system initially to ensure I cover everything for the 1515 RC2 model. I understand the names,quantities etc can change.
 
@@ -55,9 +57,7 @@ couplerheight=30;  //arbitary height increase for couplers
 // BOM Link: http://railco.re/misumi
 // Notes: Misumi pre-cut (For the Z tower Extrusions)
 //ztowerextrusions=445;
-ztowerextrusions=Zheight+115+(2*extrusion+extrusionincrease);
-
-
+ztowerextrusions=fullZsize+(2*extrusion+extrusionincrease);
 
 Ztowerextrusions();
 
@@ -75,7 +75,7 @@ horizontalYextrusions();
 // BOM Link: http://railco.re/misumi
 // Notes: Misumi pre-cut (Corner Uprights)
 //corneruprightZ=415; // Misumi pre-cut (Corner Uprights)
-corneruprightZ=Zheight+115+(2*extrusionincrease);
+corneruprightZ=fullZsize+(2*extrusionincrease);
 corneruprights();
 
 // BOM Item Name: 15x15x460 (Misumi HFS3-1515-460 )
@@ -100,9 +100,9 @@ cornercubes();
 // BOM Quantity: 1
 // BOM Link: http://railco.re/sidepanels
 // Notes: DXFs available from here via
-paneldepth=6;     // Depth of side panels (HDPE/plywood/etc) - LINK TO SCREW SIZE
+paneldepth=6;     // Depth of side panels (HDPE/plywood/etc) - THIS SHOULD BE LINKED TO SCREW SIZE
 panelcornerrounding=5; // Corner rounding of panels
-screwholes=5;     // Number of screwholes // REDUNDANT?
+screwholes=5;     // Number of screwholes // IS THIS REDUNDANT?
 // Define Panel Window Area (ZL match)
 Xwindowspacing=35;
 Zwindowspacingtop=25;  // 25 for ZL , 50 for ZLT
@@ -164,9 +164,9 @@ leadscrews();
 // Notes: MGN 12H-L400MM
 sheet=3;  //removing this breaks nopheads stuff. Find out why.
 
-translate ([extrusion*2,extrusion*1.5+97.4,(Zheight+115)/2+couplerheight]) rotate([90,-90,90]) rail();
-translate ([extrusion*2,extrusion*0.5+305.4,(Zheight+115)/2+couplerheight]) rotate([90,-90,90])  rail(railZlength);
-translate ([horizontalX,224.9+extrusion*0.5+extrusionincrease,(Zheight+115)/2+couplerheight]) rotate([-90,-90,90]) rail(railZlength);
+translate ([extrusion*2,extrusion*1.5+97.4,(fullZsize)/2+couplerheight]) rotate([90,-90,90]) rail();
+translate ([extrusion*2,extrusion*0.5+305.4,(fullZsize)/2+couplerheight]) rotate([90,-90,90])  rail(railZlength);
+translate ([horizontalX,224.9+extrusion*0.5+extrusionincrease,(fullZsize)/2+couplerheight]) rotate([-90,-90,90]) rail(railZlength);
 
 translate ([panelX/2,horizontalY+extrusion,corneruprightZ+extrusion*1.5]) rotate([90, 0, 0]) rail(railXlength);
 translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail(railXlength);
@@ -220,3 +220,10 @@ bed();
 translate ([-100,-100,0]) pcb(DuetE);
 translate ([-100,-220,0]) pcb(Duex5);
 translate ([0,-220,0]) ssr_assembly(ssrs[1], M3_cap_screw, 3);
+translate ([leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-paneldepth]) NEMA(NEMA17);
+translate ([leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth]) NEMA(NEMA17);
+translate ([leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth]) NEMA(NEMA17);
+translate ([50,-220,0]) hot_end(E3Dv6);
+translate ([50,-150,0]) iec(IEC_fused_inlet);	
+translate ([50,-120,0]) leadnut(LSN8x8);
+translate ([50,-320,0]) psu(S_250_48);
