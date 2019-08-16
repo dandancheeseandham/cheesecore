@@ -8,6 +8,7 @@ use <frame.scad>
 include <config.scad>
 use <foot.scad>
 use <bed.scad>
+use <z-tower.scad>
 
 $preview=false;
 $fullrender=false;
@@ -15,57 +16,9 @@ $fullrender=false;
 all_side_panels();
 
 
-//rods/motors/motorholes/couplers
-backleft_tower=0; //unused atm
-frontleft_tower=0; //unused atm
-right_tower=0; //unused atm
-echo("ztowerextrusions are ", ztowerextrusions);
-
-// NOTE , I'm using this BOM system initially to ensure I cover everything for the 1515 RC2 model. I understand the names,quantities etc can change.
-
-// BOM Item Name: 15x15x445 (Misumi HFS3-1515-445 )
-// BOM Quantity: 3
-// BOM Link: http://railco.re/misumi
-// Notes: Misumi pre-cut (For the Z tower Extrusions)
-//ztowerextrusions=445;
-ztowerextrusions=fullZsize+(2*extrusion);
-Ztowerextrusions();
-
-//////////////////////////
-// BOM MOTION COMPONENTS
-//////////////////////////
-
-// BOM Item Name: 450mm TR8*4 leadscrew (400 will work)
-// BOM Quantity: 3
-// BOM Link: http://railco.re/motion
-// Notes: DXFs available from here via
-
-// Choose one of three
-// leadscrewheight=ztowerextrusions-15; // (1) real height
-// leadscrewheight=ztowerextrusions-45; // (2) "will work"
-leadscrewheight=ztowerextrusions+5; // (3) BOM
-echo(leadscrewheight, "mm TR8*4 leadscrew");
-leadscrewwidth=8;
-tr8=4;  //pitch - currently unused
-leadscrews();
-
-// BOM Item Name: TR8*4 anti-backlash nut (B-ABN84)
-// BOM Quantity: 3
-// BOM Link: http://railco.re/motion
-// Notes:
-
-// BOM Item Name: 400mm MGN12H + carriage
-// BOM Quantity: 6
-// BOM Link: http://railco.re/motion
-// Notes: MGN 12H-L400MM
-
-translate ([extrusion*2,extrusion*1.5+towerY1,(fullZsize)/2+couplerheight]) rotate([90,-90,90]) rail();
-translate ([extrusion*2,extrusion*0.5+towerY2,(fullZsize)/2+couplerheight]) rotate([90,-90,90])  rail(railZlength);
-translate ([horizontalX,towerY3+extrusion*0.5+extrusionincrease,(fullZsize)/2+couplerheight]) rotate([-90,-90,90]) rail(railZlength);
-
 translate ([panelX/2,horizontalY+extrusion,corneruprightZ+extrusion*1.5]) rotate([90, 0, 0]) rail(railXlength);
 translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail(railXlength);
-translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([90, 0, 90]) rail(railYlength);
+translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail(railYlength);
 
 // BOM Item Name: 16 tooth 5mm bore GT2 Pulley
 // BOM Quantity: 2
@@ -95,8 +48,8 @@ translate ([250,200,corneruprightZ+50]) rotate ([0,0,90])  corexy_belt();
 
 
 
-//random extras
-translate ([panelX/2,panelY/2,300]) bed();
+// This placement of the bed is approximate in x/y, and arbitrary in z.
+translate ([panelX/2,panelY/2-13,300]) bed();
 
 // FIXME: we should probably position all of these onto a more convenient plane and rotation - like flat on x/y, centered about z axis
 // Then we have simplier translations here, and we can rotate/translate the whole contents as a unit when assembling the machine
@@ -121,13 +74,10 @@ module electronics_box_contents() {
 
 // electronics_box_contents();
 
-translate ([leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-paneldepth]) NEMA(NEMA17);
-translate ([leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth]) NEMA(NEMA17);
-translate ([leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth]) NEMA(NEMA17);
-
 //debug nonsense
         echo ("panelX", panelX);
         echo ("horizontalX", horizontalX);
 
 frame();
 feet();
+z_towers();
