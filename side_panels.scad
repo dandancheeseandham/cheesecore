@@ -71,8 +71,10 @@ module front_panel() {
     difference() {
       panel(panelX,panelZ,paneldepth);
 
-      translate ([windowwidth/2+Xwindowspacing,windowheight/2+Zwindowspacingbottom,paneldepth/2+epsilon])
-        rounded_rectangle([windowwidth,windowheight,paneldepth+epsilon*5], window_radius);
+      // FIXME: why does this need bigger epsilon and epsilon * 3 cut depth to work right??
+      epsilon=1;
+      translate ([windowwidth/2+Xwindowspacing,windowheight/2+Zwindowspacingbottom,paneldepth/2])
+        rounded_rectangle([windowwidth,windowheight,paneldepth+epsilon*3], window_radius);
     }
 }
 
