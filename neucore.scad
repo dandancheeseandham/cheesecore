@@ -4,9 +4,10 @@ include <lib.scad>
 use <extrusion.scad>
 include <opencoreparts.scad>
 use <side_panels.scad>
-include <frame.scad>
+use <frame.scad>
 include <config.scad>
 use <foot.scad>
+use <bed.scad>
 
 $preview=false;
 $fullrender=false;
@@ -27,7 +28,7 @@ echo("ztowerextrusions are ", ztowerextrusions);
 // BOM Link: http://railco.re/misumi
 // Notes: Misumi pre-cut (For the Z tower Extrusions)
 //ztowerextrusions=445;
-ztowerextrusions=fullZsize+(2*extrusion+extrusionincrease);
+ztowerextrusions=fullZsize+(2*extrusion);
 Ztowerextrusions();
 
 //////////////////////////
@@ -128,4 +129,5 @@ translate ([leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth]) NEMA(NEMA17)
         echo ("panelX", panelX);
         echo ("horizontalX", horizontalX);
 
+frame();
 feet();

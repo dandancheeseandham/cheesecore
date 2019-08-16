@@ -4,19 +4,6 @@ epsilon=0.01;  // epislon value for OpenSCAD reasons :)
 inch = 25.4; // convert imperial units
 
 extrusion=15;     // extrusion size for all extrusions.
-extrusionincrease=extrusion-15; // because design is based on 1515
-
-
-//BED
-bedX=300;  // bed printable X
-bedY=300;  // bed printable Y
-bedplateX=bedX+25; // bed plate size X
-bedplateY=bedY+41; // bed plate size Y
-bedcornerrounding=7.5; // bed plate corner rounding
-beddepth=6.35; // depth of bed tool plate
-bedlipX=12.5; // lip of bed for mounting
-bedYspacing=125; // extra space around Y
-
 
 railXlength=400; // rail lengths will probably be linked to something else at some point?
 railYlength=400;
@@ -42,15 +29,15 @@ Zincrease=115;
 
 fullZsize=Zheight+Zincrease;
 //corneruprightZ=415; // Misumi pre-cut (Corner Uprights)
-corneruprightZ=fullZsize+(2*extrusionincrease);
+corneruprightZ=415; //fullZsize+(2*extrusionincrease);
+extrusionincrease=0;
 
 
-horizontalX=bedX+extrusionincrease+160;
-echo("bedX is ", bedX);
-echo("extrusionincrease are ", extrusionincrease);
+horizontalX=462 ; //bedX+extrusionincrease+160;
+//echo("extrusionincrease are ", extrusionincrease);
 
 //horizontalY=425;  // Misumi pre-cut (Horizontal Y)
-horizontalY=bedY+bedYspacing+(2*extrusionincrease);
+horizontalY=425; //bedY+bedYspacing+(2*extrusionincrease);
 echo("horizontalY are ", horizontalY);
 
 paneldepth=0.25*inch;     // Depth of side panels (HDPE/plywood/etc) - THIS SHOULD BE LINKED TO SCREW SIZE
