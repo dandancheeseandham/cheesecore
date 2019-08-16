@@ -6,6 +6,7 @@ include <opencoreparts.scad>
 use <side_panels.scad>
 include <frame.scad>
 include <config.scad>
+use <foot.scad>
 
 $preview=false;
 $fullrender=false;
@@ -126,3 +127,5 @@ translate ([leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth]) NEMA(NEMA17)
 //debug nonsense
         echo ("panelX", panelX);
         echo ("horizontalX", horizontalX);
+
+feet();

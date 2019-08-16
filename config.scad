@@ -57,3 +57,11 @@ paneldepth=0.25*inch;     // Depth of side panels (HDPE/plywood/etc) - THIS SHOU
 panelX=horizontalX+extrusion*2;
 panelY=horizontalY+extrusion*2;
 panelZ=corneruprightZ+extrusion*2;
+
+
+
+// How far in from edge to start panel screws
+panel_screw_offset=50;
+
+
+assert(panel_screw_offset > extrusion + 10, "Panel Screws must be offset clear of the corner cubes");

@@ -9,7 +9,6 @@ module screwholes(x,y) {
   z=25;
   screwholesX=5;
   screwholesY=5;
-  holefromedge=50;
 
   gapX=(x-100)/(screwholesX-1);
   gapY=(y-100)/(screwholesY-1);
@@ -17,13 +16,13 @@ module screwholes(x,y) {
   //cube([x,y,z]);
 
  for (a =[0:(screwholesX-1)])
- { translate ([holefromedge+(gapX*a),extrusion/2,-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
+ { translate ([panel_screw_offset+(gapX*a),extrusion/2,-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
   for (a =[0:(screwholesY-1)])
- { translate ([extrusion/2,holefromedge+(gapY*a),-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
+ { translate ([extrusion/2,panel_screw_offset+(gapY*a),-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
   for (a =[0:(screwholesX-1)])
- { translate ([holefromedge+(gapX*a),y-extrusion/2,-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
+ { translate ([panel_screw_offset+(gapX*a),y-extrusion/2,-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
     for (a =[0:(screwholesY-1)])
- { translate ([x-extrusion/2,holefromedge+(gapY*a),-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
+ { translate ([x-extrusion/2,panel_screw_offset+(gapY*a),-paneldepth]) cylinder(paneldepth*2, screwholeradius,screwholeradius); }
 }
 
 module panel(x,y,d)
