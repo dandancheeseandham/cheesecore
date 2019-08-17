@@ -25,7 +25,7 @@ towerY1=97.4;
 towerY2=305.4;
 towerY3=224.9;
 
-couplerheight=30;  //an arbitary height increase during development
+couplerheight=5;  //a height for coupler
 Zincrease=115;
 
 fullZsize=Zheight+Zincrease;
