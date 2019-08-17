@@ -116,6 +116,7 @@ module carriage(type, rail) { //! Draw the specified carriage
 }
 
 module rail(type, length) { //! Draw the specified rail
+    assert(type != undef, "Must specify rail type");
     width = rail_width(type);
     height = rail_height(type);
 

@@ -49,6 +49,11 @@ panelZ=corneruprightZ+extrusion*2;
 rail_type_z=MGN12;
 carriage_type_z=MGN12_carriage; // This is stupid we have to define it twice, but nopscadlib is goofy
 
+// These define how far from the part origin of the z-tower the leadscrew is
+leadscrew_x_offset = 20;
+leadscrew_y_offset = 30.013; // taken off z yoke in fusion
+
+
 // How far in from edge to start panel screws
 panel_screw_offset=extrusion + 35; // 50 in original 1515 machine
 

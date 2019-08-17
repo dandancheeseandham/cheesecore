@@ -5,6 +5,7 @@ use <extrusion.scad>
 use <lib/mirror.scad>
 use <rail.scad>
 use <opencoreparts.scad>
+use <z-yoke.scad>
 
 ztowerextrusions=fullZsize+(2*extrusion);
 
@@ -14,9 +15,6 @@ tr8=4;  //pitch - currently unused
 module z_tower(z_position=0) {
   // FIXME: make this parametric
   leadscrewheight=400; // (3) BOM
-
-  leadscrew_x_offset = 20;
-  leadscrew_y_offset = 30.013; // taken off z yoke in fusion
 
   translate ([-extrusion/2, leadscrew_y_offset, 0])
     rotate([0,0,0])
@@ -38,6 +36,10 @@ module z_tower(z_position=0) {
 
   translate ([-leadscrew_x_offset, 0,-paneldepth])
     NEMA(NEMA17);
+
+  // FIXME: this z position is fake, just to make it look decent-ish
+  translate([-extrusion-carriage_height(carriage_type_z), leadscrew_y_offset, 388-z_position])
+    z_yoke();
 }
 
 module z_towers(z_position = 0) {
