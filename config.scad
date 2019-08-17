@@ -1,4 +1,5 @@
 // vim: set nospell:
+include <lib.scad>
 
 epsilon=0.01;  // epislon value for OpenSCAD reasons :)
 inch = 25.4; // convert imperial units
@@ -45,7 +46,8 @@ panelX=horizontalX+extrusion*2;
 panelY=horizontalY+extrusion*2;
 panelZ=corneruprightZ+extrusion*2;
 
-
+rail_type_z=MGN12;
+carriage_type_z=MGN12_carriage; // This is stupid we have to define it twice, but nopscadlib is goofy
 
 // How far in from edge to start panel screws
 panel_screw_offset=extrusion + 35; // 50 in original 1515 machine
