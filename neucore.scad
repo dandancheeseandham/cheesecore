@@ -2,13 +2,14 @@
 include <core.scad>
 include <lib.scad>
 use <extrusion.scad>
-include <opencoreparts.scad>
+use <opencoreparts.scad>
 use <side_panels.scad>
 use <frame.scad>
 include <config.scad>
 use <foot.scad>
 use <bed.scad>
 use <z-tower.scad>
+use <rail.scad>
 
 $fullrender=false;
 
@@ -58,20 +59,20 @@ module electronics_box_contents() {
 }
 
 
-module printer(render_electronics=false) {
+module printer(render_electronics=false, z_position=0) {
   frame();
   feet();
-  z_towers();
+  z_towers(z_position);
   all_side_panels();
   // FIXME: this z translate is very crude but looks better with extrusion != 15
   translate ([250,200,corneruprightZ+extrusion*2+20]) rotate ([0,0,90])  corexy_belt();
 
   // This placement of the bed is approximate in x/y, and arbitrary in z.
-  translate ([panelX/2,panelY/2-13,300]) bed();
+  translate ([panelX/2,panelY/2-13,375-z_position]) bed();
 
-  translate ([panelX/2,horizontalY+extrusion,corneruprightZ+extrusion*1.5]) rotate([90, 0, 0]) rail(railXlength);
-  translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail(railXlength);
-  translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail(railYlength);
+  translate ([panelX/2,horizontalY+extrusion,corneruprightZ+extrusion*1.5]) rotate([90, 0, 0]) rail_wrapper(railXlength);
+  translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail_wrapper(railXlength);
+  translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail_wrapper(railYlength);
 
   if(render_electronics)
   {
@@ -81,4 +82,4 @@ module printer(render_electronics=false) {
   }
 }
 
-printer(render_electronics=false);
+printer(render_electronics=false, z_position=125);
