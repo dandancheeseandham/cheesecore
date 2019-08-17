@@ -10,15 +10,7 @@ use <foot.scad>
 use <bed.scad>
 use <z-tower.scad>
 
-$preview=false;
 $fullrender=false;
-
-all_side_panels();
-
-
-translate ([panelX/2,horizontalY+extrusion,corneruprightZ+extrusion*1.5]) rotate([90, 0, 0]) rail(railXlength);
-translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail(railXlength);
-translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail(railYlength);
 
 // BOM Item Name: 16 tooth 5mm bore GT2 Pulley
 // BOM Quantity: 2
@@ -44,13 +36,6 @@ translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail(rai
 // BOM Quantity: 1
 // BOM Link: http://railco.re/motion
 // Notes: X/Y Motion belts (4400mm total, 2200mm per side)
-translate ([250,200,corneruprightZ+50]) rotate ([0,0,90])  corexy_belt();
-
-
-
-// This placement of the bed is approximate in x/y, and arbitrary in z.
-translate ([panelX/2,panelY/2-13,300]) bed();
-
 // FIXME: we should probably position all of these onto a more convenient plane and rotation - like flat on x/y, centered about z axis
 // Then we have simplier translations here, and we can rotate/translate the whole contents as a unit when assembling the machine
 module electronics_box_contents() {
@@ -72,12 +57,28 @@ module electronics_box_contents() {
   //translate ([50,-320,0]) psu(S_250_48);
 }
 
-// electronics_box_contents();
 
-//debug nonsense
-        echo ("panelX", panelX);
-        echo ("horizontalX", horizontalX);
+module printer(render_electronics=false) {
+  frame();
+  feet();
+  z_towers();
+  all_side_panels();
+  // FIXME: this z translate is very crude but looks better with extrusion != 15
+  translate ([250,200,corneruprightZ+extrusion*2+20]) rotate ([0,0,90])  corexy_belt();
 
-frame();
-feet();
-z_towers();
+  // This placement of the bed is approximate in x/y, and arbitrary in z.
+  translate ([panelX/2,panelY/2-13,300]) bed();
+
+  translate ([panelX/2,horizontalY+extrusion,corneruprightZ+extrusion*1.5]) rotate([90, 0, 0]) rail(railXlength);
+  translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail(railXlength);
+  translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail(railYlength);
+
+  if(render_electronics)
+  {
+    // FIXME - should not need to translate here just by paneldepth
+    translate([paneldepth, 0, 0])
+      electronics_box_contents();
+  }
+}
+
+printer(render_electronics=false);

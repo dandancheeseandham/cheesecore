@@ -48,7 +48,7 @@ panelZ=corneruprightZ+extrusion*2;
 
 
 // How far in from edge to start panel screws
-panel_screw_offset=50;
+panel_screw_offset=extrusion + 35; // 50 in original 1515 machine
 
 
 assert(panel_screw_offset > extrusion + 10, "Panel Screws must be offset clear of the corner cubes");
