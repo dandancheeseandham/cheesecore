@@ -3,6 +3,7 @@ include <config.scad>
 include <core.scad>
 include <lib.scad>
 
+// FIXME: if we're going to use nopscadlib, use his methods for this
 module motorholes(x,y,z) {
   translate ([x,y,z])
   cylinder(  15, 25/2,25/2);
