@@ -91,6 +91,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
     mirror_y() {
       translate([0, horizontalY/2, 0])
         aluminium_motor_mount();
+		translate([49, horizontalY/2-8, 0])  NEMA(NEMA17); // I've popped NEMA's here until a better place is found (probably when you educate me :P 
     }
   }
 
