@@ -1,7 +1,7 @@
 // Simple and fully customizable stepper motor / threaded rod coupler.
 // Variable names should be self-explanatory, the default values are meant for a NEMA17 motor and a M8 rod.
 // Creative Commons - Public Domain Dedication
-// Parametric Z-axis coupler (stepper and threaded rod coupling) by aspesilorenzo is licensed under the  
+// Parametric Z-axis coupler (stepper and threaded rod coupling) by aspesilorenzo is licensed under the
 // Creative Commons - Public Domain Dedication license.
 // https://www.thingiverse.com/thing:1329750
 
@@ -34,8 +34,8 @@ rodLen = couplerHeight/2;
 shaftScrewsDistance = motorShaftDiameter+screwDiameter+1;
 rodScrewsDistance = threadedRodDiameter+screwDiameter+1;
 
-$fa = 0.02;
-$fs = 0.25;
+//$fa = 0.02;
+//$fs = 0.25;
 little = 0.01; // just a little number
 big = 100; // just a big number
 
@@ -67,7 +67,7 @@ module coupler()
         // cut between the two halves
         cube([halvesDistance,big,big], center=true);
     }
-    
+
 }
 
 module screw()
