@@ -11,6 +11,7 @@ use <bed.scad>
 use <z-tower.scad>
 use <rail.scad>
 use <aluminium_idlermount.scad>
+use <aluminium_motormount.scad>
 
 $fullrender=false;
 
@@ -76,11 +77,20 @@ module printer(render_electronics=false, z_position=0) {
   translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail_wrapper(railYlength);
 
   // Idler mounts
-  translate ([extrusion, horizontalY/2+extrusion, corneruprightZ+2*extrusion])
+  translate ([extrusion, horizontalY/2+extrusion, corneruprightZ+2*extrusion]) {
     mirror_y() {
       translate([0, -horizontalY/2, 0])
         aluminium_idler_mount();
     }
+  }
+
+  // motor mounts
+  translate( [horizontalX+extrusion,horizontalY/2+extrusion, corneruprightZ+2*extrusion]  ){
+    mirror_y() {
+      translate([0, horizontalY/2, 0])
+        aluminium_motor_mount();
+    }
+  }
 
   if(render_electronics)
   {
