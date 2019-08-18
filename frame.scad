@@ -35,12 +35,22 @@ module corner_cubes() {
   }
 }
 
-module frame() {
+module frame(bottom_braces=true) {
   translate([horizontalX/2+extrusion, horizontalY/2+extrusion, corneruprightZ/2+extrusion]) {
     x_extrusions();
     y_extrusions();
     z_extrusions();
     corner_cubes();
+  }
+
+  translate([horizontalX/2+extrusion, horizontalY/2+extrusion, 0])
+  if(bottom_braces) {
+    mirror_x() {
+      // FIXME: the -50 term here is based on NEMA17 motor size, if we make that parametric this should be a param as well
+      translate([horizontalX/2-50, 0, extrusion/2])
+        rotate([90, 0, 0])
+          extrusion(extrusion, horizontalY, 3.3, center=true);
+    }
   }
 }
 
