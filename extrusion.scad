@@ -24,7 +24,7 @@ module extrusion_profile(extrusion_size, slot_width) {
 
 // FIXME: would like to have center=true be default on this
 module extrusion(extrusion_size, length, slot_width=3.3, center=false) {
-  color("silver", 0.9) {
+  color("silver") {
     linear_extrude(length, center=center) {
       extrusion_profile(extrusion_size, slot_width);
     }
