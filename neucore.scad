@@ -61,20 +61,22 @@ module electronics_box_contents() {
 }
 
 
-module printer(render_electronics=false, z_position=0) {
+module printer(render_electronics=false, position=[0, 0, 0]) {
   frame();
   feet();
-  z_towers(z_position);
+  z_towers(position[2]);
   all_side_panels();
   // FIXME: this z translate is very crude but looks better with extrusion != 15
   translate ([250,200,corneruprightZ+extrusion*2+20]) rotate ([0,0,90])  corexy_belt();
 
   // This placement of the bed is approximate in x/y, and arbitrary in z.
-  translate ([panelX/2,panelY/2-13,378-z_position]) bed();
+  translate ([panelX/2,panelY/2-13,378-position[2]]) bed();
 
-  translate ([panelX/2,horizontalY+extrusion,corneruprightZ+extrusion*1.5]) rotate([90, 0, 0]) rail_wrapper(railXlength);
-  translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail_wrapper(railXlength);
-  translate ([250,230,corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail_wrapper(railYlength);
+  translate ([panelX/2, horizontalY/2 +extrusion,corneruprightZ+extrusion*1.5])
+    x_rails(position[0]);
+
+  // FIXME: x position here is an approximation to look decent
+  translate ([horizontalX/2+extrusion - railXlength/2+55 + position[0], horizontalY/2+extrusion, corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail_wrapper(railYlength);
 
   // Idler mounts
   translate ([extrusion, horizontalY/2+extrusion, corneruprightZ+2*extrusion]) {
@@ -100,4 +102,4 @@ module printer(render_electronics=false, z_position=0) {
   }
 }
 
-printer(render_electronics=false, z_position=125);
+printer(render_electronics=false, position=[300, 0, 150]);

@@ -1,6 +1,7 @@
 include <config.scad>
 include <core.scad>
 include <lib.scad>
+use <lib/mirror.scad>
 
 module rail_wrapper(length, include_screws=false, position=0)
 {
@@ -28,3 +29,14 @@ module rail_wrapper(length, include_screws=false, position=0)
   echo("Rail travel: ", rail_travel(rail, length));
   echo("position: ", position);
 }
+
+module x_rails(position=0) {
+  mirror_y() {
+    // FIXME: this is a crude take on x-position
+    // FIXME: should not have this hardcoded to MGN12
+    translate ([0, horizontalY/2, 0]) rotate([90, 0, 0]) rail_wrapper(railXlength, position=-rail_travel(MGN12, railXlength)/2 +10 + position);
+  }
+  //translate ([panelX/2,extrusion,corneruprightZ+extrusion*1.5])  rotate([-90, 0, 0]) rail_wrapper(railXlength);
+}
+
+x_rails(position=0);
