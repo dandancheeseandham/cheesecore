@@ -54,6 +54,11 @@ module bottom_panel() {
       motorholes(leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth);
       //right motor hole
       motorholes(leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth) ;
+
+      color("black")
+      translate([panelX/2, 80, paneldepth-3+5*epsilon])
+        linear_extrude(3)
+          text("CHEESECORE", halign="center", size=35);
     }
 }
 
