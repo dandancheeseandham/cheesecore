@@ -1,4 +1,5 @@
 include <config.scad>
+use <lib/mirror.scad>
 use <vitamins/rail.scad>
 
 // The origin of the z-yoke is the center of the mounting point on the linear rail carriage
@@ -27,21 +28,63 @@ module z_yoke() {
     // thicker and still have clearance to install screws
     translate([0,0,-carriage_length(carriage_type_z/2)]) {
       linear_extrude(part_thickness) {
-        // around leadscrew out to bed ear
-        hull() {
-          // FIXME: base this on the leadscrew anti-backlash nut size
-          translate([leadscrew_x_offset-30/2, -leadscrew_y_offset])
-            circle(d=30);
-          translate([-30, -leadscrew_y_offset])
-            rounded_square([20, 30], r=2.5);
+        difference() {
+          z_yoke_bed_mount_profile();
+          z_yoke_holes_profile();
         }
-        // bridge from bed ear to upright bracket
-        bracket_w=50;
-        #translate([-20, -bracket_w/2+carriage_width(carriage_type_z)/2])
-          rounded_square([40, bracket_w], r=2.5);
       }
     }
   }
 }
 
+ear_extent = 40; // How far from the carriage face the ear should extend.
+
+module z_yoke_bed_mount_profile() {
+  // FIXME: just winging it with this value
+
+  // around leadscrew out to bed ear
+  hull() {
+    // FIXME: base this on the leadscrew anti-backlash nut size
+    translate([carriage_height(carriage_type_z) + extrusion - leadscrew_x_offset, -leadscrew_y_offset])
+      circle(d=leadscrew_y_offset);
+    translate([-30, -leadscrew_y_offset])
+      rounded_square([20, 30], r=2.5);
+  }
+  // bridge from bed ear to upright bracket
+  hull() {
+    translate([-ear_extent+2.5, carriage_width(carriage_type_z)/2 - 2.5]) circle(r=2.5);
+    translate([-1, carriage_width(carriage_type_z)/2 - 1]) square(1);
+    translate([-ear_extent,-leadscrew_y_offset]) square([ear_extent, epsilon]);
+  }
+}
+
+module z_yoke_holes_profile() {
+  // FIXME: should be driven off leadscrew nut size
+  // FIXME: the -5 term in the x translation seems bogus
+  translate([carriage_height(carriage_type_z) + extrusion - leadscrew_x_offset, -leadscrew_y_offset]) circle(d=10); // leadscrew nut hole
+
+  // slot for bed moungint screws
+  // FIXME: the +10 term here and in the lower translate is made up.  Should derive this from
+  // ear extent and bed tab length
+  translate([-ear_extent+10, -leadscrew_y_offset]) {
+    hull() {
+      circle(d=3.3);
+      translate([-ear_extent + 10, 0]) circle(d=3.3);
+    }
+  }
+
+  // the holes to screw the leadscrew in
+  // FIXME: made up this pattern
+  translate([carriage_height(carriage_type_z) + extrusion - leadscrew_x_offset, -leadscrew_y_offset]) {
+    mirror_xy() {
+      nut_offset = 7;
+      translate([nut_offset, nut_offset]) circle(d=3.3);
+    }
+  }
+}
+
+*difference() {
+  z_yoke_bed_mount_profile();
+  z_yoke_holes_profile();
+}
 z_yoke();
