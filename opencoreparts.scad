@@ -5,8 +5,9 @@ include <lib.scad>
 
 // FIXME: if we're going to use nopscadlib, use his methods for this
 module motorholes(x,y,z) {
+   NEMAhole=25;
   translate ([x,y,z])
-  cylinder(  15, 25/2,25/2);
+  cylinder(  15, NEMAhole/2,NEMAhole/2);
   translate ([x-15.33,y-15.39,z-2]) cylinder(25, 1.75,1.75);
   translate ([x-15.33,y+15.39,z-2]) cylinder(25, 1.75,1.75);
   translate ([x+15.33,y-15.39,z-2]) cylinder(25, 1.75,1.75);
