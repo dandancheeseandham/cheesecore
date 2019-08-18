@@ -30,11 +30,12 @@ module panel(x,y,d)
   panelcornerrounding=5; // Corner rounding of panels
   screwholes=5;     // Number of screwholes // IS THIS REDUNDANT?
 
-  color("Burlywood")
-    difference() {
+  difference() {
+    color("Burlywood")
       translate ([x/2,y/2,d/2])
         rounded_rectangle([x,y,d], panelcornerrounding);
-      screwholes(x,y);
+    // Color the holes darker for contrast
+    color("#8e6837") translate([0, 0, epsilon]) screwholes(x,y);
   }
 }
 
