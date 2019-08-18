@@ -31,11 +31,11 @@ module panel(x,y,d)
   screwholes=5;     // Number of screwholes // IS THIS REDUNDANT?
 
   difference() {
-    color("Burlywood")
+    color(panel_color())
       translate ([x/2,y/2,d/2])
         rounded_rectangle([x,y,d], panelcornerrounding);
     // Color the holes darker for contrast
-    color("#8e6837") translate([0, 0, epsilon]) screwholes(x,y);
+    color(panel_color_holes()) translate([0, 0, epsilon]) screwholes(x,y);
   }
 }
 
@@ -49,17 +49,19 @@ module bottom_panel() {
     difference() {
       panel(panelX,panelY,paneldepth);
 
-      //front left motor hole
-      motorholes(leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-paneldepth);
-      //rear left motor hole
-      motorholes(leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth);
-      //right motor hole
-      motorholes(leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth) ;
+      color(panel_color_holes()) {
+        //front left motor hole
+        motorholes(leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-paneldepth);
+        //rear left motor hole
+        motorholes(leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth);
+        //right motor hole
+        motorholes(leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth) ;
 
-      color("black")
-      translate([panelX/2, 80, paneldepth-3+5*epsilon])
-        linear_extrude(3)
-          text("CHEESECORE", halign="center", size=35);
+        color("black")
+        translate([panelX/2, 80, paneldepth-3+5*epsilon])
+          linear_extrude(3)
+            text("CHEESECORE", halign="center", size=35);
+      }
     }
 }
 
@@ -79,8 +81,9 @@ module front_panel() {
 
       // FIXME: why does this need bigger epsilon and epsilon * 3 cut depth to work right??
       epsilon=1;
-      translate ([windowwidth/2+Xwindowspacing,windowheight/2+Zwindowspacingbottom,paneldepth/2])
-        rounded_rectangle([windowwidth,windowheight,paneldepth+epsilon*3], window_radius);
+      color(panel_color_holes())
+        translate ([windowwidth/2+Xwindowspacing,windowheight/2+Zwindowspacingbottom,paneldepth/2])
+          rounded_rectangle([windowwidth,windowheight,paneldepth+epsilon*3], window_radius);
     }
 }
 

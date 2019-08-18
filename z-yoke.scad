@@ -6,7 +6,7 @@ module z_yoke() {
   // FIXME: need a fillet between horizontal and vertical surfaces to brace it
   // FIXME: this thickness(10) was just arbitrary to mock something up
   part_thickness = 7.5;
-  color("#555") {
+  color(printed_part_color()) {
     difference() {
       // mount face on carriage
       translate([-part_thickness/2,0,0]) cube([part_thickness, carriage_width(carriage_type_z), carriage_length(carriage_type_z)], center=true);
@@ -39,11 +39,9 @@ module z_yoke() {
         bracket_w=50;
         #translate([-20, -bracket_w/2+carriage_width(carriage_type_z)/2])
           rounded_square([40, bracket_w], r=2.5);
-
       }
     }
   }
-
 }
 
 z_yoke();

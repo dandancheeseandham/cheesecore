@@ -1,5 +1,6 @@
 // vim: set nospell:
 include <lib.scad>
+include <colors.scad>
 
 epsilon=0.01;  // epislon value for OpenSCAD reasons :)
 inch = 25.4; // convert imperial units

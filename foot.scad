@@ -11,7 +11,7 @@ panel_outside_radius=5; // FIXME: this needs unified with panel
 
 // Modeled this foot upside down both for easier printing and because it's a little easier to think about.
 module inverted_foot() {
-  color("#666666")
+  color(printed_part_color())
   difference() {
     union() {
       hull(){
