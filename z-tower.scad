@@ -41,9 +41,9 @@ module z_tower(z_position=0) {
   // FIXME: this z position is fake, just to make it look decent-ish
   translate([-extrusion-carriage_height(carriage_type_z), leadscrew_y_offset, 388-z_position])
     z_yoke();
-	
-	translate ([-leadscrew_x_offset, 0,couplerheight])
-	coupler();
+
+  translate ([-leadscrew_x_offset, 0,couplerheight])
+    coupler();
 }
 
 module z_towers(z_position = 0) {
