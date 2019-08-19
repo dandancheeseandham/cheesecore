@@ -70,7 +70,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   translate ([250,200,extrusion_length.z+extrusion*2+20]) rotate ([0,0,90])  corexy_belt();
 
   // This placement of the bed is approximate in x/y, and arbitrary in z.
-  translate ([panelX/2,panelY/2-13,378-position.z]) bed();
+  translate ([panelX/2,panelY/2-13,extrusion_length.z-position.z - 100]) bed();
 
   translate ([panelX/2, extrusion_length.y/2 +extrusion,extrusion_length.z+extrusion*1.5])
     x_rails(position.x);

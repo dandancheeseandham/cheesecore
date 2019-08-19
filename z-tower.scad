@@ -40,7 +40,7 @@ module z_tower(z_position=0) {
     NEMA(NEMA17);
 
   // FIXME: this z position is fake, just to make it look decent-ish
-  translate([-extrusion-carriage_height(carriage_type_z), leadscrew_y_offset, 388-z_position])
+  translate([-extrusion-carriage_height(carriage_type_z), leadscrew_y_offset, rail_length.z - z_position - 75])
     z_yoke();
 
   translate ([-leadscrew_x_offset, 0,couplerheight])
