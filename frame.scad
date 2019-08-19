@@ -36,18 +36,14 @@ module corner_cubes() {
 }
 
 module frame(bottom_braces=true) {
-  translate([extrusion_length.x/2+extrusion, extrusion_length.y/2+extrusion, extrusion_length.z/2+extrusion]) {
-    x_extrusions();
-    y_extrusions();
-    z_extrusions();
-    corner_cubes();
-  }
+  x_extrusions();
+  y_extrusions();
+  z_extrusions();
+  corner_cubes();
 
-  translate([extrusion_length.x/2+extrusion, extrusion_length.y/2+extrusion, 0])
   if(bottom_braces) {
     mirror_x() {
-      // FIXME: the -50 term here is based on NEMA17 motor size, if we make that parametric this should be a param as well
-      translate([extrusion_length.x/2-50, 0, extrusion/2])
+      translate([extrusion_length.x/2 - extrusion/2 - leadscrew_x_offset*2, 0, -extrusion / 2 - extrusion_length.z / 2])
         rotate([90, 0, 0])
           extrusion(extrusion, extrusion_length.y, 3.3, center=true);
     }

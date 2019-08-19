@@ -55,7 +55,7 @@ module z_tower(z_position=0) {
 
 module z_towers(z_position = 0) {
   // FIXME: the +2 y shift is made up value - but the railcore really does want the bed slightly offcenter toward the rear
-  translate([extrusion_length.x/2+extrusion, extrusion_length.y/2+2, 0]) {
+  translate([bed_offset.x, bed_offset.y, -extrusion_length.z/2 - extrusion]) {
     translate([extrusion_length.x/2, 0, 0]) z_tower(z_position);
     mirror_y() {
       translate([-extrusion_length.x/2, 255/2, 0]) rotate([0,0,180]) z_tower(z_position);

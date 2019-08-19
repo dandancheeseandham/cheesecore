@@ -50,6 +50,9 @@ module electronics_box_contents() {
   // BOM Quantity: 1
   // BOM Link: http://railco.re/sidepanels
   // Notes: DAny 24v PSU > 200W works with the AC bed.
+  panelY=extrusion_length.y+extrusion*2;
+  panelZ=extrusion_length.z+extrusion*2;
+
   translate([panelY+40,panelZ-100,280]) rotate([90,90,90])  psu(S_250_48);
   translate([panelY+40,panelZ-300,330]) rotate([90,0,90])  pcb(DuetE);
   translate([panelY+40,panelZ-200,430]) rotate([90,0,90])  translate ([-100,-220,0]) pcb(Duex5);
@@ -67,19 +70,23 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   z_towers(position[2]);
   all_side_panels();
   // FIXME: this z translate is very crude but looks better with extrusion != 15
-  translate ([250,200,extrusion_length.z+extrusion*2+20]) rotate ([0,0,90])  corexy_belt();
+  translate ([0, 0, extrusion_length.z/2 + extrusion+20]) rotate ([0,0,90])  corexy_belt();
 
+  // FIXME - extract this -13 term to a new variable like bed_offset and use it to drive everything
+  // related to bed and z-tower placement
   // This placement of the bed is approximate in x/y, and arbitrary in z.
-  translate ([panelX/2,panelY/2-13,extrusion_length.z-position.z - 100]) bed();
+  translate ([0, -13, extrusion_length.z/2 - position.z - 100]) bed();
 
-  translate ([panelX/2, extrusion_length.y/2 +extrusion,extrusion_length.z+extrusion*1.5])
+  translate ([0, 0, extrusion_length.z/2 + extrusion/2])
     x_rails(position.x);
 
   // FIXME: x position here is an approximation to look decent
-  translate ([extrusion_length.x/2+extrusion - rail_length.x/2+55 + position.x, extrusion_length.y/2+extrusion, extrusion_length.z+extrusion*1.5]) rotate([270, 0, 90]) rail_wrapper(rail_length.y);
+  translate ([-rail_length.x/2+55 + position.x, 0, extrusion_length.z/2 + extrusion/2])
+    rotate([270, 0, 90])
+      rail_wrapper(rail_length.y);
 
   // Idler mounts
-  translate ([extrusion, extrusion_length.y/2+extrusion, extrusion_length.z+2*extrusion]) {
+  translate ([-extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion]) {
     mirror_y() {
       translate([0, -extrusion_length.y/2, 0])
         aluminium_idler_mount();
@@ -87,7 +94,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   }
 
   // motor mounts
-  translate( [extrusion_length.x+extrusion,extrusion_length.y/2 +extrusion, extrusion_length.z+2*extrusion]  ){
+  translate([extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion]  ){
     mirror_y() {
       translate([0, extrusion_length.y/2, 0])
         aluminium_motor_mount();
