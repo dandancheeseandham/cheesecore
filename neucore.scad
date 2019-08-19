@@ -39,7 +39,6 @@ $fullrender=false;
 // BOM Quantity: 1
 // BOM Link: http://railco.re/motion
 // Notes: X/Y Motion belts (4400mm total, 2200mm per side)
-// FIXME: we should probably position all of these onto a more convenient plane and rotation - like flat on x/y, centered about z axis
 // Then we have simplier translations here, and we can rotate/translate the whole contents as a unit when assembling the machine
 module electronics_box_contents() {
   //
@@ -72,8 +71,6 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   // FIXME: this z translate is very crude but looks better with extrusion != 15
   translate ([0, 0, extrusion_length.z/2 + extrusion+20]) rotate ([0,0,90])  corexy_belt();
 
-  // FIXME - extract this -13 term to a new variable like bed_offset and use it to drive everything
-  // related to bed and z-tower placement
   // This placement of the bed is approximate in x/y, and arbitrary in z.
   translate ([0, -13, extrusion_length.z/2 - position.z - 100]) bed();
 

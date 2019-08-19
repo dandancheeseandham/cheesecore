@@ -15,7 +15,7 @@ leadscrewwidth=8;
 tr8=4;  //pitch - currently unused
 
 module z_tower(z_position=0) {
-  translate ([-extrusion/2, leadscrew_y_offset, 0])
+  translate ([-extrusion/2, leadscrew_y_offset, ztowerextrusions/2])
     rotate([0,0,0])
       extrusion(extrusion, ztowerextrusions, 3.3);
 
@@ -54,7 +54,6 @@ module z_tower(z_position=0) {
 }
 
 module z_towers(z_position = 0) {
-  // FIXME: the +2 y shift is made up value - but the railcore really does want the bed slightly offcenter toward the rear
   translate([bed_offset.x, bed_offset.y, -extrusion_length.z/2 - extrusion]) {
     translate([extrusion_length.x/2, 0, 0]) z_tower(z_position);
     mirror_y() {

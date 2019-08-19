@@ -22,8 +22,7 @@ module extrusion_profile(extrusion_size, slot_width) {
   }
 }
 
-// FIXME: would like to have center=true be default on this
-module extrusion(extrusion_size, length, slot_width=3.3, center=false) {
+module extrusion(extrusion_size, length, slot_width=3.3, center=true) {
   color("silver") {
     linear_extrude(length, center=center) {
       extrusion_profile(extrusion_size, slot_width);
@@ -31,15 +30,5 @@ module extrusion(extrusion_size, length, slot_width=3.3, center=false) {
   }
 }
 
-// FIXME: Would like to phase this out in favor of extrusion() module, as
-// that module is oriented centered on the axis rather than having the axis
-// on a corner.
-module aluminiumextrusion(length,height) {
-  translate([extrusion/2, 0, extrusion/2])
-    rotate([-90,0,0])
-      extrusion(extrusion, length, 3.3);
-}
-
-translate([15,0,0]) aluminiumextrusion(100,0);
 extrusion_profile(15, 3.3);
 translate([50,0,0]) extrusion(15, 100, 3.3);
