@@ -11,3 +11,4 @@ times.txt
 *_diff.png
 *.echo
 prefs.scad
+renders/*

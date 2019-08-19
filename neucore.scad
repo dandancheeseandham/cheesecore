@@ -67,31 +67,31 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   z_towers(position[2]);
   all_side_panels();
   // FIXME: this z translate is very crude but looks better with extrusion != 15
-  translate ([250,200,corneruprightZ+extrusion*2+20]) rotate ([0,0,90])  corexy_belt();
+  translate ([250,200,extrusion_length.z+extrusion*2+20]) rotate ([0,0,90])  corexy_belt();
 
   // This placement of the bed is approximate in x/y, and arbitrary in z.
   translate ([panelX/2,panelY/2-13,378-position.z]) bed();
 
-  translate ([panelX/2, horizontalY/2 +extrusion,corneruprightZ+extrusion*1.5])
+  translate ([panelX/2, extrusion_length.y/2 +extrusion,extrusion_length.z+extrusion*1.5])
     x_rails(position.x);
 
   // FIXME: x position here is an approximation to look decent
-  translate ([horizontalX/2+extrusion - railXlength/2+55 + position.x, horizontalY/2+extrusion, corneruprightZ+extrusion*1.5]) rotate([270, 0, 90]) rail_wrapper(railYlength);
+  translate ([extrusion_length.x/2+extrusion - rail_length.x/2+55 + position.x, extrusion_length.y/2+extrusion, extrusion_length.z+extrusion*1.5]) rotate([270, 0, 90]) rail_wrapper(rail_length.y);
 
   // Idler mounts
-  translate ([extrusion, horizontalY/2+extrusion, corneruprightZ+2*extrusion]) {
+  translate ([extrusion, extrusion_length.y/2+extrusion, extrusion_length.z+2*extrusion]) {
     mirror_y() {
-      translate([0, -horizontalY/2, 0])
+      translate([0, -extrusion_length.y/2, 0])
         aluminium_idler_mount();
     }
   }
 
   // motor mounts
-  translate( [horizontalX+extrusion,horizontalY/2+extrusion, corneruprightZ+2*extrusion]  ){
+  translate( [extrusion_length.x+extrusion,extrusion_length.y/2 +extrusion, extrusion_length.z+2*extrusion]  ){
     mirror_y() {
-      translate([0, horizontalY/2, 0])
+      translate([0, extrusion_length.y/2, 0])
         aluminium_motor_mount();
-		translate([49, horizontalY/2-8, 0])  NEMA(NEMA17); // I've popped NEMA's here until a better place is found (probably when you educate me :P 
+      translate([49, extrusion_length.y/2-8, 0])  NEMA(NEMA17); // I've popped NEMA's here until a better place is found (probably when you educate me :P 
     }
   }
 

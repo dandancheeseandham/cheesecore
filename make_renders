@@ -1,0 +1,9 @@
+#!/bin/bash
+OPENSCAD=openscad-nightly
+
+rm renders/*.png
+
+openscad-nightly neucore.scad  -D 'branding_name="RC 300ZL"' -D 'extrusion=15' --imgsize=1280,1280 -o renders/railcore_300zl.png
+openscad-nightly neucore.scad  -D 'branding_name="RC 300ZLT"' -D 'extrusion=15' -D 'extrusion_length=[462, 425, 715]' -D 'rail_length=[400, 400, 700]' --imgsize=1280,1280 -o renders/railcore_300zlt.png
+
+openscad-nightly neucore.scad  -D 'branding_name="2020 300ZL"' -D 'extrusion=20' --imgsize=1280,1280 -o renders/2020core_300zl.png

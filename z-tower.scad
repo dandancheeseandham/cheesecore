@@ -9,7 +9,7 @@ use <z-yoke.scad>
 use <coupler.scad>
 use <z-bracket.scad>
 
-ztowerextrusions=fullZsize+(2*extrusion);
+ztowerextrusions=extrusion_length.z+(2*extrusion);
 
 leadscrewwidth=8;
 tr8=4;  //pitch - currently unused
@@ -25,13 +25,13 @@ module z_tower(z_position=0) {
   // FIXME: This is an approximation, ideally we want to actually compute a
   // real rail position based on a nozzle-to-carriage offset, bed thickness,
   // and yoke-to-carriage offset
-  position = railZlength/2-50-z_position;
+  position = rail_length.z/2-50-z_position;
   echo("Passing rail position of: ", position);
 
   // The z-translate here seems kinda arbitrary?
-  translate ([-extrusion,leadscrew_y_offset,(fullZsize)/2+couplerheight])
+  translate ([-extrusion,leadscrew_y_offset,(extrusion_length.z)/2+couplerheight])
     rotate([90,-90,270])
-      rail_wrapper(railZlength, position=position);
+      rail_wrapper(rail_length.z, position=position);
 
  color("#BBB")  translate ([-leadscrew_x_offset, 0,couplerheight])
     cylinder(leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);  // LEADSCREW
@@ -50,7 +50,7 @@ module z_tower(z_position=0) {
   translate([0, leadscrew_y_offset +extrusion/2, extrusion])
     z_bracket();
   // top z bracket
-  translate([0, leadscrew_y_offset +extrusion/2, corneruprightZ +extrusion])
+  translate([0, leadscrew_y_offset +extrusion/2, extrusion_length.z +extrusion])
     mirror([0, 1, 0])
       rotate([180, 0, 0])
       z_bracket();
@@ -58,10 +58,10 @@ module z_tower(z_position=0) {
 
 module z_towers(z_position = 0) {
   // FIXME: the +2 y shift is made up value - but the railcore really does want the bed slightly offcenter toward the rear
-  translate([horizontalX/2+extrusion, horizontalY/2+2, 0]) {
-    translate([horizontalX/2, 0, 0]) z_tower(z_position);
+  translate([extrusion_length.x/2+extrusion, extrusion_length.y/2+2, 0]) {
+    translate([extrusion_length.x/2, 0, 0]) z_tower(z_position);
     mirror_y() {
-      translate([-horizontalX/2, 255/2, 0]) rotate([0,0,180]) z_tower(z_position);
+      translate([-extrusion_length.x/2, 255/2, 0]) rotate([0,0,180]) z_tower(z_position);
     }
   }
 }

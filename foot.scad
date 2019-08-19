@@ -69,9 +69,9 @@ module foot() {
 foot();
 
 module feet() {
-  translate([horizontalX/2+extrusion, horizontalY/2+extrusion,-paneldepth])
+  translate([extrusion_length.x/2+extrusion, extrusion_length.y/2+extrusion,-paneldepth])
     mirror_xy() {
-      translate([-horizontalX/2-extrusion, -horizontalY/2-extrusion,-foot_height]) foot();
+      translate([-extrusion_length.x/2-extrusion, -extrusion_length.y/2-extrusion,-foot_height]) foot();
   }
 }
 

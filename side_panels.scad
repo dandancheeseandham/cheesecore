@@ -3,6 +3,16 @@ include <config.scad>
 include <opencoreparts.scad>
 include <core.scad>
 
+// I should probably get this lot below into an array of some sort.
+leadscrewX1=35; //until I can find a better name
+leadscrewX2=455; //until I can find a better name
+leadscrewY1=87.75; //ditto
+leadscrewY2=342.79; //ditto
+leadscrewY3=215.25; //ditto
+towerY1=97.4;
+towerY2=305.4;
+towerY3=224.9;
+
 // FIXME: if we're going to use nopscadlib, use his methods for this
 module motorholes(x,y,z) {
    NEMAhole=25;
