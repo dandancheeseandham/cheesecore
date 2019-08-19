@@ -15,9 +15,6 @@ leadscrewwidth=8;
 tr8=4;  //pitch - currently unused
 
 module z_tower(z_position=0) {
-  // FIXME: make this parametric
-  leadscrewheight=400; // (3) BOM
-
   translate ([-extrusion/2, leadscrew_y_offset, 0])
     rotate([0,0,0])
       extrusion(extrusion, ztowerextrusions, 3.3);
@@ -34,7 +31,7 @@ module z_tower(z_position=0) {
       rail_wrapper(rail_length.z, position=position);
 
  color("#BBB")  translate ([-leadscrew_x_offset, 0,couplerheight])
-    cylinder(leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);  // LEADSCREW
+    cylinder(leadscrew_length, leadscrewwidth/2,leadscrewwidth/2);  // LEADSCREW
 
   translate ([-leadscrew_x_offset, 0,-paneldepth])
     NEMA(NEMA17);

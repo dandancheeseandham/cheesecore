@@ -10,6 +10,8 @@ extrusion=15;     // extrusion size for all extrusions.
 
 rail_length=[400, 400, 400];
 
+leadscrew_length = 400;
+
 // BOM FRAME COMPONENTS
 screwM=3; //M3 hardware for panels
 // extrusion size, rail size and screw size for panels and anything attaching to extrusions will be linked
