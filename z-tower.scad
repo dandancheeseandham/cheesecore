@@ -7,6 +7,7 @@ use <rail.scad>
 use <opencoreparts.scad>
 use <z-yoke.scad>
 use <coupler.scad>
+use <z-bracket.scad>
 
 ztowerextrusions=fullZsize+(2*extrusion);
 
@@ -44,6 +45,15 @@ module z_tower(z_position=0) {
 
   translate ([-leadscrew_x_offset, 0,couplerheight])
     coupler();
+
+  // bottom z bracket
+  translate([0, leadscrew_y_offset +extrusion/2, extrusion])
+    z_bracket();
+  // top z bracket
+  translate([0, leadscrew_y_offset +extrusion/2, corneruprightZ +extrusion])
+    mirror([0, 1, 0])
+      rotate([180, 0, 0])
+      z_bracket();
 }
 
 module z_towers(z_position = 0) {
