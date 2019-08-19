@@ -1,5 +1,7 @@
 include <config.scad>
 
+// FIXME: add holes to secure this thing
+// FIXME: describe the origin of this part ... and decide if it's right.  There isn't an obvious "right" place for this one
 module z_bracket() {
   leg_length = 60;
   thickness = 12;
