@@ -72,13 +72,13 @@ module bottom_panel() {
 
       color(panel_color_holes()) {
         //front left motor hole
-        motorholes(leadscrewX1+extrusionincrease,leadscrewY1+extrusionincrease,-paneldepth);
+        motorholes(leadscrewX1,leadscrewY1,-paneldepth);
         //rear left motor hole
-        motorholes(leadscrewX1+extrusionincrease,leadscrewY2+extrusionincrease,-paneldepth);
+        motorholes(leadscrewX1,leadscrewY2,-paneldepth);
         //right motor hole
-        motorholes(leadscrewX2+extrusionincrease,leadscrewY3,-paneldepth) ;
+        motorholes(leadscrewX2,leadscrewY3,-paneldepth) ;
 
-        color("black")
+        color(panel_color_holes())
         translate([panelX/2, 80, paneldepth-3+5*epsilon])
           linear_extrude(3)
             text(branding_name, halign="center", size=35);

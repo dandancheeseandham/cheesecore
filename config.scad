@@ -20,9 +20,6 @@ screwM=3; //M3 hardware for panels
 couplerheight=5;  //a height for coupler
 Zincrease=115;
 
-//extrusion_length.z=415; // Misumi pre-cut (Corner Uprights)
-extrusionincrease=0;
-
 extrusion_length= [462, 425, 415];
 
 paneldepth=0.25*inch;     // Depth of side panels (HDPE/plywood/etc) - THIS SHOULD BE LINKED TO SCREW SIZE
