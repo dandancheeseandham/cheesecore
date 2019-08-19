@@ -32,8 +32,8 @@ module z_tower(z_position=0) {
     rotate([90,-90,270])
       rail_wrapper(railZlength, position=position);
 
-  translate ([-leadscrew_x_offset, 0,couplerheight])
-    cylinder(leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);
+ color("#BBB")  translate ([-leadscrew_x_offset, 0,couplerheight])
+    cylinder(leadscrewheight, leadscrewwidth/2,leadscrewwidth/2);  // LEADSCREW
 
   translate ([-leadscrew_x_offset, 0,-paneldepth])
     NEMA(NEMA17);

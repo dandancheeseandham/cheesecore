@@ -41,7 +41,8 @@ big = 100; // just a big number
 
 module coupler()
 {
-    difference()
+color("#777") 
+     difference()
     {
         // main body
         cylinder(d=couplerExternalDiameter, h=shaftLen + rodLen);

@@ -3,6 +3,17 @@ include <config.scad>
 include <opencoreparts.scad>
 include <core.scad>
 
+// FIXME: if we're going to use nopscadlib, use his methods for this
+module motorholes(x,y,z) {
+   NEMAhole=25;
+  translate ([x,y,z])
+  cylinder(  15, NEMAhole/2,NEMAhole/2);
+  translate ([x-15.33,y-15.39,z-2]) cylinder(25, 1.75,1.75);
+  translate ([x-15.33,y+15.39,z-2]) cylinder(25, 1.75,1.75);
+  translate ([x+15.33,y-15.39,z-2]) cylinder(25, 1.75,1.75);
+  translate ([x+15.33,y+15.39,z-2]) cylinder(25, 1.75,1.75);
+}
+
 module screwholes(x,y) {
   //screwholeradius=1.75;
   screwholeradius=(screwM+0.5)/2;
@@ -60,7 +71,7 @@ module bottom_panel() {
         color("black")
         translate([panelX/2, 80, paneldepth-3+5*epsilon])
           linear_extrude(3)
-            text("CHEESECORE", halign="center", size=35);
+            text("RailCustom", halign="center", size=35);
       }
     }
 }
