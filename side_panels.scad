@@ -71,7 +71,7 @@ module bottom_panel() {
         color("black")
         translate([panelX/2, 80, paneldepth-3+5*epsilon])
           linear_extrude(3)
-            text("RailCustom", halign="center", size=35);
+            text(branding_name, halign="center", size=35);
       }
     }
 }

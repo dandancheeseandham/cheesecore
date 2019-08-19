@@ -1,0 +1,5 @@
+// The color scheme (from colors.scad) to use for rendering.
+theme = WOODY;
+
+// The text to deboss inside the bottom panel.
+branding_name = "RailCustom";

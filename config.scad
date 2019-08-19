@@ -1,6 +1,7 @@
 // vim: set nospell:
 include <lib.scad>
 include <colors.scad>
+include <prefs.scad>
 
 epsilon=0.01;  // epislon value for OpenSCAD reasons :)
 inch = 25.4; // convert imperial units
@@ -57,6 +58,5 @@ leadscrew_y_offset = 30.013; // taken off z yoke in fusion
 
 // How far in from edge to start panel screws
 panel_screw_offset=extrusion + 35; // 50 in original 1515 machine
-
 
 assert(panel_screw_offset > extrusion + 10, "Panel Screws must be offset clear of the corner cubes");

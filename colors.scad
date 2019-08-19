@@ -1,8 +1,6 @@
 WOODY=0;
 MURDERED=1;
 
-theme = WOODY;
-//theme = MURDERED;
 
 woody_theme = ["burlywood", "#8e6837", "#4e3807"];
 murdered_theme = ["#444444", "#222222", "#666666"];
