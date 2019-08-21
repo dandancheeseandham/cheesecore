@@ -11,7 +11,7 @@ Zremoveheight=55;
 
 module longscrewhole(screwhole_length,Mscrew,screwhole_increase) {
 
- translate([0,0,-30]) linear_extrude(height = 60, twist = 0, slices = 60) { hull() {
+ translate([0,0,-30]) linear_extrude(height = 60, twist = 0) { hull() {
     translate([screwhole_length,0,0]) circle((Mscrew/2)+screwhole_increase);
     circle((Mscrew/2)+screwhole_increase);
 }
