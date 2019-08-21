@@ -1,6 +1,6 @@
 include <config.scad>
-include <core.scad>
-include <lib.scad>
+include <nopscadlib/core.scad>
+include <nopscadlib/lib.scad>
 use <lib/mirror.scad>
 
 module rail_wrapper(length, include_screws=false, position=0)

@@ -1,7 +1,7 @@
 // vim: set nospell:
 include <config.scad>
-include <core.scad>
-include <lib.scad>
+include <nopscadlib/core.scad>
+include <nopscadlib/lib.scad>
 
 // this renders the belts at the specified carriage position
 // origin is the center of the build volume.  We will adjust this later when we have better data for printhead offsets

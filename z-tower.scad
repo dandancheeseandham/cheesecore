@@ -1,6 +1,6 @@
 include <config.scad>
-include <core.scad>
-include <lib.scad>
+include <nopscadlib/core.scad>
+include <nopscadlib/lib.scad>
 use <extrusion.scad>
 use <lib/mirror.scad>
 use <rail.scad>

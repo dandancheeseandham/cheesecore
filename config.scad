@@ -1,5 +1,5 @@
 // vim: set nospell:
-include <lib.scad>
+include <nopscadlib/lib.scad>
 include <colors.scad>
 include <prefs.scad>
 include <constants.scad>

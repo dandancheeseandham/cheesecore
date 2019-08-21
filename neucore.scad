@@ -1,6 +1,6 @@
 // vim: set nospell:
-include <core.scad>
-include <lib.scad>
+include <nopscadlib/core.scad>
+include <nopscadlib/lib.scad>
 use <extrusion.scad>
 use <opencoreparts.scad>
 use <side_panels.scad>

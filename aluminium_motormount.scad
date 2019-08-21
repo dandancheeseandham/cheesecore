@@ -3,7 +3,7 @@
 
 // vim: set nospell:
 include <config.scad>
-include <core.scad>
+include <nopscadlib/core.scad>
 include <screwholes.scad>
 
 // FIXME: rather than parameterize on screwsize, we could parameterize on NEMA size of motor - that would set all of

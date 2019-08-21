@@ -1,7 +1,7 @@
 // vim: set nospell:
 include <config.scad>
 use <opencoreparts.scad>
-include <core.scad>
+include <nopscadlib/core.scad>
 use <lib/mirror.scad>
 
 panelX=extrusion_length.x+extrusion*2;
