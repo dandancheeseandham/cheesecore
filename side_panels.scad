@@ -1,6 +1,6 @@
 // vim: set nospell:
 include <config.scad>
-include <opencoreparts.scad>
+use <opencoreparts.scad>
 include <core.scad>
 use <lib/mirror.scad>
 
@@ -23,7 +23,6 @@ module motorholes() {
 module screwholes(x, y) {
   //screwholeradius=1.75;
   screwholeradius=(screwM+0.5)/2;
-  z=25;
   screwholesX=5;
   screwholesY=5;
 
@@ -33,14 +32,14 @@ module screwholes(x, y) {
   // FIXME: something is off in how these generate in that we need to offset z=-2*epsilon
   mirror_y() {
     for (a =[0:(screwholesX-1)]) {
-      translate ([-panelX/2 + panel_screw_offset+(gapX*a),panelY/2 - extrusion/2,-2*epsilon])
+      translate ([-x/2 + panel_screw_offset+(gapX*a),y/2 - extrusion/2,-2*epsilon])
         cylinder(h=paneldepth + 3*epsilon, r=screwholeradius);
     }
   }
 
   mirror_x() {
     for (a =[0:(screwholesY-1)]) {
-      translate ([panelX/2 - extrusion/2,-panelY/2 + panel_screw_offset+(gapY*a),-2*epsilon])
+      translate ([x/2 - extrusion/2,-y/2 + panel_screw_offset+(gapY*a),-2*epsilon])
         cylinder(h=paneldepth + 3*epsilon, r=screwholeradius);
     }
   }
