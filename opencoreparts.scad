@@ -24,36 +24,45 @@ module corexy_belts(position = [0, 0]) {
   // FIXME: we use 16 tooth pulley instead of 20
   // FIXME: extract out vars for idler types to shorten this?
   // FIXME: everything but the actual carriage stack needs adjusted to put pulleys correctly in line
+  // [ coordinate, pulley/idler type, whether to invert radius, whether to show pulley ]
   lower_path = [
-    [[carriage_stack.x, -carriage_stack.y], GT2x20_plain_idler], // front idler stack
-    [[stepper_location, -carriage_stack.y-10], GT2x20um_pulley], // front stepper
-    [[-extrusion_length.x/2, -x_carriage_pulley_offset], GT2x20_toothed_idler], // front left idler
-    [[-extrusion_length.x/2, x_carriage_pulley_offset], GT2x20_toothed_idler], // rear left idler
-    [[carriage_stack.x, carriage_stack.y], GT2x20_toothed_idler],  // rear idler stack
+    [[carriage_stack.x, -carriage_stack.y], GT2x20_plain_idler, true, true], // front idler stack
+    [[stepper_location, -carriage_stack.y-10], GT2x20um_pulley, false, true], // front stepper
+    [[-extrusion_length.x/2, -x_carriage_pulley_offset], GT2x20_toothed_idler, false, true], // front left idler
+    [[-extrusion_length.x/2, x_carriage_pulley_offset], GT2x20_toothed_idler, false, true], // rear left idler
+    [[carriage_stack.x, carriage_stack.y], GT2x20_toothed_idler, false, true],  // rear idler stack
+    [[carriage_stack.x, 7], GT2x20_plain_idler, false, false],  // fake idler to offset belt
+    [[carriage_stack.x, -7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
   ];
 
   upper_path = [
-    [[carriage_stack.x, -carriage_stack.y], GT2x20_toothed_idler], // front idler stack
-    [[-extrusion_length.x/2, -x_carriage_pulley_offset], GT2x20_toothed_idler], // front left idler
-    [[-extrusion_length.x/2, x_carriage_pulley_offset], GT2x20_toothed_idler], // rear left idler
-    [[stepper_location, carriage_stack.y+10], GT2x20um_pulley], // rear stepper
-    [[carriage_stack.x, carriage_stack.y], GT2x20_toothed_idler]  // rear idler stack
+    [[carriage_stack.x, -carriage_stack.y], GT2x20_toothed_idler, false, true], // front idler stack
+    [[-extrusion_length.x/2, -x_carriage_pulley_offset], GT2x20_toothed_idler, false, true], // front left idler
+    [[-extrusion_length.x/2, x_carriage_pulley_offset], GT2x20_toothed_idler, false, true], // rear left idler
+    [[stepper_location, carriage_stack.y+10], GT2x20um_pulley, false, true], // rear stepper
+    [[carriage_stack.x, carriage_stack.y], GT2x20_plain_idler, true, true],  // rear idler stack
+    [[carriage_stack.x, 7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
+    [[carriage_stack.x, -7], GT2x20_plain_idler, false, false],  // fake idler to offset belt
   ];
 
   belt=GT2x6;
 
-  for(p=lower_path) {
-    translate(p[0]) pulley_assembly(p[1]);
-  }
+  translate([0,0,0]) {
+    for(p=lower_path) {
+      if(p[3])
+        translate(p[0]) pulley_assembly(p[1]);
+    }
 
-  path = [ for(p=lower_path) [p[0].x, p[0].y, pulley_pr(p[1])] ];
-  belt(type=belt, points=path, gap=10, gap_pt=[0,  belt_pitch_height(belt) - belt_thickness(belt) / 2]);
+    path = [ for(p=lower_path) [p[0].x, p[0].y, p[2] ? -pulley_pr(p[1]) : pulley_pr(p[1])] ];
+    belt(type=belt, points=path, gap=10, gap_pt=[0,  belt_pitch_height(belt) - belt_thickness(belt) / 2]);
+  }
 
   translate([0,0, vertical_offset]) {
     for(p=upper_path) {
-      translate(p[0]) pulley_assembly(p[1]);
+      if(p[3])
+        translate(p[0]) pulley_assembly(p[1]);
     }
-    path = [ for(p=upper_path) [p[0].x, p[0].y, pulley_pr(p[1])] ];
+    path = [ for(p=upper_path) [p[0].x, p[0].y, p[2] ? -pulley_pr(p[1]) : pulley_pr(p[1])] ];
     belt(type=belt, points=path, gap=10, gap_pt=[0,  belt_pitch_height(belt) - belt_thickness(belt) / 2]);
   }
 }
