@@ -24,4 +24,4 @@ include <global_defs.scad>
 //
 // Global functions and modules
 //
-use <utils/core/global.scad>
+use <./utils/core/global.scad>

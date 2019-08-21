@@ -1,5 +1,5 @@
 include <config.scad>
-include <core.scad>
+include <nopscadlib/core.scad>
 include <lib/mirror.scad>
 
 bed_thickness=0.25*inch; // depth of bed tool plate

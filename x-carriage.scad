@@ -1,5 +1,5 @@
 include <config.scad>
-use <vitamins/rail.scad>
+use <nopscadlib/vitamins/rail.scad>
 
 // The origin of the z-yoke is the center of the mounting point on the linear rail carriage
 module x_carriage() {

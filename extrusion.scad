@@ -1,6 +1,6 @@
 //FIXME: this lib should not need to depend on the machine config
 include <config.scad>
-include <core.scad>
+include <nopscadlib/core.scad>
 
 module extrusion_profile(extrusion_size, slot_width) {
   difference() {
