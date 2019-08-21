@@ -3,50 +3,59 @@ include <config.scad>
 include <core.scad>
 include <lib.scad>
 
+// this renders the belts at the specified carriage position
+// origin is the center of the build volume.  We will adjust this later when we have better data for printhead offsets
+module corexy_belts(position = [0, 0]) {
+  // This defines how far about the lower belt path the upper belt path is
+  vertical_offset = 10;
 
-module corexy_belt() {
-  p1 = [250,  -250];
-  p2 = [-200, -250];
-  p3 = [-200, 250];
-  p4 = [250,  250];
+  // This sets how far from centerline of the machine the idler stack on the x-carriages is.
+  // FIXME: the 13 is approximation of MGN12 carriage height
+  // FIXME: the 5 is approximation of how far from carriage face center of idler pulley is
+  x_carriage_pulley_offset = extrusion_length.y/2 - 13 - 5;
 
-  p5 = [250  - pulley_pr(GT2x20ob_pulley) - pulley_pr(GT2x16_plain_idler),  -pulley_pr(GT2x16_plain_idler)];
-  p6 = [-200 + pulley_pr(GT2x20ob_pulley) + pulley_pr(GT2x16_plain_idler),  -pulley_pr(GT2x16_plain_idler)];
+  // x/y coordinate of the x-carriage stack;
+  carriage_stack = [position.x, x_carriage_pulley_offset];
 
-  translate(p1) pulley_assembly(GT2x20ob_pulley);
-  translate(p2) pulley_assembly(GT2x20ob_pulley);
-  translate(p3) pulley_assembly(GT2x20_toothed_idler);
-  translate(p4) pulley_assembly(GT2x20_toothed_idler);
+  // Location of steppers in x
+  // FIXME: the offset is made up
+  stepper_location = extrusion_length.x/2 + 50;
 
-  translate(p5) {
-      pulley = GT2x16_plain_idler;
-      screw = find_screw(hs_cs_cap, pulley_bore(pulley));
-      insert = screw_insert(screw);
+  // FIXME: we use 16 tooth pulley instead of 20
+  // FIXME: extract out vars for idler types to shorten this?
+  // FIXME: everything but the actual carriage stack needs adjusted to put pulleys correctly in line
+  lower_path = [
+    [[carriage_stack.x, -carriage_stack.y], GT2x20_plain_idler], // front idler stack
+    [[stepper_location, -carriage_stack.y-10], GT2x20um_pulley], // front stepper
+    [[-extrusion_length.x/2, -x_carriage_pulley_offset], GT2x20_toothed_idler], // front left idler
+    [[-extrusion_length.x/2, x_carriage_pulley_offset], GT2x20_toothed_idler], // rear left idler
+    [[carriage_stack.x, carriage_stack.y], GT2x20_toothed_idler],  // rear idler stack
+  ];
 
-      pulley_assembly(pulley);
-      translate_z(pulley_height(pulley) + pulley_offset(pulley) + screw_head_depth(screw, pulley_bore(pulley)))
-          screw(screw, 20);
+  upper_path = [
+    [[carriage_stack.x, -carriage_stack.y], GT2x20_toothed_idler], // front idler stack
+    [[-extrusion_length.x/2, -x_carriage_pulley_offset], GT2x20_toothed_idler], // front left idler
+    [[-extrusion_length.x/2, x_carriage_pulley_offset], GT2x20_toothed_idler], // rear left idler
+    [[stepper_location, carriage_stack.y+10], GT2x20um_pulley], // rear stepper
+    [[carriage_stack.x, carriage_stack.y], GT2x20_toothed_idler]  // rear idler stack
+  ];
 
-      translate_z(pulley_offset(pulley) - insert_length(insert))
-          vflip()
-              insert(insert);
+  belt=GT2x6;
 
+  for(p=lower_path) {
+    translate(p[0]) pulley_assembly(p[1]);
   }
-  translate(p6) pulley_assembly(GT2x16_plain_idler);
 
-  path = [ [p1.x, p1.y, pulley_pr(GT2x20ob_pulley)],
-            [p5.x, p5.y, -pulley_pr(GT2x16_plain_idler)],
-            [p6.x, p6.y, -pulley_pr(GT2x16_plain_idler)],
-            [p2.x, p2.y, pulley_pr(GT2x20ob_pulley)],
-            [p3.x, p3.y, pulley_pr(GT2x20ob_pulley)],
-            [p4.x, p4.y, pulley_pr(GT2x20ob_pulley)]
-          ];
-  belt = GT2x6;
-  belt(belt, path, 80, [0,  belt_pitch_height(belt) - belt_thickness(belt) / 2]);
+  path = [ for(p=lower_path) [p[0].x, p[0].y, pulley_pr(p[1])] ];
+  belt(type=belt, points=path, gap=10, gap_pt=[0,  belt_pitch_height(belt) - belt_thickness(belt) / 2]);
 
-  * translate([-25, 0])
-      layout([for(b = belts) belt_width(b)], 10)
-          rotate([0, 90, 0])
-              belt(belts[$i], [[0, 0, 20], [0, 1, 20]]);
+  translate([0,0, vertical_offset]) {
+    for(p=upper_path) {
+      translate(p[0]) pulley_assembly(p[1]);
+    }
+    path = [ for(p=upper_path) [p[0].x, p[0].y, pulley_pr(p[1])] ];
+    belt(type=belt, points=path, gap=10, gap_pt=[0,  belt_pitch_height(belt) - belt_thickness(belt) / 2]);
+  }
 }
 
+corexy_belts([0, 0]);
