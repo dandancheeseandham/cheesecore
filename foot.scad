@@ -1,4 +1,5 @@
 use <lib/mirror.scad>
+use <lib/holes.scad>
 include <config.scad>
 
 
@@ -20,53 +21,56 @@ module inverted_foot() {
           hull() {
             translate([panel_outside_radius, panel_outside_radius])
               circle(r=panel_outside_radius);
-            translate([panel_screw_offset, extrusion/2])
-              circle(r=extrusion/2);
-            translate([extrusion/2, panel_screw_offset])
-              circle(r=extrusion/2);
-          }
-        }
-        // FIXME: the profile here as well as the next profile are the same, need to extract out to their own module
-        // angled part, slimmer body
-        linear_extrude(foot_height-25) {
-          hull() {
-            translate([panel_outside_radius, panel_outside_radius])
+
+            translate([panel_screw_offset, panel_outside_radius])
               circle(r=panel_outside_radius);
-            translate([panel_screw_offset-15, extrusion/2])
-              circle(r=extrusion/2);
-            translate([extrusion/2, panel_screw_offset-15])
-              circle(r=extrusion/2);
+            translate([panel_screw_offset, extrusion-panel_outside_radius])
+              circle(r=panel_outside_radius);
+
+            translate([panel_outside_radius, panel_screw_offset])
+              circle(r=panel_outside_radius);
+            translate([extrusion-panel_outside_radius, panel_screw_offset])
+              circle(r=panel_outside_radius);
           }
         }
+        // 25 = 5 of linear extrude above + 20 from the setback in the foot_base_profile()
+        linear_extrude(25) foot_base_profile();
       }
       // main, slimmer body
-      linear_extrude(foot_height) {
-        hull() {
-          translate([panel_outside_radius, panel_outside_radius])
-            circle(r=panel_outside_radius);
-          translate([panel_screw_offset-15, extrusion/2])
-            circle(r=extrusion/2);
-          translate([extrusion/2, panel_screw_offset-15])
-            circle(r=extrusion/2);
-        }
-      }
+      linear_extrude(foot_height) foot_base_profile();
     }
-    //cube([panel_screw_offset+extrusion/2, panel_screw_offset+extrusion/2, foot_height]);
 
     // FIXME: Need to add counterbore for mounting screws
     // FIXME:  This should be modeled using a hole and not a cylinder
-    translate([panel_screw_offset, extrusion/2, -epsilon])cylinder(d=3.3, h=foot_height+2*epsilon);
-    translate([extrusion/2, panel_screw_offset, -epsilon])cylinder(d=3.3, h=foot_height+2*epsilon);
-    // This could be kept for clearance hole to access corner cube?
-    *translate([extrusion/2, extrusion/2, -epsilon])cylinder(d=3.3, h=foot_height+2*epsilon);
+    // z=5 is the thickness of the straight-walled base
+    translate([panel_screw_offset, extrusion/2, 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
+    translate([extrusion/2, panel_screw_offset, 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
+
+    // Access to corner cube
+    *translate([extrusion/2, extrusion/2, -epsilon])cylinder(d=7.5, h=foot_height+2*epsilon);
+  }
+}
+
+module foot_base_profile() {
+  hull() {
+    translate([panel_outside_radius, panel_outside_radius])
+      circle(r=panel_outside_radius);
+
+    translate([panel_screw_offset-20, panel_outside_radius])
+      circle(r=panel_outside_radius);
+    translate([panel_screw_offset-20, extrusion - panel_outside_radius])
+      circle(r=panel_outside_radius);
+
+    translate([panel_outside_radius, panel_screw_offset-20])
+      circle(r=panel_outside_radius);
+    translate([extrusion - panel_outside_radius, panel_screw_offset-20])
+      circle(r=panel_outside_radius);
   }
 }
 
 module foot() {
   translate([0,0,foot_height]) mirror([0,0,-1]) inverted_foot();
 }
-
-foot();
 
 module feet() {
   translate([0, 0, -extrusion_length.z/2 - extrusion -paneldepth])
@@ -76,3 +80,5 @@ module feet() {
 }
 
 // feet();
+ foot();
+// foot_base_profile();

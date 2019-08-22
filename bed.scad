@@ -48,16 +48,19 @@ module thermistor_channel() {
 }
 
 module bed_ear() {
-  render() // This render fixes an artifact - probably due to buggy code here
-  difference() {
-    linear_extrude(bed_thickness){
-      ear_profile();
-    }
-    translate([0,0,3.35]) {
-      linear_extrude(bed_thickness) {
-        hull() {
-          translate([5,0]) circle(r=5);
-          translate([bed_ear_x*2, 0]) circle(r=5);
+  render() { // This render fixes an artifact around where the counterbore is taken out of the ear.7
+    difference() {
+      linear_extrude(bed_thickness){
+        ear_profile();
+      }
+
+      // Counterbore around slot
+      translate([0,0,3.35]) {
+        linear_extrude(bed_thickness) {
+          hull() {
+            translate([5,0]) circle(r=5);
+            translate([bed_ear_x*2, 0]) circle(r=5);
+          }
         }
       }
     }
@@ -67,12 +70,25 @@ module bed_ear() {
 module ear_profile() {
   ear_radius = 7.5;
   difference() {
-    // FIXME: Need to fillet it to the bed outside profile of tab
-    hull() {
-      translate([-epsilon, -bed_ear_y/2])  square([epsilon, bed_ear_y]);
-      mirror_y()
-      translate([bed_ear_x-ear_radius, bed_ear_y/2-ear_radius]) circle(r=ear_radius);
+    union() {
+      // Main tab of the ear
+      hull() {
+        translate([-epsilon, -bed_ear_y/2])  square([epsilon, bed_ear_y]);
+        mirror_y()
+        translate([bed_ear_x-ear_radius, bed_ear_y/2-ear_radius]) circle(r=ear_radius);
+      }
+
+      // Fillet from ear to outside counter of bed
+      mirror_y() {
+        translate([5, bed_ear_y/2+5]){
+          difference() {
+            translate([-5-epsilon, -5-epsilon]) square([5+epsilon, 5+epsilon]);
+            circle(r=5);
+          }
+        }
+      }
     }
+    //
     // through slot
     hull() {
       translate([5, 0]) circle(d=3.4);
