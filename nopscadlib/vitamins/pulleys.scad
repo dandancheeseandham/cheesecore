@@ -32,6 +32,7 @@ T2p5x16_pulley       = ["T2p5x16_pulley",       "T2.5",  16, 12.16, T2p5x6,   8,
 GT2x20um_pulley      = ["GT2x20um_pulley",      "GT2UM", 20, 12.22, GT2x6,  7.5,  18, 6.5, 5, 18.0, 1.0, 6, 3.75, M3_grub_screw, 2];
 GT2x20ob_pulley      = ["GT2x20ob_pulley",      "GT2OB", 20, 12.22, GT2x6,  7.5,  16, 5.5, 5, 16.0, 1.0, 6, 3.25, M3_grub_screw, 2];
 GT2x12_pulley        = ["GT2x12_pulley",        "GT2RD", 12,  7.15, GT2x6,  6.5,  12, 5.5, 4, 12.0, 1.0, 4, 3.0,  M3_grub_screw, 2];
+GT2x16_pulley        = ["GT2x16_pulley",        "GT2RD", 16,  9.68, GT2x6,  6.5,  14, 5.5, 4, 14.0, 1.0, 4, 3.0,  M3_grub_screw, 2];
 GT2x20_toothed_idler = ["GT2x20_toothed_idler", "GT2",   20, 12.22, GT2x6,  6.5,  18, 0,   4, 18.0, 1.0, 0, 0,    false,         0];
 GT2x20_plain_idler   = ["GT2x20_plain_idler",   "GT2",    0, 12.0,  GT2x6,  6.5,  18, 0,   4, 18.0, 1.0, 0, 0,    false,         0];
 GT2x16_toothed_idler = ["GT2x16_toothed_idler", "GT2",   16,  9.75, GT2x6,  6.5,  14, 0,   3, 14.0, 1.0, 0, 0,    false,         0];
