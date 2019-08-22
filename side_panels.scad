@@ -9,7 +9,6 @@ panelY=extrusion_length.y+extrusion*2;
 panelZ=extrusion_length.z+extrusion*2;
 
 module motorholes() {
-  // Should make stepper size parametric in config?
   NEMAhole=NEMA_boss_radius(NEMA17) * 2 + 1;
   cylinder(h=15, d=NEMAhole);
   mirror_xy() {
