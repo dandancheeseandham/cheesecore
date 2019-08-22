@@ -68,11 +68,11 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   feet();
   z_towers(position[2]);
   all_side_panels();
-  // FIXME: this z translate is very crude but looks better with extrusion != 15
+  // FIXME: this is not a final height for belts
   translate ([0, 0, extrusion_length.z/2 + extrusion + 11]) corexy_belts([position.x-150, position.y]);
 
-  // This placement of the bed is approximate in x/y, and arbitrary in z.
-  translate ([0, -13, extrusion_length.z/2 - position.z - 100]) bed();
+  // FIXME: This placement of the bed is arbitrary in z.
+  translate ([bed_offset.x, bed_offset.y, extrusion_length.z/2 - position.z - 100]) bed();
 
   translate ([0, 0, extrusion_length.z/2 + extrusion/2])
     x_rails(position.x);
