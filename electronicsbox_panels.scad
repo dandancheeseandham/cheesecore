@@ -1,8 +1,7 @@
 // vim: set nospell:
-include <config.scad>
-include <opencoreparts.scad>
-include <nopscadlib/core.scad>
-include <screwholes.scad>
+use <config.scad>
+use <nopscadlib/core.scad>
+use <screwholes.scad>
 
 electronicscabinet_depth=59;
 
