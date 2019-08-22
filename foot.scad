@@ -3,7 +3,7 @@ use <lib/holes.scad>
 include <config.scad>
 
 
-foot_height = 50;// FIXME: Just a guess, should make that parametric
+foot_height = 50;
 panel_outside_radius=5; // FIXME: this needs unified with panel
 
 // FIXME: the profiles use a radius of extrusion/2, should probably use panel_outside_radius everywhere for better visual look.
@@ -33,8 +33,8 @@ module inverted_foot() {
               circle(r=panel_outside_radius);
           }
         }
-        // 25 = 5 of linear extrude above + 20 from the setback in the foot_base_profile()
-        linear_extrude(25) foot_base_profile();
+        // 25 = 5 of linear extrude above + 15 from the setback in the foot_base_profile()
+        linear_extrude(20) foot_base_profile();
       }
       // main, slimmer body
       linear_extrude(foot_height) foot_base_profile();
@@ -45,9 +45,6 @@ module inverted_foot() {
     // z=5 is the thickness of the straight-walled base
     translate([panel_screw_offset, extrusion/2, 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
     translate([extrusion/2, panel_screw_offset, 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
-
-    // Access to corner cube
-    *translate([extrusion/2, extrusion/2, -epsilon])cylinder(d=7.5, h=foot_height+2*epsilon);
   }
 }
 
@@ -56,14 +53,14 @@ module foot_base_profile() {
     translate([panel_outside_radius, panel_outside_radius])
       circle(r=panel_outside_radius);
 
-    translate([panel_screw_offset-20, panel_outside_radius])
+    translate([panel_screw_offset-15, panel_outside_radius])
       circle(r=panel_outside_radius);
-    translate([panel_screw_offset-20, extrusion - panel_outside_radius])
+    translate([panel_screw_offset-15, extrusion - panel_outside_radius])
       circle(r=panel_outside_radius);
 
-    translate([panel_outside_radius, panel_screw_offset-20])
+    translate([panel_outside_radius, panel_screw_offset-15])
       circle(r=panel_outside_radius);
-    translate([extrusion - panel_outside_radius, panel_screw_offset-20])
+    translate([extrusion - panel_outside_radius, panel_screw_offset-15])
       circle(r=panel_outside_radius);
   }
 }
