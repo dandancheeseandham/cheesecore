@@ -7,6 +7,7 @@ use <rail.scad>
 use <opencoreparts.scad>
 use <z-yoke.scad>
 use <coupler.scad>
+use <anti-backlash-nut.scad>
 use <z-bracket.scad>
 
 ztowerextrusions=extrusion_length.z+(2*extrusion);
@@ -35,6 +36,10 @@ module z_tower(z_position=0) {
 
   translate ([-leadscrew_x_offset, 0,-paneldepth])
     NEMA(NEMA17);
+
+  // FIXME: z position is fake
+  translate([-leadscrew_x_offset, 0, rail_length.z - z_position - 85])
+    anti_backlash_nut(8);
 
   // FIXME: this z position is fake, just to make it look decent-ish
   translate([-extrusion-carriage_height(carriage_type_z), leadscrew_y_offset, rail_length.z - z_position - 75])

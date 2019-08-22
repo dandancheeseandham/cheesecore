@@ -77,8 +77,7 @@ module z_yoke_holes_profile() {
   // FIXME: made up this pattern
   translate([carriage_height(carriage_type_z) + extrusion - leadscrew_x_offset, -leadscrew_y_offset]) {
     mirror_xy() {
-      nut_offset = 7;
-      translate([nut_offset, nut_offset]) circle(d=3.3);
+      rotate(45) translate([11, 0]) circle(d=3.3);
     }
   }
 }
