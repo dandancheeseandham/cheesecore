@@ -45,7 +45,7 @@ module z_tower(z_position=0) {
 
   // bottom z bracket
   translate([0, leadscrew_y_offset +extrusion/2, extrusion])
-    z_bracket();
+    z_bracket(extrusion,screwM);
   // top z bracket
   translate([0, leadscrew_y_offset +extrusion/2, extrusion_length.z +extrusion])
     mirror([0, 1, 0])

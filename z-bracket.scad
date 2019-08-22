@@ -4,10 +4,11 @@ include <nopscadlib/core.scad>
 
 // FIXME: add holes to secure this thing
 // FIXME: describe the origin of this part ... and decide if it's right.  There isn't an obvious "right" place for this one
-module z_bracket() {
-  // extrusion=40; // for testing the module on it's own
-	z_bracket_screwsize = 3;
-	leg_length = 10+extrusion*4;
+
+module z_bracket(extrusion,z_bracket_screwsize) {
+  
+	//leg_length = 10+extrusion*4;
+	leg_length = extrusion*4;
 	thickness = extrusion-5;
 	//translate([0, 0, 0]) cube([extrusion, leg_length, thickness]);  //cube version
 	//translate([-extrusion, 0, -extrusion]) cube([extrusion, thickness, leg_length]);  //cube version
@@ -37,7 +38,7 @@ translate([-thickness/2, 0, 0]) cube([thickness, thickness, thickness]);  //fill
 }
 	
 	//screwholes removed from entire unioned object		
-			translate([extrusion/2, extrusion*2-z_bracket_screwsize, 0])  screwholes(row_distance=extrusion*2,numberofscrewholes=3,Mscrew=z_bracket_screwsize,screwhole_increase=0.5);
+	    translate([extrusion/2, extrusion*1.75-z_bracket_screwsize, 0])  screwholes(row_distance=extrusion*2,numberofscrewholes=3,Mscrew=z_bracket_screwsize,screwhole_increase=0.5);
 		rotate ([90,0,0]) translate([-extrusion/2, -extrusion/2, -extrusion*0.5])   screwholes(row_distance=extrusion*3,numberofscrewholes=4,Mscrew=z_bracket_screwsize,screwhole_increase=0.5);
 		rotate ([90,0,0]) translate([-extrusion/2, -extrusion/2, -55-thickness])   screwholes(row_distance=extrusion*3,numberofscrewholes=4,Mscrew=z_bracket_screwsize*2,screwhole_increase=0.5); // to remove some fillet to make screwing in easier
 		}
@@ -46,5 +47,5 @@ translate([-thickness/2, 0, 0]) cube([thickness, thickness, thickness]);  //fill
 
 //translate ([main_body_size_x,nubbin_size_y+rounding,0]) 
 
-z_bracket();
+z_bracket(15,3);
 
