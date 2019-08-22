@@ -4,7 +4,6 @@ include <nopscadlib/lib.scad>
 use <extrusion.scad>
 use <lib/mirror.scad>
 use <rail.scad>
-use <opencoreparts.scad>
 use <z-yoke.scad>
 use <coupler.scad>
 use <anti-backlash-nut.scad>
