@@ -5,7 +5,7 @@ include <nopscadlib/core.scad>
 // FIXME: add holes to secure this thing
 // FIXME: describe the origin of this part ... and decide if it's right.  There isn't an obvious "right" place for this one
 module z_bracket() {
-   extrusion=15; // for testing the module on it's own
+  // extrusion=40; // for testing the module on it's own
 	z_bracket_screwsize = 3;
 	leg_length = 10+extrusion*4;
 	thickness = extrusion-5;
