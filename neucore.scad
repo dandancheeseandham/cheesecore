@@ -2,7 +2,7 @@
 include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
 use <extrusion.scad>
-use <opencoreparts.scad>
+use <belts_pulleys.scad>
 use <side_panels.scad>
 use <frame.scad>
 include <config.scad>
