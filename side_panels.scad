@@ -1,6 +1,5 @@
 // vim: set nospell:
 include <config.scad>
-use <opencoreparts.scad>
 include <nopscadlib/core.scad>
 use <lib/mirror.scad>
 
