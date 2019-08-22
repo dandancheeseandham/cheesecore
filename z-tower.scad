@@ -55,7 +55,7 @@ module z_tower(z_position=0) {
   translate([0, leadscrew_y_offset +extrusion/2, extrusion_length.z +extrusion])
     mirror([0, 1, 0])
       rotate([180, 0, 0])
-      z_bracket();
+      z_bracket(15, 3);
 }
 
 module z_towers(z_position = 0) {
