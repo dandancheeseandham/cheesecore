@@ -69,7 +69,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   z_towers(position[2]);
   all_side_panels();
   // FIXME: this z translate is very crude but looks better with extrusion != 15
-  translate ([0, 0, extrusion_length.z/2 + extrusion + 11]) corexy_belts([position.x-150, position.y-150]);
+  translate ([0, 0, extrusion_length.z/2 + extrusion + 11]) corexy_belts([position.x-150, position.y]);
 
   // This placement of the bed is approximate in x/y, and arbitrary in z.
   translate ([0, -13, extrusion_length.z/2 - position.z - 100]) bed();
@@ -80,7 +80,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   // FIXME: x position here is an approximation to look decent
   translate ([-rail_length.x/2+55 + position.x, 0, extrusion_length.z/2 + extrusion/2])
     rotate([270, 0, 90])
-      rail_wrapper(rail_length.y);
+      rail_wrapper(rail_length.y, position = position.y-150);
 
   // Idler mounts
   translate ([-extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion]) {

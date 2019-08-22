@@ -21,6 +21,10 @@ module corexy_belts(position = [0, 0]) {
   // FIXME: the offset is made up
   stepper_location = extrusion_length.x/2 + 50;
 
+  // Where to position the crossover
+  // FIXME: this is a hack that doesn't account for the bed offset of geometry
+  ypos = position.y - 150;
+
   // FIXME: we use 16 tooth pulley instead of 20
   // FIXME: extract out vars for idler types to shorten this?
   // FIXME: everything but the actual carriage stack needs adjusted to put pulleys correctly in line
@@ -31,8 +35,8 @@ module corexy_belts(position = [0, 0]) {
     [[-extrusion_length.x/2 - 30, -x_carriage_pulley_offset - 1*pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // front left idler
     [[-extrusion_length.x/2 - 10, x_carriage_pulley_offset], GT2x20_toothed_idler, false, true], // rear left idler
     [[carriage_stack.x, carriage_stack.y], GT2x20_toothed_idler, false, true],  // rear idler stack
-    [[carriage_stack.x, 7], GT2x20_plain_idler, false, false],  // fake idler to offset belt
-    [[carriage_stack.x, -7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
+    [[carriage_stack.x, ypos + 7], GT2x20_plain_idler, false, false],  // fake idler to offset belt
+    [[carriage_stack.x, ypos - 7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
   ];
 
   upper_path = [
@@ -41,8 +45,8 @@ module corexy_belts(position = [0, 0]) {
     [[-extrusion_length.x/2 - 30, x_carriage_pulley_offset+1*pulley_pr(GT2x20_plain_idler)+pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // rear left idler
     [[stepper_location, carriage_stack.y+pulley_pr(GT2x20_plain_idler) + pulley_pr(GT2x16_pulley)], GT2x20um_pulley, false, true], // rear stepper
     [[carriage_stack.x, carriage_stack.y], GT2x20_plain_idler, true, true],  // rear idler stack
-    [[carriage_stack.x, 7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
-    [[carriage_stack.x, -7], GT2x20_plain_idler, false, false],  // fake idler to offset belt
+    [[carriage_stack.x, ypos + 7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
+    [[carriage_stack.x, ypos - 7], GT2x20_plain_idler, false, false],  // fake idler to offset belt
   ];
 
   belt=GT2x6;
