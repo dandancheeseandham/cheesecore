@@ -60,8 +60,9 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
 
 
 //electronics box
-//translate([extrusion_length.x/2+59+6+15, 0, 0 + extrusion]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL
-// translate([extrusion_length.x/2+59+6+15, 0, 0 + extrusion]  ) rotate ([0,0,90]) electronics_box (350,290); // New ZL
+translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
+
+*translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0,extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL bpx
 
 
   if(render_electronics)
