@@ -33,10 +33,16 @@ module z_bracket(extrusion_type) {
 	rotate ([0,270,0]) translate([thickness,thickness,0])fillet(extrusion,   extrusion); 
 	 }
 
-rotate ([90,0,0]) translate([0,(thickness),-(thickness)])fillet(extrusion,   thickness); 
+rotate ([90,0,0]) translate([0,thickness,-thickness])fillet(extrusion,   thickness); 
 rotate ([0,180,0]) translate([0,thickness,-thickness])fillet(extrusion,   thickness); 
 translate([-thickness/2, 0, 0]) cube([thickness, thickness, thickness]);  //fill in a rounded corner
 
+
+	 intersection() {
+translate([0,thickness,0]) rotate ([0,180,0]) fillet(extrusion,   extrusion+thickness);
+rotate ([0,90,0]) translate([0,thickness,-extrusion]) fillet(extrusion-1.5,   extrusion);    
+    }
+     
 }
 	
 	//screwholes removed from entire unioned object		
