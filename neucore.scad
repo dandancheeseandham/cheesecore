@@ -81,4 +81,4 @@ translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, 0]  )
   }
 }
 
-printer(render_electronics=true, position=[0, 0, 150]);
+printer(render_electronics=false, position=[0, 0, 150]);

@@ -19,7 +19,7 @@ module electronics_box(box_size_y,box_size_z) {
 //semi-constants for playing with
 depth=59; //FIXME
 material_thickness=6; //FIXME: Not parametric to material thickness
-explode=-900;
+explode=0;
 corner_adjust=27;
 corner_pos=20;
     
