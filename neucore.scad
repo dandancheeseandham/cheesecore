@@ -51,7 +51,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
     mirror_y() {
       translate([0, extrusion_length.y/2, 0])
         aluminium_motor_mount();
-      translate([49, extrusion_length.y/2-8, 0])  NEMA(NEMA17); // I've popped NEMA's here until a better place is found (probably when you educate me :P 
+      translate([49, extrusion_length.y/2-8, 0])  NEMA(NEMA17);
     }
   }
 
