@@ -1,20 +1,27 @@
 // vim: set nospell:
 use <config.scad>
-use <nopscadlib/core.scad>
 use <screwholes.scad>
-
+//use <side_panels.scad>
+include <nopscadlib/core.scad>
+use <lib/holes.scad>
+use <lib/mirror.scad>
 
 
 
 *electronics_box (305,250);
-electronics_box (298.9,238.9); // ZL
-*electronics_box (298.9,438.9); // ZLT
+*electronics_box (298.9,238.9); // ZL
+electronics_box (298.9,438.9); // ZLT
 *electronics_box (300,240); // New ZL
+
+
 
 module electronics_box(box_size_y,box_size_z) {
 //semi-constants for playing with
 depth=59; //FIXME
 material_thickness=6; //FIXME: Not parametric to material thickness
+
+corner_adjust=27;
+corner_pos=20;
     
 left=-box_size_y/2;
 up=box_size_z/2;
@@ -33,8 +40,7 @@ translate ([right+23,-depth,up-20]) rotate ([0,90,0]) electronics_electro_panel(
 translate ([left,-depth,down-50]) electronics_bottom_panel(box_size_y,depth); // bottom panel
 translate ([left-29,-depth,up-20])  rotate ([0,90,0]) electronics_side_panel(box_size_z,depth);  // left panel
 
-
-
+translate ([0,-depth,-corner_pos])  rotate ([90,0,0]) elec_panel(box_size_y+corner_adjust*2, box_size_z+corner_adjust*2, 6);
 
 
 
@@ -90,10 +96,26 @@ translate ([length-4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,
 }
 }
 
+module elec_panel(x, y, thickness)
+{
+  panelcornerrounding=5; // Corner rounding of panels
+ // screwholes=5;     // Number of screwholes // IS THIS REDUNDANT?
+
+  difference() {
+    color(panel_color())
+      translate ([0, 0, thickness/2])
+        rounded_rectangle([x, y, thickness], panelcornerrounding);
+    // Color the holes darker for contrast
+   // color(panel_color_holes()) translate([0, 0, epsilon]) //screwholes(x,y);
+  }
+}
+
+
 
 module elec_corner()
 {
 color("#222")
     rotate ([90,0,180]) import("./railcorestls/Electronics_Box_Corner.stl");
 }
+
 }
