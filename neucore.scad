@@ -13,6 +13,7 @@ use <rail.scad>
 use <aluminium_idlermount.scad>
 use <aluminium_motormount.scad>
 use <electronicsbox_panels.scad>
+use <x-carriage.scad>
 
 $fullrender=false;
 
@@ -38,6 +39,12 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
     rotate([270, 0, 90])
       rail_wrapper(rail_length.y, position = position.y-150);
 
+//x-carriage temp object
+// 12 = rail size
+
+translate ([-rail_length.x/2+55 + position.x, extrusion_length.y/2-12, extrusion_length.z/2 + extrusion_width / 2]) x_carriage();
+mirror_y() translate ([-rail_length.x/2+55 + position.x, extrusion_length.y/2-12, extrusion_length.z/2 + extrusion_width / 2]) x_carriage();   
+    
   // Idler mounts
   translate ([-extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion_width]) {
     mirror_y() {
