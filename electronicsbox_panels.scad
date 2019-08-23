@@ -19,7 +19,7 @@ module electronics_box(box_size_y,box_size_z) {
 //semi-constants for playing with
 depth=59; //FIXME
 material_thickness=6; //FIXME: Not parametric to material thickness
-
+explode=-900;
 corner_adjust=27;
 corner_pos=20;
     
@@ -103,7 +103,7 @@ module elec_panel(x, y, thickness)
 
   difference() {
     color(panel_color())
-      translate ([0, 0, thickness/2])
+      translate ([0, 0, thickness/2+explode])
         rounded_rectangle([x, y, thickness], panelcornerrounding);
     // Color the holes darker for contrast
    // color(panel_color_holes()) translate([0, 0, epsilon]) //screwholes(x,y);

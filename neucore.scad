@@ -13,6 +13,7 @@ use <rail.scad>
 use <aluminium_idlermount.scad>
 use <aluminium_motormount.scad>
 use <electronicsbox_panels.scad>
+use <electronics_box_contents.scad>
 use <x-carriage.scad>
 
 $fullrender=false;
@@ -69,15 +70,15 @@ mirror_y() translate ([-rail_length.x/2+55 + position.x, extrusion_length.y/2-12
 //electronics box
 translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
 
-*translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0,extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL bpx
+*translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0,extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
 
 
   if(render_electronics)
   {
     // FIXME - should not need to translate here just by paneldepth
-    translate([paneldepth, 0, 0])
+translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, 0]  )
       electronics_box_contents();
   }
 }
 
-printer(render_electronics=false, position=[0, 0, 150]);
+printer(render_electronics=true, position=[0, 0, 150]);

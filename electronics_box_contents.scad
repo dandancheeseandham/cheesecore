@@ -20,12 +20,15 @@ electronicsbox_size_y = 1;
 
 module electronics_box_contents() {
 extrusion=15;
-  translate([0,200-100,200]) rotate([90,90,90]) psu(S_250_48);
-  translate([0,200-300,330]) rotate([90,0,90])  pcb(DuetE);
-  translate([0,200-200,430]) rotate([90,0,90])  translate ([-100,-220,0]) pcb(Duex5);
-  translate([0,200-200,50]) rotate([90,0,90])  ssr_assembly(ssrs[1], M3_cap_screw, 3);
+  
+  translate([0,-100,60]) rotate([90,0,90])  pcb(DuetE);
+  translate([0,-100,-60]) rotate([90,0,90])  pcb(Duex5);
+  
+   translate([0,100,0]) rotate([90,90,90]) psu(S_250_48);
+    
+  translate([0,0,-100]) rotate([90,90,90])  ssr_assembly(ssrs[1], M3_cap_screw, 3);
  
-  translate ([0,electronicsbox_size_x/2,0])  rotate([90,0,180]) iec(IEC_fused_inlet);
+  translate ([59/2,electronicsbox_size_x/2-20,-76])  rotate([90,0,180]) iec(IEC_fused_inlet);
   
 }
 
