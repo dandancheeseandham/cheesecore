@@ -1,8 +1,11 @@
 // vim: set nospell:
 include <config.scad>
 include <nopscadlib/core.scad>
+use <lib/holes.scad>
 use <lib/mirror.scad>
 
+// FIXME get rid of these globals
+extrusion = extrusion_width(extrusion_type);
 panelX=extrusion_length.x+extrusion*2;
 panelY=extrusion_length.y+extrusion*2;
 panelZ=extrusion_length.z+extrusion*2;
@@ -19,8 +22,7 @@ module motorholes() {
 
 // Holes to mount panels to extrusion
 module screwholes(x, y) {
-  //screwholeradius=1.75;
-  screwholeradius=(screwM+0.5)/2;
+  screwholeradius = clearance_hole_size(extrusion_screw_size(extrusion_type)) / 2;
   screwholesX=5;
   screwholesY=5;
 

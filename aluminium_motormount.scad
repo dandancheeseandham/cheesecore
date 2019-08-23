@@ -9,7 +9,8 @@ include <screwholes.scad>
 // FIXME: rather than parameterize on screwsize, we could parameterize on NEMA size of motor - that would set all of
 // a screw size, main motor hole size, and screw pattern from one variable
 module raw_aluminium_motor_mount(screwsize,motoradjustspacing) {
-  part_thickness =6;  // part_thickness  of aluminium part in mm
+  extrusion = extrusion_width(extrusion_type);
+  part_thickness = 1/4 * inch;  // part_thickness  of aluminium part in mm
   part_corner_rounding = 3;
   NEMAhole=24; // size of hole required for NEMA17 motor
 
@@ -51,6 +52,7 @@ module motorhole(x,y,z) {
 }
 // wraps raw_aluminium_motor_mount() and rotates part to convenient orientation and placement for placing on model
 module aluminium_motor_mount(screwsize=3, motoradjustspacing=6) {
+  extrusion = extrusion_width(extrusion_type);
   translate([48+30, -47+extrusion, 6/2])
     rotate([0,0,180])
       raw_aluminium_motor_mount(screwsize=screwsize, motoradjustspacing=motoradjustspacing);

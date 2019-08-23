@@ -64,26 +64,28 @@ module electronics_box_contents() {
 
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
-  frame();
-  feet();
-  z_towers(position[2]);
+  extrusion_width = extrusion_width(extrusion_type);
+
+  frame(extrusion_type);
+  feet(extrusion_type, height=50);
+  z_towers(extrusion_type, z_position = position[2]);
   all_side_panels();
   // FIXME: this is not a final height for belts
-  translate ([0, 0, extrusion_length.z/2 + extrusion + 11]) corexy_belts([position.x-150, position.y]);
+  translate ([0, 0, extrusion_length.z/2 + extrusion_width + 11]) corexy_belts([position.x-150, position.y]);
 
   // FIXME: This placement of the bed is arbitrary in z.
   translate ([bed_offset.x, bed_offset.y, extrusion_length.z/2 - position.z - 100]) bed();
 
-  translate ([0, 0, extrusion_length.z/2 + extrusion/2])
+  translate ([0, 0, extrusion_length.z/2 + extrusion_width / 2])
     x_rails(position.x);
 
   // FIXME: x position here is an approximation to look decent
-  translate ([-rail_length.x/2+55 + position.x, 0, extrusion_length.z/2 + extrusion/2])
+  translate ([-rail_length.x/2+55 + position.x, 0, extrusion_length.z/2 + extrusion_width / 2])
     rotate([270, 0, 90])
       rail_wrapper(rail_length.y, position = position.y-150);
 
   // Idler mounts
-  translate ([-extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion]) {
+  translate ([-extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion_width]) {
     mirror_y() {
       translate([0, -extrusion_length.y/2, 0])
         aluminium_idler_mount();
@@ -91,7 +93,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   }
 
   // motor mounts
-  translate([extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion]  ){
+  translate([extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion_width]){
     mirror_y() {
       translate([0, extrusion_length.y/2, 0])
         aluminium_motor_mount();

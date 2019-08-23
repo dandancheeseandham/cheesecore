@@ -1,6 +1,7 @@
 //FIXME: this lib should not need to depend on the machine config
 include <config.scad>
 include <nopscadlib/core.scad>
+use <lib/holes.scad>
 
 module extrusion_profile(extrusion_size, slot_width) {
   difference() {
@@ -22,7 +23,10 @@ module extrusion_profile(extrusion_size, slot_width) {
   }
 }
 
-module extrusion(extrusion_size, length, slot_width=3.3, center=true) {
+module extrusion(extrusion_type, length, center=true) {
+  extrusion_size = extrusion_width(extrusion_type);
+  slot_width = extrusion_screw_size(extrusion_type);
+
   color("silver") {
     linear_extrude(length, center=center) {
       extrusion_profile(extrusion_size, slot_width);
@@ -31,4 +35,4 @@ module extrusion(extrusion_size, length, slot_width=3.3, center=true) {
 }
 
 extrusion_profile(15, 3.3);
-translate([50,0,0]) extrusion(15, 100, 3.3);
+translate([50,0,0]) extrusion(extrusion_type, 100);

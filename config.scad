@@ -16,12 +16,13 @@ leadscrew_y_offset = 30; // taken off z yoke in fusion
 // Extrusion information
 //             nominal size
 //                 nominal screw size
-extrusion15 = [15, 3];
-extrusion20 = [20, 4];
-extrusion30 = [30, 5];
-extrusion40 = [40, 6];
+extrusion15 = ["1515 Extrusion", 15, 3];
+extrusion20 = ["2020 Extrusion", 20, 4];
+extrusion30 = ["3030 Extrusion", 30, 5];
+extrusion40 = ["4040 Extrusion", 40, 6];
 
-
+function extrusion_width(extrusion_type) = extrusion_type[1];
+function extrusion_screw_size(extrusion_type) = extrusion_type[2];
 
 
 RC300BED = 42; // FIXME: build out an actual bed model
@@ -46,7 +47,7 @@ model = rc300zl;
 //model = cc300zl;
 //model = absurdo; leadscrew_y_offset= 40;
 
-extrusion = model[0][0];
+extrusion_type = model[0];
 screwM = model[0][1];
 extrusion_length = model[1];
 rail_length = model[2];
@@ -58,8 +59,8 @@ rail_type_z = model[3].z;
 carriage_type_z=rail_carriage(rail_type_z);
 
 // How far in from edge to start panel screws
-panel_screw_offset=extrusion + 35; // 50 in original 1515 machine
+panel_screw_offset=extrusion_width(extrusion_type) + 35; // 50 in original 1515 machine
 
-assert(panel_screw_offset > extrusion + 10, "Panel Screws must be offset clear of the corner cubes");
+assert(panel_screw_offset > extrusion_width(extrusion_type) + 10, "Panel Screws must be offset clear of the corner cubes");
 // Need to also check that there is enough room for the anti-backlash nut in the yoke
-assert(leadscrew_y_offset >= leadscrew_x_offset + extrusion/2, "Z stepper screws will be hidden");
+assert(leadscrew_y_offset >= leadscrew_x_offset + extrusion_width(extrusion_type) / 2, "Z stepper screws will be hidden");
