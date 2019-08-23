@@ -12,55 +12,9 @@ use <z-tower.scad>
 use <rail.scad>
 use <aluminium_idlermount.scad>
 use <aluminium_motormount.scad>
+use <electronicsbox_panels.scad>
 
 $fullrender=false;
-
-// BOM Item Name: 16 tooth 5mm bore GT2 Pulley
-// BOM Quantity: 2
-// BOM Link: http://railco.re/motion
-// Notes: For X/Y/Z steppers (Only 2 needed for the ZL Build)
-
-// BOM Item Name: Gt2 smooth idlers 5mm ID
-// BOM Quantity: 2
-// BOM Link: http://railco.re/motion
-// Notes:
-
-// BOM Item Name: Gt2 20 tooth idlers 5mm ID
-// BOM Quantity: 6
-// BOM Link: http://railco.re/motion
-// Notes: for corexy motion gear
-
-// BOM Item Name: 5mm I.D. x 6mm O.D. x 0.40mm Shim
-// BOM Quantity: 1 pack
-// BOM Link: http://railco.re/motion
-// Notes: For shimming the bearings
-
-// BOM Item Name: GT2 Belt (5m)
-// BOM Quantity: 1
-// BOM Link: http://railco.re/motion
-// Notes: X/Y Motion belts (4400mm total, 2200mm per side)
-// Then we have simplier translations here, and we can rotate/translate the whole contents as a unit when assembling the machine
-module electronics_box_contents() {
-  //
-  //BOM ELECTRONICS
-  //
-
-  // BOM Item Name: 24v PSU 350w PSU (needs to be 200w or greater with AC bed)
-  // BOM Quantity: 1
-  // BOM Link: http://railco.re/sidepanels
-  // Notes: DAny 24v PSU > 200W works with the AC bed.
-  panelY=extrusion_length.y+extrusion*2;
-  panelZ=extrusion_length.z+extrusion*2;
-
-  translate([panelY+40,panelZ-100,280]) rotate([90,90,90])  psu(S_250_48);
-  translate([panelY+40,panelZ-300,330]) rotate([90,0,90])  pcb(DuetE);
-  translate([panelY+40,panelZ-200,430]) rotate([90,0,90])  translate ([-100,-220,0]) pcb(Duex5);
-  translate([panelY+40,panelZ-200,130]) rotate([90,0,90])  ssr_assembly(ssrs[1], M3_cap_screw, 3);
-  translate ([50,-220,0]) hot_end(E3Dv6);
-  translate ([50,-150,0]) iec(IEC_fused_inlet);
-  translate ([50,-120,0]) leadnut(LSN8x8);
-  //translate ([50,-320,0]) psu(S_250_48);
-}
 
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
@@ -98,6 +52,12 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
       translate([49, extrusion_length.y/2-8, 0])  NEMA(NEMA17); // I've popped NEMA's here until a better place is found (probably when you educate me :P 
     }
   }
+
+//hotend
+  translate ([-170,-140,230]) rotate ([0,0,180]) hot_end(E3Dv6);
+
+//electronics box
+
 
   if(render_electronics)
   {
