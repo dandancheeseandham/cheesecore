@@ -49,5 +49,5 @@ translate([-thickness/2, 0, 0]) cube([thickness, thickness, thickness]);  //fill
 
 //translate ([main_body_size_x,nubbin_size_y+rounding,0]) 
 
-z_bracket(15,3);
+z_bracket(extrusion_type);
 
