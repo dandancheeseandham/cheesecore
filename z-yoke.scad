@@ -3,7 +3,9 @@ use <lib/mirror.scad>
 use <nopscadlib/vitamins/rail.scad>
 
 // The origin of the z-yoke is the center of the mounting point on the linear rail carriage
-module z_yoke() {
+module z_yoke(extrusion_type) {
+  extrusion_width = extrusion_width(extrusion_type);
+
   // FIXME: need a fillet between horizontal and vertical surfaces to brace it
   // FIXME: this thickness(10) was just arbitrary to mock something up
   part_thickness = 7.5;
@@ -29,8 +31,8 @@ module z_yoke() {
     translate([0,0,-carriage_length(carriage_type_z/2)]) {
       linear_extrude(part_thickness) {
         difference() {
-          z_yoke_bed_mount_profile();
-          z_yoke_holes_profile();
+          z_yoke_bed_mount_profile(extrusion_width);
+          z_yoke_holes_profile(extrusion_width);
         }
       }
     }
@@ -39,13 +41,13 @@ module z_yoke() {
 
 ear_extent = 40; // How far from the carriage face the ear should extend.
 
-module z_yoke_bed_mount_profile() {
-  // FIXME: just winging it with this value
+module z_yoke_bed_mount_profile(extrusion_width) {
+  assert(extrusion_width != undef, "Must specify extrusion_width");
 
   // around leadscrew out to bed ear
   hull() {
     // FIXME: base this on the leadscrew anti-backlash nut size
-    translate([carriage_height(carriage_type_z) + extrusion - leadscrew_x_offset, -leadscrew_y_offset])
+    translate([carriage_height(carriage_type_z) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset])
       circle(d=leadscrew_y_offset);
     translate([-30, -leadscrew_y_offset])
       rounded_square([20, 30], r=2.5);
@@ -58,10 +60,11 @@ module z_yoke_bed_mount_profile() {
   }
 }
 
-module z_yoke_holes_profile() {
+module z_yoke_holes_profile(extrusion_width) {
+  assert(extrusion_width != undef, "Must specify extrusion_width");
+
   // FIXME: should be driven off leadscrew nut size
-  // FIXME: the -5 term in the x translation seems bogus
-  translate([carriage_height(carriage_type_z) + extrusion - leadscrew_x_offset, -leadscrew_y_offset]) circle(d=10); // leadscrew nut hole
+  translate([carriage_height(carriage_type_z) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset]) circle(d=10); // leadscrew nut hole
 
   // slot for bed moungint screws
   // FIXME: the +10 term here and in the lower translate is made up.  Should derive this from
@@ -75,7 +78,7 @@ module z_yoke_holes_profile() {
 
   // the holes to screw the leadscrew in
   // FIXME: made up this pattern
-  translate([carriage_height(carriage_type_z) + extrusion - leadscrew_x_offset, -leadscrew_y_offset]) {
+  translate([carriage_height(carriage_type_z) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset]) {
     mirror_xy() {
       rotate(45) translate([11, 0]) circle(d=3.3);
     }
@@ -86,4 +89,4 @@ module z_yoke_holes_profile() {
   z_yoke_bed_mount_profile();
   z_yoke_holes_profile();
 }
-z_yoke();
+z_yoke(extrusion_type);

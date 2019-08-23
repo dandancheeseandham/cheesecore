@@ -2,8 +2,6 @@ use <lib/mirror.scad>
 use <lib/holes.scad>
 include <config.scad>
 
-
-foot_height = 50;// FIXME: Just a guess, should make that parametric
 panel_outside_radius=5; // FIXME: this needs unified with panel
 
 // FIXME: the profiles use a radius of extrusion/2, should probably use panel_outside_radius everywhere for better visual look.
@@ -11,7 +9,9 @@ panel_outside_radius=5; // FIXME: this needs unified with panel
 // FIXME: Could add some fileting?
 
 // Modeled this foot upside down both for easier printing and because it's a little easier to think about.
-module inverted_foot() {
+module inverted_foot(extrusion_type, height) {
+  extrusion = extrusion_width(extrusion_type);
+  assert(extrusion != undef, "Unable to figure out extrusion size");
   color(printed_part_color())
   difference() {
     union() {
@@ -33,11 +33,11 @@ module inverted_foot() {
               circle(r=panel_outside_radius);
           }
         }
-        // 25 = 5 of linear extrude above + 20 from the setback in the foot_base_profile()
-        linear_extrude(25) foot_base_profile();
+        // 25 = 5 of linear extrude above + 15 from the setback in the foot_base_profile()
+        linear_extrude(20) foot_base_profile(extrusion);
       }
       // main, slimmer body
-      linear_extrude(foot_height) foot_base_profile();
+      linear_extrude(height) foot_base_profile(extrusion);
     }
 
     // FIXME: Need to add counterbore for mounting screws
@@ -45,40 +45,39 @@ module inverted_foot() {
     // z=5 is the thickness of the straight-walled base
     translate([panel_screw_offset, extrusion/2, 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
     translate([extrusion/2, panel_screw_offset, 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
-
-    // Access to corner cube
-    *translate([extrusion/2, extrusion/2, -epsilon])cylinder(d=7.5, h=foot_height+2*epsilon);
   }
 }
 
-module foot_base_profile() {
+module foot_base_profile(extrusion_width) {
+  assert(extrusion_width != undef, "Must specify extrusion_width");
   hull() {
     translate([panel_outside_radius, panel_outside_radius])
       circle(r=panel_outside_radius);
 
-    translate([panel_screw_offset-20, panel_outside_radius])
+    translate([panel_screw_offset-15, panel_outside_radius])
       circle(r=panel_outside_radius);
-    translate([panel_screw_offset-20, extrusion - panel_outside_radius])
+    translate([panel_screw_offset-15, extrusion_width- panel_outside_radius])
       circle(r=panel_outside_radius);
 
-    translate([panel_outside_radius, panel_screw_offset-20])
+    translate([panel_outside_radius, panel_screw_offset-15])
       circle(r=panel_outside_radius);
-    translate([extrusion - panel_outside_radius, panel_screw_offset-20])
+    translate([extrusion_width - panel_outside_radius, panel_screw_offset-15])
       circle(r=panel_outside_radius);
   }
 }
 
-module foot() {
-  translate([0,0,foot_height]) mirror([0,0,-1]) inverted_foot();
+module foot(extrusion_type, height) {
+  translate([0, 0, height]) mirror([0,0,-1]) inverted_foot(extrusion_type, height);
 }
 
-module feet() {
+module feet(extrusion_type, height = 50) {
+  extrusion = extrusion_width(extrusion_type);
   translate([0, 0, -extrusion_length.z/2 - extrusion -paneldepth])
     mirror_xy() {
-      translate([-extrusion_length.x/2-extrusion, -extrusion_length.y/2-extrusion,-foot_height]) foot();
+      translate([-extrusion_length.x/2-extrusion, -extrusion_length.y/2-extrusion, -height]) foot(extrusion_type, height);
   }
 }
 
 // feet();
- foot();
-// foot_base_profile();
+foot(extrusion_type, 50);
+//foot_base_profile(15);
