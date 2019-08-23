@@ -9,8 +9,8 @@ use <lib/mirror.scad>
 
 
 *electronics_box (305,250);
-*electronics_box (298.9,238.9); // ZL
-electronics_box (298.9,438.9); // ZLT
+electronics_box (298.9,238.9); // ZL
+*electronics_box (298.9,438.9); // ZLT
 *electronics_box (300,240); // New ZL
 
 
