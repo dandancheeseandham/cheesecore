@@ -94,6 +94,6 @@ translate ([length-4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,
 module elec_corner()
 {
 color("#222")
-    rotate ([90,0,180]) import("D:/Users/dan/Documents/GitHub/dandancheeseandham/cheesecore/railcorestls/Electronics_Box_Corner.stl");
+    rotate ([90,0,180]) import("./railcorestls/Electronics_Box_Corner.stl");
 }
 }
