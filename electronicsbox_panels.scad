@@ -61,7 +61,7 @@ color("#555")
 difference()
 {
 cube ([length,electronicscabinet_depth,material_thickness]);
-translate ([length-distancefrombottom-sizeofholeX,15.25,0]) cube ([sizeofholeX,sizeofholeY,6]);
+translate ([length-distancefrombottom-sizeofholeX,15.25,0]) cube ([sizeofholeX,sizeofholeY,material_thickness]);
 translate ([length-distancefrombottom-sizeofholeX/2,9.65,0]) screwholes(row_distance=39.7,numberofscrewholes=2,Mscrew=3,screwhole_increase=0.5);
 translate ([4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,Mscrew=3,screwhole_increase=0.5);
 translate ([length-4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,Mscrew=3,screwhole_increase=0.5);

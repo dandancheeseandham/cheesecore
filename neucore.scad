@@ -58,7 +58,10 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
 //hotend
   translate ([-170,-140,230]) rotate ([0,0,180]) hot_end(E3Dv6);
 
+
 //electronics box
+//translate([extrusion_length.x/2+59+6+15, 0, 0 + extrusion]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL
+// translate([extrusion_length.x/2+59+6+15, 0, 0 + extrusion]  ) rotate ([0,0,90]) electronics_box (350,290); // New ZL
 
 
   if(render_electronics)
