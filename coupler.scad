@@ -5,7 +5,6 @@
 // Creative Commons - Public Domain Dedication license.
 // https://www.thingiverse.com/thing:1329750
 
-// nice (and horribly long) variable names for Thingiverse Customizer
 
 // Height of the coupler, half for the motor shaft and half for the rod
 couplerHeight = 30;
@@ -25,8 +24,7 @@ nutThickness = 3;
 // Gap between the two halves
 halvesDistance = 0.5;
 
-/* [Hidden] */
-// end of Customizer variables
+
 // Portion of the shaft inside the coupler
 shaftLen = couplerHeight/2;
 // Portion of the rod inside the coupler
