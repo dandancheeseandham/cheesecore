@@ -13,7 +13,7 @@ use <z-bracket.scad>
 leadscrewwidth=8;
 tr8=4;  //pitch - currently unused
 
-module z_tower(extrusion_type, z_position=0) {
+module z_tower(extrusion_type, rail_type_z, z_position=0) {
   extrusion_width = extrusion_width(extrusion_type);
   overall_length = extrusion_length.z + 2 * extrusion_width;
 
@@ -30,7 +30,7 @@ module z_tower(extrusion_type, z_position=0) {
   // The z-translate here seems kinda arbitrary?
   translate ([-extrusion_width,leadscrew_y_offset,(extrusion_length.z)/2+couplerheight])
     rotate([90,-90,270])
-      rail_wrapper(rail_length.z, position=position);
+      rail_wrapper(rail_type_z, rail_length.z, position=position);
 
  color("#BBB")  translate ([-leadscrew_x_offset, 0,couplerheight])
     cylinder(leadscrew_length, leadscrewwidth/2,leadscrewwidth/2);  // LEADSCREW
@@ -59,14 +59,14 @@ module z_tower(extrusion_type, z_position=0) {
         z_bracket(extrusion_type);
 }
 
-module z_towers(extrusion_type, z_position = 0) {
+module z_towers(extrusion_type, rail_type_z, z_position = 0) {
   translate([bed_offset.x, bed_offset.y, -extrusion_length.z/2 - extrusion_width(extrusion_type)]) {
-    translate([extrusion_length.x/2, 0, 0]) z_tower(extrusion_type, z_position);
+    translate([extrusion_length.x/2, 0, 0]) z_tower(extrusion_type, rail_type_z, z_position);
     mirror_y() {
-      translate([-extrusion_length.x/2, 255/2, 0]) rotate([0,0,180]) z_tower(extrusion_type, z_position);
+      translate([-extrusion_length.x/2, 255/2, 0]) rotate([0,0,180]) z_tower(extrusion_type, rail_type_z, z_position);
     }
   }
 }
 
 //z_tower(extrusion_type, 100);
-z_towers(extrusion_type);
+z_towers(extrusion_type , MGN12);

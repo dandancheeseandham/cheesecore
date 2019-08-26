@@ -19,27 +19,31 @@ use <x-carriage.scad>
 $fullrender=false;
 
 
-module printer(render_electronics=false, position=[0, 0, 0]) {
+module printer(render_electronics=false, position=[0, 0, 0]) {  
+    
   extrusion_width = extrusion_width(extrusion_type);
 
   frame(extrusion_type);
   feet(extrusion_type, height=50);
-  z_towers(extrusion_type, z_position = position[2]);
+  z_towers(extrusion_type, model[3].z, z_position = position[2]);
   all_side_panels();
   // FIXME: this is not a final height for belts
-  translate ([0, 0, extrusion_length.z/2 + extrusion_width + 20]) corexy_belts([position.x-20, position.y]);
+  translate ([0, 0, extrusion_length.z/2 + extrusion_width + 20]) corexy_belts([position.x-210, position.y]);
 
+// bed
   // FIXME: This placement of the bed is arbitrary in z, but linked to  
   // "position = rail_length.z/2-50-z_position;" in z-tower
   translate ([bed_offset.x, bed_offset.y, extrusion_length.z/2 - position.z - 111]) bed();
 
+//X-rail
   translate ([0, 0, extrusion_length.z/2 + extrusion_width / 2])
-    x_rails(position.x);
+    x_rails(model[3].x, position.x);
 
+// Y-rail
   // FIXME: x position here is an approximation to look decent
-  translate ([-rail_length.x/2+ 3 + position.x, 0, extrusion_length.z/2 + extrusion_width / 2])
+#  translate ([-rail_length.x/2 + 3 + position.x, 0, extrusion_length.z/2 + extrusion_width / 2])
     rotate([270, 0, 90])
-      rail_wrapper(rail_length.y, position = position.y-150);
+      rail_wrapper(model[3].y,rail_length.y, position = position.y-150);
 
 //hotend
 translate ([-rail_length.x/2+15 + position.x, position.y, extrusion_length.z/2 + extrusion_width / 2])
@@ -87,7 +91,7 @@ translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, 0]  )
 
 
 //FIXME: x=80 is around X0, y=-20 is around Y0, z=-50 is around Z0
-printer(render_electronics=false, position=[80+150, -20+150, -50]);
+printer(render_electronics=false, position=[130, -20+100, -50]);
 
 
 
