@@ -1,5 +1,5 @@
 include <config.scad>
-include <screwholes.scad>
+use <screwholes.scad>
 include <nopscadlib/core.scad>
 
 // FIXME: add holes to secure this thing

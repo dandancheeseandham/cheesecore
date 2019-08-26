@@ -65,7 +65,7 @@ module panel(x, y, thickness)
 // Notes: DXFs available from here via
 
 module bottom_panel() {
-  translate([0, 0, -extrusion_length.z/2 - extrusion -paneldepth])
+  
     difference() {
       panel(panelX, panelY, paneldepth);
 
@@ -99,9 +99,7 @@ module front_panel() {
   windowwidth = panelX - (Xwindowspacing*2);
   windowheight = panelZ - (Zwindowspacingtop+Zwindowspacingbottom);
   window_radius = 5;
-  translate([0, -panelY/2, 0])
-  rotate([90,0,0])
-    difference() {
+      difference() {
       panel(panelX,panelZ,paneldepth);
 
       // FIXME: why does this need bigger epsilon and epsilon * 3 cut depth to work right??
@@ -113,30 +111,47 @@ module front_panel() {
 }
 
 module left_panel() {
-  translate([-paneldepth-panelX/2,0,0])
-    rotate([90,0,90])
+  
       panel(panelY,panelZ,paneldepth);
 }
 
 module right_panel() {
-  translate ([panelX/2,0,0])
-    rotate([90,0,90])
+  
       panel(panelY,panelZ,paneldepth);
 }
 
 module back_panel(){
-  translate ([0,panelY/2+paneldepth,0])
-    rotate([90,0,0])
+
       panel(panelX,panelZ,paneldepth);
 }
 
-module all_side_panels() {
-  bottom_panel();
+module all_side_panelsold() {
+  translate([0, 0, -extrusion_length.z/2 - extrusion -paneldepth]) bottom_panel();
   front_panel();
   left_panel();
   right_panel();
   back_panel();
 }
 
-all_side_panels();
+module all_side_panels()
+{
+translate([0, 0, -panelZ/2 -paneldepth]) bottom_panel();
+translate([0, -panelY/2, 0]) rotate([90,0,0]) front_panel();
+translate([-panelX/2-paneldepth,0,0]) rotate([90,0,90]) left_panel();
+translate ([panelX/2,0,0]) rotate([90,0,90]) right_panel();
+translate ([0,panelY/2+paneldepth,0]) rotate([90,0,0]) back_panel();
+}
+
+module all_side_panels_dxf()
+{
+projection(cut = true) translate([0, 0, 0]) bottom_panel();
+projection(cut = true) translate([0, -panelY-30, -6])  bottom_panel();
+projection(cut = true) translate([0, -panelY*2-30, 0])  front_panel();
+projection(cut = true) translate([-panelX-30,0,0])  left_panel();
+projection(cut = true) translate ([panelX+30,0,0])  right_panel();
+projection(cut = true) translate ([0,panelY+30,0])  back_panel();   
+}
+
+all_side_panels_dxf();
+//all_side_panels();
 //front_panel();

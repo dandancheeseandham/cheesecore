@@ -27,24 +27,29 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   z_towers(extrusion_type, z_position = position[2]);
   all_side_panels();
   // FIXME: this is not a final height for belts
-  translate ([0, 0, extrusion_length.z/2 + extrusion_width + 11]) corexy_belts([position.x-150, position.y]);
+  translate ([0, 0, extrusion_length.z/2 + extrusion_width + 20]) corexy_belts([position.x-20, position.y]);
 
-  // FIXME: This placement of the bed is arbitrary in z.
-  translate ([bed_offset.x, bed_offset.y, extrusion_length.z/2 - position.z - 100]) bed();
+  // FIXME: This placement of the bed is arbitrary in z, but linked to  
+  // "position = rail_length.z/2-50-z_position;" in z-tower
+  translate ([bed_offset.x, bed_offset.y, extrusion_length.z/2 - position.z - 111]) bed();
 
   translate ([0, 0, extrusion_length.z/2 + extrusion_width / 2])
     x_rails(position.x);
 
   // FIXME: x position here is an approximation to look decent
-  translate ([-rail_length.x/2+55 + position.x, 0, extrusion_length.z/2 + extrusion_width / 2])
+  translate ([-rail_length.x/2+ 3 + position.x, 0, extrusion_length.z/2 + extrusion_width / 2])
     rotate([270, 0, 90])
       rail_wrapper(rail_length.y, position = position.y-150);
+
+//hotend
+translate ([-rail_length.x/2+15 + position.x, position.y, extrusion_length.z/2 + extrusion_width / 2])
+translate ([-50,-150,20]) // FIXME: arbitary move to look decentish
+    rotate ([0,0,180]) hot_end(E3Dv6);
 
 //x-carriage temp object
 // 12 = rail size
 
-translate ([-rail_length.x/2+55 + position.x, extrusion_length.y/2-12, extrusion_length.z/2 + extrusion_width / 2]) x_carriage();
-mirror_y() translate ([-rail_length.x/2+55 + position.x, extrusion_length.y/2-12, extrusion_length.z/2 + extrusion_width / 2]) x_carriage();   
+mirror_y() translate ([-rail_length.x/2+10 + position.x, extrusion_length.y/2-12, extrusion_length.z/2 + extrusion_width / 2]) x_carriage();   
     
   // Idler mounts
   translate ([-extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion_width]) {
@@ -63,8 +68,7 @@ mirror_y() translate ([-rail_length.x/2+55 + position.x, extrusion_length.y/2-12
     }
   }
 
-//hotend
-  translate ([-170,-140,230]) rotate ([0,0,180]) hot_end(E3Dv6);
+
 
 
 //electronics box
@@ -81,4 +85,4 @@ translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, 0]  )
   }
 }
 
-printer(render_electronics=false, position=[0, 0, 150]);
+printer(render_electronics=false, position=[340, 300, -50]);

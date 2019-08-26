@@ -24,7 +24,7 @@ module z_tower(extrusion_type, z_position=0) {
   // FIXME: This is an approximation, ideally we want to actually compute a
   // real rail position based on a nozzle-to-carriage offset, bed thickness,
   // and yoke-to-carriage offset
-  position = rail_length.z/2-50-z_position;
+  position = rail_length.z/2-80-z_position;
   echo("Passing rail position of: ", position);
 
   // The z-translate here seems kinda arbitrary?

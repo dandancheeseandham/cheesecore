@@ -10,16 +10,18 @@ module corexy_belts(position = [0, 0]) {
   vertical_offset = 10;
 
   // This sets how far from centerline of the machine the idler stack on the x-carriages is.
-  // FIXME: the 13 is approximation of MGN12 carriage height
+  // FIXME: the 12 is approximation of MGN12 carriage height
   // FIXME: the 5 is approximation of how far from carriage face center of idler pulley is
-  x_carriage_pulley_offset = extrusion_length.y/2 - 13 - 5;
+  x_carriage_pulley_offset = extrusion_length.y/2 - 12 - 5;
 
   // x/y coordinate of the x-carriage stack;
   carriage_stack = [position.x, x_carriage_pulley_offset];
 
   // Location of steppers in x
-  // FIXME: the offset is made up
-  stepper_location = extrusion_length.x/2 + 50;
+  // FIXME: the stepper offset and idler offset is made up
+  stepper_offset = 47;
+  stepper_location = extrusion_length.x/2 + stepper_offset;
+  idler_offset = 30;
 
   // Where to position the crossover
   // FIXME: this is a hack that doesn't account for the bed offset of geometry
@@ -32,8 +34,8 @@ module corexy_belts(position = [0, 0]) {
   lower_path = [
     [[carriage_stack.x, -carriage_stack.y], GT2x20_plain_idler, true, true], // front idler stack
     [[stepper_location, -carriage_stack.y-pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley)], GT2x16_pulley, false, true], // front stepper
-    [[-extrusion_length.x/2 - 30, -x_carriage_pulley_offset - 1*pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // front left idler
-    [[-extrusion_length.x/2 - 10, x_carriage_pulley_offset], GT2x20_toothed_idler, false, true], // rear left idler
+    [[-extrusion_length.x/2 - stepper_offset, -x_carriage_pulley_offset - 1*pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // front left idler
+    [[-extrusion_length.x/2 - idler_offset, x_carriage_pulley_offset], GT2x20_toothed_idler, false, true], // rear left idler
     [[carriage_stack.x, carriage_stack.y], GT2x20_toothed_idler, false, true],  // rear idler stack
     [[carriage_stack.x, ypos + 7], GT2x20_plain_idler, false, false],  // fake idler to offset belt
     [[carriage_stack.x, ypos - 7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
@@ -41,8 +43,8 @@ module corexy_belts(position = [0, 0]) {
 
   upper_path = [
     [[carriage_stack.x, -carriage_stack.y], GT2x20_toothed_idler, false, true], // front idler stack
-    [[-extrusion_length.x/2 - 10, -x_carriage_pulley_offset], GT2x20_toothed_idler, false, true], // front left idler
-    [[-extrusion_length.x/2 - 30, x_carriage_pulley_offset+1*pulley_pr(GT2x20_plain_idler)+pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // rear left idler
+    [[-extrusion_length.x/2 - idler_offset, -x_carriage_pulley_offset], GT2x20_toothed_idler, false, true], // front left idler
+    [[-extrusion_length.x/2 - stepper_offset, x_carriage_pulley_offset+1*pulley_pr(GT2x20_plain_idler)+pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // rear left idler
     [[stepper_location, carriage_stack.y+pulley_pr(GT2x20_plain_idler) + pulley_pr(GT2x16_pulley)], GT2x20um_pulley, false, true], // rear stepper
     [[carriage_stack.x, carriage_stack.y], GT2x20_plain_idler, true, true],  // rear idler stack
     [[carriage_stack.x, ypos + 7], GT2x20_plain_idler, true, false],  // fake idler to offset belt

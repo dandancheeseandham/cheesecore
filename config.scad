@@ -42,6 +42,8 @@ rc300zlt = [ extrusion15, [460, 425, 715], [400, 400, 700], [MGN12, MGN12, MGN12
 cc300zl  = [ extrusion20, [470, 425, 415], [450, 400, 400], [MGN12, MGN12, MGN12], 400, 10, 0.25*inch, RC300BED ];
 absurdo  = [ extrusion40, [470, 425, 415], [450, 400, 400], [MGN12, MGN12, MGN12], 400, 10, 0.25*inch, RC300BED ];
 
+dan300zl  = [ extrusion15, [470, 475, 415], [450, 450, 400], [MGN12, MGN12, MGN12], 400, 10, 0.25*inch, RC300BED ];
+
 model = rc300zl;
 //model = rc300zlt;
 //model = cc300zl;
