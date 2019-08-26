@@ -85,4 +85,9 @@ translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, 0]  )
   }
 }
 
-printer(render_electronics=false, position=[340, 300, -50]);
+
+//FIXME: x=80 is around X0, y=-20 is around Y0, z=-50 is around Z0
+printer(render_electronics=false, position=[80+150, -20+150, -50]);
+
+
+
