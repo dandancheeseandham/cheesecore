@@ -5,16 +5,16 @@ use <lib/holes.scad>
 use <lib/mirror.scad>
 
 
-hingewidth = 14;
+hingewidth = 16;
 hingelength = 120;
 mainchunkwidth= 24;
 mainchuncklength = 70;
 mainchunkremovalwidth=20;
 mainchunkremovallength=40;
-hingearmswidth=10;
-hingearmslength=20;
+hingearmswidth=8;
+hingearmslength=15;
 hingearmsheight=10;
-translate ([0,0,0]) import("/home/dan/Downloads/zlt_hinge_5mm_fixed_2.stl");
+#translate ([0,0,0]) import("railcorestls/lostapathy/zlt hinge 5mm fixed 2.stl");
 overlap=5;
 rounding=1;
 hingedepth=6;
@@ -22,14 +22,19 @@ hingedepth=6;
 
 
 
+translate ([-mainchunkwidth/2,-hingelength/2,0]) union()
+{
 
-roundedCube([hingewidth, hingelength, hingedepth], r=1, x=true, y=true, z=true);
+roundedCube([hingewidth, hingelength, hingedepth], r=rounding, x=true, y=true, z=true);
 
 
 translate ([0,hingelength/2-mainchuncklength/2,0]) roundedCube([hingewidth,mainchuncklength,hingearmsheight], r=rounding, x=true, y=true, z=true);
 translate ([hingewidth-overlap,hingelength/2-mainchuncklength/2,0]) roundedCube([hingearmswidth+overlap,hingearmslength,hingearmsheight], r=rounding, x=true, y=true, z=true);
 
 translate ([hingewidth-overlap,hingelength/2+mainchuncklength/2-hingearmslength,0]) roundedCube([hingearmswidth+overlap,hingearmslength,hingearmsheight], r=rounding, x=true, y=true, z=true);
+}
+
+
 
 /*
 	roundedCube() v1.0.3 by robert@cosmicrealms.com from https://github.com/Sembiance/openscad-modules
