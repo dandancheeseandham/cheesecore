@@ -3,38 +3,67 @@ include <config.scad>
 include <nopscadlib/core.scad>
 use <lib/holes.scad>
 use <lib/mirror.scad>
+use <screwholes.scad>
 
+front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_depth=5,screw_type=3); // ZL, 5mm acrylic
+*front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_depth=6,screw_type=3); // ZLTm 6mm acrylic
 
-hingewidth = 16;
-hingelength = 120;
-mainchunkwidth= 24;
-mainchuncklength = 70;
-mainchunkremovalwidth=20;
-mainchunkremovallength=40;
-hingearmswidth=8;
-hingearmslength=15;
-hingearmsheight=10;
-#translate ([0,0,0]) import("railcorestls/lostapathy/zlt hinge 5mm fixed 2.stl");
-overlap=5;
-rounding=1;
-hingedepth=6;
-
-
-
-
-translate ([-mainchunkwidth/2,-hingelength/2,0]) union()
+module front_panel_doors_hinge(screw_distance,acrylic_depth,screw_type)
 {
 
-roundedCube([hingewidth, hingelength, hingedepth], r=rounding, x=true, y=true, z=true);
+rounding=1.5;
+//consts
+hinge_arms_y = 14.75 ; // y size of arms
+door_hinge_x = 15 ;  // Part to bolt to panel X
+middle_hinge_z = 70 ;  // raised section z
+
+hole_distance_from_edge = 7.5 ;
+door_hinge_y = screw_distance + (hole_distance_from_edge * 2) ;
+
+door_hinge_z = 5.25 + (acrylic_depth-5)*2 ;  
+
+hinge_arms_x = 8.25 ;  //additional size for hinge arm 
+hinge_arms_z = 9.5 + (acrylic_depth-5)*2 ; 
+
+holeY = hinge_arms_x + 9.75 ;
+holeZ = hinge_arms_z - 3.63  ;
+
+extension = 5 ;
+
+// door_hinge_y = 122;  //ZLT
+// hinge_arms_x=8;  //additional size for hinge arm // ZLT
 
 
-translate ([0,hingelength/2-mainchuncklength/2,0]) roundedCube([hingewidth,mainchuncklength,hingearmsheight], r=rounding, x=true, y=true, z=true);
-translate ([hingewidth-overlap,hingelength/2-mainchuncklength/2,0]) roundedCube([hingearmswidth+overlap,hingearmslength,hingearmsheight], r=rounding, x=true, y=true, z=true);
+*import("railcorestls/lostapathy/zlt hinge 5mm fixed 2.stl");
+*translate ([-12.625,352,-6.25]) import("railcorestls/lostapathy/doors/railcore-hinge-panelside.stl");
+*translate ([-door_hinge_x/2-hinge_arms_x/2,-door_hinge_y/2,0]) cube ([door_hinge_x ,door_hinge_y,door_hinge_z]); //for measurement
 
-translate ([hingewidth-overlap,hingelength/2+mainchuncklength/2-hingearmslength,0]) roundedCube([hingearmswidth+overlap,hingearmslength,hingearmsheight], r=rounding, x=true, y=true, z=true);
+translate ([-door_hinge_x/2-hinge_arms_x/2,-door_hinge_y/2,0])
+difference()
+{
+union()
+{
+
+roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
+
+
+translate ([0,door_hinge_y/2-middle_hinge_z/2,0]) roundedCube([door_hinge_x + extension,middle_hinge_z,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+translate ([door_hinge_x-door_hinge_z,door_hinge_y/2-middle_hinge_z/2,0]) roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+
+translate ([door_hinge_x-door_hinge_z,door_hinge_y/2+middle_hinge_z/2-hinge_arms_y,0]) roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
 }
 
+// screwholes for panels
+translate ([door_hinge_x/2,hole_distance_from_edge,0]) screwholes(row_distance=screw_distance,numberofscrewholes=2,Mscrew=screw_type,screwhole_increase=0.25);
 
+//screwholes for panels2
+translate ([door_hinge_x/2,hole_distance_from_edge,60-hinge_arms_x + 5.25 ]) screwholes(row_distance=screw_distance,numberofscrewholes=2,Mscrew=screw_type,screwhole_increase=2.75);
+
+//screwhole for hinge
+translate ([holeY+ extension,50,holeZ]) rotate ([90,0,0]) singlescrewhole(3,0.25);
+}
+
+}
 
 /*
 	roundedCube() v1.0.3 by robert@cosmicrealms.com from https://github.com/Sembiance/openscad-modules

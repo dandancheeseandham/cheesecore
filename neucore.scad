@@ -41,7 +41,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
 
 // Y-rail
   // FIXME: x position here is an approximation to look decent
-#  translate ([-rail_length.x/2 + 3 + position.x, 0, extrusion_length.z/2 + extrusion_width / 2])
+  translate ([-rail_length.x/2 + 3 + position.x, 0, extrusion_length.z/2 + extrusion_width / 2])
     rotate([270, 0, 90])
       rail_wrapper(model[3].y,rail_length.y, position = position.y-150);
 
@@ -76,9 +76,9 @@ mirror_y() translate ([-rail_length.x/2+10 + position.x, extrusion_length.y/2-12
 
 
 //electronics box
-translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
+*translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
 
-*translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0,extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
+translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0,extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
 
 
   if(render_electronics)
