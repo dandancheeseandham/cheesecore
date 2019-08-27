@@ -14,7 +14,7 @@ module front_panel_doors_hinge(screw_distance,acrylic_depth,screw_type)
 rounding=1.5;
 //consts
 hinge_arms_y = 14.75 ; // y size of arms
-door_hinge_x = 15 ;  // Part to bolt to panel X
+door_hinge_x = extrusion_width(extrusion_type) ;  // Part to bolt to panel X - 15mm originally
 middle_hinge_z = 70 ;  // raised section z
 
 hole_distance_from_edge = 7.5 ;
@@ -35,7 +35,7 @@ extension = 5 ;
 
 
 // origin is edge and screwhole. Makes placing on panels easier
-translate ([0,-hole_distance_from_edge-screw_distance ,0 ])
+translate ([0,screw_distance-door_hinge_x,0 ])
 difference()
 {
 union()

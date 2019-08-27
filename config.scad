@@ -37,6 +37,7 @@ RC300BED = 42; // FIXME: build out an actual bed model
 //                                                                                          bed model
 //            0                1                2                      3    4   5          6         7
 rc300zl  = [ extrusion15, [460, 425, 415], [400, 400, 400], [MGN12, MGN12, MGN12], 400,  8, 0.25*inch, RC300BED ];
+rc300zl20  = [ extrusion20, [460, 425, 415], [400, 400, 400], [MGN12, MGN12, MGN12], 400,  8, 0.25*inch, RC300BED ];
 rc300zlt = [ extrusion15, [460, 425, 715], [400, 400, 700], [MGN12, MGN12, MGN12], 700,  8, 0.25*inch, RC300BED ];
 
 cc300zl  = [ extrusion20, [470, 425, 415], [450, 400, 400], [MGN12, MGN12, MGN12], 400, 10, 0.25*inch, RC300BED ];
