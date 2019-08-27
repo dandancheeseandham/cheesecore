@@ -34,23 +34,20 @@ extension = 5 ;
 // hinge_arms_x=8;  //additional size for hinge arm // ZLT
 
 
-*import("railcorestls/lostapathy/zlt hinge 5mm fixed 2.stl");
-*translate ([-12.625,352,-6.25]) import("railcorestls/lostapathy/doors/railcore-hinge-panelside.stl");
-*translate ([-door_hinge_x/2-hinge_arms_x/2,-door_hinge_y/2,0]) cube ([door_hinge_x ,door_hinge_y,door_hinge_z]); //for measurement
-
-translate ([-door_hinge_x/2-hinge_arms_x/2,-door_hinge_y/2,0])
+// origin is edge and screwhole. Makes placing on panels easier
+translate ([0,-hole_distance_from_edge-screw_distance ,0 ])
 difference()
 {
 union()
 {
 
-roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
+preview_roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
 
 
-translate ([0,door_hinge_y/2-middle_hinge_z/2,0]) roundedCube([door_hinge_x + extension,middle_hinge_z,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-translate ([door_hinge_x-door_hinge_z,door_hinge_y/2-middle_hinge_z/2,0]) roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+translate ([0,door_hinge_y/2-middle_hinge_z/2,0]) preview_roundedCube([door_hinge_x + extension,middle_hinge_z,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+translate ([door_hinge_x-door_hinge_z,door_hinge_y/2-middle_hinge_z/2,0]) preview_roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
 
-translate ([door_hinge_x-door_hinge_z,door_hinge_y/2+middle_hinge_z/2-hinge_arms_y,0]) roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+translate ([door_hinge_x-door_hinge_z,door_hinge_y/2+middle_hinge_z/2-hinge_arms_y,0]) preview_roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
 }
 
 // screwholes for panels
@@ -64,6 +61,13 @@ translate ([holeY+ extension,50,holeZ]) rotate ([90,0,0]) singlescrewhole(3,0.25
 }
 
 }
+
+module preview_roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef], $fn=128)
+{
+cube(dim);
+}
+
+
 
 /*
 	roundedCube() v1.0.3 by robert@cosmicrealms.com from https://github.com/Sembiance/openscad-modules
