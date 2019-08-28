@@ -27,6 +27,8 @@ module extrusion(extrusion_type, length, center=true) {
   extrusion_size = extrusion_width(extrusion_type);
   slot_width = extrusion_screw_size(extrusion_type);
 
+  assert(extrusion_size != undef, "Could not look up extrusion_size");
+
   color("silver") {
     linear_extrude(length, center=center) {
       extrusion_profile(extrusion_size, slot_width);
