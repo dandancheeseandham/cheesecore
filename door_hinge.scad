@@ -38,7 +38,7 @@ extension = 5 ;
 
 
 // origin is edge and screwhole. Makes placing on panels easier
-translate ([0,screw_distance-door_hinge_x,0 ])
+color(printed_part_color()) translate ([0,screw_distance-door_hinge_x,0 ])
 difference()
 {
 

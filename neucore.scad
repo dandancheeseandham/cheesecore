@@ -48,7 +48,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
 //hotend
 translate ([-rail_length.x/2+15 + position.x, position.y, extrusion_length.z/2 + extrusion_width / 2])
 translate ([-50,-150,20]) // FIXME: arbitary move to look decentish
-    rotate ([0,0,180]) hot_end(E3Dv6);
+    rotate ([0,0,180]) hot_end(E3Dv6, naked=true);
 
 //x-carriage temp object
 // 12 = rail size
@@ -68,7 +68,7 @@ mirror_y() translate ([-rail_length.x/2+10 + position.x, extrusion_length.y/2-12
     mirror_y() {
       translate([0, extrusion_length.y/2, 0])
         aluminium_motor_mount();
-      translate([49, extrusion_length.y/2-8, 0])  NEMA(NEMA17);
+      translate([49, -extrusion_length.y/2+8, 0])  NEMA(NEMA17);
     }
   }
 
@@ -92,6 +92,3 @@ translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, 0]  )
 
 //FIXME: x=80 is around X0, y=-20 is around Y0, z=-50 is around Z0
 printer(render_electronics=false, position=[130, -20+100, -50]);
-
-
-
