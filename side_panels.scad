@@ -96,12 +96,14 @@ module front_panel(Xwindowspacing,Zwindowspacingtop, Zwindowspacingbottom,screwh
 		  }
 
 // panel hinges
-distancefromedge=0 ; // FIXME : PLACEMENT IS OFF.
+distancefromedge=50 ; // FIXME : PLACEMENT IS OFF.
+panelrounding = 5;
+hole_distance_from_edge = 7.5 ;
 	 mirror_x() 
 mirror_y () {
 {
 //	translate([-(extrusion_length.x/2+extrusion_width(extrusion_type)),(extrusion_length.z+extrusion_width(extrusion_type))/2-distancefromedge,6]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_depth=5,screw_type=3); 
-	translate([-(extrusion_length.x/2+extrusion_width(extrusion_type)),0,6]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_depth=5,screw_type=3); 
+	translate([-(extrusion_length.x/2+extrusion_width(extrusion_type)),-(extrusion_length.y/2+extrusion_width(extrusion_type))-panelrounding/2+gapY+hole_distance_from_edge+distancefromedge ,6]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_depth=5,screw_type=3); 
 	}
 }	
 }

@@ -37,8 +37,8 @@ extension = 5 ;
 // hinge_arms_x=8;  //additional size for hinge arm // ZLT
 
 
-// origin is edge and screwhole. Makes placing on panels easier
-color(printed_part_color()) translate ([0,screw_distance-door_hinge_x,0 ])
+// origin is edge and screwhole. Makes placing on panels easier - screw_distance-door_hinge_x
+color(printed_part_color()) translate ([0,-door_hinge_y+hole_distance_from_edge,0 ])
 difference()
 {
 
