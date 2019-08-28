@@ -91,4 +91,20 @@ translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, 0]  )
 
 
 //FIXME: x=80 is around X0, y=-20 is around Y0, z=-50 is around Z0
-printer(render_electronics=false, position=[130, -20+100, -50]);
+//printer(render_electronics=false, position=[130, -20+100, -50]);
+
+
+module rc300zl(position = [0, 0, 0]) {
+  $extrusion_type = extrusion15;
+  // TODO: perhaps extract out wrappers for "common" parts like frame_and_sides or something?
+  frame();
+}
+
+module rc300zl40(position = [0, 0, 0]) {
+  $extrusion_type = extrusion40;
+  frame();
+}
+
+rc300zl();
+
+translate([550, 0, 0]) rc300zl40();
