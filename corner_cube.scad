@@ -1,6 +1,6 @@
 include <config.scad>
 
-module corner_cube(extrusion_type) {
+module corner_cube(extrusion_type = $extrusion_type) {
   extrusion = extrusion_width(extrusion_type);
   color("#333333") {
     difference() {
