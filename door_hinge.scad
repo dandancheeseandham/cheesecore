@@ -5,10 +5,13 @@ use <lib/holes.scad>
 use <lib/mirror.scad>
 use <screwholes.scad>
 
-front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_depth=5,screw_type=3); // ZL, 5mm acrylic
-*front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_depth=6,screw_type=3); // ZLTm 6mm acrylic
 
-module front_panel_doors_hinge(screw_distance,acrylic_depth,screw_type)
+
+*front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_depth=5,screw_type=3,preview = false); // ZL, 5mm acrylic
+front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_depth=6,screw_type=3,preview = true); // ZLTm 6mm acrylic
+
+
+module front_panel_doors_hinge(screw_distance,acrylic_depth,screw_type,preview)
 {
 
 rounding=1.5;
@@ -22,10 +25,10 @@ door_hinge_y = screw_distance + (hole_distance_from_edge * 2) ;
 
 door_hinge_z = 5.25 + (acrylic_depth-5)*2 ;  
 
-hinge_arms_x = 8.25 ;  //additional size for hinge arm 
+hinge_arms_x = 8.25  ;  //additional size for hinge arm .. 
 hinge_arms_z = 9.5 + (acrylic_depth-5)*2 ; 
 
-holeY = hinge_arms_x + 9.75 ;
+holeY = hinge_arms_x + 9.75 + 1;  //FIXME: added 1 for fitting ??? made 10.75 instead of 9.75 to fit better - strange it's diverged from original? 
 holeZ = hinge_arms_z - 3.63  ;
 
 extension = 5 ;
@@ -38,24 +41,35 @@ extension = 5 ;
 translate ([0,screw_distance-door_hinge_x,0 ])
 difference()
 {
+
+if (preview==false)   
+{
 union()
 {
-
+roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
+translate ([0,door_hinge_y/2-middle_hinge_z/2,0]) roundedCube([door_hinge_x + extension,middle_hinge_z,hinge_arms_z], r=rounding, x=true, y=true, z=true); 
+translate ([door_hinge_x-door_hinge_z,door_hinge_y/2-middle_hinge_z/2,0]) roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+translate ([door_hinge_x-door_hinge_z,door_hinge_y/2+middle_hinge_z/2-hinge_arms_y,0]) roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+}
+}
+else
+{
+union()
+{
 preview_roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
-
-
-translate ([0,door_hinge_y/2-middle_hinge_z/2,0]) preview_roundedCube([door_hinge_x + extension,middle_hinge_z,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+translate ([0,door_hinge_y/2-middle_hinge_z/2,0]) preview_roundedCube([door_hinge_x + extension,middle_hinge_z,hinge_arms_z], r=rounding, x=true, y=true, z=true); 
 translate ([door_hinge_x-door_hinge_z,door_hinge_y/2-middle_hinge_z/2,0]) preview_roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-
 translate ([door_hinge_x-door_hinge_z,door_hinge_y/2+middle_hinge_z/2-hinge_arms_y,0]) preview_roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
 }
+}
+
+
+
 
 // screwholes for panels
 translate ([door_hinge_x/2,hole_distance_from_edge,0]) screwholes(row_distance=screw_distance,numberofscrewholes=2,Mscrew=screw_type,screwhole_increase=0.25);
-
 //screwholes for panels2
 translate ([door_hinge_x/2,hole_distance_from_edge,60-hinge_arms_x + 5.25 ]) screwholes(row_distance=screw_distance,numberofscrewholes=2,Mscrew=screw_type,screwhole_increase=2.75);
-
 //screwhole for hinge
 translate ([holeY+ extension,50,holeZ]) rotate ([90,0,0]) singlescrewhole(3,0.25);
 }
@@ -120,6 +134,8 @@ translate([40, 0, 0]) { roundedCube([5, 10, 4], r=1, x=true, y=true, z=true); }
 
 
 module roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef], $fn=128)
+
+
 {
 	translate([(center==true ? (-(dim[0]/2)) : 0), (center==true ? (-(dim[1]/2)) : 0), (center==true ? (-(dim[2]/2)) : 0)])
 	{
@@ -187,3 +203,67 @@ module meniscus(h, r, fn=128)
 }
 
 module rotateAround(a, v) { translate(v) { rotate(a) { translate(-v) { children(); } } } }
+
+
+
+
+
+// More information: https://danielupshaw.com/openscad-rounded-corners/
+//module roundedcube(size = [1, 1, 1], center = false, radius = 0.5, apply_to = "all") {
+
+
+module roundedcube(size = [1, 1, 1], r = 0.5, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef]) {
+
+apply_to = "all";
+radius  = r;
+
+	// If single value, convert to [x, y, z] vector
+	size = (size[0] == undef) ? [size, size, size] : size;
+
+	translate_min = radius;
+	translate_xmax = size[0] - radius;
+	translate_ymax = size[1] - radius;
+	translate_zmax = size[2] - radius;
+
+	diameter = radius * 2;
+
+	obj_translate = (center == false) ?
+		[0, 0, 0] : [
+			-(size[0] / 2),
+			-(size[1] / 2),
+			-(size[2] / 2)
+		];
+
+	translate(v = obj_translate) {
+		hull() {
+			for (translate_x = [translate_min, translate_xmax]) {
+				x_at = (translate_x == translate_min) ? "min" : "max";
+				for (translate_y = [translate_min, translate_ymax]) {
+					y_at = (translate_y == translate_min) ? "min" : "max";
+					for (translate_z = [translate_min, translate_zmax]) {
+						z_at = (translate_z == translate_min) ? "min" : "max";
+
+						translate(v = [translate_x, translate_y, translate_z])
+						if (
+							(apply_to == "all") ||
+							(apply_to == "xmin" && x_at == "min") || (apply_to == "xmax" && x_at == "max") ||
+							(apply_to == "ymin" && y_at == "min") || (apply_to == "ymax" && y_at == "max") ||
+							(apply_to == "zmin" && z_at == "min") || (apply_to == "zmax" && z_at == "max")
+						) {
+							sphere(r = radius);
+						} else {
+							rotate = 
+								(apply_to == "xmin" || apply_to == "xmax" || apply_to == "x") ? [0, 90, 0] : (
+								(apply_to == "ymin" || apply_to == "ymax" || apply_to == "y") ? [90, 90, 0] :
+								[0, 0, 0]
+							);
+							rotate(a = rotate)
+							cylinder(h = diameter, r = radius, center = true);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
