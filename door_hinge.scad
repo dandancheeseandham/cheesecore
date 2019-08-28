@@ -5,11 +5,8 @@ use <lib/holes.scad>
 use <lib/mirror.scad>
 use <screwholes.scad>
 
-
-
 *front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_depth=5,screw_type=3,preview = false); // ZL, 5mm acrylic
-front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_depth=6,screw_type=3,preview = true); // ZLTm 6mm acrylic
-
+front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_depth=6,screw_type=3,preview = false); // ZLTm 6mm acrylic
 
 module front_panel_doors_hinge(screw_distance,acrylic_depth,screw_type,preview)
 {
@@ -28,7 +25,7 @@ door_hinge_z = 5.25 + (acrylic_depth-5)*2 ;
 hinge_arms_x = 8.25  ;  //additional size for hinge arm .. 
 hinge_arms_z = 9.5 + (acrylic_depth-5)*2 ; 
 
-holeY = hinge_arms_x + 9.75 + 1;  //FIXME: added 1 for fitting ??? made 10.75 instead of 9.75 to fit better - strange it's diverged from original? 
+holeY = hinge_arms_x + 9.75 ;  //FIXME: added 1 for fitting ??? made 10.75 instead of 9.75 to fit better - strange it's diverged from original? 
 holeZ = hinge_arms_z - 3.63  ;
 
 extension = 5 ;
