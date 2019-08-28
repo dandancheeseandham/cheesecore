@@ -5,6 +5,8 @@ use <lib/holes.scad>
 use <lib/mirror.scad>
 use <door_hinge.scad>
 
+distancefromedge = 50 ; // FIXME : Where should this go?
+
 module motorholes() {
   NEMAhole=NEMA_boss_radius(NEMA17) * 2 + 1;
   cylinder(h=15, d=NEMAhole);
@@ -20,8 +22,8 @@ module screwholes(x, y,screwholesX,screwholesY) {
  
  screwholeradius = clearance_hole_size(extrusion_screw_size($extrusion_type)) / 2;
 // gap is calculated as "first hole is 50mm from the edge, and last hole is 50mm from the other edge. Evenly space the rest of the holes."
- gapX=(x-100)/(screwholesX-1);
- gapY=(y-100)/(screwholesY-1);
+ gapX=(x-(distancefromedge*2))/(screwholesX-1);
+ gapY=(y-(distancefromedge*2))/(screwholesY-1);
    
   mirror_y() {
     for (a =[0:(screwholesX-1)]) {
@@ -53,8 +55,7 @@ module panel(x, y, thickness,screwholesX,screwholesY,panelcornerrounding)
 
 
 module bottom_panel() {
-  
-    difference() {
+      difference() {
       panel((extrusion_length.x + extrusion_width($extrusion_type)*2), (extrusion_length.y + extrusion_width(extrusion_type)*2), paneldepth,5,5,5);
 
       color(panel_color_holes()) {
@@ -80,13 +81,10 @@ module bottom_panel() {
 
 module front_panel(Xwindowspacing,Zwindowspacingtop, Zwindowspacingbottom,screwhole_X, screwhole_Y, corner_radius) {
 
-  windowwidth = (extrusion_length.x+extrusion_width($extrusion_type)*2) - (Xwindowspacing*2);
-  windowheight = (extrusion_length.z+extrusion_width($extrusion_type)*2) - (Zwindowspacingtop+Zwindowspacingbottom);
-  
-   gapY=((extrusion_length.z+extrusion_width($extrusion_type)*2)-100)/(screwhole_Y-1);
- echo (gapY);
-  
-  
+windowwidth = (extrusion_length.x+extrusion_width($extrusion_type)*2) - (Xwindowspacing*2);
+windowheight = (extrusion_length.z+extrusion_width($extrusion_type)*2) - (Zwindowspacingtop+Zwindowspacingbottom);
+
+gapY=((extrusion_length.z+extrusion_width($extrusion_type)*2)-distancefromedge*2)/(screwhole_Y-1);
       difference() {
       panel((extrusion_length.x+extrusion_width($extrusion_type)*2),(extrusion_length.z+extrusion_width(extrusion_type)*2),paneldepth,screwhole_X,screwhole_Y,corner_radius);
       
@@ -96,8 +94,8 @@ module front_panel(Xwindowspacing,Zwindowspacingtop, Zwindowspacingbottom,screwh
       }
 
 // panel hinges
-distancefromedge=50 ; // FIXME : PLACEMENT IS OFF.
-panelrounding = 5;
+
+panelrounding = 5 ;
 hole_distance_from_edge = 7.5 ;
 	 mirror_x() 
 mirror_y () {
