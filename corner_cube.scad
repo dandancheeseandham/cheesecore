@@ -1,6 +1,7 @@
 include <config.scad>
 
-module corner_cube(extrusion_type) {
+module corner_cube(extrusion_type = $extrusion_type) {
+  assert(extrusion_width(extrusion_type) != undef, "Must pass a valid extrusion type");
 
   color("#333333") {
     difference() {

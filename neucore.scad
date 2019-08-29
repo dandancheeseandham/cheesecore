@@ -15,23 +15,26 @@ use <aluminium_motormount.scad>
 use <electronicsbox_panels.scad>
 use <electronics_box_contents.scad>
 use <x-carriage.scad>
+use <validation.scad>
 
 $fullrender=false;
 
-
-module printer(render_electronics=false, position=[0, 0, 0]) {  
-    
-  extrusion_width = extrusion_width(extrusion_type);
-
-  frame(extrusion_type);
-  feet(extrusion_type, height=50);
-  z_towers(extrusion_type, model[3].z, z_position = position[2]);
+module enclosure(){
+  frame();
   all_side_panels();
+  feet($extrusion_type, height=50);
+}
+
+module printer(render_electronics=false, position=[0, 0, 0]) {
+  extrusion_width = extrusion_width();
+  enclosure();
+
+  z_towers(model[3].z, z_position = position[2]);
   // FIXME: this is not a final height for belts
   translate ([0, 0, extrusion_length.z/2 + extrusion_width + 20]) corexy_belts([position.x-210, position.y]);
 
 // bed
-  // FIXME: This placement of the bed is arbitrary in z, but linked to  
+  // FIXME: This placement of the bed is arbitrary in z, but linked to
   // "position = rail_length.z/2-50-z_position;" in z-tower
   translate ([bed_offset.x, bed_offset.y, extrusion_length.z/2 - position.z - 111]) bed();
 
@@ -53,8 +56,7 @@ translate ([-50,-150,20]) // FIXME: arbitary move to look decentish
 //x-carriage temp object
 // 12 = rail size
 
-mirror_y() translate ([-rail_length.x/2+10 + position.x, extrusion_length.y/2-12, extrusion_length.z/2 + extrusion_width / 2]) x_carriage();   
-    
+mirror_y() translate ([-rail_length.x/2+10 + position.x, extrusion_length.y/2-12, extrusion_length.z/2 + extrusion_width / 2]) x_carriage();
   // Idler mounts
   translate ([-extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion_width]) {
     mirror_y() {
@@ -72,39 +74,38 @@ mirror_y() translate ([-rail_length.x/2+10 + position.x, extrusion_length.y/2-12
     }
   }
 
-
-
-
 //electronics box
-*translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
+*translate([extrusion_length.x/2+6+extrusion_width($extrusion_type), 0, extrusion_width($extrusion_type)]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
 
-translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0,extrusion_width(extrusion_type)]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
+translate([extrusion_length.x/2+6+extrusion_width(), 0,extrusion_width()]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
 
 
   if(render_electronics)
   {
     // FIXME - should not need to translate here just by paneldepth
-translate([extrusion_length.x/2+6+extrusion_width(extrusion_type), 0, 0]  )
+translate([extrusion_length.x/2+6+extrusion_width(), 0, 0]  )
       electronics_box_contents();
   }
 }
 
-
 //FIXME: x=80 is around X0, y=-20 is around Y0, z=-50 is around Z0
 //printer(render_electronics=false, position=[130, -20+100, -50]);
-
 
 module rc300zl(position = [0, 0, 0]) {
   $extrusion_type = extrusion15;
   // TODO: perhaps extract out wrappers for "common" parts like frame_and_sides or something?
-  frame();
+  validate();
+  enclosure();
+  //printer();
 }
 
 module rc300zl40(position = [0, 0, 0]) {
   $extrusion_type = extrusion40;
-  frame();
+  validate();
+  enclosure();
+  //printer();
 }
 
-rc300zl();
-
-translate([550, 0, 0]) rc300zl40();
+printer($extrusion_type = extrusion15);
+translate([600, 0, 0]) rc300zl();
+*translate([1250, 0, 0]) rc300zl40();

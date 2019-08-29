@@ -5,7 +5,7 @@ use <corner_cube.scad>
 use <lib/mirror.scad>
 
 // FIXME: this may need to be copied into each module, or wrapped in a function
-offset = extrusion_width($extrusion_type) / 2;
+offset = extrusion_width() / 2;
 
 module z_extrusions() {
   mirror_xy() {

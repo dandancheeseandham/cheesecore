@@ -20,21 +20,21 @@ module motorholes() {
 // Holes to mount panels to extrusion
 module screwholes(x, y,screwholesX,screwholesY) {
  
- screwholeradius = clearance_hole_size(extrusion_screw_size($extrusion_type)) / 2;
+ screwholeradius = clearance_hole_size(extrusion_screw_size()) / 2;
 // gap is calculated as "first hole is 50mm from the edge, and last hole is 50mm from the other edge. Evenly space the rest of the holes."
  gapX=(x-(distancefromedge*2))/(screwholesX-1);
  gapY=(y-(distancefromedge*2))/(screwholesY-1);
    
   mirror_y() {
     for (a =[0:(screwholesX-1)]) {
-     translate ([-x/2 + panel_screw_offset+(gapX*a),y/2 - extrusion_width($extrusion_type)/2,-paneldepth/2])
+     translate ([-x/2 + panel_screw_offset()+(gapX*a),y/2 - extrusion_width()/2,-paneldepth/2])
         cylinder(h=paneldepth *2, r=screwholeradius);
     }
   }
 
   mirror_x() {
     for (a =[0:(screwholesY-1)]) {
-     translate ([x/2 - extrusion_width($extrusion_type)/2,-y/2 + panel_screw_offset+(gapY*a),-paneldepth/2])
+     translate ([x/2 - extrusion_width()/2,-y/2 + panel_screw_offset()+(gapY*a),-paneldepth/2])
         cylinder(h=paneldepth *2, r=screwholeradius);
     }
   }
@@ -56,7 +56,7 @@ module panel(x, y, thickness,screwholesX,screwholesY,panelcornerrounding)
 
 module bottom_panel() {
       difference() {
-      panel((extrusion_length.x + extrusion_width($extrusion_type)*2), (extrusion_length.y + extrusion_width(extrusion_type)*2), paneldepth,5,5,5);
+      panel((extrusion_length.x + extrusion_width()*2), (extrusion_length.y + extrusion_width()*2), paneldepth,5,5,5);
 
       color(panel_color_holes()) {
         translate([bed_offset.x, bed_offset.y, 0]) {
@@ -80,17 +80,21 @@ module bottom_panel() {
 }
 
 module front_panel(Xwindowspacing,Zwindowspacingtop, Zwindowspacingbottom,screwhole_X, screwhole_Y, corner_radius) {
+assert(Xwindowspacing >= extrusion_width(), str("Window cannot overlap extrusion in X: ", Xwindowspacing, " vs ", extrusion_width()));
+assert(Zwindowspacingtop >= extrusion_width(), "Window cannot overlap extrusion in Z");
+assert(Zwindowspacingbottom >= extrusion_width(), "Window cannot overlap extrusion in Z");
 
-windowwidth = (extrusion_length.x+extrusion_width($extrusion_type)*2) - (Xwindowspacing*2);
-windowheight = (extrusion_length.z+extrusion_width($extrusion_type)*2) - (Zwindowspacingtop+Zwindowspacingbottom);
+windowwidth = (extrusion_length.x+extrusion_width()*2) - (Xwindowspacing*2);
+windowheight = (extrusion_length.z+extrusion_width()*2) - (Zwindowspacingtop+Zwindowspacingbottom);
 
-gapY=((extrusion_length.z+extrusion_width($extrusion_type)*2)-distancefromedge*2)/(screwhole_Y-1);
+gapY=((extrusion_length.z+extrusion_width()*2)-distancefromedge*2)/(screwhole_Y-1);
       difference() {
-      panel((extrusion_length.x+extrusion_width($extrusion_type)*2),(extrusion_length.z+extrusion_width(extrusion_type)*2),paneldepth,screwhole_X,screwhole_Y,corner_radius);
-      
+      panel((extrusion_length.x+extrusion_width()*2),(extrusion_length.z+extrusion_width()*2),paneldepth,screwhole_X,screwhole_Y,corner_radius);
+
       color(panel_color_holes())
-        translate ([0, 0, paneldepth/2])
-          rounded_rectangle([windowwidth,windowheight,paneldepth+epsilon], corner_radius);
+        translate ([0, 0, paneldepth/2 + epsilon])
+          // FIXME - this is still goofy with the 5* epsilon
+          rounded_rectangle([windowwidth,windowheight,paneldepth+5*epsilon], corner_radius);
       }
 
 // panel hinges
@@ -100,46 +104,45 @@ hole_distance_from_edge = 7.5 ;
 	 mirror_x() 
 mirror_y () {
 {
-//	translate([-(extrusion_length.x/2+extrusion_width(extrusion_type)),(extrusion_length.z+extrusion_width(extrusion_type))/2-distancefromedge,6]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_depth=5,screw_type=3); 
-	translate([-(extrusion_length.x/2+extrusion_width(extrusion_type)),-(extrusion_length.y/2+extrusion_width(extrusion_type))-panelrounding/2+gapY+hole_distance_from_edge+distancefromedge ,6]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_depth=5,screw_type=3); 
+//	translate([-(extrusion_length.x/2+extrusion_width()),(extrusion_length.z+extrusion_width())/2-distancefromedge,6]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_depth=5,screw_type=3); 
+	translate([-(extrusion_length.x/2+extrusion_width()),-(extrusion_length.y/2+extrusion_width())-panelrounding/2+gapY+hole_distance_from_edge+distancefromedge ,6]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_depth=5,screw_type=3); 
 	}
 }	
 }
 
 
 module left_panel() {
-      panel((extrusion_length.y+extrusion_width($extrusion_type)*2),(extrusion_length.z+extrusion_width(extrusion_type)*2),paneldepth,5,5,5);
+      panel((extrusion_length.y+extrusion_width()*2),(extrusion_length.z+extrusion_width()*2),paneldepth,5,5,5);
 }
 
 module right_panel() {
-      panel((extrusion_length.y+extrusion_width($extrusion_type)*2),(extrusion_length.z+extrusion_width(extrusion_type)*2),paneldepth,5,5,5);
+      panel((extrusion_length.y+extrusion_width()*2),(extrusion_length.z+extrusion_width()*2),paneldepth,5,5,5);
 }
 
 module back_panel(){
-
-      panel((extrusion_length.x+extrusion_width($extrusion_type)*2),(extrusion_length.z+extrusion_width(extrusion_type)*2),paneldepth,5,5,5);
+      panel((extrusion_length.x+extrusion_width()*2),(extrusion_length.z+extrusion_width()*2),paneldepth,5,5,5);
 }
 
 
 module all_side_panels()
 {
-translate([0, 0, -(extrusion_length.z+extrusion_width($extrusion_type)*2)/2 -paneldepth]) bottom_panel();
-translate([0, -(extrusion_length.y+extrusion_width($extrusion_type)*2)/2, 0]) rotate([90,0,0]) front_panel(Xwindowspacing=35,Zwindowspacingtop=25, Zwindowspacingbottom=35,screwhole_X = 5, screwhole_Y = 5, corner_radius = 5); // ZL spacing
-// translate([0, -(extrusion_length.y+extrusion_width($extrusion_type)*2)/2, 0]) rotate([90,0,0]) front_panel(Xwindowspacing=35,Zwindowspacingtop=50, Zwindowspacingbottom=50,screwhole_X = 7, screwhole_Y = 5, corner_radius = 5); // ZLT spacing
-translate([-(extrusion_length.x+extrusion_width($extrusion_type)*2)/2-paneldepth,0,0]) rotate([90,0,90]) left_panel();
-translate ([(extrusion_length.x+extrusion_width($extrusion_type)*2)/2,0,0]) rotate([90,0,90]) right_panel();
-translate ([0,(extrusion_length.y+extrusion_width($extrusion_type)*2)/2+paneldepth,0]) rotate([90,0,0]) back_panel();
+translate([0, 0, -(extrusion_length.z+extrusion_width()*2)/2 -paneldepth]) bottom_panel();
+translate([0, -(extrusion_length.y+extrusion_width()*2)/2, 0]) rotate([90,0,0]) front_panel(Xwindowspacing=35,Zwindowspacingtop=25, Zwindowspacingbottom=35,screwhole_X = 5, screwhole_Y = 5, corner_radius = 5); // ZL spacing
+// translate([0, -(extrusion_length.y+extrusion_width()*2)/2, 0]) rotate([90,0,0]) front_panel(Xwindowspacing=35,Zwindowspacingtop=50, Zwindowspacingbottom=50,screwhole_X = 7, screwhole_Y = 5, corner_radius = 5); // ZLT spacing
+translate([-(extrusion_length.x+extrusion_width()*2)/2-paneldepth,0,0]) rotate([90,0,90]) left_panel();
+translate ([(extrusion_length.x+extrusion_width()*2)/2,0,0]) rotate([90,0,90]) right_panel();
+translate ([0,(extrusion_length.y+extrusion_width()*2)/2+paneldepth,0]) rotate([90,0,0]) back_panel();
 }
 
 module all_side_panels_dxf()
 {
 projection(cut = true) translate([0, 0, 0]) bottom_panel();
-projection(cut = true) translate([0, -(extrusion_length.y+extrusion_width($extrusion_type)*2)-30, -6])  bottom_panel();
-projection(cut = true) translate([0, -(extrusion_length.y+extrusion_width($extrusion_type)*2)*2-30, 0])  front_panel(Xwindowspacing=35,Zwindowspacingtop=25, Zwindowspacingbottom=35,screwhole_X = 5, screwhole_Y = 5, corner_radius = 5); // ZL spacing
-// projection(cut = true) translate([0, -(extrusion_length.y+extrusion_width($extrusion_type)*2)*2-30, 0])  front_panel(Xwindowspacing=35,Zwindowspacingtop=50, Zwindowspacingbottom=50,screwhole_X = 5, screwhole_Y = 7, corner_radius = 5) // ZLT spacing
-projection(cut = true) translate([-(extrusion_length.x+extrusion_width($extrusion_type)*2)-30,0,0])  left_panel();
-projection(cut = true) translate ([(extrusion_length.x+extrusion_width($extrusion_type)*2)+30,0,0])  right_panel();
-projection(cut = true) translate ([0,(extrusion_length.y+extrusion_width($extrusion_type)*2)+30,0])  back_panel();   
+projection(cut = true) translate([0, -(extrusion_length.y+extrusion_width()*2)-30, -6])  bottom_panel();
+projection(cut = true) translate([0, -(extrusion_length.y+extrusion_width()*2)*2-30, 0])  front_panel(Xwindowspacing=35,Zwindowspacingtop=25, Zwindowspacingbottom=35,screwhole_X = 5, screwhole_Y = 5, corner_radius = 5); // ZL spacing
+// projection(cut = true) translate([0, -(extrusion_length.y+extrusion_width()*2)*2-30, 0])  front_panel(Xwindowspacing=35,Zwindowspacingtop=50, Zwindowspacingbottom=50,screwhole_X = 5, screwhole_Y = 7, corner_radius = 5) // ZLT spacing
+projection(cut = true) translate([-(extrusion_length.x+extrusion_width()*2)-30,0,0])  left_panel();
+projection(cut = true) translate ([(extrusion_length.x+extrusion_width()*2)+30,0,0])  right_panel();
+projection(cut = true) translate ([0,(extrusion_length.y+extrusion_width()*2)+30,0])  back_panel();   
 }
 
 //all_side_panels_dxf();

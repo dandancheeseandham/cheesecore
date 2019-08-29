@@ -10,7 +10,7 @@ include <screwholes.scad>
 // Origin is at the inside corner where the extrusions meet under the mount
 module aluminium_idler_mount() 
 {
-extrusion = extrusion_width(extrusion_type);
+extrusion = extrusion_width($extrusion_type);
 extrusion_screwholes_x = 48.52 ;
 extrusion_screwholes_y = 49.2 ;
 extrusion_adjust_x= 71 ;

@@ -43,8 +43,8 @@ module z_tower(extrusion_type, rail_type_z, z_position=0) {
     anti_backlash_nut(8);
 
   // FIXME: this z position is fake, just to make it look decent-ish
-  translate([-extrusion_width-carriage_height(carriage_type_z), leadscrew_y_offset, rail_length.z - z_position - 75])
-    z_yoke(extrusion_type);
+  translate([-extrusion_width-carriage_height(rail_carriage(rail_type_z)), leadscrew_y_offset, rail_length.z - z_position - 75])
+    z_yoke();
 
   translate ([-leadscrew_x_offset, 0,couplerheight])
     coupler();
@@ -59,11 +59,11 @@ module z_tower(extrusion_type, rail_type_z, z_position=0) {
         z_bracket(extrusion_type);
 }
 
-module z_towers(extrusion_type, rail_type_z, z_position = 0) {
-  translate([bed_offset.x, bed_offset.y, -extrusion_length.z/2 - extrusion_width(extrusion_type)]) {
-    translate([extrusion_length.x/2, 0, 0]) z_tower(extrusion_type, rail_type_z, z_position);
+module z_towers(rail_type_z, z_position = 0) {
+  translate([bed_offset.x, bed_offset.y, -extrusion_length.z/2 - extrusion_width($extrusion_type)]) {
+    translate([extrusion_length.x/2, 0, 0]) z_tower($extrusion_type, rail_type_z, z_position);
     mirror_y() {
-      translate([-extrusion_length.x/2, 255/2, 0]) rotate([0,0,180]) z_tower(extrusion_type, rail_type_z, z_position);
+      translate([-extrusion_length.x/2, 255/2, 0]) rotate([0,0,180]) z_tower($extrusion_type, rail_type_z, z_position);
     }
   }
 }

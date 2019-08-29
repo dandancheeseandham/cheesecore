@@ -19,7 +19,7 @@ hinge_arms_x = 8.25  ;  // size for hinge arm ..
 hinge_arms_y = 14.75 ; // y size of arms - Standard for hinges
 hinge_arms_z = 4.5 + acrylic_depth ;
 
-door_hinge_x = extrusion_width(extrusion_type) ;
+door_hinge_x = extrusion_width($extrusion_type) ;
 door_hinge_y = screw_distance + (hole_distance_from_edge * 2) ;
 door_hinge_z = 0.25 + acrylic_depth ; 
 

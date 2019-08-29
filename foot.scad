@@ -9,8 +9,8 @@ panel_outside_radius=5; // FIXME: this needs unified with panel
 // FIXME: Could add some fileting?
 
 // Modeled this foot upside down both for easier printing and because it's a little easier to think about.
-module inverted_foot(extrusion_type, height) {
-  extrusion = extrusion_width(extrusion_type);
+module inverted_foot(height) {
+  extrusion = extrusion_width($extrusion_type);
   assert(extrusion != undef, "Unable to figure out extrusion size");
   color(printed_part_color())
   difference() {
@@ -22,14 +22,14 @@ module inverted_foot(extrusion_type, height) {
             translate([panel_outside_radius, panel_outside_radius])
               circle(r=panel_outside_radius);
 
-            translate([panel_screw_offset, panel_outside_radius])
+            translate([panel_screw_offset(), panel_outside_radius])
               circle(r=panel_outside_radius);
-            translate([panel_screw_offset, extrusion-panel_outside_radius])
+            translate([panel_screw_offset(), extrusion-panel_outside_radius])
               circle(r=panel_outside_radius);
 
-            translate([panel_outside_radius, panel_screw_offset])
+            translate([panel_outside_radius, panel_screw_offset()])
               circle(r=panel_outside_radius);
-            translate([extrusion-panel_outside_radius, panel_screw_offset])
+            translate([extrusion-panel_outside_radius, panel_screw_offset()])
               circle(r=panel_outside_radius);
           }
         }
@@ -43,31 +43,32 @@ module inverted_foot(extrusion_type, height) {
     // FIXME: Need to add counterbore for mounting screws
     // FIXME:  This should be modeled using a hole and not a cylinder
     // z=5 is the thickness of the straight-walled base
-    translate([panel_screw_offset, extrusion/2, 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
-    translate([extrusion/2, panel_screw_offset, 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
+    translate([panel_screw_offset(), extrusion/2, 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
+    translate([extrusion/2, panel_screw_offset(), 5]) clearance_hole_with_counterbore(h=5+epsilon, nominal_d=3);
   }
 }
 
 module foot_base_profile(extrusion_width) {
+  // FIXME: what is the magic 15 in these?
   assert(extrusion_width != undef, "Must specify extrusion_width");
   hull() {
     translate([panel_outside_radius, panel_outside_radius])
       circle(r=panel_outside_radius);
 
-    translate([panel_screw_offset-15, panel_outside_radius])
+    translate([panel_screw_offset()-15, panel_outside_radius])
       circle(r=panel_outside_radius);
-    translate([panel_screw_offset-15, extrusion_width- panel_outside_radius])
+    translate([panel_screw_offset()-15, extrusion_width- panel_outside_radius])
       circle(r=panel_outside_radius);
 
-    translate([panel_outside_radius, panel_screw_offset-15])
+    translate([panel_outside_radius, panel_screw_offset()-15])
       circle(r=panel_outside_radius);
-    translate([extrusion_width - panel_outside_radius, panel_screw_offset-15])
+    translate([extrusion_width - panel_outside_radius, panel_screw_offset()-15])
       circle(r=panel_outside_radius);
   }
 }
 
 module foot(extrusion_type, height) {
-  translate([0, 0, height]) mirror([0,0,-1]) inverted_foot(extrusion_type, height);
+  translate([0, 0, height]) mirror([0,0,-1]) inverted_foot(height);
 }
 
 module feet(extrusion_type, height = 50) {
