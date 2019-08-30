@@ -18,6 +18,8 @@ function extrusion_screw_size(extrusion_type = $extrusion_type) = extrusion_type
 
 // Still need to clean up everything below here
 
+$extrusion_type = extrusion15; // temp to fix issues with all standalone files needing an extrusion.
+
 bed_offset = [0, -25]; // How far to offset the bed from center of frame
 
 couplerheight=5;  //a height for coupler
