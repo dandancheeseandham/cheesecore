@@ -53,11 +53,14 @@ model = rc300zl ;
 //model = cc300zl;
 //model = absurdo; leadscrew_y_offset= 40;
 
+$extrusion_type = model[0]; // FIXME:  to temporarily fix issues with all standalone files needing an extrusion.
+
 extrusion_length = model[1];
 rail_length = model[2];
 leadscrew_length = model[4];
 paneldepth = model[6];
-$extrusion_type = extrusion15; // temp to fix issues with all standalone files needing an extrusion.
+
+
 
 rail_type_z = model[3].z;
 
