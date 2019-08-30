@@ -21,8 +21,8 @@ tap_hole = 2 ; // size of hole for shouldbolts
 rounding= 3 ;
 
 // size of main square of body
-main_body_size_x = 32 ;
-main_body_size_y= 53 ;
+main_body_size_x = 57 ;
+main_body_size_y= 57 ;
 // size of little extension for adjustment hole
 adjustment_hole_size_x = 24 ;
 adjustment_hole_size_y = 12 ;
@@ -35,16 +35,15 @@ extrusion_screwholes_y = 49.2 ;
 extrusion_adjust_x= 71 ;
 extrusion_adjust_y= 9.5 ;
 lengthen_extrusion_screwhole = 4 ;
+    
 
-// extra translation variable for new mount
-  move = 55 ;
 
 
 
 
   
 // FIXME: this sets a nice x/y for placement, but would probably be better if we modeled it in that position from the start
-
+  
 translate([-extrusion_screwholes_x - extrusion_width($extrusion_type)/2 + 1, -extrusion_width($extrusion_type)+1, 0])
 color("#777") 
 //render() // call render here to get artifacts out of larger model - DAN: Are there artifacts?
@@ -56,16 +55,16 @@ difference ()
 			{
 			union () 
 				{
-				translate ([move-9,rounding,0]) cube([main_body_size_x-rounding+7, main_body_size_y-rounding, idler_height/2]);
-			*	translate ([main_body_size_x-rounding,rounding,0]) cube([adjustment_hole_size_x-rounding,adjustment_hole_size_y-rounding,  idler_height/2]);
+				translate ([0,rounding,0]) cube([main_body_size_x-rounding, main_body_size_y-rounding, idler_height/2]);
+				translate ([main_body_size_x-rounding,rounding,0]) cube([adjustment_hole_size_x-rounding,adjustment_hole_size_y-rounding,  idler_height/2]);
 				}
 			cylinder(r=rounding,h=idler_height/2);
 			}
-	*	translate ([main_body_size_x,adjustment_hole_size_y+rounding,0]) fillet(rounding,   idler_height); 
+		translate ([main_body_size_x,adjustment_hole_size_y+rounding,0]) fillet(rounding,   idler_height); 
 		}
-	translate ([7+move,18,-idler_height]) cylinder(h=15, r1=tap_hole/2, r2=tap_hole/2, center=false);  //far pulley screwhole - this needs to be tapped/drilled?
-	translate ([23.6+move,33,-idler_height]) cylinder(h=15, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
-	*translate ([-25,0,-idler_height])  rotate ([0,0,45])  cube ([100,30,20]); // removal of edge of square
+	translate ([7,18,-idler_height]) cylinder(h=15, r1=tap_hole/2, r2=tap_hole/2, center=false);  //far pulley screwhole - this needs to be tapped/drilled?
+	translate ([23.6,33,-idler_height]) cylinder(h=15, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
+	translate ([-25,0,-idler_height])  rotate ([0,0,45])  cube ([100,30,20]); // removal of edge of square
 	
 	translate ([extrusion_adjust_x,extrusion_adjust_y-lengthen_extrusion_screwhole,-2])  rotate ([0,0,90]) longscrewhole(screwhole_length=lengthen_extrusion_screwhole, Mscrew=screwhole_M,screwhole_increase=0.1);  // horizontal adjustment hole
 	translate ([extrusion_screwholes_x,extrusion_screwholes_y-30,0]) screwholes(row_distance=30,numberofscrewholes=3,Mscrew=screwhole_M,screwhole_increase=0.1) ; //line of screwholes 
