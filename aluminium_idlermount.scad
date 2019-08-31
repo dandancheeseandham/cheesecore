@@ -51,7 +51,7 @@ difference ()
 			}
 // remove the following
 #	translate ([59,23,-idler_height]) cylinder(h=65, r1=tap_hole/2, r2=tap_hole/2, center=false);  //far pulley screwhole - this needs to be tapped/drilled?
-#	translate ([76.6,34,-idler_height]) cylinder(h=65, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
+#	translate ([77,34,-idler_height]) cylinder(h=65, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
 	translate ([extrusion_adjust_x,extrusion_adjust_y-lengthen_extrusion_screwhole,-2])  rotate ([0,0,90]) longscrewhole(screwhole_length=lengthen_extrusion_screwhole, Mscrew=screwhole_M,screwhole_increase=0.1);  // horizontal adjustment hole
 	translate ([extrusion_screwholes_x,extrusion_screwholes_y-extrusion_screwholes_line_length,0]) screwholes(row_distance=extrusion_screwholes_line_length,numberofscrewholes=screwhole_M,Mscrew=screwhole_M,screwhole_increase=0.1) ; //line of screwholes 
 	}

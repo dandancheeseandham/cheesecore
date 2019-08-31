@@ -8,6 +8,7 @@ use <z-yoke.scad>
 use <coupler.scad>
 use <anti-backlash-nut.scad>
 use <z-bracket.scad>
+use <leadscrew.scad>
 
 leadscrewwidth=8;
 tr8=4;  //pitch - currently unused
@@ -33,6 +34,7 @@ module z_tower(extrusion_type, rail_type_z, z_position=0)
 	
 	color("#BBB")  translate ([-leadscrew_x_offset, 0,couplerheight])
     cylinder(leadscrew_length, leadscrewwidth/2,leadscrewwidth/2);  // LEADSCREW
+	//leadscrew(300 ,8);
 
 	//NEMA17 motor
 	translate ([-leadscrew_x_offset, 0,-paneldepth])
