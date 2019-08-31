@@ -21,7 +21,7 @@ function extrusion_screw_size(extrusion_type = $extrusion_type) = extrusion_type
 
 bed_offset = [0, -25]; // How far to offset the bed from center of frame
 
-couplerheight=5;  //a height for coupler
+couplerheight=5;  //a height for coupler - FIXME: What is this?
 
 
 // These define how far from the part origin of the z-tower the leadscrew is

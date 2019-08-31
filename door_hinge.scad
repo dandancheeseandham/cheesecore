@@ -5,10 +5,10 @@ use <lib/holes.scad>
 use <lib/mirror.scad>
 use <screwholes.scad>
 
-*front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_depth=5,screw_type=3,preview = false); // ZL, 5mm acrylic
-front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_depth=6,screw_type=3,preview = false); // ZLT 6mm acrylic
+*front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_door_thickness=5,screw_type=3,preview = false); // ZL, 5mm acrylic
+front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,screw_type=3,preview = false); // ZLT 6mm acrylic
 
-module front_panel_doors_hinge(screw_distance,acrylic_depth,screw_type,preview)
+module front_panel_doors_hinge(screw_distance,acrylic_door_thickness,screw_type,preview)
 {
 extension = 5 ; //brings doors closer together
 rounding= 1.5 ; // rounding of edges
@@ -17,11 +17,11 @@ hole_distance_from_edge = 7.5 ;
 
 hinge_arms_x = 8.25  ;  // size for hinge arm .. 
 hinge_arms_y = 14.75 ; // y size of arms - Standard for hinges
-hinge_arms_z = 4.5 + acrylic_depth ;
+hinge_arms_z = 4.5 + acrylic_door_thickness ;
 
 door_hinge_x = extrusion_width($extrusion_type) ;
 door_hinge_y = screw_distance + (hole_distance_from_edge * 2) ;
-door_hinge_z = 0.25 + acrylic_depth ; 
+door_hinge_z = 0.25 + acrylic_door_thickness ; 
 
 holeY = hinge_arms_x + 9.75 ;  // 
 holeZ = hinge_arms_z - 3.63  ;

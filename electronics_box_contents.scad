@@ -19,7 +19,7 @@ electronicsbox_size_y = 1;
 
 
 module electronics_box_contents() {
-extrusion=15;
+extrusion=extrusion_width($extrusion_type);
   
   translate([0,-100,60]) rotate([90,0,90])  pcb(DuetE);
   translate([0,-100,-60]) rotate([90,0,90])  pcb(Duex5);

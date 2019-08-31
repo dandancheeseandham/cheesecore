@@ -26,22 +26,22 @@ module enclosure(){
 }
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
-  extrusion_width = extrusion_width();
+
   enclosure();
 
   z_towers(model[3].z, z_position = position[2]);
   // FIXME: this is not a final height for belts
-  translate ([0, 0, extrusion_length.z/2 + extrusion_width + 20]) corexy_belts([position.x-210, position.y]);
+  translate ([0, 0, extrusion_length.z/2 + extrusion_width($extrusion_type) + 20]) corexy_belts([position.x-210, position.y]);
 
 // bed
   // FIXME: This placement of the bed is arbitrary in z, but linked to
   // "position = rail_length.z/2-50-z_position;" in z-tower
   translate ([bed_offset.x, bed_offset.y, extrusion_length.z/2 - position.z - 111]) bed();
 
-Yrail_vector = [-rail_length.x/2 + position.x, 0, extrusion_length.z/2 + extrusion_width / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
+Yrail_vector = [-rail_length.x/2 + position.x, 0, extrusion_length.z/2 + extrusion_width($extrusion_type) / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 
 //X-rail
-  translate ([0, 0, extrusion_length.z/2 + extrusion_width / 2])
+  translate ([0, 0, extrusion_length.z/2 + extrusion_width($extrusion_type) / 2])
     x_rails(model[3].x, position.x);
 
 // Y-rail
@@ -57,12 +57,12 @@ translate (Yrail_vector + [-35, position.y-150, 20]) // FIXME: arbitary move to 
 //x-carriage temp object
 // 12 = rail size
 
-xcarriagevector = [-rail_length.x/2 + position.x, extrusion_length.y/2, extrusion_length.z/2 + extrusion_width / 2];
+xcarriagevector = [-rail_length.x/2 + position.x, extrusion_length.y/2, extrusion_length.z/2 + extrusion_width($extrusion_type) / 2];
 mirror_y() translate (xcarriagevector + [10,-12,0]) x_carriage();
 
 
 // Idler mounts
-  translate ([-extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion_width]) {
+  translate ([-extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion_width($extrusion_type)]) {
     mirror_y() {
       translate([0, -extrusion_length.y/2, 0])
         aluminium_idler_mount();
@@ -71,7 +71,7 @@ mirror_y() translate (xcarriagevector + [10,-12,0]) x_carriage();
   }
 
   // motor mounts
-  translate([extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion_width]){
+  translate([extrusion_length.x/2, 0, extrusion_length.z/2 + extrusion_width($extrusion_type)]){
     mirror_y() {
       translate([0, extrusion_length.y/2, 0]) aluminium_motor_mount();
       translate([49, 8-extrusion_length.y/2, 0])  NEMA(NEMA17);
@@ -81,13 +81,13 @@ mirror_y() translate (xcarriagevector + [10,-12,0]) x_carriage();
 //electronics box
 *translate([extrusion_length.x/2+paneldepth+extrusion_width($extrusion_type), 0, extrusion_width($extrusion_type)]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
 
-translate([extrusion_length.x/2+paneldepth+extrusion_width(), 0,extrusion_width()]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
+translate([extrusion_length.x/2+paneldepth+extrusion_width($extrusion_type), 0,extrusion_width($extrusion_type)]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
 
 
   if(render_electronics)
   {
     // FIXME - should not need to translate here just by paneldepth
-translate([extrusion_length.x/2+paneldepth+extrusion_width(), 0, 0]  )
+translate([extrusion_length.x/2+paneldepth+extrusion_width($extrusion_type), 0, 0]  )
       electronics_box_contents();
   }
 }
