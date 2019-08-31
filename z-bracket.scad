@@ -7,14 +7,10 @@ include <nopscadlib/core.scad>
 
 module z_bracket(extrusion_type) 
 {
-	extrusion = extrusion_width(extrusion_type);
-	z_bracket_screwsize = extrusion_screw_size(extrusion_type);
-  
-	//leg_length = 10+extrusion*4;
-	leg_length = extrusion*4;
+	extrusion = 15;
+	z_bracket_screwsize = 1.75;
+  	leg_length = extrusion*4;
 	thickness = extrusion-5;
-	//translate([0, 0, 0]) cube([extrusion, leg_length, thickness]);  //cube version
-	//translate([-extrusion, 0, -extrusion]) cube([extrusion, thickness, leg_length]);  //cube version
 
 	color(printed_part_color()) 
 	difference() 
@@ -49,9 +45,16 @@ module z_bracket(extrusion_type)
 		//screwholes removed from entire unioned object		
 	    translate([extrusion/2, extrusion*1.75-z_bracket_screwsize, 0])  screwholes(row_distance=extrusion*2,numberofscrewholes=3,Mscrew=z_bracket_screwsize,screwhole_increase=0.5);
 		rotate ([90,0,0]) translate([-extrusion/2, -extrusion/2, -extrusion*0.5])   screwholes(row_distance=extrusion*3,numberofscrewholes=4,Mscrew=z_bracket_screwsize,screwhole_increase=0.5);
-		rotate ([90,0,0]) translate([-extrusion/2, -extrusion/2, -55-thickness])   screwholes(row_distance=extrusion*3,numberofscrewholes=4,Mscrew=z_bracket_screwsize*screwhole_increase=0.5); // to remove some fillet to make screwing in easier
+	//	rotate ([90,0,0]) translate([-extrusion/2, -extrusion/2, -55-thickness])   screwholes(row_distance=extrusion*3,numberofscrewholes=4,Mscrew=z_bracket_screwsize*screwhole_increase=0.5); // to remove some fillet to make screwing in easier
 	}
 }
 
-//translate ([main_body_size_x,nubbin_size_y+rounding,0]) 
-z_bracket(extrusion_type);
+module z_bracket_preview(extrusion) 
+{
+	translate([0, 0, 0]) cube([extrusion, leg_length, thickness]);  //cube version
+	translate([-extrusion, 0, -extrusion]) cube([extrusion, thickness, leg_length]);  //cube version
+}
+
+
+//z_bracket(extrusion_type);
+z_bracket(15);
