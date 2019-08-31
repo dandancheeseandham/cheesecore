@@ -37,6 +37,3 @@ module longscrewhole(screwhole_length,Mscrew,screwhole_increase)
 translate([50,0,0]) longscrewhole(screwhole_length=40,Mscrew=5,screwhole_increase=0.25);
 screwholes(row_distance=60,numberofscrewholes=6,Mscrew=3,screwhole_increase=0.25);
 translate([-50,0,0]) singlescrewhole(3,0.25);
-
-
-
