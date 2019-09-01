@@ -54,9 +54,8 @@ Yrail_vector = [-rail_length.x/2 + position.x, 0, extrusion_length.z/2 + extrusi
 translate (Yrail_vector + [-35, position.y-150, 20]) // FIXME: arbitary move to look decentish
     rotate ([0,0,180]) hot_end(E3Dv6, naked=true);
 
-//x-carriage temp object
+// x-carriage
 // 12 = rail size
-
 xcarriagevector = [-rail_length.x/2 + position.x, extrusion_length.y/2, extrusion_length.z/2 + extrusion_width($extrusion_type) / 2];
 mirror_y() translate (xcarriagevector + [10,-12,0]) x_carriage();
 

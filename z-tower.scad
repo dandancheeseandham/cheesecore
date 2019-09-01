@@ -60,20 +60,19 @@ module z_tower(extrusion_type, rail_type_z, z_position=0)
     rail_wrapper(rail_type_z, rail_length.z, position=position);
 	
 	// Extrusion
-	//extrusion_width = extrusion_width(extrusion_type);
 	overall_length = extrusion_length.z + (2 * extrusion_width($extrusion_type));
 	translate ([-extrusion_width($extrusion_type)/2, leadscrew_y_offset, 0])
     extrusion(overall_length , extrusion_type);
 
 	// bottom Z bracket
 	translate([0, leadscrew_y_offset +extrusion_width($extrusion_type)/2, extrusion_width($extrusion_type)])
-    z_bracket(extrusion_type);
+    z_bracket(extrusion_width());
 	
 	// top z bracket
 	translate([0, leadscrew_y_offset +extrusion_width($extrusion_type)/2, extrusion_length.z + extrusion_width($extrusion_type)])
     mirror([0, 1, 0])
     rotate([180, 0, 0])
-    z_bracket(extrusion_type);
+    z_bracket(extrusion_width());
 	
 	//Debug - set to true for debug info
 	if (false) {
