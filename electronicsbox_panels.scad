@@ -86,6 +86,8 @@ translate ([length-19.07,electronicscabinet_depth-61.5,0]) rotate ([0,0,90]) scr
 }
 }
 }
+
+
 module electronics_bottom_panel(length,electronicscabinet_depth) {
 color(electronics_box_acrylic_color()) {
 difference()
@@ -96,15 +98,17 @@ translate ([length-4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,
 }
 }
 }
+
+
 module elec_panel(x, y, thickness)
 {
-  panelcornerrounding=5; // Corner rounding of panels
+  panelcornerrounding=13; // Corner rounding of panels
  // screwholes=5;     // Number of screwholes // IS THIS REDUNDANT?
 
   difference() {
 color([0.9,0.9,0.9,0.3])  // FIXME : get this into the theme
       translate ([0, 0, thickness/2+explode])
-       rounded_rectangle([x, y, thickness], panelcornerrounding);
+       rounded_rectangle([x+panelcornerrounding/2, y+panelcornerrounding/2, thickness], panelcornerrounding);
     // Color the holes darker for contrast
    // color(panel_color_holes()) translate([0, 0, epsilon]) //screwholes(x,y);
   }
