@@ -22,7 +22,7 @@ $fullrender=false;
 module enclosure(){
   frame();
   all_side_panels();
-  feet($extrusion_type, height=50);
+  feet(height=50);
 }
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
@@ -65,7 +65,7 @@ mirror_y() translate (xcarriagevector + [10,-12,0]) x_carriage();
     mirror_y() {
       translate([0, -extrusion_length.y/2, 0])
         aluminium_idler_mount();
-		
+    
     }
   }
 
@@ -110,5 +110,5 @@ module rc300zl40(position = [0, 0, 0]) {
 }
 
 printer(render_electronics=true, position=[50, 50, 0],$extrusion_type = extrusion15);
-*translate([600, 0, 0]) rc300zl();
+translate([600, 0, 0]) rc300zl();
 *translate([1250, 0, 0]) rc300zl40();

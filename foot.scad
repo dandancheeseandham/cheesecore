@@ -67,12 +67,13 @@ module foot_base_profile(extrusion_width) {
   }
 }
 
-module foot(extrusion_type, height) {
+module foot(extrusion_type = $extrusion_type, height) {
+  assert(height != undef, "Foot height is required");
   translate([0, 0, height]) mirror([0,0,-1]) inverted_foot(height);
 }
 
-module feet(extrusion_type, height = 50) {
-  extrusion = extrusion_width(extrusion_type);
+module feet(height = 50) {
+  extrusion = extrusion_width();
   translate([0, 0, -extrusion_length.z/2 - extrusion -paneldepth])
     mirror_xy() {
       translate([-extrusion_length.x/2-extrusion, -extrusion_length.y/2-extrusion, -height]) foot(extrusion_type, height);
