@@ -10,7 +10,7 @@ front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,screw_t
 
 module front_panel_doors_hinge(screw_distance,acrylic_door_thickness,screw_type,preview)
 {
-extension = 5 ; //brings doors closer together
+extension = 0 ; //brings doors closer together
 rounding= 1.5 ; // rounding of edges
 middle_hinge_z = 70 ;  // raised section z
 hole_distance_from_edge = 7.5 ;

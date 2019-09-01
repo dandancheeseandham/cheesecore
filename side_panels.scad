@@ -111,6 +111,21 @@ mirror_y() {
 	translate([-(extrusion_length.x/2+extrusion_width()),-(extrusion_length.y/2+extrusion_width())-panelrounding/2+gapY+hole_distance_from_edge+screwhole_distance_from_edge ,paneldepth]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_door_thickness=5,screw_type=3); 
 	}
 }	
+
+// Doors
+overlap = 10 ;
+doorgap = 4 ;
+
+%mirror_x() {
+color([0.9,0.9,0.9,0.3])
+translate ([-(windowwidth/2 + overlap)/2,0,paneldepth])
+ rounded_rectangle([windowwidth/2 + overlap - doorgap/2,windowheight + overlap*2,paneldepth+ 3*epsilon], corner_radius);
+}
+
+%color([0.9,0.9,0.9,0.3])
+translate ([-(windowwidth/2 + overlap)/2,0,paneldepth])
+ rounded_rectangle([windowwidth/2 + overlap - doorgap/2,windowheight + overlap*2,paneldepth+ 3*epsilon], corner_radius);
+
 }
 
 
