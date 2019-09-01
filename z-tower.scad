@@ -35,8 +35,7 @@ module z_tower(extrusion_type, rail_type_z, z_position=0)
 	// Leadscrew is connected to the coupler
     color("#BBB")  
 	translate ([-leadscrew_x_offset, 0,base_of_coupler_adjustment])
-    cylinder(leadscrew_length, leadscrew_width/2,leadscrew_width/2);  
-	//leadscrew(300 ,8);
+    leadscrew(leadscrew_length ,leadscrew_width);
 	
 	// Anti Backlash nut - connected to the leadscrew
 	// FIXME: z position is fake
