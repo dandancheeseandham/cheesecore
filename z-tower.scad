@@ -10,12 +10,14 @@ use <anti-backlash-nut.scad>
 use <z-bracket.scad>
 use <leadscrew.scad>
 
-	space_between_towers = 255 ;
-	rail_carriage_adjustment = 80 ;
-	coupler_adjustment = rail_carriage_adjustment + 5 ;
-	z_yoke_adjustment = rail_carriage_adjustment - 5 ;
+	rail_adjustment = 30 + 6 ;  			// couplerheight + panel_depth
+	space_between_towers = 255 ; 	// standard for ZL/ZLT , based on bed tongues
+	coupler_adjustment = 85 ;
+	z_yoke_adjustment = coupler_adjustment - 10 ; 
+	rail_carriage_adjustment = z_yoke_adjustment +5 ;
+	
 	leadscrew_width = 8 ;
-	leadscrew_pitch = 4 ;  //pitch - currently unused
+	leadscrew_pitch = 4 ;  					// pitch - currently unused
 	
 module z_tower(extrusion_type, rail_type_z, z_position=0) 
 {
@@ -51,7 +53,7 @@ module z_tower(extrusion_type, rail_type_z, z_position=0)
 	// and yoke-to-carriage offset.
 	
 	position = rail_length.z/2-z_position-rail_carriage_adjustment;
- 	translate ([-extrusion_width($extrusion_type),leadscrew_y_offset,(extrusion_length.z)/2 + couplerheight])
+ 	translate ([-extrusion_width($extrusion_type),leadscrew_y_offset,(rail_length.z)/2 + rail_adjustment])
     rotate([90,270,270])
     rail_wrapper(rail_type_z, rail_length.z, position=position);
 	
