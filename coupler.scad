@@ -39,7 +39,7 @@ big = 100; // just a big number
 
 module coupler()
 {
-color(alum_part_color()) {
+color(alum_commercial_part_color()) {
      difference()
     {
         // main body

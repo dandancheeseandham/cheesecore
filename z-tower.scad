@@ -33,7 +33,6 @@ module z_tower(extrusion_type, rail_type_z, z_position=0)
     coupler();
 	
 	// Leadscrew is connected to the coupler
-    color("#BBB")  
 	translate ([-leadscrew_x_offset, 0,base_of_coupler_adjustment])
     leadscrew(leadscrew_length ,leadscrew_width);
 	
