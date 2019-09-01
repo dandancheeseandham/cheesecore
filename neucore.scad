@@ -22,6 +22,8 @@ $fullrender=false;
 module enclosure(){
   frame();
   all_side_panels();
+  hinges();
+  translate([0, -frame_size().y / 2 - panel_thickness() - epsilon, 0]) doors();
   feet(height=50);
 }
 

@@ -54,10 +54,18 @@ rail_length = model[2];
 leadscrew_length = model[4];
 paneldepth = model[6];
 
-
+function frame_size() = [extrusion_length.x + 2 * extrusion_width(), extrusion_length.y + 2 * extrusion_width(), extrusion_length.z + 2 * extrusion_width()];
+function panel_radius() = 5;
+function panel_thickness() = 0.25 * inch;
+function front_window_size() = [frame_size().x - 2 * 35, frame_size().z - 25 - 35];
+function front_window_radius() = 10;
+function front_window_offset() = [0, 5];
 
 rail_type_z = model[3].z;
 
 // How far in from edge to start panel screws
 function panel_screw_offset() = extrusion_width($extrusion_type) + 35; // 50 in original 1515 machine
+// Max allowable distance between screws on front panels
+function max_panel_screw_spacing() = 100;
 
+$draft = true;
