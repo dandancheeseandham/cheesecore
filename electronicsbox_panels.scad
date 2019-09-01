@@ -108,7 +108,7 @@ module elec_panel(x, y, thickness)
   difference() {
 color([0.9,0.9,0.9,0.3])  // FIXME : get this into the theme
       translate ([0, 0, thickness/2+explode])
-       rounded_rectangle([x+panelcornerrounding/2, y+panelcornerrounding/2, thickness], panelcornerrounding);
+       rounded_rectangle([x+thickness/2, y+thickness/2, thickness], panelcornerrounding);
     // Color the holes darker for contrast
    // color(panel_color_holes()) translate([0, 0, epsilon]) //screwholes(x,y);
   }
