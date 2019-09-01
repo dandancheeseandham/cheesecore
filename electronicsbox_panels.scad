@@ -40,7 +40,7 @@ translate ([right+23,-depth,up-20]) rotate ([0,90,0]) electronics_electro_panel(
 translate ([left,-depth,down-50]) electronics_bottom_panel(box_size_y,depth); // bottom panel
 translate ([left-29,-depth,up-20])  rotate ([0,90,0]) electronics_side_panel(box_size_z,depth);  // left panel
 
-translate ([0,-depth,-corner_pos])  rotate ([90,0,0]) elec_panel(box_size_y+corner_adjust*2, box_size_z+corner_adjust*2, 6);
+%translate ([0,-depth,-corner_pos])  rotate ([90,0,0]) elec_panel(box_size_y+corner_adjust*2, box_size_z+corner_adjust*2, 6);
 
 
 
@@ -75,7 +75,7 @@ module electronics_top_panel(length,electronicscabinet_depth) {
 
 thingy=4.5;
 otherthing=14.5;
-    
+
 color(electronics_box_acrylic_color()) {
 difference()
 {
@@ -102,9 +102,9 @@ module elec_panel(x, y, thickness)
  // screwholes=5;     // Number of screwholes // IS THIS REDUNDANT?
 
   difference() {
-    color(panel_color())
+color([0.9,0.9,0.9,0.3])  // FIXME : get this into the theme
       translate ([0, 0, thickness/2+explode])
-        rounded_rectangle([x, y, thickness], panelcornerrounding);
+       rounded_rectangle([x, y, thickness], panelcornerrounding);
     // Color the holes darker for contrast
    // color(panel_color_holes()) translate([0, 0, epsilon]) //screwholes(x,y);
   }

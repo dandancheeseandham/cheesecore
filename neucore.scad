@@ -109,6 +109,6 @@ module rc300zl40(position = [0, 0, 0]) {
   //printer();
 }
 
-printer(render_electronics=false, position=[50, 50, 0],$extrusion_type = extrusion15);
-translate([600, 0, 0]) rc300zl();
+printer(render_electronics=true, position=[50, 50, 0],$extrusion_type = extrusion15);
+*translate([600, 0, 0]) rc300zl();
 *translate([1250, 0, 0]) rc300zl40();
