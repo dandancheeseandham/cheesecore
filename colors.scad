@@ -1,8 +1,8 @@
 WOODY=0;
 MURDERED=1;
 
-woody_theme = ["burlywood", "#8e6837", "#4e3807", "#777777", "#BBBBBB" ];
-murdered_theme = ["#444444", "#222222", "#666666", "#777777", "#BBBBBB" ];
+woody_theme = ["burlywood", "#8e6837", "#4e3807", "#777777", "#C0C0C0" ];
+murdered_theme = ["#444444", "#222222", "#666666", "#777777", "#C0C0C0" ];
 themes = [ woody_theme, murdered_theme ];
 
 function panel_color() = themes[theme][0];
