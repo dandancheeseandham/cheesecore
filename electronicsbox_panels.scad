@@ -45,7 +45,7 @@ translate ([0,-depth,-corner_pos])  rotate ([90,0,0]) elec_panel(box_size_y+corn
 
 
 module electronics_side_panel(length,electronicscabinet_depth) {
-color("#555")
+color(electronics_box_acrylic_color()) {
 difference()
 {
 cube ([length,electronicscabinet_depth,material_thickness]);
@@ -53,14 +53,14 @@ translate ([4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,Mscrew=
 translate ([length-4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,Mscrew=3,screwhole_increase=0.5);
 }
 }
-
+}
 
 module electronics_electro_panel(length,electronicscabinet_depth) {
 
 distancefrombottom=20;
 sizeofholeX=57;
 sizeofholeY=28.5;
-color("#555")
+color(electronics_box_acrylic_color()) {
 difference()
 {
 cube ([length,electronicscabinet_depth,material_thickness]);
@@ -70,13 +70,13 @@ translate ([4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,Mscrew=
 translate ([length-4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,Mscrew=3,screwhole_increase=0.5);
 }
 }
-
+}
 module electronics_top_panel(length,electronicscabinet_depth) {
 
 thingy=4.5;
 otherthing=14.5;
     
-color("#555")
+color(electronics_box_acrylic_color()) {
 difference()
 {
 cube ([length,electronicscabinet_depth,material_thickness]);
@@ -85,9 +85,9 @@ translate ([length-thingy,otherthing,0]) screwholes(row_distance=30,numberofscre
 translate ([length-19.07,electronicscabinet_depth-61.5,0]) rotate ([0,0,90]) screwholes(row_distance=260.76,numberofscrewholes=2,Mscrew=7.5*2,screwhole_increase=0);  //holes for motor wires
 }
 }
-
+}
 module electronics_bottom_panel(length,electronicscabinet_depth) {
-color("#555")
+color(electronics_box_acrylic_color()) {
 difference()
 {
 cube ([length,electronicscabinet_depth,material_thickness]);
@@ -95,7 +95,7 @@ translate ([4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,Mscrew=
 translate ([length-4.5,14.5,0]) screwholes(row_distance=30,numberofscrewholes=2,Mscrew=3,screwhole_increase=0.5);
 }
 }
-
+}
 module elec_panel(x, y, thickness)
 {
   panelcornerrounding=5; // Corner rounding of panels
@@ -114,8 +114,8 @@ module elec_panel(x, y, thickness)
 
 module elec_corner()
 {
-color("#222")
+color(printed_part_color()) {
     rotate ([90,0,180]) import("./railcorestls/Electronics_Box_Corner.stl");
 }
-
+}
 }
