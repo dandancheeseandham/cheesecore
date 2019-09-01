@@ -108,10 +108,15 @@ hole_distance_from_edge = 7.5 ;
 mirror_x() 
 mirror_y() {
 {
-	translate([-(extrusion_length.x/2+extrusion_width()),-(extrusion_length.y/2+extrusion_width())-panelrounding/2+gapY+hole_distance_from_edge+screwhole_distance_from_edge ,paneldepth]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_door_thickness=5,screw_type=3); 
+translate([-(extrusion_length.x/2+extrusion_width()),-(extrusion_length.y/2+extrusion_width())-panelrounding/2+gapY+hole_distance_from_edge+screwhole_distance_from_edge ,paneldepth]) front_panel_doors_hinge(screw_distance = gapY ,acrylic_door_thickness=5,screw_type=3); 	
 	}
 }	
-
+color(printed_part_color())
+mirror_x() 
+mirror_y() {
+	translate([-(extrusion_length.x/2+extrusion_width()),-(extrusion_length.y/2+extrusion_width())-panelrounding/2+gapY+hole_distance_from_edge+screwhole_distance_from_edge ,paneldepth]) 
+	import("./railcorestls/lostapathy/doors/railcore-hinge-doorside.stl");
+}
 // Doors
 overlap = 10 ;
 doorgap = 4 ;
