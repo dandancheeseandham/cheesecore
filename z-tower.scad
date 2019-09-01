@@ -10,11 +10,13 @@ use <anti-backlash-nut.scad>
 use <z-bracket.scad>
 use <leadscrew.scad>
 
-	rail_adjustment = 30 + 6 ;  			// couplerheight + panel_depth
+
+	rail_adjustment = 30 + 6 ;  			// base_of_coupler_adjustment + panel_depth
 	space_between_towers = 255 ; 	// standard for ZL/ZLT , based on bed tongues
 	coupler_adjustment = 85 ;
 	z_yoke_adjustment = coupler_adjustment - 10 ; 
 	rail_carriage_adjustment = z_yoke_adjustment +5 ;
+	base_of_coupler_adjustment = 5 ;  // a height for coupler
 	
 	leadscrew_width = 8 ;
 	leadscrew_pitch = 4 ;  					// pitch - currently unused
@@ -27,12 +29,12 @@ module z_tower(extrusion_type, rail_type_z, z_position=0)
     NEMA(NEMA17);
 
 	//Coupler is connected to the NEMA12 motor
-	translate ([-leadscrew_x_offset, 0,couplerheight])
+	translate ([-leadscrew_x_offset, 0,base_of_coupler_adjustment])
     coupler();
 	
 	// Leadscrew is connected to the coupler
     color("#BBB")  
-	translate ([-leadscrew_x_offset, 0,couplerheight])
+	translate ([-leadscrew_x_offset, 0,base_of_coupler_adjustment])
     cylinder(leadscrew_length, leadscrew_width/2,leadscrew_width/2);  
 	//leadscrew(300 ,8);
 	

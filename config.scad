@@ -17,12 +17,7 @@ function extrusion_screw_size(extrusion_type = $extrusion_type) = extrusion_type
 
 
 // Still need to clean up everything below here
-
-
 bed_offset = [0, -25]; // How far to offset the bed from center of frame
-
-couplerheight=5;  //a height for coupler - FIXME: What is this?
-
 
 // These define how far from the part origin of the z-tower the leadscrew is
 leadscrew_x_offset = 20; // how far in x the centerline of the leadscrew is from the inside edge of the frame extrusions
@@ -54,7 +49,6 @@ model = rc300zl ;
 //model = absurdo; leadscrew_y_offset= 40;
 
 $extrusion_type = model[0]; // FIXME:  to temporarily fix issues with all standalone files needing an extrusion.
-
 extrusion_length = model[1];
 rail_length = model[2];
 leadscrew_length = model[4];
