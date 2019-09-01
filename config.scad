@@ -57,9 +57,15 @@ paneldepth = model[6];
 function frame_size() = [extrusion_length.x + 2 * extrusion_width(), extrusion_length.y + 2 * extrusion_width(), extrusion_length.z + 2 * extrusion_width()];
 function panel_radius() = 5;
 function panel_thickness() = 0.25 * inch;
-function front_window_size() = [frame_size().x - 2 * 35, frame_size().z - 25 - 35];
-function front_window_radius() = 10;
-function front_window_offset() = [0, 5];
+
+
+front_window_zl  = ["WINDOW_TYPE", [420, 385], 10, [0, 5]];
+front_window_zlt = ["WINDOW_TYPE", [410, 645], 10, [0, 0]];
+
+
+function front_window_size() = $front_window_size[1];
+function front_window_radius() = $front_window_size[2];
+function front_window_offset() = $front_window_size[3];
 
 rail_type_z = model[3].z;
 
