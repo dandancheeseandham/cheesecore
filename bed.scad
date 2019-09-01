@@ -1,6 +1,7 @@
 include <config.scad>
 include <nopscadlib/core.scad>
 include <lib/mirror.scad>
+use <screwholes.scad>
 
 bed_thickness=0.25*inch; // depth of bed tool plate
 bed_ear_x = 12.5;
@@ -31,7 +32,14 @@ color(alum_part_color()) {
           translate([-bedplateX/2,ear_y_offset,0]) rotate([0,0,180]) bed_ear();
       }
       thermistor_channel();
-    }
+
+// Grounding connection hole
+//  a proper grounding connection is consists of a toothed washer, washer, ring terminal, washer, a "schnorr disk" (?) and the bolt going through all of it      
+       translate ([190,-35,bed_thickness/2]) rotate ([0,90,0]) singlescrewhole(2,0);
+      
+// Mounting hole for wire restraint on the side where cables go.
+     translate ([190,-50,bed_thickness/2]) rotate ([0,90,0]) singlescrewhole(2,0);
+      }
   }
 }
 module thermistor_channel() {
