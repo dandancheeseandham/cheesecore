@@ -5,7 +5,7 @@
 // Creative Commons - Public Domain Dedication license.
 // https://www.thingiverse.com/thing:1329750
 
-
+include <config.scad>
 // Height of the coupler, half for the motor shaft and half for the rod
 couplerHeight = 30;
 // External diameter of the coupler
@@ -39,7 +39,7 @@ big = 100; // just a big number
 
 module coupler()
 {
-color("#777") 
+color(alum_part_color()) {
      difference()
     {
         // main body
@@ -67,6 +67,7 @@ color("#777")
         cube([halvesDistance,big,big], center=true);
     }
 
+}
 }
 
 module screw()

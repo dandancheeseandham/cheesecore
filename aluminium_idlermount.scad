@@ -41,7 +41,7 @@ lengthen_extrusion_screwhole = 4 ;
   
 // FIXME: this sets a nice x/y for placement, but would probably be better if we modeled it in that position from the start
 translate([-extrusion_screwholes_x - extrusion_width($extrusion_type)/2 , -extrusion_width($extrusion_type), 0])
-color("#777") 
+  color(alum_part_color()) {
 difference () 
 	{
 		minkowski() 
@@ -54,6 +54,7 @@ difference ()
 #	translate ([77,34,-idler_height]) cylinder(h=65, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
 	translate ([extrusion_adjust_x,extrusion_adjust_y-lengthen_extrusion_screwhole,-2])  rotate ([0,0,90]) longscrewhole(screwhole_length=lengthen_extrusion_screwhole, Mscrew=screwhole_M,screwhole_increase=0.1);  // horizontal adjustment hole
 	translate ([extrusion_screwholes_x,extrusion_screwholes_y-extrusion_screwholes_line_length,0]) screwholes(row_distance=extrusion_screwholes_line_length,numberofscrewholes=screwhole_M,Mscrew=screwhole_M,screwhole_increase=0.1) ; //line of screwholes 
+	}
 	}
 }
 

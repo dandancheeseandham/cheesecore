@@ -19,7 +19,7 @@ use <leadscrew.scad>
 	base_of_coupler_adjustment = 5 ;  // a height for coupler
 	
 	leadscrew_width = 8 ;
-	leadscrew_pitch = 4 ;  					// pitch - currently unused
+
 	
 module z_tower(extrusion_type, rail_type_z, z_position=0) 
 {

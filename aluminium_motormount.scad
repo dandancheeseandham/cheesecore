@@ -14,7 +14,7 @@ module raw_aluminium_motor_mount(screwsize,motoradjustspacing) {
   part_corner_rounding = 3;
   NEMAhole=24; // size of hole required for NEMA17 motor
 
-  color("#777") {
+color(alum_part_color()) {
   difference () {
   //main block
   //FIXME: add rounded corner to the join

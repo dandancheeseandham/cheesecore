@@ -18,7 +18,7 @@ module bed()
   bedcornerrounding=7.5; // bed plate corner rounding
   bedYspacing=125; // extra space around Y
 
-  color([188/255,188/255,188/255]) {
+color(alum_part_color()) {
     difference() {
       union() {
         // Main body of bed
