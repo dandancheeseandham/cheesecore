@@ -42,9 +42,9 @@ rotate ([0,90,0])
 make_panel (box_size_z,box_depth,stepper_cables = false, IEC = false);  
 
 // transparent cover
-%translate ([0, -box_depth, 0])
+translate ([0, -box_depth, 0])
 rotate ([90,0,0]) 
-electronics_cover_panel(box_size_y+cover_corner_adjust*2, box_size_z+cover_corner_adjust*2, acrylic_thickness, panelcornerrounding);
+%electronics_cover_panel(box_size_y+cover_corner_adjust*2, box_size_z+cover_corner_adjust*2, acrylic_thickness, panelcornerrounding);
 
 
 module make_panel(length,electronicscabinet_box_depth,stepper_cables,IEC) 
@@ -86,9 +86,11 @@ module electronics_cover_panel(x, y, thickness, panelcornerrounding)
 {
 	difference() 
 	{
-		color([0.9,0.9,0.9,0.3])  // FIXME : get this into the theme
+		color(acrylic2_color())
+		{
 		translate ([0, 0, thickness/2])
 		rounded_rectangle([x+thickness/2, y+thickness/2, thickness],panelcornerrounding);
+		}
 	}
 }
 

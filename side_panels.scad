@@ -144,7 +144,7 @@ module door() {
   door_radius_outside_corners = front_window_radius() + door_overlap;
   difference() {
     // Outline of the door
-    color(acrylic_color()) {
+    color(acrylic2_color()) {
       // FIXME - make door thickness parametric
       linear_extrude(1/8 * inch) {
         hull() {
