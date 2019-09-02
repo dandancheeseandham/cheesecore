@@ -55,7 +55,7 @@ IEC_cutout_distance=20; // hole starts at this distance from bottom of panel
 cut_out_width=57;  
 cut_out_depth=28.5; 
 
-color(electronics_box_acrylic_color()) 
+color(acrylic_color())
 	{
 		difference()
 		{

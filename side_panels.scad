@@ -172,7 +172,7 @@ module doors() {
   rotate([90, 0, 0])
     translate(front_window_offset())
     mirror_x()
-    door();
+    %door();
 }
 
 module side_panel() {

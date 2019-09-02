@@ -12,7 +12,7 @@ use <z-tower.scad>
 use <rail.scad>
 use <aluminium_idlermount.scad>
 use <aluminium_motormount.scad>
-use <electronicsbox_panels.scad>
+use <electronics_box_panels.scad>
 use <electronics_box_contents.scad>
 use <x-carriage.scad>
 use <validation.scad>
@@ -80,9 +80,9 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   }
 
   //electronics box
-  *translate([frame_size().x / 2 + panel_thickness(), 0, extrusion_width()]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
+  %translate([frame_size().x / 2 + panel_thickness(), 0, 0]  ) rotate ([0,0,90]) electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 59, acrylic_thickness = 6); // Old ZL size
 
-  translate([frame_size().x / 2 + panel_thickness(), 0,extrusion_width()]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
+
 
 
   if(render_electronics)
