@@ -15,7 +15,6 @@ extrusion40 = ["4040 Extrusion", 40, 6];
 function extrusion_width(extrusion_type = $extrusion_type) = extrusion_type[1];
 function extrusion_screw_size(extrusion_type = $extrusion_type) = extrusion_type[2];
 
-
 // Still need to clean up everything below here
 bed_offset = [0, -25]; // How far to offset the bed from center of frame
 
@@ -48,16 +47,29 @@ model = rc300zl ;
 //model = cc300zl;
 //model = absurdo; leadscrew_y_offset= 40;
 
-$extrusion_type = model[0]; // FIXME:  to temporarily fix issues with all standalone files needing an extrusion.
-extrusion_length = model[1];
+old_extrusion_length = model[1];
 rail_length = model[2];
 leadscrew_length = model[4];
-paneldepth = model[6];
+//paneldepth = model[6];
+
+function frame_size() = [old_extrusion_length.x + 2 * extrusion_width(), old_extrusion_length.y + 2 * extrusion_width(), old_extrusion_length.z + 2 * extrusion_width()];
+function panel_radius() = 5;
+function panel_thickness() = 0.25 * inch;
 
 
+front_window_zl  = ["WINDOW_TYPE", [420, 385], 10, [0, 5]];
+front_window_zlt = ["WINDOW_TYPE", [410, 645], 10, [0, 0]];
+
+
+function front_window_size() = $front_window_size[1];
+function front_window_radius() = $front_window_size[2];
+function front_window_offset() = $front_window_size[3];
 
 rail_type_z = model[3].z;
 
 // How far in from edge to start panel screws
 function panel_screw_offset() = extrusion_width($extrusion_type) + 35; // 50 in original 1515 machine
+// Max allowable distance between screws on front panels
+function max_panel_screw_spacing() = 100;
 
+$draft = true;

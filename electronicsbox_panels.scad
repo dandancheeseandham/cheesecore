@@ -45,7 +45,7 @@ translate ([left-29,-depth,up-20])  rotate ([0,90,0]) electronics_side_panel(box
 
 
 module electronics_side_panel(length,electronicscabinet_depth) {
-color(electronics_box_acrylic_color()) {
+color(acrylic_color()) {
 difference()
 {
 cube ([length,electronicscabinet_depth,material_thickness]);
@@ -60,7 +60,7 @@ module electronics_electro_panel(length,electronicscabinet_depth) {
 distancefrombottom=20;
 sizeofholeX=57;
 sizeofholeY=28.5;
-color(electronics_box_acrylic_color()) {
+color(acrylic_color()) {
 difference()
 {
 cube ([length,electronicscabinet_depth,material_thickness]);
@@ -76,7 +76,7 @@ module electronics_top_panel(length,electronicscabinet_depth) {
 thingy=4.5;
 otherthing=14.5;
 
-color(electronics_box_acrylic_color()) {
+color(acrylic_color()) {
 difference()
 {
 cube ([length,electronicscabinet_depth,material_thickness]);
@@ -89,7 +89,7 @@ translate ([length-19.07,electronicscabinet_depth-61.5,0]) rotate ([0,0,90]) scr
 
 
 module electronics_bottom_panel(length,electronicscabinet_depth) {
-color(electronics_box_acrylic_color()) {
+color(acrylic_color()) {
 difference()
 {
 cube ([length,electronicscabinet_depth,material_thickness]);
