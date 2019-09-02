@@ -29,7 +29,7 @@ module extrusion(length, center=true, extrusion_type = $extrusion_type) {
 
   assert(extrusion_size != undef, "Could not look up extrusion_size");
 
-color(alum_commercial_part_color()) {
+  color(alum_commercial_part_color()) {
     linear_extrude(length, center=center) {
       extrusion_profile(extrusion_size, slot_width);
     }

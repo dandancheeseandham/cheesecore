@@ -17,7 +17,14 @@ module panel(x, y)
       translate ([0, 0, panel_thickness()/2])
       rounded_rectangle([x, y, panel_thickness()], panel_radius());
     // Color the holes darker for contrast
-    color(panel_color_holes()) panel_mounting_screws(x, y);
+    color(panel_color_holes()) {
+      panel_mounting_screws(x, y);
+      // Access screws to corner cubes
+      mirror_xy() {
+        translate([x / 2 - extrusion_width() / 2, y / 2 - extrusion_width() / 2, -epsilon])
+          cylinder(d=extrusion_width() * 0.5, h = panel_thickness() + 2 * epsilon);
+      }
+    }
   }
 }
 
@@ -201,6 +208,7 @@ module all_side_panels_dxf()
 //all_side_panels_dxf();
 //all_side_panels();
 //bottom_panel();
-front_panel();
-hinges();
+// Must supply these params when calling this and not define it global to the file
+front_panel($extrusion_type = extrusion15, $front_window_size = front_window_zl);
+//hinges();
 //doors();

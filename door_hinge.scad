@@ -6,6 +6,7 @@ use <lib/mirror.scad>
 use <screwholes.scad>
 
 $draft = true;
+$extrusion_type = extrusion15;
 *front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_door_thickness=5,screw_type=3); // ZL, 5mm acrylic
 front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,screw_type=3); // ZLT 6mm acrylic
 

@@ -15,7 +15,6 @@ extrusion40 = ["4040 Extrusion", 40, 6];
 function extrusion_width(extrusion_type = $extrusion_type) = extrusion_type[1];
 function extrusion_screw_size(extrusion_type = $extrusion_type) = extrusion_type[2];
 
-
 // Still need to clean up everything below here
 bed_offset = [0, -25]; // How far to offset the bed from center of frame
 
@@ -48,7 +47,6 @@ model = rc300zl ;
 //model = cc300zl;
 //model = absurdo; leadscrew_y_offset= 40;
 
-$extrusion_type = model[0]; // FIXME:  to temporarily fix issues with all standalone files needing an extrusion.
 extrusion_length = model[1];
 rail_length = model[2];
 leadscrew_length = model[4];
