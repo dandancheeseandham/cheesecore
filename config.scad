@@ -47,12 +47,12 @@ model = rc300zl ;
 //model = cc300zl;
 //model = absurdo; leadscrew_y_offset= 40;
 
-extrusion_length = model[1];
+old_extrusion_length = model[1];
 rail_length = model[2];
 leadscrew_length = model[4];
 paneldepth = model[6];
 
-function frame_size() = [extrusion_length.x + 2 * extrusion_width(), extrusion_length.y + 2 * extrusion_width(), extrusion_length.z + 2 * extrusion_width()];
+function frame_size() = [old_extrusion_length.x + 2 * extrusion_width(), old_extrusion_length.y + 2 * extrusion_width(), old_extrusion_length.z + 2 * extrusion_width()];
 function panel_radius() = 5;
 function panel_thickness() = 0.25 * inch;
 

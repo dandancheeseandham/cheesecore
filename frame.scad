@@ -9,30 +9,30 @@ offset = extrusion_width() / 2;
 
 module z_extrusions() {
   mirror_xy() {
-    translate([extrusion_length.x/2 + offset, extrusion_length.y/2 + offset, 0])
-      extrusion(extrusion_length.z);
+    translate([frame_size().x / 2 - offset, frame_size().y / 2 - offset, 0])
+      extrusion(frame_size().z - 2 * extrusion_width());
   }
 }
 
 module x_extrusions() {
   mirror_yz() {
-    translate([0, extrusion_length.y/2+ offset, extrusion_length.z/2 + offset])
+    translate([0, frame_size().y / 2 - offset, frame_size().z / 2 - offset])
       rotate([0,90,0])
-        extrusion(extrusion_length.x);
+        extrusion(frame_size().x - 2 * extrusion_width());
   }
 }
 
 module y_extrusions() {
   mirror_xz() {
-    translate([extrusion_length.x/2+ offset, 0, extrusion_length.z/2 + offset])
+    translate([frame_size().x / 2 - offset, 0, frame_size().z / 2 - offset])
       rotate([90,0,0])
-        extrusion(extrusion_length.y);
+        extrusion(frame_size().y - 2 * extrusion_width());
   }
 }
 
 module corner_cubes() {
   mirror_xyz() {
-    translate([extrusion_length.x/2 + offset, extrusion_length.y/2 + offset, extrusion_length.z/2 + offset])
+    translate([frame_size().x / 2 - offset, frame_size().y / 2 - offset, frame_size().z / 2 - offset])
       rotate([0,0,90])
         corner_cube();
   }
@@ -46,9 +46,9 @@ module frame(bottom_braces=true) {
 
   if(bottom_braces) {
     mirror_x() {
-      translate([extrusion_length.x/2 - offset - leadscrew_x_offset*2, 0, -offset - extrusion_length.z / 2])
+      translate([frame_size().x / 2 + offset - leadscrew_x_offset*2, 0, offset - frame_size().z / 2])
         rotate([90, 0, 0])
-          extrusion(extrusion_length.y);
+          extrusion(frame_size().y - 2 * extrusion_width());
     }
   }
 }

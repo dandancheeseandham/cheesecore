@@ -82,17 +82,17 @@ module bottom_panel() {
       translate([bed_offset.x, bed_offset.y, 0]) {
         // left side holes
         mirror_y() {
-          translate([-extrusion_length.x/2 + leadscrew_x_offset, 255/2, -1])
+          translate([-frame_size().x / 2 - extrusion_width() + leadscrew_x_offset, 255/2, -1])
             motor_holes();
         }
         // right side holes
-        translate([extrusion_length.x/2 - leadscrew_x_offset, 0, -1])
+        translate([frame_size().x / 2 - leadscrew_x_offset, 0, -1])
           motor_holes();
       }
 
       // Deboss a name in the bottom panel
       deboss_depth = 3;
-      translate([0, -frame_size().y/2 + 25, panel_thickness() - deboss_depth + epsilon])
+      translate([0, -frame_size().y/2 + 50, panel_thickness() - deboss_depth + epsilon])
         linear_extrude(deboss_depth)
         text(branding_name, halign="center", size=35);
     }
@@ -106,7 +106,7 @@ module front_panel() {
   //assert(Zwindowspacingbottom >= extrusion_width(), "Window cannot overlap extrusion in Z");
 
   difference() {
-    panel((extrusion_length.x+extrusion_width()*2),(extrusion_length.z+extrusion_width()*2));
+    panel(frame_size().x, frame_size().z);
 
     color(panel_color_holes())
       translate ([front_window_offset().x, front_window_offset().y, panel_thickness() / 2])
@@ -188,7 +188,6 @@ module all_side_panels()
   // FIXME this is not right
   translate([0, 0, -frame_size().z / 2 - panel_thickness()]) bottom_panel();
   translate([0, -(frame_size().y)/2, 0]) rotate([90,0,0]) front_panel(); // ZL spacing
-  // translate([0, -(extrusion_length.y+extrusion_width()*2)/2, 0]) rotate([90,0,0]) front_panel(); // ZLT spacing
   translate([-frame_size().x / 2 - panel_thickness(), 0, 0]) rotate([90,0,90]) side_panel();
   translate ([frame_size().x / 2, 0, 0]) rotate([90,0,90]) side_panel();
   translate ([0, frame_size().y / 2 + panel_thickness(),0]) rotate([90,0,0]) back_panel();
