@@ -4,10 +4,13 @@ use <screwholes.scad>
 include <nopscadlib/core.scad>
 use <lib/holes.scad>
 use <lib/mirror.scad>
+use <lib/fan_grill_difference.scad>
+use <electronics_box_corner.scad>
 
 *electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 59, acrylic_thickness = 6); // ZL
 *electronics_box (box_size_y = 298.9, box_size_z = 438.9, box_depth = 59, acrylic_thickness = 6); // ZLT
-electronics_box (box_size_y = 300, box_size_z = 240, box_depth = 59, acrylic_thickness = 6); // New ZL
+electronics_box (box_size_y = 300, box_size_z = 240, box_depth = 79, acrylic_thickness = 6); // New ZL
+
 
 module electronics_box(box_size_z,box_size_y, box_depth, acrylic_thickness) 
 {
@@ -20,7 +23,7 @@ panelcornerrounding = 14 ; // rounding acrylic cover to match the corners
 mirror_xz() 
 	{
 	translate ([-box_size_y/2+move_corners,-box_depth,box_size_z/2+-move_corners]) 
-	elec_corner();  //electronics box corners
+	electronics_box_corner(cornersize = 15, acrylicdepth = acrylic_thickness ,height = box_depth, ledgewidth = 10 , ledgethickness = 4); ;  //electronics box corners
     }
 
 // top panel
@@ -76,28 +79,47 @@ color(acrylic_color())
 		    translate ([length-IEC_cutout_distance-cut_out_width,15.25,0]) cube ([cut_out_width,cut_out_depth,acrylic_thickness]);
 			translate ([length-IEC_cutout_distance-cut_out_width/2,9.65,0]) screwholes(row_distance=39.7,numberofscrewholes=2,Mscrew=3,screwhole_increase=0.5);
 			}
-			
 		}
 	}
 }
 
-
 module electronics_cover_panel(x, y, thickness, panelcornerrounding)
 {
+    laser_vent=true;
+	fans=true;
+    PSU_hole_pos_x = 50;  // this should be PSU position.
+    PSU_hole_pos_z = 50;
+    vent_length = 78;
+    vent_height = 3 ;
+    gap_between_vents = 4.5 ;
+    fan_pos_x = -100;  //this should be over the Duet
+    fan_pos_z =75;
+    
 	difference() 
 	{
 		color(acrylic2_color())
-		{
-		translate ([0, 0, thickness/2])
+		difference ()
+        {
+		translate ([0, 0, thickness/2]) 
 		rounded_rectangle([x+thickness/2, y+thickness/2, thickness],panelcornerrounding);
+
+		//16 vents
+		if (laser_vent==true) for(vents = [0 : 15]) translate ([PSU_hole_pos_x,PSU_hole_pos_z-(vents*(vent_height + gap_between_vents)),-20]) longscrewhole(vent_length,vent_height,0) ;
+		if (laser_vent==false) translate ([PSU_hole_pos_x,PSU_hole_pos_z-131,-20]) cube ([91,131,40]);    
+		if (fans==true) {
+		translate ([fan_pos_x,fan_pos_z,-acrylic_thickness]) fan_grill_difference(32,3.5,40,8 ,acrylic_thickness*3);
+		translate ([fan_pos_x,fan_pos_z-100,-acrylic_thickness]) fan_grill_difference(32,3.5,40,8 ,acrylic_thickness*3);
 		}
+ 		}
 	}
 }
 
 module elec_corner()
 {
-color(printed_part_color()) {
-    rotate ([90,0,180]) import("./railcorestls/Electronics_Box_Corner.stl");
+	color(printed_part_color())
+	{
+		rotate ([90,0,180]) import("./railcorestls/Electronics_Box_Corner.stl");
+	}
 }
-}
+
 }
