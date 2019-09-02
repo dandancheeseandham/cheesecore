@@ -119,7 +119,7 @@ module front_panel() {
 }
 
 module hinges() {
-  translate([0, -frame_size().y/2 - panel_thickness(), 0]) rotate([90, 0, 0]) {
+  translate([0, -frame_size().y/2, 0]) rotate([90, 0, 0]) {
     mirror_xy() {
       // FIXME: the -5 term here is bogus
       translate([-frame_size().x / 2, frame_size().y / 2 - panel_screw_offset() - 5, panel_thickness()])
@@ -128,8 +128,8 @@ module hinges() {
 
     color(printed_part_color())
       mirror_xy() {
-        // FIXME: the -1 and -50 here are bogus, but this component will get replaced anyway
-        translate([-(frame_size().x / 2) - 1, frame_size().z / 2 - 50, panel_thickness()])
+        // FIXME: the -1 and -50  and 0.5 here are bogus, but this component will get replaced anyway
+        translate([-(frame_size().x / 2) - 1.5, frame_size().z / 2 - 50, panel_thickness()+ 0.5])
           import("./railcorestls/lostapathy/doors/railcore-hinge-doorside.stl");
       }
   }

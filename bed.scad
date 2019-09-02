@@ -106,5 +106,8 @@ module ear_profile() {
 }
 
 //ear_profile();
-bed();
+//projection () bed();
+//projection(cut = true)  translate([0, 0, -bed_thickness]) bed();
+//projection(cut = true)  bed();
+bed ();
 //bed_ear();
