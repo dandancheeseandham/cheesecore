@@ -25,7 +25,7 @@ module z_tower(extrusion_type, rail_type_z, z_position=0)
 {
 
   //NEMA17 motor
-  translate ([-leadscrew_x_offset, 0,-paneldepth])
+  translate ([-leadscrew_x_offset, 0,-panel_thickness()])
     NEMA(NEMA17);
 
   //Coupler is connected to the NEMA12 motor

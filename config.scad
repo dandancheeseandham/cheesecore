@@ -50,7 +50,7 @@ model = rc300zl ;
 old_extrusion_length = model[1];
 rail_length = model[2];
 leadscrew_length = model[4];
-paneldepth = model[6];
+//paneldepth = model[6];
 
 function frame_size() = [old_extrusion_length.x + 2 * extrusion_width(), old_extrusion_length.y + 2 * extrusion_width(), old_extrusion_length.z + 2 * extrusion_width()];
 function panel_radius() = 5;

@@ -80,15 +80,15 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   }
 
   //electronics box
-  *translate([frame_size().x / 2 + paneldepth, 0, extrusion_width()]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
+  *translate([frame_size().x / 2 + panel_thickness(), 0, extrusion_width()]  ) rotate ([0,0,90]) electronics_box (298.9,238.9); // Old ZL size
 
-  translate([frame_size().x / 2 + paneldepth, 0,extrusion_width()]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
+  translate([frame_size().x / 2 + panel_thickness(), 0,extrusion_width()]  ) rotate ([0,0,90]) electronics_box (350,290); // New bigger ZL box
 
 
   if(render_electronics)
   {
-    // FIXME - should not need to translate here just by paneldepth
-    translate([frame_size().x / 2 + paneldepth, 0, 0]  )
+    // FIXME - should not need to translate here just by panel_thickness()
+    translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
       electronics_box_contents();
   }
 }
