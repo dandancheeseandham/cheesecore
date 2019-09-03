@@ -71,20 +71,20 @@ module panel_mounting_screws(x, y)
   }
 }
 
-module motor_holes()
-{
-  cylinder(h=15, d=NEMA_boss_radius(NEMA17) * 2 + 1);
-  mirror_xy()
-  {
-    translate([ NEMA_hole_pitch(NEMA17)/2, NEMA_hole_pitch(NEMA17)/2, -1 ])
-      // FIXME: this diameter should be driven by stepper size. (Looked in modules, there is no definition for this.-dan)
-      // FIXME this needs to be a hole() not a cylinder
-      cylinder(d=3.3, h=panel_thickness() + 2 * epsilon);
-  }
-}
-
 module bottom_panel()
 {
+  module motor_holes()
+  {
+    translate([0, 0, -epsilon]) cylinder(h=panel_thickness() + 2 * epsilon, d=NEMA_boss_radius(NEMA17) * 2 + 1);
+    mirror_xy()
+    {
+      translate([ NEMA_hole_pitch(NEMA17)/2, NEMA_hole_pitch(NEMA17)/2, -epsilon ])
+        // FIXME: this diameter should be driven by stepper size. (Looked in modules, there is no definition for this.-dan)
+        // FIXME this needs to be a hole() not a cylinder
+        cylinder(d=3.3, h=panel_thickness() + 2 * epsilon);
+    }
+  }
+
   difference()
   {
     panel(frame_size().x, frame_size().y);
@@ -100,7 +100,7 @@ module bottom_panel()
             motor_holes();
         }
         // right side holes
-        translate([frame_size().x / 2 - extrusion_width() - leadscrew_x_offset, 0, -1])
+        translate([frame_size().x / 2 - extrusion_width() - leadscrew_x_offset, 0, 0])
           motor_holes();
       }
 
@@ -201,7 +201,7 @@ module doors()
   rotate([90, 0, 0])
     translate(front_window_offset())
     mirror_x()
-    %door();
+    door();
 }
 
 module side_panel()
@@ -216,10 +216,10 @@ module back_panel()
 
 module all_side_panels()
 {
-  // FIXME this is not right
   translate([0, 0, -frame_size().z / 2 - panel_thickness()]) bottom_panel();
-  translate([0, -(frame_size().y)/2, 0]) rotate([90,0,0]) front_panel(); // ZL spacing
+  translate([0, -(frame_size().y)/2, 0]) rotate([90,0,0]) front_panel();
   translate([-frame_size().x / 2 - panel_thickness(), 0, 0]) rotate([90,0,90]) side_panel();
+  // FIXME: should move this into a right_side_panel() module and call that.
   difference()
   {
     translate ([frame_size().x / 2, 0, 0]) rotate([90,0,90]) side_panel();

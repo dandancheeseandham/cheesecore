@@ -30,7 +30,7 @@ module enclosure(){
 module printer(render_electronics=false, position=[0, 0, 0]) {
   enclosure();
 
-  z_towers(model[3].z, z_position = position[2]);
+  z_towers(rail_type = model[3].z, z_position = position[2]);
   // FIXME: this is not a final height for belts
   translate ([0, 0, frame_size().z / 2 + 20]) corexy_belts([position.x-210, position.y]);
 
@@ -78,9 +78,6 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
       translate([49, 38 - frame_size().y / 2 - extrusion_width(), 0])  NEMA(NEMA17);
     }
   }
-
-
-
 
   if(render_electronics)
   {

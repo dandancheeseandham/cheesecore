@@ -83,14 +83,14 @@ module z_tower(extrusion_type, rail_type_z, z_position=0)
 
 }
 
-module z_towers(rail_type_z, z_position = 0)
+module z_towers(rail_type, z_position = 0)
 {
   translate([bed_offset.x, bed_offset.y, -frame_size().z / 2])
   {
-    translate([frame_size().x / 2 - extrusion_width(), 0, 0]) z_tower($extrusion_type, rail_type_z, z_position);
+    translate([frame_size().x / 2 - extrusion_width(), 0, 0]) z_tower($extrusion_type, rail_type, z_position);
     mirror_y()
     {
-      translate([-frame_size().x / 2 + extrusion_width(), gap_between_motors / 2, 0]) rotate([0,0,180]) z_tower($extrusion_type, rail_type_z, z_position);
+      translate([-frame_size().x / 2 + extrusion_width(), gap_between_motors / 2, 0]) rotate([0,0,180]) z_tower($extrusion_type, rail_type, z_position);
     }
   }
 }
