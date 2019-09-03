@@ -29,6 +29,7 @@ module enclosure(){
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
   enclosure();
+
   z_towers(model[3].z, z_position = position[2]);
   // FIXME: this is not a final height for belts
   translate ([0, 0, frame_size().z / 2 + 20]) corexy_belts([position.x-210, position.y]);
@@ -37,7 +38,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   // FIXME: This placement of the bed is arbitrary in z, but linked to
   // "position = rail_length.z/2-50-z_position;" in z-tower
 
- // translate ([bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - 100]) bed(325,342,7.5);
+  // translate ([bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - 100]) bed(325,342,7.5);
 
   Yrail_vector = [-rail_length.x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 
@@ -78,10 +79,6 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
     }
   }
 
-  // ELECTRONICS BOX
-  %translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
-  rotate ([0,0,90]) 
-  electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 60, acrylic_thickness = 6); // Old ZL size
 
 
 
@@ -90,6 +87,11 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
     // FIXME - should not need to translate here just by panel_thickness()
     translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
       electronics_box_contents();
+
+    // ELECTRONICS BOX
+    translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
+      rotate ([0,0,90])
+        electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 60, acrylic_thickness = 6); // Old ZL size
   }
 }
 
@@ -123,7 +125,7 @@ module rc300zl40(position = [0, 0, 0]) {
 
 $front_window_size = front_window_zl;
 $frame_size = frame_rc300zl;
-printer(render_electronics=true, position=[50, 50, 0],$extrusion_type = extrusion15);
+printer(render_electronics=false, position=[50, 50, 0],$extrusion_type = extrusion15);
 translate([800, 0, 0]) rc300zl();
 translate([0, 800, 0]) rc300zlt();
 translate([800, 800, 0]) rc300zl40();
