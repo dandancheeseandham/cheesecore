@@ -21,7 +21,7 @@ module corexy_belts(position = [0, 0]) {
   // FIXME: the stepper offset and idler offset is made up
   stepper_offset = 47;
   idler_offset_inner = 50;  //tie this to the pulley location
-  idler_offset_outer = 21;  //tie this to the pulley location 
+  idler_offset_outer = 21;  //tie this to the pulley location
   //stepper_location = extrusion_length.x/2 + stepper_offset;
 
   // Where to position the crossover

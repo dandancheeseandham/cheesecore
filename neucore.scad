@@ -29,10 +29,9 @@ module enclosure(){
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
   enclosure();
+  xy_motion(position);
 
   z_towers(rail_type = model[3].z, z_position = position[2]);
-  // FIXME: this is not a final height for belts
-  translate ([0, 0, frame_size().z / 2 + 20]) corexy_belts([position.x-210, position.y]);
 
   // BED
   // FIXME: This placement of the bed is arbitrary in z, but linked to
@@ -62,22 +61,6 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   mirror_y() translate (xcarriagevector + [10,-12,0]) x_carriage();
 
 
-  // IDLER MOUNTS
-  translate ([-frame_size().x / 2 + extrusion_width(), 0, frame_size().z / 2]) {
-    mirror_y() {
-      translate([0, -frame_size().y / 2 + extrusion_width(), 0])
-        aluminium_idler_mount();
-
-    }
-  }
-
-  // MOTOR MOUNTS
-  translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
-    mirror_y() {
-      translate([0, frame_size().y / 2 - extrusion_width(), 0]) aluminium_motor_mount();
-      translate([49, 38 - frame_size().y / 2 - extrusion_width(), 0])  NEMA(NEMA17);
-    }
-  }
 
   if(render_electronics)
   {
@@ -95,11 +78,36 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
 //FIXME: x=80 is around X0, y=-20 is around Y0, z=-50 is around Z0
 //printer(render_electronics=false, position=[130, -20+100, -50]);
 
+
+// x/y motion stage.  So belts, pulleys, x/y motors, and mounts.
+// Position is the printhead position
+module xy_motion(position = [0, 0]) {
+  // FIXME: this is not a final height for belts
+  translate ([0, 0, frame_size().z / 2 + 20]) corexy_belts([position.x-210, position.y]);
+
+  // IDLER MOUNTS
+  translate ([-frame_size().x / 2 + extrusion_width(), 0, frame_size().z / 2]) {
+    mirror_y() {
+      translate([0, -frame_size().y / 2 + extrusion_width(), 0])
+        aluminium_idler_mount();
+    }
+  }
+
+  // MOTOR MOUNTS
+  translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
+    mirror_y() {
+      translate([0, frame_size().y / 2 - extrusion_width(), 0]) aluminium_motor_mount();
+      translate([49, 38 - frame_size().y / 2 - extrusion_width(), 0])  NEMA(NEMA17);
+    }
+  }
+}
+
 module rc300zl(position = [0, 0, 0]) {
   $extrusion_type = extrusion15;
   // TODO: perhaps extract out wrappers for "common" parts like frame_and_sides or something?
   validate();
   enclosure();
+  xy_motion(position);
   //printer();
 }
 
@@ -110,6 +118,7 @@ module rc300zlt(position = [0, 0, 0]) {
   // TODO: perhaps extract out wrappers for "common" parts like frame_and_sides or something?
   validate();
   enclosure();
+  xy_motion(position);
   //printer();
 }
 module rc300zl40(position = [0, 0, 0]) {
@@ -117,6 +126,7 @@ module rc300zl40(position = [0, 0, 0]) {
   $frame_size = frame_rc300zl4040;
   validate();
   enclosure();
+  xy_motion(position);
   //printer();
 }
 
