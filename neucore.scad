@@ -36,7 +36,8 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   // BED
   // FIXME: This placement of the bed is arbitrary in z, but linked to
   // "position = rail_length.z/2-50-z_position;" in z-tower
-  translate ([bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - 100]) bed();
+  
+ // translate ([bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - 100]) bed(325,342,7.5);
 
   Yrail_vector = [-rail_length.x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 

@@ -19,8 +19,9 @@ function extrusion_screw_size(extrusion_type = $extrusion_type) = extrusion_type
 bed_offset = [0, -25]; // How far to offset the bed from center of frame
 
 // These define how far from the part origin of the z-tower the leadscrew is
-leadscrew_x_offset = 20; // how far in x the centerline of the leadscrew is from the inside edge of the frame extrusions
-leadscrew_y_offset = 30; // taken off z yoke in fusion
+leadscrew_x_offset = 35 ; // how far in x the centerline of the leadscrew is from the inside edge of the frame extrusions
+leadscrew_y_offset = 30 ; // taken off z yoke in fusion
+gap_between_motors = 255 ;   // 255 is standard for ZL/ZLT , based on bed tongues
 
 RC300BED = 42; // FIXME: build out an actual bed model
 

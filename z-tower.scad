@@ -12,7 +12,7 @@ use <leadscrew.scad>
 
 
 rail_adjustment = 30 + 6 ;        // base_of_coupler_adjustment + panel_depth
-space_between_towers = 255 ;  // standard for ZL/ZLT , based on bed tongues
+//gap_between_motors = 255 ; 
 coupler_adjustment = 85 ;
 z_yoke_adjustment = coupler_adjustment - 10 ;
 rail_carriage_adjustment = z_yoke_adjustment +5 ;
@@ -90,7 +90,7 @@ module z_towers(rail_type_z, z_position = 0)
     translate([frame_size().x / 2 - extrusion_width(), 0, 0]) z_tower($extrusion_type, rail_type_z, z_position);
     mirror_y()
     {
-      translate([-frame_size().x / 2 + extrusion_width(), space_between_towers / 2, 0]) rotate([0,0,180]) z_tower($extrusion_type, rail_type_z, z_position);
+      translate([-frame_size().x / 2 + extrusion_width(), gap_between_motors / 2, 0]) rotate([0,0,180]) z_tower($extrusion_type, rail_type_z, z_position);
     }
   }
 }
