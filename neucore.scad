@@ -28,41 +28,39 @@ module enclosure(){
 }
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
-
   enclosure();
-
   z_towers(model[3].z, z_position = position[2]);
   // FIXME: this is not a final height for belts
   translate ([0, 0, frame_size().z / 2 + 20]) corexy_belts([position.x-210, position.y]);
 
-  // bed
+  // BED
   // FIXME: This placement of the bed is arbitrary in z, but linked to
   // "position = rail_length.z/2-50-z_position;" in z-tower
   translate ([bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - 100]) bed();
 
   Yrail_vector = [-rail_length.x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 
-  //X-rail
+  //X-RAIL
   translate ([0, 0, frame_size().z / 2 - extrusion_width() / 2])
     x_rails(model[3].x, position.x);
 
-  // Y-rail
+  // Y-RAIL
   // FIXME: x position here is an approximation to look decent
   translate (Yrail_vector + [3 , 0, 0])
     rotate([270, 0, 90])
     rail_wrapper(model[3].y,rail_length.y, position = position.y-150);
 
-  //hotend
+  // HOTEND
   translate (Yrail_vector + [-35, position.y-150, 20]) // FIXME: arbitary move to look decentish
     rotate ([0,0,180]) hot_end(E3Dv6, naked=true);
 
-  // x-carriage
+  // X-CARRIAGE
   // 12 = rail size
   xcarriagevector = [-rail_length.x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
   mirror_y() translate (xcarriagevector + [10,-12,0]) x_carriage();
 
 
-  // Idler mounts
+  // IDLER MOUNTS
   translate ([-frame_size().x / 2 + extrusion_width(), 0, frame_size().z / 2]) {
     mirror_y() {
       translate([0, -frame_size().y / 2 + extrusion_width(), 0])
@@ -71,7 +69,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
     }
   }
 
-  // motor mounts
+  // MOTOR MOUNTS
   translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
     mirror_y() {
       translate([0, frame_size().y / 2 - extrusion_width(), 0]) aluminium_motor_mount();
@@ -79,11 +77,10 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
     }
   }
 
-  //electronics box
+  // ELECTRONICS BOX
   %translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
   rotate ([0,0,90]) 
   electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 60, acrylic_thickness = 6); // Old ZL size
-
 
 
 

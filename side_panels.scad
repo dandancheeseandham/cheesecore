@@ -189,7 +189,11 @@ module all_side_panels()
   translate([0, 0, -frame_size().z / 2 - panel_thickness()]) bottom_panel();
   translate([0, -(frame_size().y)/2, 0]) rotate([90,0,0]) front_panel(); // ZL spacing
   translate([-frame_size().x / 2 - panel_thickness(), 0, 0]) rotate([90,0,90]) side_panel();
+  difference()
+  {
   translate ([frame_size().x / 2, 0, 0]) rotate([90,0,90]) side_panel();
+  translate ([frame_size().x / 2, -frame_size().y/2+150, frame_size().z/2-100]) rotate([90,0,90]) singlescrewhole(26,0);
+  }
   translate ([0, frame_size().y / 2 + panel_thickness(),0]) rotate([90,0,0]) back_panel();
 }
 
@@ -208,6 +212,7 @@ module all_side_panels_dxf()
 //all_side_panels();
 //bottom_panel();
 // Must supply these params when calling this and not define it global to the file
-front_panel($extrusion_type = extrusion15, $front_window_size = front_window_zl);
+// front_panel($extrusion_type = extrusion15, $front_window_size = front_window_zl);
+side_panel($extrusion_type = extrusion15);
 //hinges();
 //doors();
