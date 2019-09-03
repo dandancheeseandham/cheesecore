@@ -75,12 +75,14 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
     mirror_y() {
       translate([0, frame_size().y / 2 - extrusion_width(), 0]) aluminium_motor_mount();
-      translate([49, 8 - frame_size().y / 2 - extrusion_width(), 0])  NEMA(NEMA17);
+      translate([49, 38 - frame_size().y / 2 - extrusion_width(), 0])  NEMA(NEMA17);
     }
   }
 
   //electronics box
-  %translate([frame_size().x / 2 + panel_thickness(), 0, 0]  ) rotate ([0,0,90]) electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 59, acrylic_thickness = 6); // Old ZL size
+  %translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
+  rotate ([0,0,90]) 
+  electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 60, acrylic_thickness = 6); // Old ZL size
 
 
 
@@ -120,6 +122,6 @@ module rc300zl40(position = [0, 0, 0]) {
 }
 $front_window_size = front_window_zl;
 printer(render_electronics=true, position=[50, 50, 0],$extrusion_type = extrusion15);
-translate([600, 0, 0]) rc300zl();
-*translate([1250, 0, 0]) rc300zlt();
-translate([1900, 0, 0]) rc300zl40();
+translate([800, 0, 0]) rc300zl();
+*translate([0, 800, 0]) rc300zlt();
+translate([800, 800, 0]) rc300zl40();

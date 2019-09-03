@@ -12,6 +12,7 @@ module electronics_box_corner(cornersize, acrylicdepth ,height, ledgewidth , led
 {
 rotate ([90,270,0])
 translate ([cornersize+ledgewidth-(ledgewidth-10),cornersize+ledgewidth-(ledgewidth-10),-height])
+ color(printed_part_color()) {
 union()
 {
 	difference ()
@@ -29,6 +30,7 @@ union()
 	// second "ledge" 
 	translate ([cornersize-ledgethickness-acrylicdepth,-ledgewidth-cornersize,0])  ledge();
 } 
+}
 
 module ledge()
 {
