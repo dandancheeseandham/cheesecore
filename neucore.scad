@@ -36,7 +36,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   // BED
   // FIXME: This placement of the bed is arbitrary in z, but linked to
   // "position = rail_length.z/2-50-z_position;" in z-tower
-  
+
  // translate ([bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - 100]) bed(325,342,7.5);
 
   Yrail_vector = [-rail_length.x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
@@ -107,6 +107,7 @@ module rc300zl(position = [0, 0, 0]) {
 module rc300zlt(position = [0, 0, 0]) {
   $front_window_size = front_window_zlt;
   $extrusion_type = extrusion15;
+  $frame_size = frame_rc300zlt;
   // TODO: perhaps extract out wrappers for "common" parts like frame_and_sides or something?
   validate();
   enclosure();
@@ -114,12 +115,15 @@ module rc300zlt(position = [0, 0, 0]) {
 }
 module rc300zl40(position = [0, 0, 0]) {
   $extrusion_type = extrusion40;
+  $frame_size = frame_rc300zl4040;
   validate();
   enclosure();
   //printer();
 }
+
 $front_window_size = front_window_zl;
+$frame_size = frame_rc300zl;
 printer(render_electronics=true, position=[50, 50, 0],$extrusion_type = extrusion15);
 translate([800, 0, 0]) rc300zl();
-*translate([0, 800, 0]) rc300zlt();
+translate([0, 800, 0]) rc300zlt();
 translate([800, 800, 0]) rc300zl40();
