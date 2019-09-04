@@ -245,7 +245,7 @@ module all_side_panels_dxf()
 //all_side_panels();
 //bottom_panel();
 // Must supply these params when calling this and not define it global to the file
-front_panel($extrusion_type = extrusion15, $front_window_size = front_window_zl);
+front_panel($extrusion_type = extrusion15, $front_window_size = front_window_zl, $frame_size = frame_rc300zl);
 // side_panel($extrusion_type = extrusion15);
 //hinges();
 //doors();
