@@ -111,6 +111,7 @@ module rc300zl(position = [0, 0, 0]) {
   validate();
   enclosure();
   xy_motion(position);
+  z_towers(z_position = position[2]);
   //printer();
 }
 
@@ -123,6 +124,7 @@ module rc300zlt(position = [0, 0, 0]) {
   validate();
   enclosure();
   xy_motion(position);
+  z_towers(z_position = position[2]);
   //printer();
 }
 module rc300zl40(position = [0, 0, 0]) {
@@ -132,6 +134,7 @@ module rc300zl40(position = [0, 0, 0]) {
   validate();
   enclosure();
   xy_motion(position);
+  z_towers(z_position = position[2]);
   //printer();
 }
 
@@ -142,6 +145,7 @@ module dancore(position = [0, 0, 0]) {
   validate();
   enclosure();
   xy_motion(position);
+  z_towers(z_position = position[2]);
 }
 
 module andycore(position = [0, 0, 0]) {
@@ -151,6 +155,7 @@ module andycore(position = [0, 0, 0]) {
   validate();
   enclosure();
   xy_motion(position);
+  z_towers(z_position = position[2]);
 }
 
 $front_window_size = front_window_zl;
