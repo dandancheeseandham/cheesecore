@@ -2,6 +2,7 @@
 use <config.scad>
 use <screwholes.scad>
 include <nopscadlib/core.scad>
+include <nopscadlib/lib.scad>
 use <lib/holes.scad>
 use <lib/mirror.scad>
 
@@ -31,9 +32,18 @@ union()
 	//bottom right cube
 	translate ([0,-cornersize,0]) cube ([cornersize,cornersize,height]);
 	// first "ledge"
-	translate ([-cornersize,cornersize-ledgethickness-acrylicdepth,0]) rotate ([0,0,90]) ledge();
+	translate ([-cornersize,cornersize-ledgethickness-acrylicdepth,0]) rotate ([0,0,90]) 
+	{ ledge();
+	rotate ([0,0,90]) fillet (1.5,height);
+	}
+
 	// second "ledge" 
-	translate ([cornersize-ledgethickness-acrylicdepth,-ledgewidth-cornersize,0])  ledge();
+	translate ([cornersize-ledgethickness-acrylicdepth,-ledgewidth-cornersize,0]) 
+	{ ledge();
+	translate ([0,ledgewidth,0])
+	rotate ([0,0,180]) fillet (1.5,height);
+	}
+	
 } 
 }
 
