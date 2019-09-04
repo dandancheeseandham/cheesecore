@@ -5,7 +5,7 @@ use <nopscadlib/vitamins/rail.scad>
 // The origin of the z-yoke is the center of the mounting point on the linear rail carriage
 module z_yoke() {
   extrusion_width = extrusion_width($extrusion_type);
-  carriage_type = rail_carriage(rail_type_z);
+  carriage_type = rail_carriage(rail_profiles().z);
 
   // FIXME: need a fillet between horizontal and vertical surfaces to brace it
   // FIXME: this thickness(10) was just arbitrary to mock something up
@@ -44,7 +44,7 @@ ear_extent = 40; // How far from the carriage face the ear should extend.
 
 module z_yoke_bed_mount_profile(extrusion_width) {
   assert(extrusion_width != undef, "Must specify extrusion_width");
-  carriage_type = rail_carriage(rail_type_z);
+  carriage_type = rail_carriage(rail_profiles().z);
 
   // around leadscrew out to bed ear
   hull() {
@@ -64,7 +64,7 @@ module z_yoke_bed_mount_profile(extrusion_width) {
 
 module z_yoke_holes_profile(extrusion_width) {
   assert(extrusion_width != undef, "Must specify extrusion_width");
-  carriage_type = rail_carriage(rail_type_z);
+  carriage_type = rail_carriage(rail_profiles().z);
 
   // FIXME: should be driven off leadscrew nut size
   translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset]) circle(d=10); // leadscrew nut hole

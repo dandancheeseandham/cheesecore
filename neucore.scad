@@ -1,6 +1,7 @@
 // vim: set nospell:
 include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
+use <lib/mirror.scad>
 use <extrusion.scad>
 use <belts_pulleys.scad>
 use <side_panels.scad>
@@ -31,7 +32,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   enclosure();
   xy_motion(position);
 
-  z_towers(rail_type = model[3].z, z_position = position[2]);
+  z_towers(z_position = position[2]);
 
   // BED
   // FIXME: This placement of the bed is arbitrary in z, but linked to
@@ -39,17 +40,17 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
 
   // translate ([bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - 100]) bed(325,342,7.5);
 
-  Yrail_vector = [-rail_length.x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
+  Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 
   //X-RAIL
   translate ([0, 0, frame_size().z / 2 - extrusion_width() / 2])
-    x_rails(model[3].x, position.x);
+    x_rails(position.x);
 
   // Y-RAIL
   // FIXME: x position here is an approximation to look decent
   translate (Yrail_vector + [3 , 0, 0])
     rotate([270, 0, 90])
-    rail_wrapper(model[3].y,rail_length.y, position = position.y-150);
+      rail_wrapper(rail_profiles().y, rail_lengths().y, position = position.y-150);
 
   // HOTEND
   translate (Yrail_vector + [-35, position.y-150, 20]) // FIXME: arbitary move to look decentish
@@ -57,7 +58,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
 
   // X-CARRIAGE
   // 12 = rail size
-  xcarriagevector = [-rail_length.x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
+  xcarriagevector = [-rail_lengths().x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
   mirror_y() translate (xcarriagevector + [10,-12,0]) x_carriage();
 
 
@@ -104,10 +105,13 @@ module xy_motion(position = [0, 0]) {
 
 module rc300zl(position = [0, 0, 0]) {
   $extrusion_type = extrusion15;
+  $frame_size = frame_rc300zl;
+  $rail_specs = rails_rc300zl;
   // TODO: perhaps extract out wrappers for "common" parts like frame_and_sides or something?
   validate();
   enclosure();
   xy_motion(position);
+  z_towers(z_position = position[2]);
   //printer();
 }
 
@@ -115,24 +119,51 @@ module rc300zlt(position = [0, 0, 0]) {
   $front_window_size = front_window_zlt;
   $extrusion_type = extrusion15;
   $frame_size = frame_rc300zlt;
+  $rail_specs = rails_rc300zlt;
   // TODO: perhaps extract out wrappers for "common" parts like frame_and_sides or something?
   validate();
   enclosure();
   xy_motion(position);
+  z_towers(z_position = position[2]);
   //printer();
 }
 module rc300zl40(position = [0, 0, 0]) {
   $extrusion_type = extrusion40;
   $frame_size = frame_rc300zl4040;
+  $rail_specs = rails_rc300zl;
   validate();
   enclosure();
   xy_motion(position);
+  z_towers(z_position = position[2]);
   //printer();
+}
+
+module dancore(position = [0, 0, 0]) {
+  $extrusion_type = extrusion20;
+  $frame_size = [510, 475, 465];
+  $rail_specs = [[420, MGN12], [420, MGN12], [420, MGN12]];
+  validate();
+  enclosure();
+  xy_motion(position);
+  z_towers(z_position = position[2]);
+}
+
+module andycore(position = [0, 0, 0]) {
+  $extrusion_type = extrusion20;
+  $frame_size = [410, 415, 355];
+  $rail_specs = [[300, MGN9], [350, MGN12], [300, MGN9]];
+  validate();
+  enclosure();
+  xy_motion(position);
+  z_towers(z_position = position[2]);
 }
 
 $front_window_size = front_window_zl;
 $frame_size = frame_rc300zl;
+$rail_specs = rails_rc300zl;
 printer(render_electronics=false, position=[50, 50, 0],$extrusion_type = extrusion15);
 translate([800, 0, 0]) rc300zl();
 translate([0, 800, 0]) rc300zlt();
 translate([800, 800, 0]) rc300zl40();
+
+

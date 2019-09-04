@@ -1,6 +1,5 @@
 include <config.scad>
-include <nopscadlib/core.scad>
-include <lib/mirror.scad>
+use <lib/mirror.scad>
 use <screwholes.scad>
 
 bed_thickness=0.25*inch; // depth of bed tool plate
@@ -19,7 +18,7 @@ module bed()
   bedcornerrounding=7.5; // bed plate corner rounding
   bedYspacing=125; // extra space around Y
 
-color(alum_part_color()) {
+  color(alum_part_color()) {
     difference() {
       union() {
         // Main body of bed
@@ -33,13 +32,13 @@ color(alum_part_color()) {
       }
       thermistor_channel();
 
-// Grounding connection hole
-//  a proper grounding connection is consists of a toothed washer, washer, ring terminal, washer, a "schnorr disk" (?) and the bolt going through all of it      
-       translate ([190,-35,bed_thickness/2]) rotate ([0,90,0]) singlescrewhole(2,0);
-      
-// Mounting hole for wire restraint on the side where cables go.
-     translate ([190,-50,bed_thickness/2]) rotate ([0,90,0]) singlescrewhole(2,0);
-      }
+      // Grounding connection hole
+      //  a proper grounding connection is consists of a toothed washer, washer, ring terminal, washer, a "schnorr disk" (?) and the bolt going through all of it      
+      translate ([190,-35,bed_thickness/2]) rotate ([0,90,0]) singlescrewhole(2,0);
+
+      // Mounting hole for wire restraint on the side where cables go.
+      translate ([190,-50,bed_thickness/2]) rotate ([0,90,0]) singlescrewhole(2,0);
+    }
   }
 }
 module thermistor_channel() {
@@ -83,7 +82,7 @@ module ear_profile() {
       hull() {
         translate([-epsilon, -bed_ear_y/2])  square([epsilon, bed_ear_y]);
         mirror_y()
-        translate([bed_ear_x-ear_radius, bed_ear_y/2-ear_radius]) circle(r=ear_radius);
+          translate([bed_ear_x-ear_radius, bed_ear_y/2-ear_radius]) circle(r=ear_radius);
       }
 
       // Fillet from ear to outside counter of bed

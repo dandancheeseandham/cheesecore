@@ -3,7 +3,7 @@ include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
 use <lib/mirror.scad>
 
-module rail_wrapper(rail_type,length, include_screws=false, position=0)
+module rail_wrapper(rail_type, length, include_screws=false, position=0)
 {
   assert(length != undef, "Length must be defined");
   rail = rail_type;
@@ -32,12 +32,14 @@ module rail_wrapper(rail_type,length, include_screws=false, position=0)
   }
 }
 
-module x_rails(rail_type, position = 0)
+module x_rails(position = 0)
 {
+  rail_type = rail_profiles().x;
+  rail_length = rail_lengths().x;
   mirror_y()
   {
-    translate ([0, frame_size().y / 2 - extrusion_width(), 0]) rotate([90, 0, 0]) rail_wrapper(rail_type, rail_length.x, position=-rail_travel(rail_type, rail_length.x)/2 + position);
+    translate ([0, frame_size().y / 2 - extrusion_width(), 0]) rotate([90, 0, 0]) rail_wrapper(rail_type, rail_length, position=-rail_travel(rail_type, rail_length) / 2 + position);
   }
 }
 
-x_rails(MGN9,position=0);
+x_rails(position=0);

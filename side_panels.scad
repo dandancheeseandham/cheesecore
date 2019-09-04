@@ -1,6 +1,7 @@
 // vim: set nospell:
 include <config.scad>
-include <nopscadlib/core.scad>
+use <nopscadlib/vitamins/stepper_motor.scad>
+include <nopscadlib/vitamins/stepper_motors.scad>
 use <lib/holes.scad>
 use <lib/mirror.scad>
 use <door_hinge.scad>
