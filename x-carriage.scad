@@ -1,11 +1,9 @@
 include <config.scad>
 use <nopscadlib/vitamins/rail.scad>
 
-// check out dogbone_square(size, r = cnc_bit_r, center = true)
-// The origin of the z-yoke is the center of the mounting point on the linear rail carriage
+// The origin of the x-carriage is the center of the mounting point on the face of the linear rail carriage
 module x_carriage()
 {
-  // FIXME: need a fillet between horizontal and vertical surfaces to brace it
   // FIXME: this thickness(10) was just arbitrary to mock something up
   part_thickness = 10;
   part_width = 60;
