@@ -14,7 +14,6 @@ module top_enclosure_all(){
   frame();
   all_side_panels();
   //hinges();
-
 }
 
 $front_window_size = front_window_zl;
