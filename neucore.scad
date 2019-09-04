@@ -17,15 +17,17 @@ use <electronics_box_panels.scad>
 use <electronics_box_contents.scad>
 use <x-carriage.scad>
 use <validation.scad>
+use <top_enclosure.scad>
 
 $fullrender=false;
 
 module enclosure(){
   frame();
-  all_side_panels();
+ all_side_panels();
   hinges();
   translate([0, -frame_size().y / 2 - panel_thickness() - epsilon, 0]) doors();
   feet(height=50);
+  * translate ([0, 0, frame_size().z / 2 + 150]) top_enclosure_all();
 }
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
