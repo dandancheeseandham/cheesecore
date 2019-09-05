@@ -56,10 +56,10 @@ module aluminium_idler_mount()
           translate ([rounding,rounding,0]) cube([main_body_size_x+(extrusion_width($extrusion_type)-rounding), main_body_size_y+extrusion_width($extrusion_type)-rounding, idler_height/2]);
           cylinder(r=rounding,h=idler_height/2);
         }
-        	#translate ([7+extrusion_width($extrusion_type),x_to_first_pulley,-idler_height]) cylinder(h=115, r1=tap_hole/2, r2=tap_hole/2, center=false);  //far pulley screwhole - this needs to be tapped/drilled?
-          #translate ([7+extrusion_width($extrusion_type)+pulley_clearance,x_to_second_pulley,-idler_height]) cylinder(h=115, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
+        	translate ([7+extrusion_width($extrusion_type),x_to_first_pulley,-idler_height]) cylinder(h=115, r1=tap_hole/2, r2=tap_hole/2, center=false);  //far pulley screwhole - this needs to be tapped/drilled?
+          translate ([7+extrusion_width($extrusion_type)+pulley_clearance,x_to_second_pulley,-idler_height]) cylinder(h=115, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
         
-        #translate ([extrusion_width($extrusion_type)+move_holes_by,extrusion_width($extrusion_type)/2-lengthen_extrusion_screwhole,-2])  rotate ([0,0,90]) longscrewhole(screwhole_length=extrusion_width($extrusion_type)/lengthen_extrusion_screwhole, Mscrew=screwhole_M,screwhole_increase=0.1);  // horizontal adjustment hole
+        #translate ([extrusion_width($extrusion_type)+move_holes_by,extrusion_width($extrusion_type)/2-lengthen_extrusion_screwhole/2,-2])  rotate ([0,0,90]) longscrewhole(screwhole_length=extrusion_width($extrusion_type)/lengthen_extrusion_screwhole, Mscrew=screwhole_M,screwhole_increase=0.1);  // horizontal adjustment hole
         translate ([extrusion_width($extrusion_type)/2,extrusion_width($extrusion_type)+move_holes_by,0]) screwholes(row_distance=extrusion_screwholes_line_length,numberofscrewholes=3,Mscrew=screwhole_M,screwhole_increase=0.1) ; //line of screwholes
       }
     }
