@@ -1,7 +1,7 @@
-//FIXME: this lib should not need to depend on the machine config
-include <config.scad>
+include <constants.scad>
 include <nopscadlib/core.scad>
 use <lib/holes.scad>
+use <demo.scad>
 
 module extrusion_profile(extrusion_size, slot_width) {
   difference() {
@@ -36,5 +36,8 @@ module extrusion(length, center=true, extrusion_type = $extrusion_type) {
   }
 }
 
-extrusion_profile(15, 3.3);
-translate([50,0,0]) extrusion($extrusion_type, 100);
+
+demo() {
+extrusion_profile(extrusion_width($extrusion_type), 3.3);
+translate([50,0,0]) extrusion(length=100);
+}

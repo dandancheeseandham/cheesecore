@@ -12,7 +12,7 @@ use <z-tower.scad>
 use <rail.scad>
 use <aluminium_idlermount.scad>
 use <aluminium_motormount.scad>
-
+use <demo.scad>
 
 electronicsbox_size_x = 400; //for PSU
 electronicsbox_size_y = 1;
@@ -32,4 +32,6 @@ extrusion=extrusion_width($extrusion_type);
   
 }
 
+demo() {
 electronics_box_contents();
+}

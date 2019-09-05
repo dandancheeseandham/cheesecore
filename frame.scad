@@ -3,6 +3,7 @@ include <config.scad>
 use <extrusion.scad>
 use <corner_cube.scad>
 use <lib/mirror.scad>
+use <demo.scad>
 
 module z_extrusions() {
   mirror_xy() {
@@ -54,4 +55,6 @@ module frame(bottom_braces=true) {
   }
 }
 
-frame($extrusion_type = extrusion15);
+demo() {
+  frame();
+}

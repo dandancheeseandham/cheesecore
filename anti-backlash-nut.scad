@@ -1,5 +1,6 @@
 include <constants.scad>
 use <lib/mirror.scad>
+use <demo.scad>
 
 module anti_backlash_nut(screw_size) {
   color("#b5a642") {
@@ -23,4 +24,6 @@ module anti_backlash_nut(screw_size) {
   }
 }
 
-anti_backlash_nut(8);
+demo() {
+  anti_backlash_nut(8);
+}

@@ -4,11 +4,12 @@ include <nopscadlib/core.scad>
 use <lib/holes.scad>
 use <lib/mirror.scad>
 use <screwholes.scad>
+use <demo.scad>
 
-$draft = true;
-$extrusion_type = extrusion15;
-*front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_door_thickness=5,screw_type=3); // ZL, 5mm acrylic
-front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,screw_type=3); // ZLT 6mm acrylic
+demo() {
+front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_door_thickness=5,screw_type=3); // ZL, 5mm acrylic
+  translate ([60,0,0]) front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,screw_type=3); // ZLT 6mm acrylic
+}
 
 module front_panel_doors_hinge(screw_distance,acrylic_door_thickness,screw_type)
 {

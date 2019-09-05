@@ -5,6 +5,7 @@
 include <config.scad>
 include <nopscadlib/core.scad>
 use <screwholes.scad>
+use <demo.scad>
 
 // FIXME: rather than parameterize on screwsize, we could parameterize on NEMA size of motor - that would set all of
 // a screw size, main motor hole size, and screw pattern from one variable
@@ -58,5 +59,7 @@ module aluminium_motor_mount(screwsize=3, motoradjustspacing=6) {
       raw_aluminium_motor_mount(screwsize=screwsize, motoradjustspacing=motoradjustspacing);
 }
 
-* mirror([0,1,0]) translate ([0,-10,0]) z_yoke(screwsize=3,motoradjustspacing=6) ; //mirrored version
+demo() {
+mirror([0,1,0]) translate ([0,-60,0]) aluminium_motor_mount(screwsize=3,motoradjustspacing=6) ; //mirrored version
 aluminium_motor_mount(screwsize=3,motoradjustspacing=6) ;
+}

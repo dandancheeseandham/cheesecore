@@ -1,5 +1,6 @@
 include <config.scad>
 use <nopscadlib/vitamins/rail.scad>
+use <demo.scad>
 
 // The origin of the x-carriage is the center of the mounting point on the face of the linear rail carriage
 module x_carriage()
@@ -21,4 +22,6 @@ module x_carriage()
   }
 }
 
+demo() {
 x_carriage();
+}

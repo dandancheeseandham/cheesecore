@@ -6,6 +6,7 @@ use <lib/holes.scad>
 use <lib/mirror.scad>
 use <door_hinge.scad>
 use <screwholes.scad>
+use <demo.scad>
 
 
 module panel(x, y)

@@ -1,6 +1,7 @@
 include <config.scad>
 use <lib/mirror.scad>
 use <screwholes.scad>
+use <demo.scad>
 
 bed_thickness=0.25*inch; // depth of bed tool plate
 bed_ear_x = 12.5;
@@ -96,9 +97,11 @@ module ear_profile() {
   }
 }
 
+demo() {
 *ear_profile();
 //projection () bed();
 //projection(cut = true)  translate([0, 0, -bed_thickness]) bed();
 //projection(cut = true)  bed();
 bed ();
 *bed_ear();
+}

@@ -5,13 +5,7 @@ include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
 use <lib/holes.scad>
 use <lib/mirror.scad>
-
-*rotate ([0,0,90]) import("railcorestls/lostapathy/electronics-box-corner.stl");
-*rotate ([0,-90,90]) import("railcorestls/Electronics_Box_Corner.stl");
-
-* electronics_box_corner(cornersize = 15, acrylicdepth = 6,height = 60, ledgewidth = 10 , ledgethickness = 4, holesize = 3.5);  // standard box
-electronics_box_corner(cornersize = 15, acrylicdepth = 6.6 ,height = 60, ledgewidth = 10 , ledgethickness = 7, holesize = 4.75); //lostapathy version for heat inserts with thicker "ledge"
-
+use <demo.scad>
 
 module electronics_box_corner(cornersize, acrylicdepth ,height, ledgewidth , ledgethickness, holesize) {
   rotate ([90,270,0])
@@ -50,4 +44,11 @@ module ledge() {
       }
     }
   }
+}
+
+demo() {
+  translate ([60,0,-50]) rotate ([0,0,90]) import("railcorestls/lostapathy/electronics-box-corner.stl");
+  translate ([0,60,-50]) rotate ([0,-90,90]) import("railcorestls/Electronics_Box_Corner.stl");
+  electronics_box_corner(cornersize = 15, acrylicdepth = 6,height = 60, ledgewidth = 10 , ledgethickness = 4, holesize = 3.5);  // standard box
+  translate ([60,0,0]) electronics_box_corner(cornersize = 15, acrylicdepth = 6.6 ,height = 60, ledgewidth = 10 , ledgethickness = 7, holesize = 4.75); //lostapathy version for heat inserts with thicker "ledge"
 }

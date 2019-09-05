@@ -2,6 +2,7 @@ include <config.scad>
 include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
 use <lib/mirror.scad>
+use <demo.scad>
 
 module rail_wrapper(rail_type, length, include_screws=false, position=0)
 {
@@ -42,4 +43,6 @@ module x_rails(position = 0)
   }
 }
 
+demo() {
 x_rails(position=0);
+}

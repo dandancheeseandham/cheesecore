@@ -1,4 +1,5 @@
 include <config.scad>
+use <demo.scad>
 
 module corner_cube(extrusion_type = $extrusion_type) {
   assert(extrusion_width(extrusion_type) != undef, "Must pass a valid extrusion type");
@@ -18,4 +19,6 @@ module corner_cube(extrusion_type = $extrusion_type) {
   }
 }
 
+demo() {
 corner_cube(extrusion_type);
+}

@@ -5,7 +5,8 @@
 // Creative Commons - Public Domain Dedication license.
 // https://www.thingiverse.com/thing:1329750
 
-include <config.scad>
+use <demo.scad>
+
 // Height of the coupler, half for the motor shaft and half for the rod
 couplerHeight = 30;
 // External diameter of the coupler
@@ -83,4 +84,6 @@ module screw()
             cylinder(d=nutWidth*2*tan(30), h=big, $fn=6);
 }
 
-coupler();
+demo() {
+  coupler();
+}

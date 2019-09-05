@@ -8,4 +8,5 @@ module demo() {
   $bed = bed_rc300;
   $front_window_size = front_window_zl ;
   children();
+  $draft = false;
 }

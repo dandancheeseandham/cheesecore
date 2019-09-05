@@ -1,6 +1,7 @@
 use <lib/mirror.scad>
 use <lib/holes.scad>
 include <config.scad>
+use <demo.scad>
 
 panel_outside_radius=5; // FIXME: this needs unified with panel
 
@@ -80,6 +81,8 @@ module feet(height = 50) {
     }
 }
 
+demo() {
 // feet();
-foot(extrusion15, 50);
+foot(height=50);
 //foot_base_profile(15);
+}

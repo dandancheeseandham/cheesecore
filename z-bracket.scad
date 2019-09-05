@@ -1,6 +1,7 @@
 include <config.scad>
 use <screwholes.scad>
 use <nopscadlib/utils/fillet.scad>
+use <demo.scad>
 
 // FIXME: describe the origin of this part ... and decide if it's right.  There isn't an obvious "right" place for this one
 module z_bracket(extrusion_type)
@@ -53,6 +54,7 @@ module z_bracket_preview(extrusion)
   translate([-extrusion_width(), 0, -extrusion_width()]) cube([extrusion_width(), thickness, leg_length]);  //cube version
 }
 
+demo() {
+z_bracket(extrusion_width($extrusion_type));
+}
 
-//z_bracket(extrusion_width()_type);
-z_bracket(15);

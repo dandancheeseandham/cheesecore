@@ -2,7 +2,6 @@
 use <nopscadlib/vitamins/fan_guard.scad>
 include <nopscadlib/core.scad>
 use <nopscadlib/utils/layout.scad>
-
 include <nopscadlib/vitamins/fans.scad>
 
 module fan_guards()

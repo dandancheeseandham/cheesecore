@@ -2,6 +2,7 @@
 include <config.scad>
 include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
+use <demo.scad>
 
 // this renders the belts at the specified carriage position
 // origin is the center of the build volume.  We will adjust this later when we have better data for printhead offsets
@@ -76,4 +77,6 @@ module corexy_belts(position = [0, 0]) {
   // square([1000, x_carriage_pulley_offset*2 + pulley_pr(GT2x20_toothed_idler)*2], center=true);
 }
 
+demo() {
 corexy_belts([0, 0]);
+}
