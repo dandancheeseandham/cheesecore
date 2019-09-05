@@ -1,4 +1,5 @@
 include <config.scad>
+use <demo.scad>
 use <lib/mirror.scad>
 use <nopscadlib/vitamins/rail.scad>
 
@@ -92,4 +93,7 @@ module z_yoke_holes_profile(extrusion_width) {
   z_yoke_bed_mount_profile();
   z_yoke_holes_profile();
 }
-z_yoke(extrusion_type);
+
+demo() {
+  z_yoke();
+}

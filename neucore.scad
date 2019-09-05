@@ -23,12 +23,13 @@ $fullrender=false;
 
 module enclosure(){
   frame();
- all_side_panels();
+  all_side_panels();
   hinges();
   translate([0, -frame_size().y / 2 - panel_thickness() - epsilon, 0]) doors();
   feet(height=50);
-  * translate ([0, 0, frame_size().z / 2 + 150]) top_enclosure_all();
+  *translate ([0, 0, frame_size().z / 2 + 150]) top_enclosure_all();
 }
+
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
   enclosure();
@@ -36,16 +37,12 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
 
   z_towers(z_position = position[2]);
 
-  // BED
-  // FIXME: This placement of the bed is arbitrary in z, but linked to
-  // "position = rail_length.z/2-50-z_position;" in z-tower
-
-  // translate ([bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - 100]) bed(325,342,7.5);
+  translate(offset_bed_from_frame(position)) bed();
 
   Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 
   //X-RAIL
-  translate ([0, 0, frame_size().z / 2 - extrusion_width() / 2])
+  translate([0, 0, frame_size().z / 2 - extrusion_width() / 2])
     x_rails(position.x);
 
   // Y-RAIL
@@ -55,8 +52,8 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
       rail_wrapper(rail_profiles().y, rail_lengths().y, position = position.y-150);
 
   // HOTEND
-  translate (Yrail_vector + [-35, position.y-150, 20]) // FIXME: arbitary move to look decentish
-    rotate ([0,0,180]) hot_end(E3Dv6, naked=true);
+  translate(Yrail_vector + [-35, position.y-150, 5]) // FIXME: arbitary move to look decentish
+    rotate([0,0,180]) hot_end(E3Dv6, naked=true);
 
   // X-CARRIAGE
   // 12 = rail size
@@ -109,7 +106,6 @@ module rc300zl(position = [0, 0, 0]) {
   $extrusion_type = extrusion15;
   $frame_size = frame_rc300zl;
   $rail_specs = rails_rc300zl;
-  // TODO: perhaps extract out wrappers for "common" parts like frame_and_sides or something?
   validate();
   enclosure();
   xy_motion(position);
@@ -122,7 +118,6 @@ module rc300zlt(position = [0, 0, 0]) {
   $extrusion_type = extrusion15;
   $frame_size = frame_rc300zlt;
   $rail_specs = rails_rc300zlt;
-  // TODO: perhaps extract out wrappers for "common" parts like frame_and_sides or something?
   validate();
   enclosure();
   xy_motion(position);
@@ -163,9 +158,7 @@ module andycore(position = [0, 0, 0]) {
 $front_window_size = front_window_zl;
 $frame_size = frame_rc300zl;
 $rail_specs = rails_rc300zl;
-printer(render_electronics=false, position=[50, 50, 0],$extrusion_type = extrusion15);
-translate([800, 0, 0]) rc300zl();
-translate([0, 800, 0]) rc300zlt();
-translate([800, 800, 0]) rc300zl40();
-
-
+printer(render_electronics=false, position=[150, 50, 0],$extrusion_type = extrusion15);
+*translate([800, 0, 0]) rc300zl();
+*translate([0, 800, 0]) rc300zlt();
+*translate([800, 800, 0]) rc300zl40();
