@@ -97,7 +97,7 @@ module bottom_panel()
         // left side holes
         mirror_y()
         {
-          translate([-frame_size().x / 2 + extrusion_width() + leadscrew_x_offset , gap_between_motors / 2, 0])
+          translate([-frame_size().x / 2 + extrusion_width() + leadscrew_x_offset , bed_ear_spacing() / 2, 0])
             motor_holes();
         }
         // right side holes

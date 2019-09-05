@@ -21,9 +21,17 @@ bed_offset = [0, -12.5]; // How far to offset the bed from center of frame
 // These define how far from the part origin of the z-tower the leadscrew is
 leadscrew_x_offset = 20 ; // how far in x the centerline of the leadscrew is from the inside edge of the frame extrusions
 leadscrew_y_offset = 30 ; // taken off z yoke in fusion
-gap_between_motors = 255 ;   // 255 is standard for ZL/ZLT , based on bed tongues
+//gap_between_motors = 255 ;   // 255 is standard for ZL/ZLT , based on bed tongues
 
 RC300BED = 42; // FIXME: build out an actual bed model
+//           type,  dimensions, ear spacing, nominal mount distance in x
+// Note that we don't specify the finer points of the bed ears here, because it doesn't affect how the printer lays out, that's an impelementation detail fo ths bed model
+bed_rc300 = ["BED", [325, 342], 255, [335, 342]];
+
+function bed_plate_size() = $bed[1];
+function bed_ear_spacing() = $bed[2];
+function bed_overall_size() = $bed[3];
+$bed = bed_rc300;
 
 //          Extrusion
 //              Extrusion length
