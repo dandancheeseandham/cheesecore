@@ -62,8 +62,8 @@ difference ()
 			}
 		translate ([main_body_size_x,adjustment_hole_size_y+rounding,0]) fillet(rounding,   idler_height); 
 		}
-	translate ([7,18,-idler_height]) cylinder(h=15, r1=tap_hole/2, r2=tap_hole/2, center=false);  //far pulley screwhole - this needs to be tapped/drilled?
-	translate ([23.6,33,-idler_height]) cylinder(h=15, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
+	translate ([7,21,-idler_height]) cylinder(h=15, r1=tap_hole/2, r2=tap_hole/2, center=false);  //far pulley screwhole - this needs to be tapped/drilled?
+	translate ([23.6,50,-idler_height]) cylinder(h=15, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
 	translate ([-25,0,-idler_height])  rotate ([0,0,45])  cube ([100,30,20]); // removal of edge of square
 	
 	translate ([extrusion_adjust_x,extrusion_adjust_y-lengthen_extrusion_screwhole,-2])  rotate ([0,0,90]) longscrewhole(screwhole_length=lengthen_extrusion_screwhole, Mscrew=screwhole_M,screwhole_increase=0.1);  // horizontal adjustment hole
