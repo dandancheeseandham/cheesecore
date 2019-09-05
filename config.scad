@@ -16,7 +16,7 @@ function extrusion_width(extrusion_type = $extrusion_type) = extrusion_type[1];
 function extrusion_screw_size(extrusion_type = $extrusion_type) = extrusion_type[2];
 
 // Still need to clean up everything below here
-bed_offset = [0, -25]; // How far to offset the bed from center of frame
+bed_offset = [0, -12.5]; // How far to offset the bed from center of frame
 
 // These define how far from the part origin of the z-tower the leadscrew is
 leadscrew_x_offset = 20 ; // how far in x the centerline of the leadscrew is from the inside edge of the frame extrusions
