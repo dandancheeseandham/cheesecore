@@ -27,8 +27,7 @@ module enclosure(){
   hinges();
   translate([0, -frame_size().y / 2 - panel_thickness() - epsilon, 0]) doors();
   feet(height=50);
-  *translate ([0, 0, frame_size().z / 2 + 150]) top_enclosure_all();
-}
+ }
 
 
 module printer(render_electronics=false, position=[0, 0, 0]) {
@@ -73,6 +72,8 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
       rotate ([0,0,90])
         electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 60, acrylic_thickness = 6); // Old ZL size
   }
+  translate ([0, 0, frame_size().z / 2 + 150]) top_enclosure_all();
+  
 }
 
 //FIXME: x=80 is around X0, y=-20 is around Y0, z=-50 is around Z0
@@ -161,4 +162,4 @@ $rail_specs = rails_rc300zl;
 printer(render_electronics=false, position=[150, 50, 0],$extrusion_type = extrusion15);
 *translate([800, 0, 0]) rc300zl();
 *translate([0, 800, 0]) rc300zlt();
-*translate([800, 800, 0]) rc300zl40();
+translate([800, 800, 0]) rc300zl40();

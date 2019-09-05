@@ -20,7 +20,7 @@ module aluminium_idler_mount()
   rounding= 3 ;
 
   // size of main square of body
-  main_body_size_x = 25 ;
+  main_body_size_x = 27 ;
   main_body_size_y= 50 ;
   // size of little extension for adjustment hole
   adjustment_hole_size_x = 24 ;
@@ -37,11 +37,12 @@ module aluminium_idler_mount()
   //extrusion_adjust_y= 2.5 ;
   lengthen_extrusion_screwhole = 3.75 ;
  
+ 
   GT_gap = 12.78 ;
   pulley_clearance = 17 ; 
   
-  x_to_first_pulley = 7 + extrusion_width($extrusion_type); 
-  x_to_second_pulley = 7 + GT_gap + extrusion_width($extrusion_type);
+  x_to_first_pulley = 7  ;
+  x_to_second_pulley = x_to_first_pulley + GT_gap ;
   
   
 
@@ -56,10 +57,10 @@ module aluminium_idler_mount()
           translate ([rounding,rounding,0]) cube([main_body_size_x+(extrusion_width($extrusion_type)-rounding), main_body_size_y+extrusion_width($extrusion_type)-rounding, idler_height/2]);
           cylinder(r=rounding,h=idler_height/2);
         }
-        	translate ([7+extrusion_width($extrusion_type),x_to_first_pulley,-idler_height]) cylinder(h=115, r1=tap_hole/2, r2=tap_hole/2, center=false);  //far pulley screwhole - this needs to be tapped/drilled?
-          translate ([7+extrusion_width($extrusion_type)+pulley_clearance,x_to_second_pulley,-idler_height]) cylinder(h=115, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
+        	translate ([x_to_first_pulley + extrusion_width($extrusion_type),x_to_first_pulley + extrusion_width($extrusion_type),-idler_height]) cylinder(h=115, r1=tap_hole/2, r2=tap_hole/2, center=false);  //far pulley screwhole - this needs to be tapped/drilled?
+          translate ([x_to_first_pulley+extrusion_width($extrusion_type)+pulley_clearance,x_to_second_pulley + extrusion_width($extrusion_type),-idler_height]) cylinder(h=115, r1=tap_hole/2, r2=tap_hole/2, center=false); // near pulley screwhole
         
-        #translate ([extrusion_width($extrusion_type)+move_holes_by,extrusion_width($extrusion_type)/2-lengthen_extrusion_screwhole/2,-2])  rotate ([0,0,90]) longscrewhole(screwhole_length=extrusion_width($extrusion_type)/lengthen_extrusion_screwhole, Mscrew=screwhole_M,screwhole_increase=0.1);  // horizontal adjustment hole
+        translate ([extrusion_width($extrusion_type)+move_holes_by,extrusion_width($extrusion_type)/2-lengthen_extrusion_screwhole/2,-2])  rotate ([0,0,90]) longscrewhole(screwhole_length=extrusion_width($extrusion_type)/lengthen_extrusion_screwhole, Mscrew=screwhole_M,screwhole_increase=0.1);  // horizontal adjustment hole
         translate ([extrusion_width($extrusion_type)/2,extrusion_width($extrusion_type)+move_holes_by,0]) screwholes(row_distance=extrusion_screwholes_line_length,numberofscrewholes=3,Mscrew=screwhole_M,screwhole_increase=0.1) ; //line of screwholes
       }
     }
