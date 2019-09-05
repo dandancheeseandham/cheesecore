@@ -6,6 +6,6 @@ module demo() {
   $frame_size = frame_rc300zl;
   $rail_specs = rails_rc300zl;
   $bed = bed_rc300;
-
+  $front_window_size = front_window_zl ;
   children();
 }
