@@ -130,10 +130,10 @@ module front_panel()
       translate ([front_window_offset().x, front_window_offset().y, panel_thickness() / 2])
       rounded_rectangle([front_window_size().x, front_window_size().y, panel_thickness() + 2 * epsilon], front_window_radius());
   }
-
+*translate([-frame_size().x / 2 , -frame_size().z / 2 , panel_thickness()])  cube ([10,frame_size().z,10]);
   // panel hinges
-  panelrounding = 5 ;
-  hole_distance_from_edge = 7.5 ;
+  // panelrounding = 5 ;
+  // hole_distance_from_edge = 7.5 ;
 }
 
 module hinges()
@@ -143,12 +143,11 @@ module hinges()
     {
       mirror_xy()
       {
-        // FIXME: the -5 term here is bogus
-        translate([-frame_size().x / 2, frame_size().y / 2 - panel_screw_offset() - 5, panel_thickness()])
-          front_panel_doors_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=5, screw_type=3);
+        translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().z / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()])
+          front_panel_doors_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=1/8 * inch, screw_type=3);
       }
 
-      color(printed_part_color())
+    *  color(printed_part_color())
         mirror_xy()
         {
           // FIXME: the -1 and -50  and 0.5 here are bogus, but this component will get replaced anyway
@@ -166,13 +165,14 @@ module door()
   door_overlap = 10; // How far do we want the doors to overlap the panel edges?
   door_radius_mating_corners = 2.5; // radius of the corners where the panels come together
   door_radius_outside_corners = front_window_radius() + door_overlap;
+  acrylic_door_thickness = 1/8 * inch;
   difference()
   {
     // Outline of the door
     color(acrylic2_color())
     {
       // FIXME - make door thickness parametric
-      linear_extrude(1/8 * inch)
+      linear_extrude(acrylic_door_thickness)
       {
         hull()
         {
