@@ -33,8 +33,6 @@ module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,e
   
   // origin is top screwhole. Makes placing on panels easier
   color(printed_part_color())
-
-  if ($draft == undef || $draft == false) {
     difference() {
       union() {
         // draw main arm
@@ -57,44 +55,10 @@ module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,e
         rotate ([90,0,0]) 
           poly_cylinder(screw_type/2, 300);
     }
-  }
-  else {
-    difference() {
-      union() {
-        // draw main arm
-        translate ([-door_hinge_x/2,-door_hinge_y/2,0 ]) 
-          preview_roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
-          
-        // raised part of hinge to accommodate arms
-        translate ([-door_hinge_x/2,-hinge_arm_body_y/2,0]) 
-          preview_roundedCube([door_hinge_x + extension,hinge_arm_body_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-          
-        // hinge arms. The 10 is an overlap to prevent the join being rounded off.
-        mirror_y() 
-          translate ([door_hinge_x/2 - 10 ,hinge_arm_body_y/2-hinge_arms_y,0]) 
-            preview_roundedCube([extension + hinge_arms_x + 10 ,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-      }
-      mirror_y() 
-        translate ([0,door_hinge_y/2-hole_distance_from_edge,0])   
-          poly_cylinder(1.5, 30);
-      translate ([door_hinge_x/2 + extension + 5,150,acrylic_door_thickness+2.5]) 
-        rotate ([90,0,0]) 
-          poly_cylinder(screw_type/2, 300);
-    }
-  } 
 }
 
 
 // everything below here is for creating a rounded cube (or a preview that is just a cube), and can be swapped out with other similar code..
-
-
-
-module preview_roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef], $fn=128)
-{
-  cube(dim);
-}
-
-
 
 /*
    roundedCube() v1.0.3 by robert@cosmicrealms.com from https://github.com/Sembiance/openscad-modules
@@ -148,6 +112,12 @@ Thanks to Sergio Vilches for the initial code inspiration
 
 module roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef], $fn=128)
 
+{
+if ($draft == true) 
+{
+  cube(dim);
+}
+else
 
 {
   translate([(center==true ? (-(dim[0]/2)) : 0), (center==true ? (-(dim[1]/2)) : 0), (center==true ? (-(dim[2]/2)) : 0)])
@@ -202,6 +172,7 @@ module roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,
       }
     }
   }
+}
 }
 
 module meniscus(h, r, fn=128)
