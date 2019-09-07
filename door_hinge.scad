@@ -1,68 +1,93 @@
 // vim: set nospell:
 include <config.scad>
 include <nopscadlib/core.scad>
+include <nopscadlib/utils/round.scad>
 use <lib/holes.scad>
 use <lib/mirror.scad>
 use <screwholes.scad>
 use <demo.scad>
 
 demo() {
-front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_door_thickness=5,screw_type=3); // ZL, 5mm acrylic
-  translate ([60,0,0]) front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,screw_type=3); // ZLT 6mm acrylic
+  // Standard lostapathy ZL hinge for a 5mm acrylic door
+  front_panel_doors_hinge(); 
+  
+  // ZLT 6mm acrylic with doors that need to be 10mm closer to each other (extension = 5mm , on each hinge/door)
+  translate ([40,0,0]) 
+    front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false); 
 }
 
-module front_panel_doors_hinge(screw_distance,acrylic_door_thickness,screw_type)
-{
-  extension = 0 ; //brings doors closer together
-  rounding= 1.5 ; // rounding of edges
-  middle_hinge_z = 70 ;  // raised section z
-  hole_distance_from_edge = 7.5 ;
+module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension = 0 ,screw_type =3, $draft = true) {
 
+  hole_distance_from_edge = 7.5 ;  //distance that the panel screwhole is from the end. 
+  rounding= 1.5 ; // rounding of edges
+  
+  door_hinge_x = extrusion_width($extrusion_type) ;   // hinge is the width of the extrusion
+  door_hinge_y = screw_distance + (hole_distance_from_edge * 2) ;   // this is so it fits the panels depending on the distance between screws.
+  door_hinge_z = 0.25 + acrylic_door_thickness ;       
+        
   hinge_arms_x = 8.25  ;  // size for hinge arm ..
   hinge_arms_y = 14.75 ; // y size of arms - Standard for hinges
-  hinge_arms_z = 4.5 + acrylic_door_thickness ;
-
-  door_hinge_x = extrusion_width($extrusion_type) ;
-  door_hinge_y = screw_distance + (hole_distance_from_edge * 2) ;
-  door_hinge_z = 0.25 + acrylic_door_thickness ;
-
-  holeY = hinge_arms_x + 9.75 ;  //
-  holeZ = hinge_arms_z - 3.63  ;
-
+  hinge_arms_z = 5.82 + acrylic_door_thickness ;
+  
+  hinge_arm_body_y = 70 ;  // raised section 
+  
   // origin is top screwhole. Makes placing on panels easier
-  color(printed_part_color()) translate ([0,-door_hinge_y+hole_distance_from_edge,0 ])
-    difference()
-    {
-      if ($draft == undef || $draft == false)
-      {
-        union()
-        {
+  color(printed_part_color())
+
+  if ($draft == undef || $draft == false) {
+    difference() {
+      union() {
+        // draw main arm
+        translate ([-door_hinge_x/2,-door_hinge_y/2,0 ]) 
           roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
-          translate ([0,door_hinge_y/2-middle_hinge_z/2,0]) roundedCube([door_hinge_x + extension,middle_hinge_z,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-          translate ([door_hinge_x-door_hinge_z,door_hinge_y/2-middle_hinge_z/2,0]) roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-          translate ([door_hinge_x-door_hinge_z,door_hinge_y/2+middle_hinge_z/2-hinge_arms_y,0]) roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-        }
+          
+        // raised part of hinge to accommodate arms
+        translate ([-door_hinge_x/2,-hinge_arm_body_y/2,0]) 
+          roundedCube([door_hinge_x + extension,hinge_arm_body_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+          
+        // hinge arms. The 10 is an overlap to prevent the join being rounded off.
+        mirror_y() 
+          translate ([door_hinge_x/2 - 10 ,hinge_arm_body_y/2-hinge_arms_y,0]) 
+            roundedCube([extension + hinge_arms_x + 10 ,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
       }
-      else
-      {
-        union()
-        {
-          preview_roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
-          translate ([0,door_hinge_y/2-middle_hinge_z/2,0]) preview_roundedCube([door_hinge_x + extension,middle_hinge_z,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-          translate ([door_hinge_x-door_hinge_z,door_hinge_y/2-middle_hinge_z/2,0]) preview_roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-          translate ([door_hinge_x-door_hinge_z,door_hinge_y/2+middle_hinge_z/2-hinge_arms_y,0]) preview_roundedCube([hinge_arms_x+door_hinge_z+ extension,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
-        }
-      }
-      // screwholes for panels
-      translate ([door_hinge_x/2,hole_distance_from_edge,0]) screwholes(row_distance=screw_distance,numberofscrewholes=2,Mscrew=screw_type,screwhole_increase=0.25);
-
-      //screwholes for panels2
-      translate ([door_hinge_x/2,hole_distance_from_edge,60-hinge_arms_x + 5.25 ]) screwholes(row_distance=screw_distance,numberofscrewholes=2,Mscrew=screw_type,screwhole_increase=2.75);
-
-      //screwhole for hinge
-      translate ([holeY+ extension,50,holeZ]) rotate ([90,0,0]) singlescrewhole(3,0.25);
+      mirror_y() 
+        translate ([0,door_hinge_y/2-hole_distance_from_edge,0])   
+          poly_cylinder(1.5, 30);
+      translate ([door_hinge_x/2 + extension + 5,150,acrylic_door_thickness+2.5]) 
+        rotate ([90,0,0]) 
+          poly_cylinder(screw_type/2, 300);
     }
+  }
+  else {
+    difference() {
+      union() {
+        // draw main arm
+        translate ([-door_hinge_x/2,-door_hinge_y/2,0 ]) 
+          preview_roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
+          
+        // raised part of hinge to accommodate arms
+        translate ([-door_hinge_x/2,-hinge_arm_body_y/2,0]) 
+          preview_roundedCube([door_hinge_x + extension,hinge_arm_body_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+          
+        // hinge arms. The 10 is an overlap to prevent the join being rounded off.
+        mirror_y() 
+          translate ([door_hinge_x/2 - 10 ,hinge_arm_body_y/2-hinge_arms_y,0]) 
+            preview_roundedCube([extension + hinge_arms_x + 10 ,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+      }
+      mirror_y() 
+        translate ([0,door_hinge_y/2-hole_distance_from_edge,0])   
+          poly_cylinder(1.5, 30);
+      translate ([door_hinge_x/2 + extension + 5,150,acrylic_door_thickness+2.5]) 
+        rotate ([90,0,0]) 
+          poly_cylinder(screw_type/2, 300);
+    }
+  } 
 }
+
+
+// everything below here is for creating a rounded cube (or a preview that is just a cube), and can be swapped out with other similar code..
+
+
 
 module preview_roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef], $fn=128)
 {
