@@ -7,29 +7,36 @@ use <lib/mirror.scad>
 use <screwholes.scad>
 use <demo.scad>
 
+
+
 demo() {
   // Standard lostapathy ZL hinge for a 5mm acrylic door
-  front_panel_doors_hinge(); 
-  
+  front_panel_doors_hinge( $draft = false); 
+    translate ([45,0,5])  doorside();
+    
   // ZLT 6mm acrylic with doors that need to be 10mm closer to each other (extension = 5mm , on each hinge/door)
-  translate ([40,0,0]) 
+  translate ([0,-120,0]) 
     front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false); 
+  translate ([50,-120,6]) rotate ([0,0,180]) doorside();
 }
+
+function hole_distance_from_edge() = 7.5 ;
+function rounding() = 1.5 ; // rounding() of edges
+function hinge_arm_body_y() = 70 ;  // raised section and panel hinge_y
+function hinge_arms_x() = 8.75  ;  // size for hinge arm ..
+function hinge_arms_y() = 14.75 ; // y size of arms - Standard for hinges
 
 module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension = 0 ,screw_type =3, $draft = true) {
 
-  hole_distance_from_edge = 7.5 ;  //distance that the panel screwhole is from the end. 
-  rounding= 1.5 ; // rounding of edges
+  
   
   door_hinge_x = extrusion_width($extrusion_type) ;   // hinge is the width of the extrusion
-  door_hinge_y = screw_distance + (hole_distance_from_edge * 2) ;   // this is so it fits the panels depending on the distance between screws.
+  door_hinge_y = screw_distance + (hole_distance_from_edge() * 2) ;   // this is so it fits the panels depending on the distance between screws.
   door_hinge_z = 0.25 + acrylic_door_thickness ;       
         
-  hinge_arms_x = 8.25  ;  // size for hinge arm ..
-  hinge_arms_y = 14.75 ; // y size of arms - Standard for hinges
+
   hinge_arms_z = 5.82 + acrylic_door_thickness ;
   
-  hinge_arm_body_y = 70 ;  // raised section 
   
   // origin is top screwhole. Makes placing on panels easier
   color(printed_part_color())
@@ -37,19 +44,19 @@ module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,e
       union() {
         // draw main arm
         translate ([-door_hinge_x/2,-door_hinge_y/2,0 ]) 
-          roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding, x=true, y=true, z=true);
+          roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding(), x=true, y=true, z=true);
           
         // raised part of hinge to accommodate arms
-        translate ([-door_hinge_x/2,-hinge_arm_body_y/2,0]) 
-          roundedCube([door_hinge_x + extension,hinge_arm_body_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+        translate ([-door_hinge_x/2,-hinge_arm_body_y()/2,0]) 
+          roundedCube([door_hinge_x + extension,hinge_arm_body_y(),hinge_arms_z], r=rounding(), x=true, y=true, z=true);
           
         // hinge arms. The 10 is an overlap to prevent the join being rounded off.
         mirror_y() 
-          translate ([door_hinge_x/2 - 10 ,hinge_arm_body_y/2-hinge_arms_y,0]) 
-            roundedCube([extension + hinge_arms_x + 10 ,hinge_arms_y,hinge_arms_z], r=rounding, x=true, y=true, z=true);
+          translate ([door_hinge_x/2 - 10 ,hinge_arm_body_y()/2-hinge_arms_y(),0]) 
+            roundedCube([extension + hinge_arms_x() + 10 ,hinge_arms_y(),hinge_arms_z], r=rounding(), x=true, y=true, z=true);
       }
       mirror_y() 
-        translate ([0,door_hinge_y/2-hole_distance_from_edge,0])   
+        translate ([0,door_hinge_y/2-hole_distance_from_edge(),0])   
           poly_cylinder(1.5, 30);
       translate ([door_hinge_x/2 + extension + 5,150,acrylic_door_thickness+2.5]) 
         rotate ([90,0,0]) 
@@ -57,6 +64,51 @@ module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,e
     }
 }
 
+module doorside() {
+
+  panel_hinge_width = 27.5 ;
+  panel_hinge_depth = 6.25 ;
+  shape_overlap = 15 ;
+color(printed_part_color())
+rotate ([0,0,180])
+  difference(){
+    union () {     
+      // side with larger rounded corners
+      difference() {
+        translate ([0,-hinge_arm_body_y()/2,0]) 
+          roundedCube([panel_hinge_width-5,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=false,$draft=false);       
+            // take a 10mm cube off to corners, to add a 10mm rounded corner
+        mirror_y()   
+          translate ([-epsilon,-hinge_arm_body_y()/2-epsilon,-epsilon]) 
+              cube([10+epsilon,10+epsilon,10]);
+          }
+          // mid-section
+          translate ([shape_overlap,-hinge_arm_body_y()/2,0])
+            roundedCube([panel_hinge_width-shape_overlap,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=true,$draft=false);
+          
+          // hinge area  
+          translate ([panel_hinge_width-shape_overlap,15-hinge_arm_body_y()/2,0]) 
+            roundedCube([hinge_arms_x()+shape_overlap,(hinge_arm_body_y()/2-hinge_arms_y())*2-0.5,panel_hinge_depth], r=rounding(), x=true, y=true, z=true,$draft=false);
+          
+          // 10mm rounded corners
+          mirror_y()   
+            translate ([0,0,panel_hinge_depth/2])  
+              rotate ([0,0,180]) 
+                mirror_z()  
+                  translate ([-10,hinge_arm_body_y()/2-10,0]) 
+                    rounded_cylinder(r=10, h = panel_hinge_depth/2, r2 = rounding(), ir = 0, angle = 90);
+    }
+   translate ([6,0,0]) 
+    poly_cylinder(1.5, 30);
+   mirror_y() 
+    translate ([6,25,0]) 
+      poly_cylinder(1.5, 30);
+    translate ([panel_hinge_width+hinge_arms_x()-3.75,150,2.63]) 
+        rotate ([90,0,0]) 
+          poly_cylinder(1.38, 300);   
+      
+  }
+}
 
 // everything below here is for creating a rounded cube (or a preview that is just a cube), and can be swapped out with other similar code..
 
@@ -84,12 +136,12 @@ Arguments:
 -       ry = Radius of the y corners. Default: [r, r, r, r]
 -       rz = Radius of the z corners. Default: [r, r, r, r]
 -   center = Whether to render the cube centered or not. Default: false
--      $fn = How smooth you want the rounding to be. Default: 128
+-      $fn = How smooth you want the rounding() to be. Default: 128
 
 Change Log
 ==========
 2018-08-21: v1.0.3 - Added ability to set the radius of each corner individually with vectors: rx, ry, rz
-2017-05-15: v1.0.2 - Fixed bugs relating to rounding corners on the X axis
+2017-05-15: v1.0.2 - Fixed bugs relating to rounding() corners on the X axis
 2017-04-22: v1.0.1 - Added center option
 2017-01-04: v1.0.0 - Initial Release
 

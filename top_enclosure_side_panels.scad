@@ -108,24 +108,14 @@ module front_panel()
 
 module hinges()
 {
-  translate([0, -frame_size().y/2, 0])
-    rotate([90, 0, 0])
-    {
-      mirror_xy()
-      {
-        // FIXME: the -5 term here is bogus
-        translate([-frame_size().x / 2, frame_size().y / 2 - panel_screw_offset() - 5, panel_thickness()])
-          front_panel_doors_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=5, screw_type=3);
-      }
-
-      color(printed_part_color())
-        mirror_xy()
-        {
-          // FIXME: the -1 and -50  and 0.5 here are bogus, but this component will get replaced anyway
-          translate([-(frame_size().x / 2) - 1.5, frame_size().z / 2 - 50, panel_thickness()+ 0.5])
-            import("./railcorestls/lostapathy/doors/railcore-hinge-doorside.stl");
-        }
-    }
+  mirror_x()
+  translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6,frame_size().z/2-extrusion_width($extrusion_type)/2])
+    rotate([0, 270, 270])
+     front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false); 
+  
+  mirror_x()     
+ translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6-27.5,frame_size().z/2-extrusion_width($extrusion_type)/2+15])
+    rotate([0, 270, 270]) rotate([0, 90, 0])  doorside();    
 }
 
 // One door - the right side as facing printer

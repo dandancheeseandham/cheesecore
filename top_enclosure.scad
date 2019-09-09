@@ -7,13 +7,14 @@ use <top_enclosure_side_panels.scad>
 use <top_enclosure_frame.scad>
 include <config.scad>
 use <validation.scad>
+use <door_hinge.scad>
 
 $fullrender=false;
 
 module top_enclosure_all(){
   frame();
   all_side_panels();
-  //hinges();
+  hinges();
 }
 
 $front_window_size = front_window_zl;
