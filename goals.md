@@ -13,6 +13,7 @@ Make a RailCore2-like printer that:-
 In order to take advantage of existing parts.
 
 3. Make enclosed from the beginning. i.e. a proper door and top enclosure.
+With this in mind, gearing things up to be able to print at higher temperatures.
 
 4. The ability to modify, improve and eventually diverge where appropriate. 
 However I'm also keen not to "add to core" just for the sake of it, and changes should be considered and tested.
@@ -22,3 +23,11 @@ However I'm also keen not to "add to core" just for the sake of it, and changes 
  * USB and Octoprint (extra features and the ability to communicate with the Duet with a network issue)
  * Extra hardware that a Duet can't support.
  * Automated backups and a simple restore.
+ 
+ 6. Minimize printed part content - metals behave more predictably
+ 
+ 7. Safety - Software and hardware means (such as TCO's)
+ 
+ 8. Ease of assembly - anything that can reduce issues in getting it printing reliably. Such as additional parts to ensure squareness of extrusion and rails.
+ 
+ Secondary Goals
