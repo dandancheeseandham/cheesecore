@@ -143,16 +143,14 @@ module hinges()
     {
       mirror_xy()
       {
-        translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().z / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()])
+        translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()])
           front_panel_doors_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=1/8 * inch, screw_type=3);
       }
-
-    *  color(printed_part_color())
         mirror_xy()
-        {
-          // FIXME: the -1 and -50  and 0.5 here are bogus, but this component will get replaced anyway
-          translate([-(frame_size().x / 2) - 1.5, frame_size().z / 2 - 50, panel_thickness()+ 0.5])
-            import("./railcorestls/lostapathy/doors/railcore-hinge-doorside.stl");
+        {        
+          // FIXME: the -1 and -50  and 0.5 here are bogus, but this component      
+          translate([-frame_size().x / 2  + 27.5 + 24, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()])
+           doorside() ;
         }
     }
 }
