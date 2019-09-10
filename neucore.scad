@@ -73,7 +73,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
         electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 60, acrylic_thickness = 6); // Old ZL size
   }
   translate ([0, 0, frame_size().z / 2 + 150]) top_enclosure_all();
-  
+
 }
 
 //FIXME: x=80 is around X0, y=-20 is around Y0, z=-50 is around Z0
@@ -107,6 +107,7 @@ module rc300zl(position = [0, 0, 0]) {
   $extrusion_type = extrusion15;
   $frame_size = frame_rc300zl;
   $rail_specs = rails_rc300zl;
+  $bed = bed_rc300;
   validate();
   enclosure();
   xy_motion(position);
@@ -119,6 +120,7 @@ module rc300zlt(position = [0, 0, 0]) {
   $extrusion_type = extrusion15;
   $frame_size = frame_rc300zlt;
   $rail_specs = rails_rc300zlt;
+  $bed = bed_rc300;
   validate();
   enclosure();
   xy_motion(position);
@@ -129,6 +131,7 @@ module rc300zl40(position = [0, 0, 0]) {
   $extrusion_type = extrusion40;
   $frame_size = frame_rc300zl4040;
   $rail_specs = rails_rc300zl;
+  $bed = bed_rc300;
   validate();
   enclosure();
   xy_motion(position);
@@ -140,6 +143,8 @@ module dancore(position = [0, 0, 0]) {
   $extrusion_type = extrusion20;
   $frame_size = [510, 475, 465];
   $rail_specs = [[420, MGN12], [420, MGN12], [420, MGN12]];
+  $leadscrew_specs = ["LEADSCREW_SPECS", 400, 10];
+  $bed = bed_rc300;
   validate();
   enclosure();
   xy_motion(position);
@@ -150,12 +155,16 @@ module andycore(position = [0, 0, 0]) {
   $extrusion_type = extrusion20;
   $frame_size = [410, 415, 355];
   $rail_specs = [[300, MGN9], [350, MGN12], [300, MGN9]];
+  $leadscrew_specs = ["LEADSCREW_SPECS", 250, 8];
+  $bed = bed_rc300;
   validate();
   enclosure();
   xy_motion(position);
   z_towers(z_position = position[2]);
 }
 
+$leadscrew_specs = leadscrew_rc300zl;
+$bed = bed_rc300;
 $front_window_size = front_window_zl;
 $frame_size = frame_rc300zl;
 $rail_specs = rails_rc300zl;

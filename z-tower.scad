@@ -35,10 +35,8 @@ function yoke_z_offset_from_base(z_position) = offset_bed_from_frame([0, 0, z_po
 
 module z_tower(z_position=0)
 {
-  // FIXME: the +18 here needs to be calculatd right
-  carriage_position = frame_size().z / 2 - z_position - offset_z_rails().z + offset_nozzle_carriage().z + 18;
+  carriage_position = frame_size().z / 2 - z_position - offset_z_rails().z/2 + offset_nozzle_carriage().z ;
 
-  //NEMA17 motor
   translate ([-leadscrew_x_offset, 0, -panel_thickness()])
     NEMA(NEMA17);
 
@@ -46,10 +44,11 @@ module z_tower(z_position=0)
   translate ([-leadscrew_x_offset, 0, base_of_coupler_adjustment])
     coupler();
 
-  // FIXME: this actually puts the leadscrew overlapping the coupler
-  // Leadscrew is connected to the coupler
-  translate ([-leadscrew_x_offset, 0, base_of_coupler_adjustment])
-    leadscrew(leadscrew_length ,leadscrew_width);
+  // The +20 puts the leadscrew above the end of the shaft a bit.  This is not
+  // an exact science between stepper output shaft may vary in ways we don't have modeled
+  // here.
+  translate ([-leadscrew_x_offset, 0, base_of_coupler_adjustment + 20])
+    leadscrew();
 
   // Anti Backlash nut - connected to the leadscrew
   // FIXME: the -10 term here undoes the +10 in the yoke_z_offset_from_base
@@ -59,12 +58,6 @@ module z_tower(z_position=0)
   // Z-yoke - connected to the anti-backlast nut
   translate([-extrusion_width() - carriage_height(rail_carriage(rail_profiles().z)), leadscrew_y_offset, yoke_z_offset_from_base(z_position)])
     z_yoke();
-
-  // Rail - rail carriage connected to the Z-yoke
-  // The z-translate here seems kinda arbitrary?
-  // FIXME: This is an approximation, ideally we want to actually compute a
-  // real rail position based on a nozzle-to-carriage offset, bed thickness,
-  // and yoke-to-carriage offset.
 
   translate ([-extrusion_width(), leadscrew_y_offset, rail_lengths().z / 2] + offset_z_rails())
     rotate([90,270,270])
