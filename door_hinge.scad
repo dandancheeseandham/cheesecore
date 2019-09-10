@@ -40,7 +40,7 @@ module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,e
   
   // origin is top screwhole. Makes placing on panels easier
   color(printed_part_color())
-    difference() {
+render() difference() {
       union() {
         // draw main arm
         translate ([-door_hinge_x/2,-door_hinge_y/2,0 ]) 
@@ -71,7 +71,7 @@ module doorside() {
   shape_overlap = 15 ;
 color(printed_part_color())
 rotate ([0,0,180])
-  difference(){
+ render() difference(){
     union () {     
       // side with larger rounded corners
       difference() {
