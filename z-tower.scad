@@ -46,10 +46,10 @@ module z_tower(z_position=0)
   translate ([-leadscrew_x_offset, 0, base_of_coupler_adjustment])
     coupler();
 
-  // FIXME: this actually puts the leadscrew overlapping the coupler
+  // FIXME: the +20 puts the leadscrew above the end of the shaft a bit
   // Leadscrew is connected to the coupler
-  translate ([-leadscrew_x_offset, 0, base_of_coupler_adjustment])
-    leadscrew(leadscrew_length ,leadscrew_width);
+  translate ([-leadscrew_x_offset, 0, base_of_coupler_adjustment + 20])
+    leadscrew();
 
   // Anti Backlash nut - connected to the leadscrew
   // FIXME: the -10 term here undoes the +10 in the yoke_z_offset_from_base

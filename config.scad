@@ -31,33 +31,12 @@ bed_rc300 = ["BED", [325, 342], 255, [335, 342]];
 function bed_plate_size() = $bed[1];
 function bed_ear_spacing() = $bed[2];
 function bed_overall_size() = $bed[3];
-$bed = bed_rc300;
 
-//          Extrusion
-//              Extrusion length
-//                               Rail Length
-//                                                Rail types
-//                                                                         leadscrew length
-//                                                                              leadscrew diameter
-//                                                                                 panel thickness
-//                                                                                          bed model
-//            0                1                2                      3    4   5          6         7
-rc300zl  = [ undef, undef, undef, undef, 400,  8, 0.25*inch, RC300BED ];
-rc300zl20  = [ undef, undef, undef, undef, 400,  8, 0.25*inch, RC300BED ];
-rc300zlt = [ undef, undef, undef, undef, 700,  8, 0.25*inch, RC300BED ];
+leadscrew_rc300zl = ["LEADSCREW_SPECS", 400, 8];
+leadscrew_rc300zlt = ["LEADSCREW_SPECS", 700, 8];
 
-cc300zl  = [ undef, undef, undef, undef, 400, 10, 0.25*inch, RC300BED ];
-absurdo  = [ undef, undef, undef, undef, 400, 10, 0.25*inch, RC300BED ];
-
-andy  = [ undef, undef, undef, undef, 250, 8, 6, RC300BED ];
-dan =  [ undef, undef, undef, undef, 400, 10, 6, RC300BED ];
-
-model = rc300zl ;
-//model = rc300zlt;
-//model = cc300zl;
-//model = absurdo; leadscrew_y_offset= 40;
-
-leadscrew_length = model[4];
+function leadscrew_length() = $leadscrew_specs[1];
+function leadscrew_diameter() = $leadscrew_specs[2];
 
 frame_rc300zl  = [490, 455, 445];
 frame_rc300zl4040  = [540, 500, 475];
