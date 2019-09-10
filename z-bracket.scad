@@ -12,6 +12,7 @@ module z_bracket(extrusion_type)
   corner_radius = 2;
 
   color(printed_part_color())
+    render() // FIXME: this render() prevents an artifact in the assembled printer, but model seems put together fine on it's own?
     difference()
     {
       union()
@@ -23,19 +24,20 @@ module z_bracket(extrusion_type)
           translate([extrusion_width() - corner_radius, leg_length - corner_radius, 0]) cylinder(r=corner_radius, h=thickness);
         }
         // material for fillets
-        cube([extrusion_width(), thickness+extrusion_width(), thickness + extrusion_width()]);
         translate([-extrusion_width(), 0, 0]) cube([2 * extrusion_width(), thickness + extrusion_width(), thickness + extrusion_width()]);
+        translate([-extrusion_width()/2, extrusion_width()/2 - epsilon/2 + thickness, -extrusion_width()/2 + thickness/2]) rotate ([0,90,90])  rounded_rectangle([extrusion_width() + thickness, extrusion_width() + epsilon, extrusion_width()], 2);
 
         // vertical leg
         translate([-extrusion_width()/2,thickness/2, leg_length/2-extrusion_width()]) rotate ([0,90,90])  rounded_rectangle([leg_length, extrusion_width(), thickness], 2);
-        translate([-extrusion_width()/2,thickness/2 + thickness, -extrusion_width()/2 + 5]) rotate ([0,90,90])  rounded_rectangle([extrusion_width() + 10, extrusion_width(), extrusion_width()], 2);
       }
 
       // fillets
-      translate([extrusion_width(), -epsilon, thickness+extrusion_width()]) rotate([-90,0,0]) cylinder(r=extrusion_width(), h=leg_length);
-      translate([-extrusion_width(), thickness+ extrusion_width(), -extrusion_width() - epsilon]) cylinder(r=extrusion_width(), h=leg_length);
-      translate([extrusion_width() + epsilon, thickness + extrusion_width(), thickness+extrusion_width()]) rotate([-90,0,90]) cylinder(r=extrusion_width(), h=leg_length);
-      translate([extrusion_width() + epsilon, thickness + extrusion_width(), -extrusion_width()]) rotate([-90,0,90]) cylinder(r=extrusion_width(), h=leg_length);
+      union() {
+        translate([extrusion_width(), -epsilon, thickness+extrusion_width()]) rotate([-90,0,0]) cylinder(r=extrusion_width(), h=leg_length);
+        translate([-extrusion_width(), thickness+ extrusion_width(), -extrusion_width() - epsilon]) cylinder(r=extrusion_width(), h=leg_length);
+        translate([extrusion_width() + epsilon, thickness + extrusion_width(), thickness+extrusion_width()]) rotate([-90,0,90]) cylinder(r=extrusion_width(), h=leg_length);
+        translate([extrusion_width() + epsilon, thickness + extrusion_width(), -extrusion_width()]) rotate([-90,0,90]) cylinder(r=extrusion_width(), h=leg_length);
+      }
 
       //screwholes removed from entire unioned object
       // FIXME: at some point we lost the counterbores on these screws
