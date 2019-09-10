@@ -75,16 +75,17 @@ module panel_mounting_screws(x, y)
 
 module bottom_panel()
 {
-  
+
   difference()
   {
     panel(frame_size().x, frame_size().y);
-      // Deboss a name in the bottom panel
-      deboss_depth = 3;
+    // Deboss a name in the bottom panel
+    deboss_depth = 3;
+    color("#333333")
       translate([0, -frame_size().y/2 + 50, panel_thickness() - deboss_depth + epsilon])
         linear_extrude(deboss_depth)
-        text("this way up", halign="center", size=35);
-  
+          text("this way up", halign="center", size=35);
+
   }
 }
 
@@ -109,12 +110,12 @@ module front_panel()
 module hinges()
 {
   mirror_x()
-  translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6,frame_size().z/2-extrusion_width($extrusion_type)/2])
+    translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6,frame_size().z/2-extrusion_width($extrusion_type)/2])
     rotate([0, 270, 270])
-     front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false); 
-  
+    front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false);
+
   mirror_x()     
- translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6-27.5,frame_size().z/2-extrusion_width($extrusion_type)/2+15])
+    translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6-27.5,frame_size().z/2-extrusion_width($extrusion_type)/2+15])
     rotate([0, 270, 270]) rotate([0, 90, 0])  doorside();    
 }
 
