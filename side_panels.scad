@@ -224,7 +224,7 @@ module right_panel()
    side_panel();
     color(panel_color_holes())
      {
-    translate(cable_bundle_hole()) singlescrewhole(26,0); // cable bundle - correct for ZL
+    translate(cable_bundle_hole_placement()) singlescrewhole(26,0); // cable bundle - correct for ZL
     translate(DuetE_placement())  pcb_holes(DuetE);  // correct for ZL
     translate(Duex5_placement())  pcb_holes(Duex5);  //correct for ZL
     translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
