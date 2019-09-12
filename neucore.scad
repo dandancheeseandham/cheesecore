@@ -168,7 +168,7 @@ $bed = bed_rc300;
 $front_window_size = front_window_zl;
 $frame_size = frame_rc300zl;
 $rail_specs = rails_rc300zl;
-printer(render_electronics=false, position=[150, 50, 0],$extrusion_type = extrusion15);
+printer(render_electronics=true, position=[150, 50, 0],$extrusion_type = extrusion15);
 *translate([800, 0, 0]) rc300zl();
 *translate([0, 800, 0]) rc300zlt();
 translate([800, 800, 0]) rc300zl40();

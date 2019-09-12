@@ -1,12 +1,15 @@
 // vim: set nospell:
 include <config.scad>
 use <nopscadlib/vitamins/stepper_motor.scad>
+include <nopscadlib/core.scad>
+include <nopscadlib/lib.scad>
 include <nopscadlib/vitamins/stepper_motors.scad>
 use <lib/holes.scad>
 use <lib/mirror.scad>
 use <door_hinge.scad>
 use <screwholes.scad>
 use <demo.scad>
+use <electronics_placement.scad>
 
 module panel(x, y)
 {
@@ -213,18 +216,44 @@ module back_panel()
   panel(frame_size().x, frame_size().z);
 }
 
+module right_panel()
+{
+  // FIXME: should move this into a right_side_panel() module and call that.
+  difference()
+  {
+   side_panel();
+    color(panel_color_holes())
+     {
+    translate(cable_bundle_hole()) singlescrewhole(26,0); // cable bundle - correct for ZL
+    translate(DuetE_placement())  pcb_holes(DuetE);  // correct for ZL
+    translate(Duex5_placement())  pcb_holes(Duex5);  //correct for ZL
+    translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
+    }
+  }
+
+
+}
+
+module pcb_holes(type) { // Holes for PCB's
+    screw = pcb_screw(type);
+    ir = screw_clearance_radius(screw);
+{
+                pcb_screw_positions(type)
+                   cylinder(20,ir,ir);
+            }
+
+    }
+
+
 module all_side_panels()
 {
   translate([0, 0, -frame_size().z / 2 - panel_thickness()]) bottom_panel();
   translate([0, -(frame_size().y)/2, 0]) rotate([90,0,0]) front_panel();
   translate([-frame_size().x / 2 - panel_thickness(), 0, 0]) rotate([90,0,90]) side_panel();
-  // FIXME: should move this into a right_side_panel() module and call that.
-  difference()
-  {
-    translate ([frame_size().x / 2, 0, 0]) rotate([90,0,90]) side_panel();
-    color(panel_color_holes())
-      translate ([frame_size().x / 2, -frame_size().y/2+150, frame_size().z/2-100]) rotate([90,0,90]) singlescrewhole(26,0);
-  }
+
+  translate ([frame_size().x / 2, 0, 0]) rotate([90,0,90]) 
+  right_panel();
+  
   translate ([0, frame_size().y / 2 + panel_thickness(),0]) rotate([90,0,0]) back_panel();
 }
 
