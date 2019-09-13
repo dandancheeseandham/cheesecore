@@ -46,6 +46,8 @@ function frame_size() = $frame_size;
 function panel_radius() = 5;
 function panel_thickness() = 0.25 * inch;
 
+function acrylic_door_thickness() = 8;
+
 rails_rc300zl = [[400, MGN12], [400, MGN12], [400, MGN12]];
 rails_rc300zlt = [[400, MGN12], [400, MGN12], [700, MGN12]];
 

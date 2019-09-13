@@ -32,7 +32,8 @@ module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,e
   
   door_hinge_x = extrusion_width($extrusion_type) ;   // hinge is the width of the extrusion
   door_hinge_y = screw_distance + (hole_distance_from_edge() * 2) ;   // this is so it fits the panels depending on the distance between screws.
-  door_hinge_z = 0.25 + acrylic_door_thickness ;       
+  door_hinge_z = 5.25 ;
+  //door_hinge_z = 0.25 + acrylic_door_thickness ;   // Used to be parametric: Needs counterbore to work
         
 
   hinge_arms_z = 5.82 + acrylic_door_thickness ;
