@@ -115,8 +115,29 @@ module hinges()
     panelside_hinge(screw_distance = 86.25 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false);
 
   mirror_x()     
-    translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6-27.5,frame_size().z/2-extrusion_width($extrusion_type)/2+15])
+    translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+30,frame_size().z/2-extrusion_width($extrusion_type)/2+15])
     rotate([0, 270, 270]) rotate([0, 90, 0])  doorside_hinge();    
+
+/*
+  translate([0, -frame_size().y/2, 0])
+    rotate([90, 0, 0])
+    {
+      mirror_xy()
+            {
+      
+      //translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()]) 
+      
+        translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2 , panel_thickness()])          panelside_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=acrylic_door_thickness(), extension = 0 , screw_type=3,$draft=false);
+      }
+        mirror_xy()
+        {        
+              translate([-frame_size().x / 2 , frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness() + acrylic_door_thickness()])
+           doorside_hinge() ;
+        }
+    }
+*/   
+    
+
 }
 
 // One door - the right side as facing printer

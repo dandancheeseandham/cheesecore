@@ -156,7 +156,7 @@ module hinges()
       }
         mirror_xy()
         {        
-              translate([-frame_size().x / 2 , frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, acrylic_door_thickness()])
+              translate([-frame_size().x / 2 , frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness() + acrylic_door_thickness()])
            doorside_hinge() ;
         }
     }
