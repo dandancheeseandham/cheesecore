@@ -21,7 +21,7 @@ module bed()
           rounded_rectangle([bed_plate_size().x, bed_plate_size().y, bed_thickness], bed_radius);
         // Ears
         translate([bed_plate_size().x / 2, 0, 0]) bed_ear();
-        #mirror_y()
+        mirror_y()
           translate([-bed_plate_size().x / 2, bed_ear_spacing() / 2, ,0]) rotate([0,0,180]) bed_ear();
       }
       thermistor_channel();
