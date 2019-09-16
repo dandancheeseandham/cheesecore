@@ -11,25 +11,29 @@ module x_carriage()
   carriage_x=64.12 ; 
   carriage_y=31.45 ;
   carriage_z=11 ;   //how thick is the AL?
-
+  rail_pos_x = 13.24 ; // rail width 12/2  (centre of rail)
+  carr_pos_x =  rail_pos_x - (11.3 + 12/2 + 20/2 ); //12 = rail width , 20 = carriage spacing width
+  screw_pos_x = rail_pos_x + 5.91 + (12/2) ; //screw pos from rail pos
+ shoulder_bolt = 5 ;    //FIXME needs accurate measurement
+ 
 //orient for the printer 
   rotate([90,180,0]) { 
     color(alum_part_color()) {  
       difference(){ 
         rounded_rectangle([carriage_x,  carriage_y, carriage_z], 5.5); 
-        translate([-carriage_x/2+rail_width(MGN12)/2+40-11.3-10,carriage_y/2-(rail_width(MGN12)+1)/2-10,-50]) 
+        translate([carr_pos_x,0 ,-50]) 
         rotate([0,0,90])
           carriage_hole_positions(carriage_type) {
             cylinder(d=3.3,h=100);
           }
          
-      //translate([0,carriage_y/2-(rail_width(MGN12)+1)-10,-50]) cube ([rail_width(MGN12), (rail_width(MGN12)+1),100]);  // add 1 for ease of fit. screw will hold.
-      // use dogbone for the aluminium version
-      translate([-carriage_x/2+rail_width(MGN12)/2+40,carriage_y/2-(rail_width(MGN12)+1)/2-10,-50]) 
+  
+      translate([rail_pos_x,0,-50]) 
         linear_extrude(height = 100) 
-          dogbone_rectangle([rail_width(MGN12),rail_width(MGN12)+1], r = 1.5, center = true, xy_center = true);
-          
-      translate([-carriage_x,0,0])   rotate([0,90,0]) cylinder(d=8,h=carriage_x);  //counterbore
+          dogbone_rectangle([rail_width(MGN12),rail_width(MGN12)+1], r = 1.5, center = true, xy_center = true); // add 1 for ease of fit. screw will hold
+ 
+     translate ([screw_pos_x ,carriage_y,0]) rotate([90,0,0]) cylinder(d=shoulder_bolt,h=carriage_y); 
+      translate([-carriage_x,0,0])   rotate([0,90,0]) cylinder(d=8,h=carriage_x);  //counterbore FIXME needs accurate counterbore
       translate([-carriage_x+10,0,0])   rotate([0,90,0]) cylinder(d=3,h=carriage_x);  
       }
     } 
@@ -38,5 +42,5 @@ module x_carriage()
 
 demo() {
  rotate([-90,-180,0]) x_carriage();  //orient for development
-translate([-30,-15.5,-6])  rotate([0,0,0]) import("./railcorestls/Front_X_Carriage.stl");
+translate([32,-15.5,16])  rotate([0,-180,0]) import("./railcorestls/Front_X_Carriage.stl");
 }

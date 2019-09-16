@@ -25,7 +25,7 @@ include <screws.scad>
 MGN5_carriage  = [ 16,   9.6,  12, 6,  1.5, 0,  8 , M2_cap_screw ];
 MGN7_carriage  = [ 23,   14.3, 17, 8,  1.5, 8,  12, M2_cap_screw ];
 MGN9_carriage  = [ 29.7, 20.8, 20, 10, 2,   10, 15, M3_cap_screw ];
-MGN12_carriage = [ 34.7, 21.7, 27, 13, 3,   15, 20, M3_cap_screw ];
+MGN12_carriage = [ 34.7, 21.7, 27, 13, 3,   20, 20, M3_cap_screw ];
 MGN15_carriage = [ 43.3, 27.7, 32, 16, 4,   20, 25, M3_cap_screw ];
 SSR15_carriage = [ 40.3, 23.3, 34, 24, 4.5, 0,  26, M4_cap_screw ];
 //

@@ -57,7 +57,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   // X-CARRIAGE
   // 12 = rail size
   xcarriagevector = [-rail_lengths().x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
-  mirror_y() translate (xcarriagevector + [10,-12,0]) x_carriage();
+  #mirror_y() translate (xcarriagevector + [13,-12,0]) x_carriage();
 
 
 
