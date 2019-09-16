@@ -112,11 +112,11 @@ module hinges()
   mirror_x()
     translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6,frame_size().z/2-extrusion_width($extrusion_type)/2])
     rotate([0, 270, 270])
-    front_panel_doors_hinge(screw_distance = 86.25 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false);
+    panelside_hinge(screw_distance = 86.25 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false);
 
   mirror_x()     
     translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6-27.5,frame_size().z/2-extrusion_width($extrusion_type)/2+15])
-    rotate([0, 270, 270]) rotate([0, 90, 0])  doorside();    
+    rotate([0, 270, 270]) rotate([0, 90, 0])  doorside_hinge();    
 }
 
 // One door - the right side as facing printer

@@ -148,15 +148,16 @@ module hinges()
     rotate([90, 0, 0])
     {
       mirror_xy()
-      {
-        translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()])
-          front_panel_doors_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=acrylic_door_thickness(), screw_type=3,$draft=false);
+            {
+      
+      //translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()]) 
+      
+        translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2 , panel_thickness()])          panelside_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=acrylic_door_thickness(), extension = 0 , screw_type=3,$draft=false);
       }
         mirror_xy()
         {        
-          // FIXME: the -1 and -50  and 0.5 here are bogus, but this component      
-          translate([-frame_size().x / 2  + 27.5 + 24, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()+ acrylic_door_thickness()])
-           doorside() ;
+              translate([-frame_size().x / 2 , frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, acrylic_door_thickness()])
+           doorside_hinge() ;
         }
     }
 }

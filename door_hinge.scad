@@ -8,16 +8,19 @@ use <screwholes.scad>
 use <demo.scad>
 
 
-
+  //door_hinge_x()/2 + hinge_arms_x() 
 demo() {
   // Standard lostapathy ZL hinge for a 5mm acrylic door
-  front_panel_doors_hinge( $draft = false); 
-    translate ([45,0,5])  doorside();
-    
+      translate([0, 0 ,0])  panelside_hinge( $draft = false); 
+      translate([0 , 0,  acrylic_door_thickness()])  doorside_hinge();
+   
   // ZLT 6mm acrylic with doors that need to be 10mm closer to each other (extension = 5mm , on each hinge/door)
   translate ([0,-120,0]) 
-    front_panel_doors_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false); 
-  translate ([50,-120,6]) rotate ([0,0,180]) doorside();
+    panelside_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false); 
+  translate ([0,-120,0])  doorside_hinge();
+  
+
+  
 }
 
 function hole_distance_from_edge() = 7.5 ;
@@ -25,12 +28,14 @@ function rounding() = 1.5 ; // rounding() of edges
 function hinge_arm_body_y() = 70 ;  // raised section and panel hinge_y
 function hinge_arms_x() = 8.75  ;  // size for hinge arm ..
 function hinge_arms_y() = 14.75 ; // y size of arms - Standard for hinges
+ function door_hinge_x()= extrusion_width($extrusion_type) ;   // hinge is the width of the extrusion
 
-module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension = 0 ,screw_type =3, $draft = true) {
+
+module panelside_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension = 0 ,screw_type =3, $draft = true) {
 
   
   
-  door_hinge_x = extrusion_width($extrusion_type) ;   // hinge is the width of the extrusion
+
   door_hinge_y = screw_distance + (hole_distance_from_edge() * 2) ;   // this is so it fits the panels depending on the distance between screws.
   door_hinge_z = 5.25 ;
   //door_hinge_z = 0.25 + acrylic_door_thickness ;   // Used to be parametric: Needs counterbore to work
@@ -38,40 +43,44 @@ module front_panel_doors_hinge(screw_distance = 86.25,acrylic_door_thickness=5,e
 
   hinge_arms_z = 5.82 + acrylic_door_thickness ;
   
-  
+
   // origin is top screwhole. Makes placing on panels easier
   color(printed_part_color())
 render() difference() {
       union() {
         // draw main arm
-        translate ([-door_hinge_x/2,-door_hinge_y/2,0 ]) 
-          roundedCube([door_hinge_x, door_hinge_y, door_hinge_z], r=rounding(), x=true, y=true, z=true);
+        translate ([-door_hinge_x()/2,-door_hinge_y/2,0 ]) 
+          roundedCube([door_hinge_x(), door_hinge_y, door_hinge_z], r=rounding(), x=true, y=true, z=true);
           
         // raised part of hinge to accommodate arms
-        translate ([-door_hinge_x/2,-hinge_arm_body_y()/2,0]) 
-          roundedCube([door_hinge_x + extension,hinge_arm_body_y(),hinge_arms_z], r=rounding(), x=true, y=true, z=true);
+        translate ([-door_hinge_x()/2,-hinge_arm_body_y()/2,0]) 
+          roundedCube([door_hinge_x() + extension,hinge_arm_body_y(),hinge_arms_z], r=rounding(), x=true, y=true, z=true);
           
         // hinge arms. The 10 is an overlap to prevent the join being rounded off.
         mirror_y() 
-          translate ([door_hinge_x/2 - 10 ,hinge_arm_body_y()/2-hinge_arms_y(),0]) 
+          translate ([door_hinge_x()/2 - 10 ,hinge_arm_body_y()/2-hinge_arms_y(),0]) 
             roundedCube([extension + hinge_arms_x() + 10 ,hinge_arms_y(),hinge_arms_z], r=rounding(), x=true, y=true, z=true);
       }
       mirror_y() 
         translate ([0,door_hinge_y/2-hole_distance_from_edge(),0])   
           poly_cylinder(1.5, 30);
-      translate ([door_hinge_x/2 + extension + 5,150,acrylic_door_thickness+2.5]) 
+      translate ([door_hinge_x()/2 + extension + 5,150,acrylic_door_thickness+2.5]) 
         rotate ([90,0,0]) 
           poly_cylinder(screw_type/2, 300);
     }
 }
 
-module doorside() {
+module doorside_hinge() {
 
   panel_hinge_width = 27.5 ;
   panel_hinge_depth = 6.25 ;
   shape_overlap = 15 ;
+  
 color(printed_part_color())
-rotate ([0,0,180])
+
+//panel_hinge_width + hinge_arms_x() + extrusion_width()
+
+ translate ([panel_hinge_width + hinge_arms_x() + extrusion_width(),0,panel_hinge_depth]) rotate ([0,180,0])
  render() difference(){
     union () {     
       // side with larger rounded corners
