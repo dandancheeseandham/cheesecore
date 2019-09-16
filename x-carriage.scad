@@ -38,5 +38,5 @@ module x_carriage()
 
 demo() {
  rotate([-90,-180,0]) x_carriage();  //orient for development
-translate([50,0,0])  rotate([0,0,0]) import("./railcorestls/Front_X_Carriage.stl");
+translate([-30,-15.5,-6])  rotate([0,0,0]) import("./railcorestls/Front_X_Carriage.stl");
 }
