@@ -11,23 +11,19 @@ use <screwholes.scad>
 use <demo.scad>
 use <electronics_placement.scad>
 
-module panel(x, y)
-{
+module panel(x, y) {
   assert(x != undef, "Must specify panel x dimension");
   assert(y != undef, "Must specify panel y dimension");
 
-  difference()
-  {
+  difference() {
     color(panel_color())
       translate ([0, 0, panel_thickness()/2])
       rounded_rectangle([x, y, panel_thickness()], panel_radius());
     // Color the holes darker for contrast
-    color(panel_color_holes())
-    {
+    color(panel_color_holes()) {
       panel_mounting_screws(x, y);
       // Access screws to corner cubes
-      mirror_xy()
-      {
+      mirror_xy() {
         translate([x / 2 - extrusion_width() / 2, y / 2 - extrusion_width() / 2, -epsilon])
           cylinder(d=extrusion_width() * 0.5, h = panel_thickness() + 2 * epsilon);
       }
@@ -54,20 +50,16 @@ module panel_mounting_screws(x, y)
   screw_spacing_x = extent_x / (screws_x - 1);
   screw_spacing_y = extent_y / (screws_y - 1);
 
-  mirror_y()
-  {
-    for (a =[0:(screws_x - 1)])
-    {
+  mirror_y() {
+    for (a =[0:(screws_x - 1)]) {
       translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), y / 2 - extrusion_width() / 2, -epsilon])
         // FIXME - this should be a hole() not a cylinder
         cylinder(h=panel_thickness() + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
     }
   }
 
-  mirror_x()
-  {
-    for (a =[0:(screws_y - 1)])
-    {
+  mirror_x() {
+    for (a =[0:(screws_y - 1)]) {
       translate ([x / 2 - extrusion_width() / 2, -y / 2 + panel_screw_offset() + (screw_spacing_y * a), -epsilon])
         // FIXME - this should be a hole not a cylinder
         cylinder(h=panel_thickness() + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
@@ -77,13 +69,11 @@ module panel_mounting_screws(x, y)
 
 
 // BOTTOM PANEL
-module bottom_panel()
-{
-  module motor_holes()
-  {
-    translate([0, 0, -epsilon]) cylinder(h=panel_thickness() + 2 * epsilon, d=NEMA_boss_radius(NEMA17) * 2 + 1);
-    mirror_xy()
-    {
+module bottom_panel() {
+  module motor_holes() {
+    translate([0, 0, -epsilon])
+      cylinder(h=panel_thickness() + 2 * epsilon, d=NEMA_boss_radius(NEMA17) * 2 + 1);
+    mirror_xy() {
       translate([ NEMA_hole_pitch(NEMA17)/2, NEMA_hole_pitch(NEMA17)/2, -epsilon ])
         // FIXME: this diameter should be driven by stepper size. (Looked in modules, there is no definition for this.-dan)
         // FIXME this needs to be a hole() not a cylinder
@@ -91,17 +81,13 @@ module bottom_panel()
     }
   }
 
-  difference()
-  {
+  difference() {
     panel(frame_size().x, frame_size().y);
 
-    color(panel_color_holes())
-    {
-      translate([bed_offset.x, bed_offset.y, 0])
-      {
+    color(panel_color_holes()) {
+      translate([bed_offset.x, bed_offset.y, 0]) {
         // left side holes
-        mirror_y()
-        {
+        mirror_y() {
           translate([-frame_size().x / 2 + extrusion_width() + leadscrew_x_offset , bed_ear_spacing() / 2, 0])
             motor_holes();
         }
@@ -114,20 +100,18 @@ module bottom_panel()
       deboss_depth = 3;
       translate([0, -frame_size().y/2 + 50, panel_thickness() - deboss_depth + epsilon])
         linear_extrude(deboss_depth)
-        text(branding_name, halign="center", size=35);
+          text(branding_name, halign="center", size=35);
     }
   }
 }
 
-module front_panel()
-{
+module front_panel() {
   assert(front_window_size().x <= frame_size().x - 2 * extrusion_width(), str("Window cannot overlap extrusion in X: "));
   assert(front_window_size().y <= frame_size().z - 2 * extrusion_width(), "Window cannot overlap extrusion in Z");
   // FIXME to make this assert work again
   //assert(Zwindowspacingbottom >= extrusion_width(), "Window cannot overlap extrusion in Z");
 
-  difference()
-  {
+  difference() {
     panel(frame_size().x, frame_size().z);
 
     //remove window in front panel
@@ -142,47 +126,36 @@ module front_panel()
   // hole_distance_from_edge = 7.5 ;
 }
 
-module hinges()
-{
+module hinges() {
   translate([0, -frame_size().y/2, 0])
-    rotate([90, 0, 0])
-    {
-      mirror_xy()
-            {
-      
-      //translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()]) 
-      
-        translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2 , panel_thickness()])          panelside_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=acrylic_door_thickness(), extension = 0 , screw_type=3,$draft=false);
+    rotate([90, 0, 0]) {
+      mirror_xy() {
+        //translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness()])
+        translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2 , panel_thickness()])
+          panelside_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=acrylic_door_thickness(), extension = 0 , screw_type=3,$draft=false);
       }
-        mirror_xy()
-        {        
-              translate([-frame_size().x / 2 , frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness() + acrylic_door_thickness()])
-           doorside_hinge() ;
+      mirror_xy() {
+        translate([-frame_size().x / 2 , frame_size().y / 2 - panel_screw_offset() - panel_screw_spacing(frame_size().z)/2, panel_thickness() + acrylic_door_thickness()])
+          doorside_hinge() ;
         }
     }
 }
 
 // One door - the right side as facing printer
 // Origin is the centerline between the doors at the middle of the height. So not quite on the door, but rather in the gap between where they meet together
-module door()
-{
+module door() {
   door_gap = 1; // How far do we want between doors?
   door_overlap = 10; // How far do we want the doors to overlap the panel edges?
   door_radius_mating_corners = 2.5; // radius of the corners where the panels come together
   door_radius_outside_corners = front_window_radius() + door_overlap;
-  
-  difference()
-  {
+
+  difference() {
     // Outline of the door
-    color(acrylic2_color())
-    {
+    color(acrylic2_color()) {
       // FIXME - make door thickness parametric
-      linear_extrude(acrylic_door_thickness())
-      {
-        hull()
-        {
-          mirror_y()
-          {
+      linear_extrude(acrylic_door_thickness()) {
+        hull() {
+          mirror_y() {
             // The smaller corners where the doors meet
             translate([door_radius_mating_corners + door_gap / 2, front_window_size().y / 2 + door_overlap - door_radius_mating_corners])
               circle(r = door_radius_mating_corners);
@@ -202,67 +175,65 @@ module door()
   }
 }
 
-module doors()
-{
+module doors() {
   rotate([90, 0, 0])
     translate(front_window_offset())
     mirror_x()
     %door();
 }
 
-module side_panel()
-{
+module side_panel() {
   panel(frame_size(). y, frame_size().z);
 }
 
-module back_panel()
-{
+module back_panel() {
   panel(frame_size().x, frame_size().z);
 }
 
-module right_panel()
-{
+module right_panel() {
   // FIXME: should move this into a right_side_panel() module and call that.
-  difference()
-  {
+  difference() {
    side_panel();
-    color(panel_color_holes())
-     {
+    color(panel_color_holes()) {
     translate(cable_bundle_hole_placement()) singlescrewhole(26,0); // cable bundle - correct for ZL
     translate(DuetE_placement())  pcb_holes(DuetE);  // correct for ZL
     translate(Duex5_placement())  pcb_holes(Duex5);  //correct for ZL
     translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
     }
   }
-
-
 }
 
 module pcb_holes(type) { // Holes for PCB's
     screw = pcb_screw(type);
-    ir = screw_clearance_radius(screw);
-{
-                pcb_screw_positions(type)
-                   cylinder(20,ir,ir);
-            }
-
+    ir = screw_clearance_radius(screw); {
+      pcb_screw_positions(type)
+        cylinder(20,ir,ir);
     }
-
-
-module all_side_panels()
-{
-  translate([0, 0, -frame_size().z / 2 - panel_thickness()]) bottom_panel();
-  translate([0, -(frame_size().y)/2, 0]) rotate([90,0,0]) front_panel();
-  translate([-frame_size().x / 2 - panel_thickness(), 0, 0]) rotate([90,0,90]) side_panel();
-
-  translate ([frame_size().x / 2, 0, 0]) rotate([90,0,90]) 
-  right_panel();
-  
-  translate ([0, frame_size().y / 2 + panel_thickness(),0]) rotate([90,0,0]) back_panel();
 }
 
-module all_side_panels_dxf()
-{
+
+module all_side_panels() {
+  translate([0, 0, -frame_size().z / 2 - panel_thickness()])
+    bottom_panel();
+
+  translate([0, -(frame_size().y)/2, 0])
+    rotate([90,0,0])
+      front_panel();
+
+  translate([-frame_size().x / 2 - panel_thickness(), 0, 0])
+    rotate([90,0,90])
+      side_panel();
+
+  translate ([frame_size().x / 2, 0, 0])
+    rotate([90,0,90])
+      right_panel();
+
+  translate ([0, frame_size().y / 2 + panel_thickness(),0])
+    rotate([90,0,0])
+      back_panel();
+}
+
+module all_side_panels_dxf() {
   projection(cut = true) translate([0, 0, 0]) bottom_panel();
   projection(cut = true) translate([0, -(frame_size().y)-30, -6])  bottom_panel();
   projection(cut = true) translate([0, -(frame_size().y)*2-30, 0])  front_panel(Xwindowspacing=35,Zwindowspacingtop=25, Zwindowspacingbottom=35,screwhole_X = 5, screwhole_Y = 5, corner_radius = 5); // ZL spacing
@@ -282,6 +253,5 @@ module all_side_panels_dxf()
 //doors();
 
 demo() {
-  all_side_panels() ; 
+  all_side_panels() ;
 }
-

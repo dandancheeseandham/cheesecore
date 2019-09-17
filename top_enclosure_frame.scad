@@ -4,8 +4,6 @@ use <extrusion.scad>
 use <corner_cube.scad>
 use <lib/mirror.scad>
 
-
-
 module z_extrusions() {
   mirror_xy() {
     translate([frame_size().x / 2 - extrusion_width() / 2, frame_size().y / 2 - extrusion_width() / 2, 0])
@@ -22,8 +20,7 @@ module x_extrusions() {
 }
 
 module y_extrusions() {
-    mirror_x() 
-  {
+    mirror_x() {
     translate([frame_size().x / 2 - extrusion_width() / 2, 0, frame_size().z / 2 - extrusion_width() / 2])
       rotate([90,0,0])
         extrusion(frame_size().y - 2 * extrusion_width());
@@ -47,18 +44,13 @@ module frame(bottom_braces=true) {
   // This cube is just for debugging - it makes sure the space between brace and outside extrusion is correct
   //#translate([-frame_size().x / 2 + extrusion_width(), 0, -frame_size().z / 2+ 40]) cube([40, 100, 100]);
   assert(leadscrew_x_offset == 20, "Leadscrew_x_offset sets placement of stepper and bottom braces.  Must be 20 unless we do something besides NEMA17 z motors");
-
 }
 
 module enclosure_frame() {
   x_extrusions();
- y_extrusions();
+  y_extrusions();
   z_extrusions();
   corner_cubes();
-
-
-  }
-
-
+}
 
 enclosure_frame($extrusion_type = extrusion15);
