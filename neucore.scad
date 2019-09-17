@@ -41,22 +41,7 @@ module kinematics(position) {
   z_towers(z_position = position[2]);
   bed(offset_bed_from_frame(position));
   x_rails(position.x);
-
-
-  // messy bit!
-  Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
-  // Y-RAIL
-  // FIXME: x position here is an approximation to look decent
-  translate (Yrail_vector + [3 , 0, 0])
-    rotate([270, 0, 90])
-      rail_wrapper(rail_profiles().y, rail_lengths().y, position = position.y-150);
-  // HOTEND
-  translate(Yrail_vector + [-35, position.y-150, 5]) // FIXME: arbitary move to look decentish
-    rotate([0,0,180]) hot_end(E3Dv6, naked=true);
-  // X-CARRIAGE
-  // 12 = rail size
-  xcarriagevector = [-rail_lengths().x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
-  mirror_y() translate (xcarriagevector + [13,-12,0]) x_carriage();
+  y_carriage(position);
 
 }
 
@@ -82,6 +67,28 @@ translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
       NEMA(NEMA17);
     }
   }
+}
+
+module y_carriage(position) {
+  // messy bit!
+  Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
+
+  // HOTEND
+  *translate(Yrail_vector + [-35, position.y-150, 5]) // FIXME: arbitary move to look decentish
+    rotate([0,0,180]) hot_end(E3Dv6, naked=true);
+
+  // Y-RAIL
+  // FIXME: x position here is an approximation to look decent
+  translate (Yrail_vector + [3 , 0, 0])
+    rotate([270, 0, 90])
+      rail_wrapper(rail_profiles().y, rail_lengths().y, position = position.y-150);
+
+  // X-CARRIAGE
+  // 12 = rail size
+  xcarriagevector = [-rail_lengths().x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
+  mirror_y()
+    translate (xcarriagevector + [13,-12,0]) 
+      x_carriage();
 }
 
 module rc300zl(position = [0, 0, 0]) {
@@ -153,6 +160,6 @@ module dancore(position = [0, 0, 0]) {
 }
 
 rc300zl(position = [80, 90, 30]);
-*translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
+translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
 *translate([0, 800, 0]) dancore(position = [150, 150, 130]);
 *translate([800, 800, 0]) rc300zl40();
