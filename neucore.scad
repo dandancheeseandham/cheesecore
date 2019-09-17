@@ -29,41 +29,43 @@ module enclosure() {
   feet(height=50);
  }
 
+module electronics() {
+  electronics_box_contents();
+  electronics_box ();
+}
 
-module printer() {
+//FIXME: position isn't quite right
+module kinematics(position) {
+  // the tidy bit
+  xy_motion(position);
+  z_towers(z_position = position[2]);
+  bed(offset_bed_from_frame(position));
+  x_rails(position.x);
 
-Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 
+  // messy bit!
+  Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
   // Y-RAIL
   // FIXME: x position here is an approximation to look decent
   translate (Yrail_vector + [3 , 0, 0])
     rotate([270, 0, 90])
       rail_wrapper(rail_profiles().y, rail_lengths().y, position = position.y-150);
-
   // HOTEND
   translate(Yrail_vector + [-35, position.y-150, 5]) // FIXME: arbitary move to look decentish
     rotate([0,0,180]) hot_end(E3Dv6, naked=true);
-
   // X-CARRIAGE
   // 12 = rail size
   xcarriagevector = [-rail_lengths().x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
   mirror_y() translate (xcarriagevector + [13,-12,0]) x_carriage();
 
-
-  translate ([0, 0, frame_size().z / 2 + 150]) top_enclosure_all();
-
 }
-
-//FIXME: x=80 is around X0, y=-20 is around Y0, z=-50 is around Z0
-//printer(render_electronics=false, position=[130, -20+100, -50]);
-
 
 // x/y motion stage.  So belts, pulleys, x/y motors, and mounts.
 // Position is the printhead position
-module xy_motion(position = [0, 0]) {
+module xy_motion(position = [0, 0, 0]) {
   // FIXME: this is not a final height for belts
-  translate ([0, 0, frame_size().z / 2 + 20]) corexy_belts([position.x-210, position.y]);
-
+  translate ([0, 0, frame_size().z / 2 + 20])
+    corexy_belts([position.x-210, position.y]);
   // IDLER MOUNTS
   translate ([-frame_size().x / 2 + extrusion_width(), 0, frame_size().z / 2]) {
     mirror_y() {
@@ -71,12 +73,13 @@ module xy_motion(position = [0, 0]) {
         aluminium_idler_mount();
     }
   }
-
-  // MOTOR MOUNTS
-  translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
-    mirror_y() {
-      translate([0, frame_size().y / 2 - extrusion_width(), 0]) aluminium_motor_mount();
-      translate([49, 38 - frame_size().y / 2 - extrusion_width(), 0])  NEMA(NEMA17);
+// MOTOR MOUNTS
+translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
+  mirror_y() {
+    translate([0, frame_size().y / 2 - extrusion_width(), 0])
+      aluminium_motor_mount();
+    translate([49, 38 - frame_size().y / 2 - extrusion_width(), 0])
+      NEMA(NEMA17);
     }
   }
 }
@@ -93,14 +96,9 @@ module rc300zl(position = [0, 0, 0]) {
   $enclosure_size = enclosure_rc300zl;
   validate();
   enclosure();
-  xy_motion(position);
-  z_towers(z_position = position[2]);
-  bed(offset_bed_from_frame(position));
-  x_rails(position.x);
-  electronics_box_contents();
-  electronics_box ();
-  //printer();
-  top_enclosure_all();
+  kinematics(position);
+  electronics();
+  top_enclosure();
 }
 
 module rc300zlt(position = [0, 0, 0]) {
@@ -115,14 +113,9 @@ module rc300zlt(position = [0, 0, 0]) {
   $enclosure_size = enclosure_rc300zl;
   validate();
   enclosure();
-  xy_motion(position);
-  z_towers(z_position = position[2]);
-  bed(offset_bed_from_frame(position));
-  x_rails(position.x);
-  electronics_box_contents();
-  electronics_box();
-  top_enclosure_all();
-  //printer();
+  kinematics(position);
+  electronics();
+  top_enclosure();
 }
 
 module rc300zl40(position = [0, 0, 0]) {
@@ -137,14 +130,9 @@ module rc300zl40(position = [0, 0, 0]) {
   $enclosure_size = enclosure_rc300zl;
   validate();
   enclosure();
-  xy_motion(position);
-  z_towers(z_position = position[2]);
-  bed(offset_bed_from_frame(position));
-  x_rails(position.x);
-  electronics_box_contents();
-  electronics_box();
-  top_enclosure_all();
-  //printer();
+  kinematics(position);
+  electronics();
+  top_enclosure();
 }
 
 module dancore(position = [0, 0, 0]) {
@@ -159,28 +147,12 @@ module dancore(position = [0, 0, 0]) {
   $enclosure_size = enclosure_rc300zl;
   validate();
   enclosure();
-  xy_motion(position);
-  z_towers(z_position = position[2]);
-  bed(offset_bed_from_frame(position));
-  x_rails(position.x);
-  electronics_box_contents();
-  electronics_box ();
-  top_enclosure_all();
-  //printer();
+  kinematics(position);
+  electronics();
+  top_enclosure();
 }
 
-
-
-$leadscrew_specs = leadscrew_rc300zl;
-$bed = bed_rc300;
-$front_window_size = front_window_zl;
-$frame_size = frame_rc300zl;
-$rail_specs = rails_rc300zl;
-
-*printer(render_electronics=true, position=[150, 50, 0]);
-
-
-rc300zl(position = [150, 150, 130]);
-translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
-translate([0, 800, 0]) dancore(position = [150, 150, 130]);
-translate([800, 800, 0]) rc300zl40();
+rc300zl(position = [80, 90, 30]);
+*translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
+*translate([0, 800, 0]) dancore(position = [150, 150, 130]);
+*translate([800, 800, 0]) rc300zl40();

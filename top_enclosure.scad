@@ -12,7 +12,7 @@ use <demo.scad>
 
 $fullrender=false;
 
-module top_enclosure_all() {
+module top_enclosure() {
   translate ([0, 0, frame_size().z / 2 + 150]) {
     frame();
     %all_side_panels();

@@ -24,16 +24,20 @@ color(alum_part_color()) {
   addonx = extrusion+15 ;
   addony = 12 ;
 
-
   union() {
-  translate ([mainx/2,-mainy/2,0]) rounded_rectangle([mainx,mainy,part_thickness ], part_corner_rounding);
-  translate ([mainx,-mainy+addony/2+screwsize,0])  rounded_rectangle([addonx,addony+screwsize*2,part_thickness ], part_corner_rounding);
+  translate ([mainx/2,-mainy/2,0])
+    rounded_rectangle([mainx,mainy,part_thickness ], part_corner_rounding);
+  translate ([mainx,-mainy+addony/2+screwsize,0])
+    rounded_rectangle([addonx,addony+screwsize*2,part_thickness ], part_corner_rounding);
   }
 
-
-  translate ([mainx-(extrusion/2),-41.8,0]) screwholes(row_distance=37,numberofscrewholes=5,Mscrew=screwsize,screwhole_increase=0.1) ; //line of screwholes
-  translate ([23,-24,0])  motorhole(0,0,0);  //motor holes
-  translate ([mainx+(extrusion/2),-43.3+(screwsize/2),2]) rotate ([0,0,90]) longscrewhole(screwhole_length=8,Mscrew=screwsize,screwhole_increase=0.15); //extrusion adjust
+  translate ([mainx-(extrusion/2),-41.8,0])
+    screwholes(row_distance=37,numberofscrewholes=5,Mscrew=screwsize,screwhole_increase=0.1) ; //line of screwholes
+  translate ([23,-24,0])
+    motorhole(0,0,0);  //motor holes
+  translate ([mainx+(extrusion/2),-43.3+(screwsize/2),2])
+    rotate ([0,0,90])
+      longscrewhole(screwhole_length=8,Mscrew=screwsize,screwhole_increase=0.15); //extrusion adjust
   }
 }
 
@@ -44,10 +48,14 @@ module motorhole(x,y,z) {
   NEMAadjust = 10 ;
   NEMAscrew = 3 ;
   longscrewhole(screwhole_length=NEMAadjust,Mscrew=NEMAhole,screwhole_increase=0.6);
-  translate ([-posx,-posy,-2])  longscrewhole(screwhole_length=motoradjustspacing, Mscrew=NEMAscrew,screwhole_increase=0.1);
-  translate ([-posx,+posy,-2])  longscrewhole(screwhole_length=motoradjustspacing, Mscrew=NEMAscrew,screwhole_increase=0.1);
-  translate ([posx+(NEMAadjust/2),-posy,-2])  longscrewhole(screwhole_length=motoradjustspacing, Mscrew=NEMAscrew,screwhole_increase=0.1);
-  translate ([posx+(NEMAadjust/2),+posy,-2])  longscrewhole(screwhole_length=motoradjustspacing, Mscrew=NEMAscrew,screwhole_increase=0.1);
+  translate ([-posx,-posy,-2])
+    longscrewhole(screwhole_length=motoradjustspacing, Mscrew=NEMAscrew,screwhole_increase=0.1);
+  translate ([-posx,+posy,-2])
+    longscrewhole(screwhole_length=motoradjustspacing, Mscrew=NEMAscrew,screwhole_increase=0.1);
+  translate ([posx+(NEMAadjust/2),-posy,-2])
+    longscrewhole(screwhole_length=motoradjustspacing, Mscrew=NEMAscrew,screwhole_increase=0.1);
+  translate ([posx+(NEMAadjust/2),+posy,-2])
+    longscrewhole(screwhole_length=motoradjustspacing, Mscrew=NEMAscrew,screwhole_increase=0.1);
     }
   }
 }
@@ -60,6 +68,7 @@ module aluminium_motor_mount(screwsize=3, motoradjustspacing=6) {
 }
 
 demo() {
-mirror([0,1,0]) translate ([0,-60,0]) aluminium_motor_mount(screwsize=3,motoradjustspacing=6) ; //mirrored version
-aluminium_motor_mount(screwsize=3,motoradjustspacing=6) ;
+  mirror([0,1,0])
+    translate ([0,-60,0]) aluminium_motor_mount(screwsize=3,motoradjustspacing=6) ; //mirrored version
+  aluminium_motor_mount(screwsize=3,motoradjustspacing=6) ;
 }
