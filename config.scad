@@ -68,7 +68,6 @@ function panel_screw_offset() = extrusion_width($extrusion_type) + 35; // 50 in 
 function max_panel_screw_spacing() = 100;
 
 
-
 // ELECTRONICS BOX ALONG WITH  & ELECTRONICS & CABLE PLACEMENT -  placement of parts on right panel with X/Y as centre
 //
 //              name       sizeX  sizeY  depth thick, lasercut cable_bundle       DuetE            Duex           PSU       SSR
@@ -89,6 +88,13 @@ function Duex5_placement() = $elecbox[8] ;
 function psu_placement() = $elecbox[9] ;
 function ssr_placement() = $elecbox[10] ;
 
-// ELECTRONICS BOX - size and shape
+// ENCLOSURE BOX - size and shape - left unconstrained from the frame for future ideas.
+enclosure_rc300zl  = [490, 455, 245];
+enclosure_rc300zlt = [490, 455, 245];
+enclosure_rc300zl4040  = [540, 500, 275];
+
+function enclosure_size() = $enclosure_size ;
+
+
 
 $draft = true;

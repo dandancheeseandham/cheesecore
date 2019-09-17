@@ -67,11 +67,11 @@ module panel_mounting_screws(x, y) {
 module bottom_panel() {
 
   difference() {
-    panel(frame_size().x, frame_size().y);
+    panel(enclosure_size().x, enclosure_size().y);
     // Deboss instructions on panel
     deboss_depth = 3;
     color("#333333")
-      translate([0, -frame_size().y/2 + 50, panel_thickness() - deboss_depth + epsilon])
+      translate([0, -enclosure_size().y/2 + 50, panel_thickness() - deboss_depth + epsilon])
         linear_extrude(deboss_depth)
           text("lid lifts up", halign="center", size=25);
   }
@@ -79,53 +79,53 @@ module bottom_panel() {
 
 module front_panel() {
   difference()
-    panel(frame_size().x, frame_size().z-extrusion_width($extrusion_type));
+    panel(enclosure_size().x, enclosure_size().z-extrusion_width($extrusion_type));
     // Deboss instructions on panel
     deboss_depth = 3;
     color("#333333")
-      translate([0, -frame_size().z/2 + 150, panel_thickness() - deboss_depth + epsilon])
+      translate([0, -enclosure_size().z/2 + 150, panel_thickness() - deboss_depth + epsilon])
         linear_extrude(deboss_depth)
           text("lid lifts up", halign="center", size=25);
 }
 
 module hinges() {
   mirror_x()
-    translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+6,frame_size().z/2-extrusion_width($extrusion_type)/2])
+    translate ([enclosure_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, enclosure_size().y/2+6,enclosure_size().z/2-extrusion_width($extrusion_type)/2])
       rotate([0, 270, 270])
         panelside_hinge(screw_distance = 86.25 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false);
 
   mirror_x()
-    translate ([frame_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, frame_size().y/2+30,frame_size().z/2-extrusion_width($extrusion_type)/2+15])
+    translate ([enclosure_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, enclosure_size().y/2+30,enclosure_size().z/2-extrusion_width($extrusion_type)/2+15])
       rotate([0, 270, 270])
         rotate([0, 90, 0])  doorside_hinge();
 }
 
 
 module side_panel() {
-  panel(frame_size(). y, frame_size().z-extrusion_width($extrusion_type)/2);
+  panel(frame_size(). y, enclosure_size().z-extrusion_width($extrusion_type)/2);
 }
 
 module back_panel() {
-  panel(frame_size().x, frame_size().z-extrusion_width($extrusion_type)/2);
+  panel(enclosure_size().x, enclosure_size().z-extrusion_width($extrusion_type)/2);
 }
 
 module all_side_panels() {
-  translate([0, 0, frame_size().z / 2]) bottom_panel();
-  translate([0, -(frame_size().y)/2, extrusion_width($extrusion_type)/2]) rotate([90,0,0]) front_panel();
-  translate([-frame_size().x / 2 - panel_thickness(), 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
+  translate([0, 0, enclosure_size().z / 2]) bottom_panel();
+  translate([0, -(enclosure_size().y)/2, extrusion_width($extrusion_type)/2]) rotate([90,0,0]) front_panel();
+  translate([-enclosure_size().x / 2 - panel_thickness(), 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
   // FIXME: should move this into a right_side_panel() module and call that.
-  translate ([frame_size().x / 2, 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
-  translate ([0, frame_size().y / 2 + panel_thickness(),extrusion_width($extrusion_type)/2]) rotate([90,0,0]) back_panel();
+  translate ([enclosure_size().x / 2, 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
+  translate ([0, enclosure_size().y / 2 + panel_thickness(),extrusion_width($extrusion_type)/2]) rotate([90,0,0]) back_panel();
 }
 
 module all_side_panels_dxf() {
   projection(cut = true) translate([0, 0, 0]) bottom_panel();
-  projection(cut = true) translate([0, -(frame_size().y)-30, -6])  bottom_panel();
-  projection(cut = true) translate([0, -(frame_size().y)*2-30, 0])  front_panel(Xwindowspacing=35,Zwindowspacingtop=25, Zwindowspacingbottom=35,screwhole_X = 5, screwhole_Y = 5, corner_radius = 5); // ZL spacing
-  // projection(cut = true) translate([0, -(frame_size().y)*2-30, 0])  front_panel(Xwindowspacing=35,Zwindowspacingtop=50, Zwindowspacingbottom=50,screwhole_X = 5, screwhole_Y = 7, corner_radius = 5) // ZLT spacing
-  projection(cut = true) translate([-(frame_size().x)-30,0,0])  side_panel();
-  projection(cut = true) translate ([(frame_size().x)+30,0,0])  side_panel();
-  projection(cut = true) translate ([0,(frame_size().y)+30,0])  back_panel();
+  projection(cut = true) translate([0, -(enclosure_size().y)-30, -6])  bottom_panel();
+  projection(cut = true) translate([0, -(enclosure_size().y)*2-30, 0])  front_panel(Xwindowspacing=35,Zwindowspacingtop=25, Zwindowspacingbottom=35,screwhole_X = 5, screwhole_Y = 5, corner_radius = 5); // ZL spacing
+  // projection(cut = true) translate([0, -(enclosure_size().y)*2-30, 0])  front_panel(Xwindowspacing=35,Zwindowspacingtop=50, Zwindowspacingbottom=50,screwhole_X = 5, screwhole_Y = 7, corner_radius = 5) // ZLT spacing
+  projection(cut = true) translate([-(enclosure_size().x)-30,0,0])  side_panel();
+  projection(cut = true) translate ([(enclosure_size().x)+30,0,0])  side_panel();
+  projection(cut = true) translate ([0,(enclosure_size().y)+30,0])  back_panel();
 }
 
 front_panel($extrusion_type = extrusion15, $front_window_size = front_window_zl, $frame_size = frame_rc300zl);

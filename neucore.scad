@@ -30,14 +30,9 @@ module enclosure() {
  }
 
 
-module printer(render_electronics=false, position=[0, 0, 0]) {
-  enclosure();
-  xy_motion(position);
-  z_towers(z_position = position[2]);
-  bed();
-  x_rails(position.x);
+module printer() {
 
-  Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
+Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 
   // Y-RAIL
   // FIXME: x position here is an approximation to look decent
@@ -55,15 +50,6 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   mirror_y() translate (xcarriagevector + [13,-12,0]) x_carriage();
 
 
-  if(render_electronics)
-  {
-    electronics_box_contents();
-
-    // ELECTRONICS BOX
-    translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
-      rotate ([0,0,90])
-        electronics_box ();
-  }
   translate ([0, 0, frame_size().z / 2 + 150]) top_enclosure_all();
 
 }
@@ -104,6 +90,7 @@ module rc300zl(position = [0, 0, 0]) {
   $bed = bed_rc300;
   $elecbox = elec_ZL ; //electronics box size and placements
   $branding_name = "Original ZL";
+  $enclosure_size = enclosure_rc300zl;
   validate();
   enclosure();
   xy_motion(position);
@@ -113,6 +100,7 @@ module rc300zl(position = [0, 0, 0]) {
   electronics_box_contents();
   electronics_box ();
   //printer();
+  top_enclosure_all();
 }
 
 module rc300zlt(position = [0, 0, 0]) {
@@ -124,6 +112,7 @@ module rc300zlt(position = [0, 0, 0]) {
   $bed = bed_rc300;
   $elecbox = elec_ZLT ; //electronics box size and placements
   $branding_name = "Original ZLT";
+  $enclosure_size = enclosure_rc300zl;
   validate();
   enclosure();
   xy_motion(position);
@@ -131,7 +120,8 @@ module rc300zlt(position = [0, 0, 0]) {
   bed(offset_bed_from_frame(position));
   x_rails(position.x);
   electronics_box_contents();
-  electronics_box ();
+  electronics_box();
+  top_enclosure_all();
   //printer();
 }
 
@@ -144,6 +134,7 @@ module rc300zl40(position = [0, 0, 0]) {
   $bed = bed_rc300;
   $elecbox = elec_ZL ; //electronics box size and placements
   $branding_name = "4040 ZL";
+  $enclosure_size = enclosure_rc300zl;
   validate();
   enclosure();
   xy_motion(position);
@@ -151,7 +142,8 @@ module rc300zl40(position = [0, 0, 0]) {
   bed(offset_bed_from_frame(position));
   x_rails(position.x);
   electronics_box_contents();
-  electronics_box ();
+  electronics_box();
+  top_enclosure_all();
   //printer();
 }
 
@@ -164,6 +156,7 @@ module dancore(position = [0, 0, 0]) {
   $bed = bed_rc300;
   $elecbox = elec_new_ZL ; //electronics box size and placements
   $branding_name = "CHEESECore ZL";
+  $enclosure_size = enclosure_rc300zl;
   validate();
   enclosure();
   xy_motion(position);
@@ -172,6 +165,7 @@ module dancore(position = [0, 0, 0]) {
   x_rails(position.x);
   electronics_box_contents();
   electronics_box ();
+  top_enclosure_all();
   //printer();
 }
 

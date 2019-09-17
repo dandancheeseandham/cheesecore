@@ -8,18 +8,24 @@ use <top_enclosure_frame.scad>
 include <config.scad>
 use <validation.scad>
 use <door_hinge.scad>
+use <demo.scad>
 
 $fullrender=false;
 
 module top_enclosure_all() {
-  frame();
-  all_side_panels();
-  hinges();
+  translate ([0, 0, frame_size().z / 2 + 150]) {
+    frame();
+    %all_side_panels();
+    hinges();
+  }
 }
 
-$front_window_size = front_window_zl;
-// FIXME : This needs to be derived from the actual frame size.
-$frame_size = [490, 455, 250];
+demo() {
+  $front_window_size = front_window_zl;
+  // FIXME : This needs to be derived from the actual frame size.
+  $frame_size = [490, 455, 250];
+  $rail_specs = rails_rc300zl;
 
-$rail_specs = rails_rc300zl;
-top_enclosure_all($extrusion_type = extrusion15);
+  translate ([0, 0, -frame_size().z / 2 - 150])
+    top_enclosure_all($extrusion_type = extrusion15);
+  }
