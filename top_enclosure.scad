@@ -18,7 +18,8 @@ module top_enclosure_all() {
 }
 
 $front_window_size = front_window_zl;
+// FIXME : This needs to be derived from the actual frame size.
 $frame_size = [490, 455, 250];
-// $frame_size = frame_rc300zl;
+
 $rail_specs = rails_rc300zl;
 top_enclosure_all($extrusion_type = extrusion15);

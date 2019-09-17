@@ -14,23 +14,23 @@ module electronics_box_contents() {
         translate_z(5)
                 screw_and_washer(psu_screw(S_250_48), 8);
       translate(ssr_placement()) ssr_assembly(ssrs[1], M3_cap_screw, 3);
-  
-/* 
+
+/*
 //below is development crap to be removed later.
 
 //playing with the idea of a RJ45 coupler for DuetEthernet versions
-translate (rj45_coupler_cutout()) rotate([0,0,180])  rj45(cutout = false)  ; 
-translate (rj45_coupler_cutout()+[5,0,0]) rotate([0,0,0])  rj45(cutout = false)  ; 
+translate (rj45_coupler_cutout()) rotate([0,0,180])  rj45(cutout = false)  ;
+translate (rj45_coupler_cutout()+[5,0,0]) rotate([0,0,0])  rj45(cutout = false)  ;
 
 * translate ([59/2,electronicsbox_size_x/2-20,-76])  rotate([90,0,180]) iec(IEC_fused_inlet);
-* rj45(cutout = false)       
+* rj45(cutout = false)
 translate([-84.82,50.5])  pcb(Duex5);
-pcb_base(Duex5, 13, 3, wall = 2)	
-standoff(3, 12);        
+pcb_base(Duex5, 13, 3, wall = 2)
+standoff(3, 12);
         *pcb_holes(DuetE) {
             cylinder(d=3.3,h=100);
           }
-*/ 
+*/
 
     }
 }

@@ -15,6 +15,7 @@ use <aluminium_idlermount.scad>
 use <aluminium_motormount.scad>
 use <electronics_box_panels.scad>
 use <electronics_box_contents.scad>
+use <electronics_placement.scad>
 use <x-carriage.scad>
 use <validation.scad>
 use <top_enclosure.scad>
@@ -34,13 +35,8 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   enclosure();
   xy_motion(position);
   z_towers(z_position = position[2]);
-
-  // BED
   bed();
-
-  //X-RAIL
-  translate([0, 0, frame_size().z / 2 - extrusion_width() / 2 ])
-    x_rails(position.x);
+  x_rails(position.x);
 
   Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 
@@ -58,7 +54,6 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   // 12 = rail size
   xcarriagevector = [-rail_lengths().x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
   mirror_y() translate (xcarriagevector + [13,-12,0]) x_carriage();
-
 
 
   if(render_electronics)
@@ -128,6 +123,7 @@ module rc300zlt(position = [0, 0, 0]) {
   xy_motion(position);
   z_towers(z_position = position[2]);
   bed(offset_bed_from_frame(position));
+  x_rails(position.x);
   //printer();
 }
 module rc300zl40(position = [0, 0, 0]) {
