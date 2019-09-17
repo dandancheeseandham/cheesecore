@@ -14,8 +14,7 @@ use <demo.scad>
 
 coupler_adjustment = 85 ;
 z_yoke_adjustment = coupler_adjustment - 10 ;
-base_of_coupler_adjustment = 5 ;  // a height for coupler
-rail_carriage_adjustment = z_yoke_adjustment +5 ;
+rail_carriage_adjustment = z_yoke_adjustment + 5 ;
 leadscrew_width = 8 ;
 
 // FIXME: this will break down if the rails is closer to full length of extrusion
@@ -25,29 +24,29 @@ function offset_z_rails() = [0, 0, 30 + 6];// coupler lengths + panel thickness 
 // FIXME: rough approximation of how to get from the nozzle tip to the centroid of the y-rail carriage
 function offset_nozzle_carriage() = [-20, -5, -54];
 
-bed_thickness = 0.25 * inch;
+
 //                                      adjust to top of frame, down to middle of extrusion, nozzle offset, down bed thickness
-function offset_bed_from_frame(position) = [bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - extrusion_width() / 2  + offset_nozzle_carriage().z - bed_thickness];
+function offset_bed_from_frame(position) = [bed_offset.x, bed_offset.y, frame_size().z / 2 - position.z - extrusion_width() / 2  + offset_nozzle_carriage().z - bed_thickness()];
 
 // FIXME: the +10 is made up term, should come from yoke model
 // Basically we take the bed position, adjust for it being referenced off center of cube where this is from tower base, then adjust for offset from yoke origin to bed mounting ear
 function yoke_z_offset_from_base(z_position) = offset_bed_from_frame([0, 0, z_position]).z + frame_size().z / 2 + 10;
 
-module z_tower(z_position=0)
-{
+module z_tower(z_position=0) {
   carriage_position = frame_size().z / 2 - z_position - offset_z_rails().z/2 + offset_nozzle_carriage().z ;
 
+  // NEMA 17 Z motors
   translate ([-leadscrew_x_offset, 0, -panel_thickness()])
     NEMA(NEMA17);
 
   //Coupler is connected to the NEMA17 motor
-  translate ([-leadscrew_x_offset, 0, base_of_coupler_adjustment])
+  %translate ([-leadscrew_x_offset, 0, 0])
     coupler();
 
   // The +20 puts the leadscrew above the end of the shaft a bit.  This is not
   // an exact science between stepper output shaft may vary in ways we don't have modeled
   // here.
-  translate ([-leadscrew_x_offset, 0, base_of_coupler_adjustment + 20])
+  translate ([-leadscrew_x_offset, 0, NEMA_shaft_length(NEMA17)])
     leadscrew();
 
   // Anti Backlash nut - connected to the leadscrew
@@ -78,23 +77,23 @@ module z_tower(z_position=0)
         z_bracket(extrusion_width());
 
   //Debug - set to true for debug info
-  if (false) {
-    echo ("rail_length.z",rail_length.z);
+  if (true) {
+    //echo ("rail_length.z",rail_length.z);
     echo ("z_position",z_position);
-    echo("Passing rail position of: ", position);
-    echo("extrusion_length.z",extrusion_length.z);
+    //echo("Passing rail position of: ", position);
+    //echo("extrusion_length.z",extrusion_length.z);
     echo("extrusion_width" , extrusion_width() );
+    echo("NEMA_shaft_length(type)" , NEMA_shaft_length(NEMA17) );
   }
 }
 
-module z_towers(z_position = 0)
-{
-  translate([bed_offset.x, bed_offset.y, -frame_size().z / 2])
-  {
+module z_towers(z_position = 0) {
+  translate([bed_offset.x, bed_offset.y, -frame_size().z / 2]) {
     translate([frame_size().x / 2 - extrusion_width(), 0, 0]) z_tower(z_position);
-    mirror_y()
-    {
-      translate([-frame_size().x / 2 + extrusion_width(), bed_ear_spacing() / 2, 0]) rotate([0, 0, 180]) z_tower(z_position);
+    mirror_y() {
+      translate([-frame_size().x / 2 + extrusion_width(), bed_ear_spacing() / 2, 0])
+        rotate([0, 0, 180])
+          z_tower(z_position);
     }
   }
 }

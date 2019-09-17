@@ -11,7 +11,7 @@ use <door_hinge.scad>
 
 $fullrender=false;
 
-module top_enclosure_all(){
+module top_enclosure_all() {
   frame();
   all_side_panels();
   hinges();
@@ -22,4 +22,3 @@ $frame_size = [490, 455, 250];
 // $frame_size = frame_rc300zl;
 $rail_specs = rails_rc300zl;
 top_enclosure_all($extrusion_type = extrusion15);
-

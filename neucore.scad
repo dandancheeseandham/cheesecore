@@ -21,11 +21,11 @@ use <top_enclosure.scad>
 
 $fullrender=false;
 
-module enclosure(){
+module enclosure() {
   frame();
   all_side_panels();
   hinges();
-  translate([0, -frame_size().y / 2 - panel_thickness() - epsilon, 0]) doors();
+  doors();
   feet(height=50);
  }
 
@@ -33,16 +33,16 @@ module enclosure(){
 module printer(render_electronics=false, position=[0, 0, 0]) {
   enclosure();
   xy_motion(position);
-
   z_towers(z_position = position[2]);
 
-  translate(offset_bed_from_frame(position)) bed();
-
-  Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
+  // BED
+  bed();
 
   //X-RAIL
-  translate([0, 0, frame_size().z / 2 - extrusion_width() / 2])
+  translate([0, 0, frame_size().z / 2 - extrusion_width() / 2 ])
     x_rails(position.x);
+
+  Yrail_vector = [-rail_lengths().x/2 + position.x, 0, frame_size().z / 2 - extrusion_width() / 2]; // Since a lot of things are tied to the Y-rail, I thought it might be worth investigating a base vector to simplify the code.
 
   // Y-RAIL
   // FIXME: x position here is an approximation to look decent
@@ -64,6 +64,7 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
   if(render_electronics)
   {
     // FIXME - should not need to translate here just by panel_thickness()
+    // ask lostapathy "why?"
     translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
       electronics_box_contents();
 
@@ -120,11 +121,13 @@ module rc300zlt(position = [0, 0, 0]) {
   $extrusion_type = extrusion15;
   $frame_size = frame_rc300zlt;
   $rail_specs = rails_rc300zlt;
+  $leadscrew_specs = ["LEADSCREW_SPECS", 750, 8];
   $bed = bed_rc300;
   validate();
   enclosure();
   xy_motion(position);
   z_towers(z_position = position[2]);
+  bed(offset_bed_from_frame(position));
   //printer();
 }
 module rc300zl40(position = [0, 0, 0]) {
@@ -143,7 +146,7 @@ module dancore(position = [0, 0, 0]) {
   $extrusion_type = extrusion20;
   $frame_size = [510, 475, 465];
   $rail_specs = [[420, MGN12], [420, MGN12], [420, MGN12]];
-  $leadscrew_specs = ["LEADSCREW_SPECS", 400, 10];
+  $leadscrew_specs = ["LEADSCREW_SPECS", 450, 10];
   $bed = bed_rc300;
   validate();
   enclosure();
@@ -168,7 +171,11 @@ $bed = bed_rc300;
 $front_window_size = front_window_zl;
 $frame_size = frame_rc300zl;
 $rail_specs = rails_rc300zl;
-printer(render_electronics=true, position=[150, 50, 0],$extrusion_type = extrusion15);
+
+*printer(render_electronics=true, position=[150, 50, 0],$extrusion_type = extrusion15);
+
+
+rc300zlt(position = [150, 150, 130]);
 *translate([800, 0, 0]) rc300zl();
 *translate([0, 800, 0]) rc300zlt();
-translate([800, 800, 0]) rc300zl40();
+*translate([800, 800, 0]) rc300zl40();

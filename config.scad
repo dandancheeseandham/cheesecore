@@ -26,11 +26,12 @@ leadscrew_y_offset = 30 ; // taken off z yoke in fusion
 RC300BED = 42; // FIXME: build out an actual bed model
 //           type,  dimensions, ear spacing, nominal mount distance in x
 // Note that we don't specify the finer points of the bed ears here, because it doesn't affect how the printer lays out, that's an impelementation detail fo ths bed model
-bed_rc300 = ["BED", [325, 342], 255, [335, 342]];
+bed_rc300 = ["BED", [325, 342], 255, [335, 342],0.25 * inch];
 
 function bed_plate_size() = $bed[1];
 function bed_ear_spacing() = $bed[2];
 function bed_overall_size() = $bed[3];
+function bed_thickness() = $bed[4];
 
 leadscrew_rc300zl = ["LEADSCREW_SPECS", 400, 8];
 leadscrew_rc300zlt = ["LEADSCREW_SPECS", 700, 8];

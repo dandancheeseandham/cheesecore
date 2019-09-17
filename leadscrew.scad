@@ -1,14 +1,12 @@
 include <config.scad>
 include <demo.scad>
 
-module leadscrew()
-{
+module leadscrew() {
   color(alum_commercial_part_color()) {
     cylinder(h=leadscrew_length(), d = leadscrew_diameter());  // LEADSCREW
   }
 }
 
-demo()
-{
+demo() {
   leadscrew(leadscrew_length,leadscrewwidth);
 }

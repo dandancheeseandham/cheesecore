@@ -121,9 +121,6 @@ module front_panel() {
   }
 // DEBUG cube
 *translate([-frame_size().x / 2 , -frame_size().z / 2 , panel_thickness()])  cube ([10,frame_size().z,10]);
-  // panel hinges
-  // panelrounding = 5 ;
-  // hole_distance_from_edge = 7.5 ;
 }
 
 module hinges() {
@@ -176,6 +173,7 @@ module door() {
 }
 
 module doors() {
+translate([0, -frame_size().y / 2 - panel_thickness() - epsilon, 0])
   rotate([90, 0, 0])
     translate(front_window_offset())
     mirror_x()

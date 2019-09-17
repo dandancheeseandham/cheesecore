@@ -39,5 +39,6 @@ module extrusion(length, center=true, extrusion_type = $extrusion_type) {
 
 demo() {
 extrusion_profile(extrusion_width($extrusion_type), 3.3);
-translate([50,0,0]) extrusion(length=100);
+translate([50,0,0])
+  extrusion(length=100);
 }
