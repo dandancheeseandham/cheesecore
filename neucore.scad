@@ -42,7 +42,6 @@ module kinematics(position) {
   bed(offset_bed_from_frame(position));
   x_rails(position.x);
   y_carriage(position);
-
 }
 
 // x/y motion stage.  So belts, pulleys, x/y motors, and mounts.
@@ -87,7 +86,7 @@ module y_carriage(position) {
   // 12 = rail size
   xcarriagevector = [-rail_lengths().x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
   mirror_y()
-    translate (xcarriagevector + [13,-12,0]) 
+    translate (xcarriagevector + [13,-12,0])
       x_carriage();
 }
 
@@ -107,6 +106,25 @@ module rc300zl(position = [0, 0, 0]) {
   electronics();
   top_enclosure();
 }
+
+
+module rc300zlv2(position = [0, 0, 0]) {
+  $front_window_size = front_window_zl;
+  $extrusion_type = extrusion15;
+  $frame_size = frame_rc300zl;
+  $rail_specs = rails_rc300zl;
+  $leadscrew_specs = leadscrew_rc300zl ;
+  $bed = bed_rc300;
+  $elecbox = elec_new_ZL ; //electronics box size and placements
+  $branding_name = "ZLv2";
+  $enclosure_size = enclosure_rc300zl;
+  validate();
+  enclosure();
+  *kinematics(position);
+  electronics();
+  *top_enclosure();
+}
+
 
 module rc300zlt(position = [0, 0, 0]) {
   $front_window_size = front_window_zlt;
@@ -159,7 +177,8 @@ module dancore(position = [0, 0, 0]) {
   top_enclosure();
 }
 
+*rc300zlv2(position = [80, 90, 30]);
 rc300zl(position = [80, 90, 30]);
 translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
-*translate([0, 800, 0]) dancore(position = [150, 150, 130]);
+translate([0, 800, 0]) dancore(position = [150, 150, 130]);
 *translate([800, 800, 0]) rc300zl40();

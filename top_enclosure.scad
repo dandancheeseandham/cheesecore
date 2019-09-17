@@ -9,6 +9,7 @@ include <config.scad>
 use <validation.scad>
 use <door_hinge.scad>
 use <demo.scad>
+use <nopscadlib/printed/handle.scad>
 
 $fullrender=false;
 
@@ -17,8 +18,17 @@ module top_enclosure() {
     frame();
     %all_side_panels();
     hinges();
+    handle();
   }
 }
+
+module handle() {
+  color(printed_part_color())
+    translate ([0, -enclosure_size().y / 2 - 6, 0 ])
+      rotate ([90,0,0])
+        handle_assembly();
+}
+
 
 demo() {
   $front_window_size = front_window_zl;
