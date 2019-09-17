@@ -2,10 +2,13 @@
 include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
 use <demo.scad>
-use <electronics_placement.scad>
 
 module electronics_box_contents() {
   extrusion=extrusion_width($extrusion_type);
+
+  // FIXME - should not need to translate here just by panel_thickness()
+  // ask lostapathy "why?"
+  translate([frame_size().x / 2 + panel_thickness(), 0, 0])
     rotate([90,0,90]) {
       translate(DuetE_placement()) pcb_assembly(DuetE, 12, 3); // DuetE
       translate(Duex5_placement()) pcb_assembly(Duex5, 12 , 3); // Duex5
@@ -43,5 +46,6 @@ module standoff(screw, height, wall = 1.8, taper = 0) {
 }
 
 demo() {
+    translate([-frame_size().x / 2 - panel_thickness(), 0, 0])
   electronics_box_contents();
 }

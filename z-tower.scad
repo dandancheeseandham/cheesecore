@@ -40,7 +40,7 @@ module z_tower(z_position=0) {
     NEMA(NEMA17);
 
   //Coupler is connected to the NEMA17 motor
-  %translate ([-leadscrew_x_offset, 0, 0])
+  translate ([-leadscrew_x_offset, 0, 0])
     coupler();
 
   // The +20 puts the leadscrew above the end of the shaft a bit.  This is not

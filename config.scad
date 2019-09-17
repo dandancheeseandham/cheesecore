@@ -67,4 +67,28 @@ function panel_screw_offset() = extrusion_width($extrusion_type) + 35; // 50 in 
 // Max allowable distance between screws on front panels
 function max_panel_screw_spacing() = 100;
 
+
+
+// ELECTRONICS BOX ALONG WITH  & ELECTRONICS & CABLE PLACEMENT -  placement of parts on right panel with X/Y as centre
+//
+//              name       sizeX  sizeY  depth thick, lasercut cable_bundle       DuetE            Duex           PSU       SSR
+elec_ZL     = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,     false,  [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0],[80,30,0],[30,-110,0] ] ;
+elec_ZLT    = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,     false,  [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0], [80,80,0],[0,-110,0] ] ;
+elec_new_ZL = ["ELEC.BOX", 320,   300,   59 ,   6,     false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],     [80,30,0],[30,-110,0] ] ;
+elec_new_ZLT= ["ELEC.BOX", 298.9, 438.9, 59 ,   6,     false,  [-84,166.5,0], [-84.82,50.5,0], [-84.82,-59.5,0],[80,30,0],[30,-110,0] ] ;
+
+function box_size_y() = $elecbox[1] ;
+function box_size_z() = $elecbox[2] ;
+function box_depth() = $elecbox[3] ;
+function acrylic_thickness() = $elecbox[4] ;
+function laser_cut_vents() = $elecbox[5] ;
+
+function cable_bundle_hole_placement() = $elecbox[6] ;
+function DuetE_placement()  = $elecbox[7] ;
+function Duex5_placement() = $elecbox[8] ;
+function psu_placement() = $elecbox[9] ;
+function ssr_placement() = $elecbox[10] ;
+
+// ELECTRONICS BOX - size and shape
+
 $draft = true;

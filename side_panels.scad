@@ -9,7 +9,6 @@ use <lib/mirror.scad>
 use <door_hinge.scad>
 use <screwholes.scad>
 use <demo.scad>
-use <electronics_placement.scad>
 
 module panel(x, y) {
   assert(x != undef, "Must specify panel x dimension");
@@ -100,7 +99,7 @@ module bottom_panel() {
       deboss_depth = 3;
       translate([0, -frame_size().y/2 + 50, panel_thickness() - deboss_depth + epsilon])
         linear_extrude(deboss_depth)
-          text(branding_name, halign="center", size=35);
+          text($branding_name, halign="center", size=35);
     }
   }
 }
@@ -176,7 +175,7 @@ translate([0, -frame_size().y / 2 - panel_thickness() - epsilon, 0])
   rotate([90, 0, 0])
     translate(front_window_offset())
     mirror_x()
-    %door();
+    door();
 }
 
 module side_panel() {

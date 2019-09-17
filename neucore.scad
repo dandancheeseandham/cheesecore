@@ -15,7 +15,6 @@ use <aluminium_idlermount.scad>
 use <aluminium_motormount.scad>
 use <electronics_box_panels.scad>
 use <electronics_box_contents.scad>
-use <electronics_placement.scad>
 use <x-carriage.scad>
 use <validation.scad>
 use <top_enclosure.scad>
@@ -26,7 +25,7 @@ module enclosure() {
   frame();
   all_side_panels();
   hinges();
-  doors();
+  %doors();
   feet(height=50);
  }
 
@@ -58,15 +57,12 @@ module printer(render_electronics=false, position=[0, 0, 0]) {
 
   if(render_electronics)
   {
-    // FIXME - should not need to translate here just by panel_thickness()
-    // ask lostapathy "why?"
-    translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
-      electronics_box_contents();
+    electronics_box_contents();
 
     // ELECTRONICS BOX
     translate([frame_size().x / 2 + panel_thickness(), 0, 0]  )
       rotate ([0,0,90])
-        electronics_box (box_size_y = 298.9, box_size_z = 238.9, box_depth = 60, acrylic_thickness = 6); // Old ZL size
+        electronics_box ();
   }
   translate ([0, 0, frame_size().z / 2 + 150]) top_enclosure_all();
 
@@ -100,14 +96,22 @@ module xy_motion(position = [0, 0]) {
 }
 
 module rc300zl(position = [0, 0, 0]) {
+  $front_window_size = front_window_zl;
   $extrusion_type = extrusion15;
   $frame_size = frame_rc300zl;
   $rail_specs = rails_rc300zl;
+  $leadscrew_specs = leadscrew_rc300zl ;
   $bed = bed_rc300;
+  $elecbox = elec_ZL ; //electronics box size and placements
+  $branding_name = "Original ZL";
   validate();
   enclosure();
   xy_motion(position);
   z_towers(z_position = position[2]);
+  bed(offset_bed_from_frame(position));
+  x_rails(position.x);
+  electronics_box_contents();
+  electronics_box ();
   //printer();
 }
 
@@ -116,51 +120,62 @@ module rc300zlt(position = [0, 0, 0]) {
   $extrusion_type = extrusion15;
   $frame_size = frame_rc300zlt;
   $rail_specs = rails_rc300zlt;
-  $leadscrew_specs = ["LEADSCREW_SPECS", 750, 8];
+  $leadscrew_specs = leadscrew_rc300zlt ;
   $bed = bed_rc300;
+  $elecbox = elec_ZLT ; //electronics box size and placements
+  $branding_name = "Original ZLT";
   validate();
   enclosure();
   xy_motion(position);
   z_towers(z_position = position[2]);
   bed(offset_bed_from_frame(position));
   x_rails(position.x);
+  electronics_box_contents();
+  electronics_box ();
   //printer();
 }
+
 module rc300zl40(position = [0, 0, 0]) {
+  $front_window_size = front_window_zl;
   $extrusion_type = extrusion40;
   $frame_size = frame_rc300zl4040;
   $rail_specs = rails_rc300zl;
+  $leadscrew_specs = leadscrew_rc300zl ;
   $bed = bed_rc300;
+  $elecbox = elec_ZL ; //electronics box size and placements
+  $branding_name = "4040 ZL";
   validate();
   enclosure();
   xy_motion(position);
   z_towers(z_position = position[2]);
+  bed(offset_bed_from_frame(position));
+  x_rails(position.x);
+  electronics_box_contents();
+  electronics_box ();
   //printer();
 }
 
 module dancore(position = [0, 0, 0]) {
+  $front_window_size = front_window_zl;
   $extrusion_type = extrusion20;
   $frame_size = [510, 475, 465];
   $rail_specs = [[420, MGN12], [420, MGN12], [420, MGN12]];
   $leadscrew_specs = ["LEADSCREW_SPECS", 450, 10];
   $bed = bed_rc300;
+  $elecbox = elec_new_ZL ; //electronics box size and placements
+  $branding_name = "CHEESECore ZL";
   validate();
   enclosure();
   xy_motion(position);
   z_towers(z_position = position[2]);
+  bed(offset_bed_from_frame(position));
+  x_rails(position.x);
+  electronics_box_contents();
+  electronics_box ();
+  //printer();
 }
 
-module andycore(position = [0, 0, 0]) {
-  $extrusion_type = extrusion20;
-  $frame_size = [410, 415, 355];
-  $rail_specs = [[300, MGN9], [350, MGN12], [300, MGN9]];
-  $leadscrew_specs = ["LEADSCREW_SPECS", 250, 8];
-  $bed = bed_rc300;
-  validate();
-  enclosure();
-  xy_motion(position);
-  z_towers(z_position = position[2]);
-}
+
 
 $leadscrew_specs = leadscrew_rc300zl;
 $bed = bed_rc300;
@@ -168,10 +183,10 @@ $front_window_size = front_window_zl;
 $frame_size = frame_rc300zl;
 $rail_specs = rails_rc300zl;
 
-*printer(render_electronics=true, position=[150, 50, 0],$extrusion_type = extrusion15);
+*printer(render_electronics=true, position=[150, 50, 0]);
 
 
-rc300zlt(position = [150, 150, 130]);
-*translate([800, 0, 0]) rc300zl();
-*translate([0, 800, 0]) rc300zlt();
-*translate([800, 800, 0]) rc300zl40();
+rc300zl(position = [150, 150, 130]);
+translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
+translate([0, 800, 0]) dancore(position = [150, 150, 130]);
+translate([800, 800, 0]) rc300zl40();
