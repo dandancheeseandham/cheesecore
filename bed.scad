@@ -8,20 +8,22 @@ bed_ear_x = 12.5;
 bed_ear_y = 23.4;
 bed_radius = 7.5;
 
-module bed(bed_frame_offset = 0)
+module bed(bed_frame_offset)
 {
   // FIXME: we should probably define this directly in terms of bed x and y dimensions and not in terms of printable area.
   // Printable area will vary with the printhead setup and isn't an exact dimension at design time.
+translate (bed_frame_offset)
   color(alum_part_color()) {
     difference() {
       union() {
+
         // Main body of bed
-        translate([0, 0, bed_thickness()/2] + bed_frame_offset)
+        translate([0, 0, bed_thickness()/2 ]) ;
           rounded_rectangle([bed_plate_size().x, bed_plate_size().y, bed_thickness()], bed_radius);
         // Ears
-        translate([bed_plate_size().x / 2, 0, 0]) bed_ear();
+        translate([bed_plate_size().x / 2, 0, -bed_thickness()/2]) bed_ear();
         mirror_y()
-          translate([-bed_plate_size().x / 2, bed_ear_spacing() / 2, ,0]) rotate([0,0,180]) bed_ear();
+          translate([-bed_plate_size().x / 2, bed_ear_spacing() / 2, -bed_thickness()/2]) rotate([0,0,180]) bed_ear();
       }
       thermistor_channel();
 
@@ -101,6 +103,6 @@ demo() {
 //projection () bed();
 //projection(cut = true)  translate([0, 0, -bed_thickness()]) bed();
 //projection(cut = true)  bed();
-bed ();
+bed ([0,0,0]);
 *bed_ear();
 }

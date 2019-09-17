@@ -30,7 +30,7 @@ function offset_bed_from_frame(position) = [bed_offset.x, bed_offset.y, frame_si
 
 // FIXME: the +10 is made up term, should come from yoke model
 // Basically we take the bed position, adjust for it being referenced off center of cube where this is from tower base, then adjust for offset from yoke origin to bed mounting ear
-function yoke_z_offset_from_base(z_position) = offset_bed_from_frame([0, 0, z_position]).z + frame_size().z / 2 + 10;
+function yoke_z_offset_from_base(z_position) = offset_bed_from_frame([0, 0, z_position]).z + frame_size().z / 2 + bed_thickness() ;
 
 module z_tower(z_position=0) {
   carriage_position = frame_size().z / 2 - z_position - offset_z_rails().z/2 + offset_nozzle_carriage().z ;
