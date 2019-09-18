@@ -10,16 +10,32 @@ use <validation.scad>
 use <door_hinge.scad>
 use <demo.scad>
 use <nopscadlib/printed/handle.scad>
+use <top_enclosure_parts.scad>
 
 $fullrender=false;
-
+//FIXME 45 is L height from topenclosure part
 module top_enclosure() {
-  translate ([0, 0, frame_size().z / 2 + 150]) {
+  translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + 45]) {
     frame();
-    %all_side_panels();
+    all_side_panels();
     hinges();
     handle();
   }
+  printed_interface();
+}
+
+
+module printed_interface()
+{
+  translate ([frame_size().x / 2 - extrusion_width() , -frame_size().y/2   , frame_size().z / 2])
+  enclosure_fitting(frame_size().y );
+  translate ([-frame_size().x / 2 + extrusion_width() , frame_size().y/2   , frame_size().z / 2]) rotate ([0,0,180])
+  enclosure_fitting(frame_size().y );
+
+  translate ([frame_size().x/2 +10 , frame_size().y / 2 - extrusion_width() , frame_size().z / 2]) rotate ([0,0,90])
+  enclosure_fitting(frame_size().x +20 ,true);
+  translate ([-frame_size().x/2 - extrusion_width() , -frame_size().y / 2 + extrusion_width() , frame_size().z / 2]) rotate ([0,0,-90])
+  enclosure_fitting(frame_size().x+extrusion_width()*2,true);
 }
 
 module handle() {

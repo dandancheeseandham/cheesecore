@@ -19,6 +19,7 @@ use <x-carriage.scad>
 use <validation.scad>
 use <top_enclosure.scad>
 
+
 $fullrender=false;
 
 module enclosure() {
@@ -66,6 +67,7 @@ translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
       NEMA(NEMA17);
     }
   }
+
 }
 
 module y_carriage(position) {
@@ -179,6 +181,6 @@ module dancore(position = [0, 0, 0]) {
 
 *rc300zlv2(position = [80, 90, 30]);
 rc300zl(position = [80, 90, 30]);
-translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
-translate([0, 800, 0]) dancore(position = [150, 150, 130]);
+*translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
+*translate([0, 800, 0]) dancore(position = [150, 150, 130]);
 *translate([800, 800, 0]) rc300zl40();
