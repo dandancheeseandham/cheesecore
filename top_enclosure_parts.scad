@@ -1,10 +1,29 @@
 
 include <config.scad>
 
-enclosure_fitting(300,true);
+*enclosure_fitting(100,200,true);
+
+pass_thru_idler(100,100,0,0);
+
+module pass_thru_idler(length1,length2,adjust1,adjust2)
+{
+  color(printed_part_color())  render() difference(){
+  enclosure_fitting(length1,length2,true);
+  translate([-adjust1,-adjust2,-1]) cube ([adjust1*2,adjust2*2,16]);
+}
+}
 
 
-module enclosure_fitting(piece_length,corners=false)
+module pass_thru_motor(length1,length2,adjust1,adjust2)
+{
+  color(printed_part_color())  render() difference(){
+  enclosure_fitting(length1,length2,true);
+  translate([-adjust1,-adjust2+8,-1]) cube ([adjust1*2,adjust2*2,35]);
+}
+}
+
+
+module enclosure_fitting(piece_length1,piece_length2,corners=false)
 {
 
 // main body
@@ -18,20 +37,25 @@ L_height = 45 ;  //default45
 extrusion = 15 ;
 hyp = pow((pow(acrylic_thickness,2)/2),1/2) ;
 
-if (corners == false) translate ([base_width,0,0]) rotate ([0,0,180]) main_length(piece_length);
+if (corners == false) translate ([base_width,0,0]) rotate ([0,0,180]) main_length(piece_length1);
 if (corners == true) {
-  translate ([0,piece_length,0]) rotate ([0,0,-90]) enclosure_fitting_corner();
-  translate ([base_width,base_width,0]) rotate ([0,0,180]) enclosure_fitting_corner();
-  translate ([base_width,base_width,0]) rotate ([0,0,180]) main_length(piece_length-base_width*2,false);
+  //*translate ([0,piece_length,0]) rotate ([0,0,-90]) enclosure_fitting_corner();
+  translate ([wall_thickness,30,0]) rotate ([0,0,180]) enclosure_fitting_corner(); //FIXME Magic 30 here.
+  translate ([-extrusion,extrusion,0]) cube ([extrusion,extrusion,L_height-acrylic_catchment_depth]) ;
+  translate ([wall_thickness,base_width+5,0]) rotate ([0,0,180]) main_length(piece_length1-base_width,false);  //FIXME Magic 5 here
+  translate ([-(piece_length2),-wall_thickness+extrusion,0]) rotate ([0,0,90]) main_length(piece_length2-extrusion,true);
+
 }
 
-module main_length(length,vremove=true)
+module main_length(length,no_V_slots=false)
 {
-  color(printed_part_color())
-  {
- difference(){
+color(printed_part_color()) {
+  render() {
+
+difference(){
   rotate ([90,0,0])
     linear_extrude(length) {
+      //START 2D shape
       difference() {
         union() {
           square(size = [base_width, base_height]) ;  //bottom of L
@@ -50,28 +74,27 @@ module main_length(length,vremove=true)
           circle(d=L_fillet_size); // "crook of L" fillet removal
       }
     }
-
-  for (y =[15:30:length]) {
-    translate([base_width-(extrusion/2),-y,-10]) cylinder(h = 20 , d=3);
-    }
-    if (vremove) {//remove V fitting
+    //END 2D shape
+    if (no_V_slots==false) {//remove a slot in a V shape for enclosure_fitting
+      //add V fitting //30mm interval (20mm gap)
      translate ([wall_thickness/2-acrylic_thickness/2+hyp,-acrylic_thickness/2-length,0]) rotate ([0,0,45])
     cube ([hyp,hyp,L_height-acrylic_catchment_depth]);
     }
-}
-{
-//add V fitting
+    //SCREWHOLES in BASE
+     for (y =[15:30:length-4]) {
+      translate([base_width-(extrusion/2),-y,-10]) cylinder(h = 20 , d=3);
+      }
 
+
+}
 translate ([wall_thickness/2-acrylic_thickness/2+hyp,-acrylic_thickness/2,0]) rotate ([0,0,45])
 cube ([hyp,hyp,L_height-acrylic_catchment_depth]);
-
-//30mm interval (20mm gap)
-for (y =[7.5 : 30 : length]) {
+//END 3D SHAPE
+for (y =[7.5 : 30 : length-10]) {
   translate ([11.5,-y,0])
     arm_bit();
-
-
 }
+
 }
 }
 }
@@ -82,7 +105,7 @@ for (y =[7.5 : 30 : length]) {
 
 module arm_bit() {
   // arm bits
-  render () //render to remove an artifact.
+  //render to remove an artifact.
   difference(){
     union(){
       rotate ([0,0,90])

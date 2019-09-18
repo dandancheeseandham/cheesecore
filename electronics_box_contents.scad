@@ -18,7 +18,7 @@ module electronics_box_contents() {
         translate_z(5)
                 screw_and_washer(psu_screw(S_250_48), 8);
       translate(ssr_placement()) rotate([0,0,90]) ssr_assembly(ssrs[0], M3_cap_screw, 3);
-      translate(ssr_placement()) rotate([0,0,270]) ssr_shroud_fastened_assembly(SSR25DA, 12,6,SSR25DA);
+      translate(ssr_placement()) rotate([0,0,90]) ssr_shroud_fastened_assembly(SSR25DA, 12,6,SSR25DA);
 /*
 //below is development crap to be removed later.
 

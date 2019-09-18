@@ -15,9 +15,9 @@ use <top_enclosure_parts.scad>
 $fullrender=false;
 //FIXME 45 is L height from topenclosure part
 module top_enclosure() {
-  translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + 45]) {
+  translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + 42]) {
     frame();
-    all_side_panels();
+    %all_side_panels();
     hinges();
     handle();
   }
@@ -26,18 +26,41 @@ module top_enclosure() {
 
 
 module printed_interface()
-{
-  translate ([frame_size().x / 2 - extrusion_width() , -frame_size().y/2   , frame_size().z / 2])
-  enclosure_fitting(frame_size().y );
-  translate ([-frame_size().x / 2 + extrusion_width() , frame_size().y/2   , frame_size().z / 2]) rotate ([0,0,180])
-  enclosure_fitting(frame_size().y );
 
-  translate ([frame_size().x/2 +10 , frame_size().y / 2 - extrusion_width() , frame_size().z / 2]) rotate ([0,0,90])
-  enclosure_fitting(frame_size().x +20 ,true);
-  translate ([-frame_size().x/2 - extrusion_width() , -frame_size().y / 2 + extrusion_width() , frame_size().z / 2]) rotate ([0,0,-90])
-  enclosure_fitting(frame_size().x+extrusion_width()*2,true);
+{
+  adjust = 150;
+  //MOTORS
+translate ([frame_size().x/2 + extrusion_width()   , frame_size().y / 2 , frame_size().z / 2]) rotate ([0,0,90])
+  pass_thru_motor(frame_size().x / 2 + extrusion_width() /2 ,frame_size().y / 2 ,60,40);
+
+translate ([frame_size().x / 2  , -frame_size().y/2 - extrusion_width() , frame_size().z / 2])
+  pass_thru_motor(frame_size().y / 2 + extrusion_width() /2 ,frame_size().x / 2 + extrusion_width(),40,60);
+
+
+//IDLERS
+translate ([-frame_size().x / 2  , frame_size().y/2 + extrusion_width() , frame_size().z / 2]) rotate ([0,0,180])
+pass_thru_idler(frame_size().y / 2 +extrusion_width() /2  , frame_size().x / 2  ,35,90);
+
+translate ([-frame_size().x/2 - extrusion_width() , -frame_size().y / 2  , frame_size().z / 2]) rotate ([0,0,-90])
+  pass_thru_idler(frame_size().x / 2 - extrusion_width() /2, frame_size().y / 2  ,90,35);
 }
 
+/*
+{
+  adjust = 150;
+  //Y
+  translate ([frame_size().x / 2 - extrusion_width() , -frame_size().y/2 + adjust/2  , frame_size().z / 2])
+  enclosure_fitting(frame_size().y - adjust);
+  translate ([-(frame_size().x / 2 - extrusion_width()) , frame_size().y/2 - adjust/2  , frame_size().z / 2]) rotate ([0,0,180])
+  enclosure_fitting(frame_size().y - adjust);
+
+//X
+  translate ([frame_size().x/2  - adjust/2  , frame_size().y / 2 - extrusion_width() , frame_size().z / 2]) rotate ([0,0,90])
+  enclosure_fitting(frame_size().x - adjust);
+  translate ([-frame_size().x/2  + adjust/2 , -frame_size().y / 2 + extrusion_width() , frame_size().z / 2]) rotate ([0,0,-90])
+  enclosure_fitting(frame_size().x - adjust);
+}
+*/
 module handle() {
   color(printed_part_color())
     translate ([0, -enclosure_size().y / 2 - 6, 0 ])
