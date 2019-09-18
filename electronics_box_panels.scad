@@ -89,15 +89,15 @@ module electronics_box() {
     gap_between_vents = 4.5 ;
     thickness = acrylic_thickness();
     difference() {
-      color(acrylic2_color())
+      %color(acrylic2_color())
         difference () {
           translate ([0, 0, thickness/2])
             rounded_rectangle([x+thickness/2, y+thickness/2, thickness],panelcornerrounding);
 
           //16 vents
           if (laser_cut_vents() == true)
-          translate(psu_placement()) {
-            for(vents = [0 : 15])
+          translate(psu_placement() + [-40,90,0])  {
+            for(vents = [0 : 23])
               translate ([0,0-(vents*(vent_height + gap_between_vents)),-20])
                 longscrewhole(vent_length,vent_height,0) ;
               }
@@ -107,10 +107,10 @@ module electronics_box() {
 
           // FIXME : These should probably be on the left hand panel as cooling occurs from the bottom on the Duet.
           if (laser_cut_vents() == true) {
-            translate(DuetE_placement())
-              fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()*3);
-            translate(Duex5_placement())
-              fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()*3);
+            %translate(DuetE_placement()-[0,0,-epsilon])
+              fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
+            %translate(Duex5_placement()-[0,0,-epsilon])
+              fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
           }
           if (laser_cut_vents() == false) {
             translate(DuetE_placement())
