@@ -49,7 +49,7 @@ module kinematics(position) {
 // Position is the printhead position
 module xy_motion(position = [0, 0, 0]) {
   // FIXME: this is not a final height for belts
-  translate ([0, 0, frame_size().z / 2 + 20])
+  translate ([0, 0, frame_size().z / 2 + 10])
     corexy_belts([position.x-210, position.y]);
   // IDLER MOUNTS
   translate ([-frame_size().x / 2 + extrusion_width(), 0, frame_size().z / 2]) {

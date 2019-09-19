@@ -58,7 +58,7 @@ module corexy_belts(position = [0, 0]) {
   translate([0,0,0]) {
     for(p=lower_path) {
       if(p[3])
-        translate(p[0]) pulley_assembly(p[1]);
+        translate(p[0]) rotate ([0,180,0]) pulley_assembly(p[1]);  //FIXME (not sure if a FIXME, highlighting for a check!) rotate 180 so front motor pulley is in correct orientation
     }
 
     path = [ for(p=lower_path) [p[0].x, p[0].y, p[2] ? -pulley_pr(p[1]) : pulley_pr(p[1])] ];
