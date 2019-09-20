@@ -37,6 +37,13 @@ GT2x20_toothed_idler = ["GT2x20_toothed_idler", "GT2",   20, 12.22, GT2x6,  6.5,
 GT2x20_plain_idler   = ["GT2x20_plain_idler",   "GT2",    0, 12.0,  GT2x6,  6.5,  18, 0,   4, 18.0, 1.0, 0, 0,    false,         0];
 GT2x16_toothed_idler = ["GT2x16_toothed_idler", "GT2",   16,  9.75, GT2x6,  6.5,  14, 0,   3, 14.0, 1.0, 0, 0,    false,         0];
 GT2x16_plain_idler   = ["GT2x16_plain_idler",   "GT2",    0,  9.63, GT2x6,  7.0,  13, 0,   3, 13.0, 1.0, 0, 0,    false,         0];
+//RAILCORE ADDITIONS
+//16 tooth 5mm bore GT2 Pulley
+GT2x16_pulley_5b     = ["GT2x16_pulley_5b",     "GT2RD5", 16,  9.68, GT2x6,  6.5,  14, 5.5, 5, 14.0, 1.0, 4, 3.0,  M3_grub_screw, 2];
+//Gt2 smooth idlers (2) 5mm ID
+GT2x20_plain_idler_5b= ["GT2x20_plain_idler_5b", "GT2",    0, 12.0,  GT2x6,  6.5,  18, 0,   4, 18.0, 1.0, 0, 0,    false,         0];
+//Gt2 20 tooth idlers (6) 5mm ID
+GT2x20_tooth_idler_5b= ["GT2x20_tooth_idler_5b", "GT2",   20, 12.22, GT2x6,  6.5,  18, 0,   5, 18.0, 1.0, 0, 0,    false,         0];
 
 pulleys = [T5x10_pulley,
            T2p5x16_pulley,

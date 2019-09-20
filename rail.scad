@@ -40,7 +40,7 @@ module x_rails(position = 0) {
 translate([0, 0, frame_size().z / 2 - extrusion_width() / 2 ])
   mirror_y()
   {
-    translate ([0, frame_size().y / 2 - extrusion_width(), 0]) rotate([90, 0, 0]) rail_wrapper(rail_type, rail_length, position=-rail_travel(rail_type, rail_length) / 2 + position + 10);
+    translate ([0, frame_size().y / 2 - extrusion_width(), 0]) rotate([90, 0, 0]) rail_wrapper(rail_type, rail_length, position=-rail_travel(rail_type, rail_length) / 2 + position);
   }
 }
 

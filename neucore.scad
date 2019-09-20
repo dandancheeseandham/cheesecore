@@ -63,7 +63,8 @@ translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
   mirror_y() {
     translate([0, frame_size().y / 2 - extrusion_width(), 0])
       aluminium_motor_mount();
-    translate([49, 38 - frame_size().y / 2 - extrusion_width(), 0])
+    translate([extrusion_width() + NEMA_width(NEMA17)/2, motor_pulley_link() + extrusion_width()/2 + 3.5, 0])  //FIXME what is 3.5?
+
       NEMA(NEMA17);
     }
   }
@@ -87,9 +88,10 @@ module y_carriage(position) {
   // X-CARRIAGE
   // 12 = rail size
   xcarriagevector = [-rail_lengths().x/2 + position.x, frame_size().y / 2 - extrusion_width() , frame_size().z / 2 - extrusion_width() / 2];
-  mirror_y()
-    translate (xcarriagevector + [13,-12,0])
+  *mirror_y()
+    translate (xcarriagevector)
       x_carriage();
+      //+ [13,-12,0]
 }
 
 module rc300zl(position = [0, 0, 0]) {
@@ -179,8 +181,32 @@ module dancore(position = [0, 0, 0]) {
   top_enclosure();
 }
 
-*rc300zlv2(position = [80, 90, 30]);
-rc300zl(position = [80, 90, 30]);
+// CUSTOMCORE FOR DEBUGGING/QUICK RENDERING
+module customcore(position = [0, 0, 0]) {
+  $front_window_size = front_window_custom;
+  $extrusion_type = extrusion15;
+  $frame_size = frame_rc300_custom;
+  $rail_specs = rails_custom;
+  $leadscrew_specs = leadscrew_rc_custom;
+  $bed = bed_rc300;
+  $elecbox = elec_custom ; //electronics box size and placements
+  $branding_name = "Custom";
+  $enclosure_size = enclosure_custom;
+  validate();
+  frame();
+  *all_side_panels();
+  *hinges();
+  *doors();
+  *feet(height=50);
+  kinematics(position);
+  *electronics();
+  *top_enclosure();
+}
+
+
+customcore(position = [150, 150, 130]);
+translate([0, 800, 0]) rc300zl(position = [80, 90, 30]);
 *translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
 *translate([0, 800, 0]) dancore(position = [150, 150, 130]);
+*translate([0, 800, 0]) rc300zlv2(position = [80, 90, 30]);
 *translate([800, 800, 0]) rc300zl40();

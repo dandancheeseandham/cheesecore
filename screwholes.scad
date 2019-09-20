@@ -1,5 +1,8 @@
 include <config.scad>
 
+include <nopscadlib/core.scad>
+include <nopscadlib/lib.scad>
+include <nopscadlib/vitamins/stepper_motor.scad>
 
 module screwholes(row_distance,numberofscrewholes,Mscrew,screwhole_increase) {
   // screwhole_increase = amount to increase screwholes so screws fit - 0.1 for aluminium parts and 0.25 for panels
@@ -30,8 +33,21 @@ module longscrewhole(screwhole_length,Mscrew,screwhole_increase) {
 	}
 }
 
+module NEMAmotorholes(type = NEMA17)
+{
+
+//boss radius NEMA_big_hole(type)
+cylinder(50 ,r = NEMA_big_hole(type));
+NEMA_screw_positions(type)
+cylinder(50 ,r = 3/2);
+
+}
+
 translate([50,0,0])
   longscrewhole(screwhole_length=40,Mscrew=5,screwhole_increase=0.25);
 screwholes(row_distance=60,numberofscrewholes=6,Mscrew=3,screwhole_increase=0.25);
 translate([-50,0,0])
   singlescrewhole(3,0.25);
+
+#translate([-50,-50,0])
+  NEMAmotorholes();

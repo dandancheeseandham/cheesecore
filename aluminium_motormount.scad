@@ -33,7 +33,7 @@ color(alum_part_color()) {
 
   translate ([mainx-(extrusion/2),-41.8,0])
     screwholes(row_distance=37,numberofscrewholes=5,Mscrew=screwsize,screwhole_increase=0.1) ; //line of screwholes
-  translate ([23,-24,0])
+  translate ([33,-24.5,0])
     motorhole(0,0,0);  //motor holes
   translate ([mainx+(extrusion/2),-43.3+(screwsize/2),2])
     rotate ([0,0,90])
