@@ -63,9 +63,9 @@ translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
   mirror_y() {
     translate([0, frame_size().y / 2 - extrusion_width(), 0])
       aluminium_motor_mount();
-    translate([extrusion_width() + NEMA_width(NEMA17)/2, motor_pulley_link() + extrusion_width()/2 + 3.5, 0])  //FIXME what is 3.5?
+    translate([extrusion_width() + NEMA_width(NEMAtype())/2, motor_pulley_link() + extrusion_width()/2 + 3.5, 0])  //FIXME what is 3.5?
 
-      NEMA(NEMA17);
+      NEMA(NEMAtype());
     }
   }
 
@@ -205,7 +205,7 @@ module customcore(position = [0, 0, 0]) {
 
 
 customcore(position = [150, 150, 130]);
-translate([0, 800, 0]) rc300zl(position = [80, 90, 30]);
+*translate([0, 800, 0]) rc300zl(position = [80, 90, 30]);
 *translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
 *translate([0, 800, 0]) dancore(position = [150, 150, 130]);
 *translate([0, 800, 0]) rc300zlv2(position = [80, 90, 30]);

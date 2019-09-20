@@ -20,7 +20,7 @@ module corexy_belts(position = [0, 0]) {
 // carriage_clearance(type)
   // Location of steppers in x
   // FIXME: the stepper offset and idler offset is made up
-  stepper_offset = 21  ;
+  stepper_offset = NEMA_width(NEMAtype())/2  ;
   // 34 for stepperoffset extrusion15
 
   // *** THESE ARE DEPENDENT ON THE IDLER POSITION

@@ -37,7 +37,7 @@ module z_tower(z_position=0) {
 
   // NEMA 17 Z motors
   translate ([-leadscrew_x_offset, 0, -panel_thickness()])
-    NEMA(NEMA17);
+    NEMA(NEMAtype());
 
   //Coupler is connected to the NEMA17 motor
   translate ([-leadscrew_x_offset, 0, 0])

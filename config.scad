@@ -70,7 +70,6 @@ extrusion40 = ["4040 Extrusion", 40, 6];
 // *************************************************************************************************************************************************
 
 
-NEMAtype = "NEMA17" ;   // not in yet
 // Still need to clean up everything below here
 bed_offset = [0, -12.5]; // How far to offset the bed from center of frame
 // These define how far from the part origin of the z-tower the leadscrew is
@@ -79,6 +78,9 @@ leadscrew_y_offset = 30 ; // taken off z yoke in fusion
 //RC300BED = 42; // FIXME: build out an actual bed model
 //           type,  dimensions, ear spacing, nominal mount distance in x
 // Note that we don't specify the finer points of the bed ears here, because it doesn't affect how the printer lays out, that's an impelementation detail fo ths bed model
+
+function NEMAtype() = NEMA17 ;
+
 
 function bed_plate_size() = $bed[1];
 function bed_ear_spacing() = $bed[2];
