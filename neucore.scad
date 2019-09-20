@@ -194,13 +194,13 @@ module customcore(position = [0, 0, 0]) {
   $enclosure_size = enclosure_custom;
   validate();
   frame();
-  *all_side_panels();
+  all_side_panels();
   *hinges();
   *doors();
   *feet(height=50);
   kinematics(position);
   *electronics();
-  *top_enclosure();
+  top_enclosure();
 }
 
 
