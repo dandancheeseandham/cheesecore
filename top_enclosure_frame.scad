@@ -35,7 +35,7 @@ module corner_cubes() {
   }
 }
 
-module frame(bottom_braces=true) {
+module enclosure_frame(bottom_braces=true) {
   x_extrusions();
   y_extrusions();
   z_extrusions();
@@ -46,7 +46,7 @@ module frame(bottom_braces=true) {
   assert(leadscrew_x_offset == 20, "Leadscrew_x_offset sets placement of stepper and bottom braces.  Must be 20 unless we do something besides NEMA17 z motors");
 }
 
-module enclosure_frame() {
+module test_enclosure_frame() {
   x_extrusions();
   y_extrusions();
   z_extrusions();

@@ -17,33 +17,14 @@ use <electronics_box_panels.scad>
 use <electronics_box_contents.scad>
 use <x-carriage.scad>
 use <validation.scad>
-use <top_enclosure.scad>
+use <top_enclosure_parts.scad>
+use <top_enclosure_side_panels.scad>
+use <top_enclosure_frame.scad>
 
 
 $fullrender=false;
 
-module enclosure() {
-  frame();
-  all_side_panels();
-  hinges();
-  %doors();
-  feet(height=50);
- }
 
-module electronics() {
-  electronics_box_contents();
-  electronics_box ();
-}
-
-//FIXME: position isn't quite right
-module kinematics(position) {
-  // the tidy bit
-  xy_motion(position);
-  z_towers(z_position = position[2]);
-  bed(offset_bed_from_frame(position));
-  x_rails(position.x);
-  y_carriage(position);
-}
 
 // x/y motion stage.  So belts, pulleys, x/y motors, and mounts.
 // Position is the printhead position
@@ -203,10 +184,43 @@ module customcore(position = [0, 0, 0]) {
   top_enclosure();
 }
 
+module enclosure() {
+  frame();
+  all_side_panels();
+  *hinges();
+  * doors();
+  feet(height=50);
+ }
+
+module electronics() {
+  electronics_box_contents();
+  electronics_box ();
+}
+
+//FIXME: position isn't quite right
+module kinematics(position) {
+  // the tidy bit
+  xy_motion(position);
+  z_towers(z_position = position[2]);
+  bed(offset_bed_from_frame(position));
+  x_rails(position.x);
+  y_carriage(position);
+}
+
+//FIXME 45 is L height from topenclosure part
+module top_enclosure() {
+  translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + 42]) {
+    enclosure_frame();
+     %enclosure_side_panels();
+    *encolosure_hinges();
+    //handle();
+  }
+  printed_interface_arrangement();
+}
 
 customcore(position = [150, 150, 130]);
 *translate([0, 800, 0]) rc300zl(position = [80, 90, 30]);
-*translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
+translate([800, 0, 0]) rc300zlt(position = [150, 150, 130]);
 *translate([0, 800, 0]) dancore(position = [150, 150, 130]);
 *translate([0, 800, 0]) rc300zlv2(position = [80, 90, 30]);
 *translate([800, 800, 0]) rc300zl40();

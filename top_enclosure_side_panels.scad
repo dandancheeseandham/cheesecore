@@ -88,7 +88,7 @@ module front_panel() {
           text("lid lifts up", halign="center", size=25);
 }
 
-module hinges() {
+module enclosure_hinges() {
   mirror_x()
     translate ([enclosure_size().x/2-extrusion_width($extrusion_type)/2-50-86.25/2, enclosure_size().y/2+6,enclosure_size().z/2-extrusion_width($extrusion_type)/2])
       rotate([0, 270, 270])
@@ -109,7 +109,7 @@ module back_panel() {
   panel(enclosure_size().x, enclosure_size().z-extrusion_width($extrusion_type)/2);
 }
 
-module all_side_panels() {
+module enclosure_side_panels() {
   translate([0, 0, enclosure_size().z / 2]) bottom_panel();
   translate([0, -(enclosure_size().y)/2, extrusion_width($extrusion_type)/2]) rotate([90,0,0]) front_panel();
   translate([-enclosure_size().x / 2 - panel_thickness(), 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
