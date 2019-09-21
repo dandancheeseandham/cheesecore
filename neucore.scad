@@ -184,7 +184,7 @@ module dancore(position = [0, 0, 0]) {
 // CUSTOMCORE FOR DEBUGGING/QUICK RENDERING
 module customcore(position = [0, 0, 0]) {
   $front_window_size = front_window_custom;
-  $extrusion_type = extrusion15;
+  $extrusion_type = extrusion30;
   $frame_size = frame_rc300_custom;
   $rail_specs = rails_custom;
   $leadscrew_specs = leadscrew_rc_custom;
@@ -197,7 +197,7 @@ module customcore(position = [0, 0, 0]) {
   all_side_panels();
   *hinges();
   *doors();
-  *feet(height=50);
+  feet(height=50);
   kinematics(position);
   *electronics();
   top_enclosure();

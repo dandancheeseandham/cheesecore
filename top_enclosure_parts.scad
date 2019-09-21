@@ -28,15 +28,14 @@ module enclosure_fitting(piece_length1,piece_length2,corners=false)
 {
 
 // main body
-
-L_height = 45 ;  //default45
+L_height          = 45 ;  //default45
 acrylic_thickness = 7 ;
 acrylic_catchment_depth = 4 ;
-wall_thickness = acrylic_thickness + 3 ;
-base_width = extrusion_width() +  wall_thickness;
-base_height = 4 ;   //default 4
-L_fillet_size = base_height + 0.5 ;
-hyp = pow((pow(acrylic_thickness,2)/2),1/2) ;
+wall_thickness    = acrylic_thickness + 3 ;
+base_width        = extrusion_width() +  wall_thickness;
+base_height       = 4 ;   //default 4
+L_fillet_size     = base_height + 0.5 ;
+hyp               = pow((pow(acrylic_thickness,2)/2),1/2) ;
 
 if (corners == false) translate ([base_width,0,0]) rotate ([0,0,180]) main_length(piece_length1);
 if (corners == true) {
@@ -45,14 +44,12 @@ if (corners == true) {
   translate ([-extrusion_width(),extrusion_width(),0]) cube ([extrusion_width(),extrusion_width(),L_height-acrylic_catchment_depth]) ;
   translate ([wall_thickness,base_width + 7,0]) rotate ([0,0,180]) main_length(piece_length1-base_width,false);  //FIXME Magic 5 here
   translate ([-(piece_length2),-wall_thickness+extrusion_width(),0]) rotate ([0,0,90]) main_length(piece_length2-extrusion_width(),true);
-
 }
 
 module main_length(length,no_V_slots=false) {
 color(printed_part_color()) {
 //render()
    {
-
 difference(){
   rotate ([90,0,0])
     linear_extrude(length) {
