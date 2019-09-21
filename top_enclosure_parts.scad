@@ -1,5 +1,6 @@
 
 include <config.scad>
+use <nopscadlib/printed/handle.scad>
 
 *enclosure_fitting(100,200,true);
 
@@ -42,14 +43,15 @@ if (corners == true) {
   //*translate ([0,piece_length,0]) rotate ([0,0,-90]) enclosure_fitting_corner();
   translate ([wall_thickness,30,0]) rotate ([0,0,180]) enclosure_fitting_corner(); //FIXME Magic 30 here.
   translate ([-extrusion_width(),extrusion_width(),0]) cube ([extrusion_width(),extrusion_width(),L_height-acrylic_catchment_depth]) ;
-  translate ([wall_thickness,base_width+5,0]) rotate ([0,0,180]) main_length(piece_length1-base_width,false);  //FIXME Magic 5 here
+  translate ([wall_thickness,base_width + 7,0]) rotate ([0,0,180]) main_length(piece_length1-base_width,false);  //FIXME Magic 5 here
   translate ([-(piece_length2),-wall_thickness+extrusion_width(),0]) rotate ([0,0,90]) main_length(piece_length2-extrusion_width(),true);
 
 }
 
 module main_length(length,no_V_slots=false) {
 color(printed_part_color()) {
-  render() {
+//render()
+   {
 
 difference(){
   rotate ([90,0,0])
@@ -160,4 +162,10 @@ difference() {
 }
 
 
+}
+module handle() {
+  color(printed_part_color())
+    translate ([0, -enclosure_size().y / 2 - 6, 0 ])
+      rotate ([90,0,0])
+        handle_assembly();
 }

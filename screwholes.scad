@@ -1,5 +1,5 @@
 include <config.scad>
-
+use <lib/mirror.scad>
 include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
 include <nopscadlib/vitamins/stepper_motor.scad>
@@ -33,21 +33,23 @@ module longscrewhole(screwhole_length,Mscrew,screwhole_increase) {
 	}
 }
 
-module NEMAmotorholes(type = NEMA17)
-{
-
-//boss radius NEMA_big_hole(type)
-cylinder(50 ,r = NEMA_big_hole(type));
-NEMA_screw_positions(type)
-cylinder(50 ,r = 3/2);
-
+module motor_holes(type = NEMA17) {
+  translate([0, 0, -epsilon])
+    cylinder(h=panel_thickness() + 2 * epsilon, d=NEMA_boss_radius(NEMA17) * 2 + 1);
+  mirror_xy() {
+    translate([ NEMA_hole_pitch(type)/2, NEMA_hole_pitch(type)/2, -epsilon ])
+      // FIXME: this diameter should be driven by stepper size. (Looked in modules, there is no definition for this.-dan)
+      // FIXME this needs to be a hole() not a cylinder
+      cylinder(d=3.3, h=panel_thickness() + 2 * epsilon);
+  }
 }
 
+
+
+module wtf(){
 translate([50,0,0])
   longscrewhole(screwhole_length=40,Mscrew=5,screwhole_increase=0.25);
 screwholes(row_distance=60,numberofscrewholes=6,Mscrew=3,screwhole_increase=0.25);
 translate([-50,0,0])
   singlescrewhole(3,0.25);
-
-#translate([-50,-50,0])
-  NEMAmotorholes();
+}

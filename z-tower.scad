@@ -10,6 +10,7 @@ use <anti-backlash-nut.scad>
 use <z-bracket.scad>
 use <leadscrew.scad>
 use <demo.scad>
+use <bearing_block.scad>
 
 
 coupler_adjustment = 85 ;
@@ -42,6 +43,10 @@ module z_tower(z_position=0) {
   //Coupler is connected to the NEMA17 motor
   translate ([-leadscrew_x_offset, 0, 0])
     coupler();
+
+    translate ([-leadscrew_x_offset, 0, epsilon])
+    //  bearing_block();
+      bearing_block_v3();
 
   // The +20 puts the leadscrew above the end of the shaft a bit.  This is not
   // an exact science between stepper output shaft may vary in ways we don't have modeled

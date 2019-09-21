@@ -69,16 +69,7 @@ module panel_mounting_screws(x, y)
 
 // BOTTOM PANEL
 module bottom_panel() {
-  module motor_holes() {
-    translate([0, 0, -epsilon])
-      cylinder(h=panel_thickness() + 2 * epsilon, d=NEMA_boss_radius(NEMA17) * 2 + 1);
-    mirror_xy() {
-      translate([ NEMA_hole_pitch(NEMA17)/2, NEMA_hole_pitch(NEMA17)/2, -epsilon ])
-        // FIXME: this diameter should be driven by stepper size. (Looked in modules, there is no definition for this.-dan)
-        // FIXME this needs to be a hole() not a cylinder
-        cylinder(d=3.3, h=panel_thickness() + 2 * epsilon);
-    }
-  }
+  
 
   difference() {
     panel(frame_size().x, frame_size().y);

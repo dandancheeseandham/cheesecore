@@ -9,11 +9,21 @@ include <config.scad>
 use <validation.scad>
 use <door_hinge.scad>
 use <demo.scad>
-use <nopscadlib/printed/handle.scad>
 use <top_enclosure_parts.scad>
 
 $fullrender=false;
 //FIXME 45 is L height from topenclosure part
+
+demo() {
+  $front_window_size = front_window_zl;
+  // FIXME : This needs to be derived from the actual frame size.
+  $frame_size = [490, 455, 250];
+  $rail_specs = rails_rc300zl;
+
+  translate ([0, 0, -frame_size().z / 2 - 150])
+    top_enclosure_all($extrusion_type = extrusion15);
+  }
+
 module top_enclosure() {
   translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + 42]) {
     frame();
@@ -21,11 +31,11 @@ module top_enclosure() {
     hinges();
     handle();
   }
-  printed_interface();
+  printed_interface_arrangement();
 }
 
 
-module printed_interface()
+module printed_interface_arrangement()
 
 {
   adjust = 150;
@@ -44,37 +54,3 @@ pass_thru_idler(frame_size().y / 2 +extrusion_width() /2  , frame_size().x / 2  
 translate ([-frame_size().x/2 - extrusion_width() , -frame_size().y / 2  , frame_size().z / 2]) rotate ([0,0,-90])
   pass_thru_idler(frame_size().x / 2 - extrusion_width() /2, frame_size().y / 2  ,90,35);
 }
-
-/*
-{
-  adjust = 150;
-  //Y
-  translate ([frame_size().x / 2 - extrusion_width() , -frame_size().y/2 + adjust/2  , frame_size().z / 2])
-  enclosure_fitting(frame_size().y - adjust);
-  translate ([-(frame_size().x / 2 - extrusion_width()) , frame_size().y/2 - adjust/2  , frame_size().z / 2]) rotate ([0,0,180])
-  enclosure_fitting(frame_size().y - adjust);
-
-//X
-  translate ([frame_size().x/2  - adjust/2  , frame_size().y / 2 - extrusion_width() , frame_size().z / 2]) rotate ([0,0,90])
-  enclosure_fitting(frame_size().x - adjust);
-  translate ([-frame_size().x/2  + adjust/2 , -frame_size().y / 2 + extrusion_width() , frame_size().z / 2]) rotate ([0,0,-90])
-  enclosure_fitting(frame_size().x - adjust);
-}
-*/
-module handle() {
-  color(printed_part_color())
-    translate ([0, -enclosure_size().y / 2 - 6, 0 ])
-      rotate ([90,0,0])
-        handle_assembly();
-}
-
-
-demo() {
-  $front_window_size = front_window_zl;
-  // FIXME : This needs to be derived from the actual frame size.
-  $frame_size = [490, 455, 250];
-  $rail_specs = rails_rc300zl;
-
-  translate ([0, 0, -frame_size().z / 2 - 150])
-    top_enclosure_all($extrusion_type = extrusion15);
-  }
