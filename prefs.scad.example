@@ -1,0 +1,2 @@
+// The color scheme (from colors.scad) to use for rendering.
+theme = MURDERED;

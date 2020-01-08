@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Command to call openscad
+OPENSCAD=openscad-nightly
+
+# loop over all .dxf.scad or .stl.scad files in build build directory
+for source in build/*.dxf.scad build/*.stl.scad ; do
+  dest=`basename --suffix=.scad ${source}`
+
+  echo "Building artifacts/${dest} from ${source}"
+  ${OPENSCAD} -o artifacts/${dest} ${source}
+done
