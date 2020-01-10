@@ -11,24 +11,21 @@ include <nopscadlib/vitamins/stepper_motors.scad>
 // USER DEFINED
 
 //This should be per machine
-function acrylic_door_thickness() = 0.25 * inch ; // EU would be 6mm
 function panel_thickness() = 4 ;
-function halo_thickness() = 4 ;
 function aluminium_part_depth() = 6 ;
-function bearing_blocks()   = true ;
-//function halo() = [130,30,3] ;           // EU would be 6mm
-function panel_radius() = 5;
-function bearing_block() = false;
-
+//function bearing_blocks()   = true ;
+function bearing_block()   = true ;
 // Can stay global. (not so common to change)
 // How far in from edge to start panel screws
 function panel_screw_offset()  = extrusion_width($extrusion_type) + 35 ; // 50 in original 1515 machine
 // Max allowable distance between screws on front panels
 function max_panel_screw_spacing() = 100 ;
 $draft = true;
+
 // Panel Options - Sides, halo and doors.
 //                              Panel               Door                   Halo
 //                            thickness  radius  thickness      radius   present  X     Y  thickness
+function panel_radius() = 5;
 panels_rc300       = ["PANELS",[6,          5],   0.25 * inch,     true,  [130, 30,   3]];
 panels_rc300zlt    = ["PANELS",[6,          5],   0.25 * inch,     true,  [130, 30,   3]];
 
@@ -58,6 +55,7 @@ rails_custom      = [[420, MGN12], [445, MGN12], [420, MGN12]];
 
 // FRONT WINDOW / DOOR
 //                            name       sizeXY   depth thick
+function acrylic_door_thickness() = 0.25 * inch ; // EU would be 6mm
 front_window_zl      = ["WINDOW_TYPE", [420, 385], 10, [0, 5]];
 front_window_zlt     = ["WINDOW_TYPE", [410, 645], 10, [0, 0]];
 
@@ -87,8 +85,22 @@ enclosure_custom      = frame_rc300_custom + [150, 3, -200];
 
 // HALO  - NOT IN USE YET.
 //
-halo_rc300zl             = [520, 469 ,6];
-halo_rc300steel300zl     = [520, 469 ,3];
+
+//function minimum_addition()  = 150 ; //backwards compatibility until extended sides are in play.
+///function extra_x() = 0 ;
+//function extra_y() = panel_thickness();
+
+function halo_thickness() = 4 ;
+halo_rc300zl                  = [frame_rc300zl.x + 150, frame_rc300zl.y + panel_thickness() * 2, halo_thickness()];
+halo_rc300zlNEMA23            = [+160,+15];
+//halo_rc300zl                  = frame_rc300zl + [frame_size().x,frame_size().y + minimum_addition(),panel_thickness()];
+halo_rc300steel300zlv1        = [638, 465 ,4];
+halo_rc300steel300zlv2        = [640, 465 ,4];
+halo_rc300steel300zlv2nema23  = [640+40, 465 ,4];
+
+
+
+
 
 // LEADSCREW_SPECS
 //                        Name          height diameter
@@ -142,6 +154,7 @@ function leadscrew_length()   = $leadscrew_specs[1];
 function leadscrew_diameter() = $leadscrew_specs[2];
 
 function frame_size() = $frame_size;
+function halo_size() = $halo_size;
 
 function rail_lengths()  = [$rail_specs.x[0], $rail_specs.y[0], $rail_specs.z[0]];
 function rail_profiles() = [$rail_specs.x[1], $rail_specs.y[1], $rail_specs.z[1]];
@@ -162,14 +175,12 @@ function Duex5_placement()  = $elecbox[8] ;
 function psu_placement()    = $elecbox[9] ;
 function ssr_placement()    = $elecbox[10] ;
 function rpi_placement()    = $elecbox[11] ;
+
+
 function enclosure_size()   = $enclosure_size ;
 
 function extrusion_width      (extrusion_type = $extrusion_type) = extrusion_type[1];
 function extrusion_screw_size (extrusion_type = $extrusion_type) = extrusion_type[2];
-
-function halox() = $halo[0] ;
-function haloy() = $halo[1] ;
-function haloz() = $halo[2] ;
 
 // CONSTRAINTS
 // This sets how far from centerline of the machine the idler stack on the x-carriages is.

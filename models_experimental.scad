@@ -21,16 +21,17 @@ module customcore(position = [0, 0, 0]) {
 module 2020core(position = [0, 0, 0]) {
   $front_window_size  = front_window_zl;
   $extrusion_type     = extrusion20;
-  $NEMA_XY            = NEMA17;
+  $NEMA_XY            = NEMA23;
   $NEMA_Z             = NEMA17;
-  $frame_size         = frame_rc300zl;
-  $rail_specs         = rails_rc300zl;
+  $frame_size         = frame_rc300zl + [20,20,20];
+  $rail_specs         = [[420, MGN12], [420, MGN12], [420, MGN12]];
   $leadscrew_specs    = leadscrew_rc300zl ;
   $bed                = bed_rc300;
   $elecbox            = elec_new_ZL;
   //elec_ZL ; //electronics box size and placements
   $branding_name      = "2020 RC2-inspired";
-  $enclosure_size     = enclosure_rc300zl;
+  $enclosure_size     = enclosure_rc300zl + [20+40,25,20];
+  $halo_size          = halo_rc300zl ;
   //$halo               = halo_rc300steel300zl;
   //$feet_depth         = 50 ;
   children();

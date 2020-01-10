@@ -14,6 +14,7 @@ module rc300zl(position = [0, 0, 0]) {
   //elec_ZL ; //electronics box size and placements
   $branding_name      = "Original ZL";
   $enclosure_size     = enclosure_rc300zl;
+  $halo_size          = halo_rc300zl ;
   //$halo               = halo_rc300steel300zl;
   //$feet_depth         = 50 ;
   children();
@@ -32,5 +33,6 @@ module rc300zlt(position = [0, 0, 0]) {
   $elecbox = elec_ZLT ; //electronics box size and placements
   $branding_name = "Original ZLT";
   $enclosure_size = enclosure_rc300zl;
+  $halo_size          = halo_rc300zl ;
   children();
 }

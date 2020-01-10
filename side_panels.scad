@@ -265,8 +265,7 @@ module all_side_panels(braces) {
       back_panel();
 
       translate([0, 0, frame_size().z / 2 ])
-        //halo(160,15); //nema23sla
-        halo(0,panel_thickness()); // nema17
+        halo();
 }
 
 
