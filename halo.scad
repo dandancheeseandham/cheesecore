@@ -19,7 +19,7 @@ move electronics box up, no top piece
 holes in electronics side panels for microswitch buttons
 */
 
-module halo(extra_x,extra_y) {
+module halo() {
 /*
   assert(front_window_size().x <= frame_size().x - 2 * extrusion_width(), str("Window cannot overlap extrusion in X: "));
   assert(front_window_size().y <= frame_size().z - 2 * extrusion_width(), "Window cannot overlap extrusion in Z");
@@ -28,12 +28,13 @@ module halo(extra_x,extra_y) {
 */
 
 
-minimum_addition = 150; //backwards compatibility until extended sides are in play.
+
   difference() {
     difference() {
       color(panel_color())
         translate ([0, 0, halo_thickness()/2])
-          rounded_rectangle([frame_size().x + extra_x + minimum_addition, frame_size().y + halo_thickness()  + extra_y, halo_thickness()], panel_radius());
+          //rounded_rectangle([frame_size().x + extra_x() + minimum_addition(), frame_size().y + halo_thickness()  + extra_y (), halo_thickness()], panel_radius());
+          rounded_rectangle([halo_size().x , halo_size().y, halo_thickness()], panel_radius());
       // Color the holes darker for contrast
       color(panel_color_holes()) {
         panel_mounting_screws(frame_size().x, frame_size().y);

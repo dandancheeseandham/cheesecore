@@ -7,16 +7,18 @@ use <demo.scad>
 // this renders the belts at the specified carriage position
 // origin is the center of the build volume.  We will adjust this later when we have better data for printhead offsets
 module corexy_belts(position = [0, 0]) {
+
+  // NOT USER MODIFIED
   // This defines how far above the lower belt path the upper belt path is
   vertical_offset = 9; // an 8.6mm heigh GT2 pulley, with a 0.4mm shim on top
 
     // x/y coordinate of the x-carriage stack;
-  // FIXME: the +62 here is an approximation to make things look decent
-  carriage_stack = [position.x + 62, motor_pulley_link()];
+  // FIXME: the +62 here is an approximation to make things look decent positioned over the X carriage
+  carriage_stack = [position.x + 62 , motor_pulley_link()];
 
   // Location of steppers in x
   // FIXME: the stepper offset works for the stepper, but the idler moves also.
-  gap_for_screws = 6;
+  gap_for_screws = 6; //
   stepper_offset = NEMA_width(NEMAtypeXY())/2 + panel_thickness() + gap_for_screws;
 
   // *** THESE ARE DEPENDENT ON THE IDLER POSITION
