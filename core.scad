@@ -48,8 +48,8 @@ module kinematics(position) {
 
 //FIXME 45 is L height from topenclosure part
 module top_enclosure() {
-  enclosure_height_above_frame = 4;
-  translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + enclosure_height_above_frame]) {
+
+  translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + enclosure_height_above_frame()]) {
     enclosure_frame();
      %enclosure_side_panels();
     enclosure_hinges();
@@ -64,7 +64,7 @@ module printer(position = [0, 0, 0]) {
   kinematics(position);
   *electronics_box_contents();
   electronics_box_panels_assembly();
-  *top_enclosure();
+  top_enclosure();
   report();
 }
 
@@ -75,6 +75,8 @@ module report() {
   echo ("Leadscrew length: ",leadscrew_length());
   echo ("Leadscrew diameter: ",leadscrew_diameter());
   echo ("Rail lengths",rail_lengths());
+
+  echo ("NEMA");
   echo ("NEMAtypeXY() :",NEMAtypeXY());
   echo ("NEMAtypeZ() :",NEMAtypeZ());
   echo ("Bed")

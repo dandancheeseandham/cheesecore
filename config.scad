@@ -6,52 +6,38 @@ use <validation.scad>
 use <core.scad>
 include <nopscadlib/vitamins/rails.scad>
 include <nopscadlib/vitamins/stepper_motors.scad>
-
-// *************************************************************************************************************************************************
-// USER DEFINED
-
-//This should be per machine
-function panel_thickness() = 4 ;
-function aluminium_part_depth() = 6 ;
-//function bearing_blocks()   = true ;
-function bearing_block()   = true ;
-// Can stay global. (not so common to change)
-// How far in from edge to start panel screws
-function panel_screw_offset()  = extrusion_width($extrusion_type) + 35 ; // 50 in original 1515 machine
-// Max allowable distance between screws on front panels
-function max_panel_screw_spacing() = 100 ;
 $draft = true;
-
-// Panel Options - Sides, halo and doors.
-//                              Panel               Door                   Halo
-//                            thickness  radius  thickness      radius   present  X     Y  thickness
-function panel_radius() = 5;
-panels_rc300       = ["PANELS",[6,          5],   0.25 * inch,     true,  [130, 30,   3]];
-panels_rc300zlt    = ["PANELS",[6,          5],   0.25 * inch,     true,  [130, 30,   3]];
-
-panels_steel300zl  = ["PANELS",[6,          5],   5,               true,  [130, 30,  3]];
-panels_steel300zl2 = ["PANELS",[6,          5],   5,               true,  [130, 30,  3]];
-panels_custom      = ["PANELS",[6,          5],   5,               true,  [130, 30,   3]];
+// *************************************************************************************************************************************************
 
 // FRAME
-//                   sizeX sizeY sizeZ
+function frame_size() = $frame_size;
+//                        sizeX sizeY sizeZ
+//Standard
 frame_rc300zl           = [490, 455, 445];
 frame_rc300zlt          = [490, 455, 745];
-
+//Experimental
 frame_rc300zl4040       = [590, 555, 545];
 frame_rc300_steel300zl  = [490, 455, 445];
 frame_rc300_steel300zl2 = [490, 500, 460];
 frame_rc300_custom      = [490, 500, 460];
 
-// RAILS
-//                  sizeX  Xtype  sizeY  Ytype    sizeZ Ztype
-rails_rc300zl     = [[400, MGN12], [400, MGN12], [400, MGN12]];
-rails_rc300zlt    = [[400, MGN12], [400, MGN12], [700, MGN12]];
 
-rails_rc300zl4040 = [[500, MGN15], [500, MGN12], [500, MGN15]];
-rails_steel300zl  = [[400, MGN12], [400, MGN12], [400, MGN12]];
-rails_steel300zl2 = [[420, MGN12], [445, MGN12], [420, MGN12]];
-rails_custom      = [[420, MGN12], [445, MGN12], [420, MGN12]];
+
+// Panel Options - Sides, halo and doors.
+//                              Panel               Door                   Halo
+//                            thickness  radius  thickness      radius   present  X     Y  thickness
+//Standard
+panels_rc300       = ["PANELS",[6,          5],   0.25 * inch,     true,  [130, 30,  3]];
+panels_rc300zlt    = ["PANELS",[6,          5],   0.25 * inch,     true,  [130, 30,  3]];
+//Experimental
+panels_steel300zl  = ["PANELS",[6,          5],   5,               true,  [130, 30,  3]];
+panels_steel300zl2 = ["PANELS",[6,          5],   5,               true,  [130, 30,  3]];
+panels_custom      = ["PANELS",[6,          5],   5,               true,  [130, 30,  3]];
+function panel_radius() = 5;
+function panel_thickness() = 4 ;
+function panel_screw_offset()  = extrusion_width() + 35 ; // 50 in original 1515 machine
+// Max allowable distance between screws on front panels
+function max_panel_screw_spacing() = 100 ;
 
 // FRONT WINDOW / DOOR
 //                            name       sizeXY   depth thick
@@ -60,6 +46,21 @@ front_window_zl      = ["WINDOW_TYPE", [420, 385], 10, [0, 5]];
 front_window_zlt     = ["WINDOW_TYPE", [410, 645], 10, [0, 0]];
 
 front_window_custom  = ["WINDOW_TYPE", [420, 385], 10, [0, 0]];
+
+
+// RAILS
+//                  sizeX  Xtype  sizeY  Ytype    sizeZ Ztype
+//Standard
+rails_rc300zl     = [[400, MGN12], [400, MGN12], [400, MGN12]];
+rails_rc300zlt    = [[400, MGN12], [400, MGN12], [700, MGN12]];
+//Experimental
+
+rails_rc300zl4040 = [[500, MGN15], [500, MGN12], [500, MGN15]];
+rails_steel300zl  = [[400, MGN12], [400, MGN12], [400, MGN12]];
+rails_steel300zl2 = [[420, MGN12], [445, MGN12], [420, MGN12]];
+rails_custom      = [[420, MGN12], [445, MGN12], [420, MGN12]];
+
+
 
 // ELECTRONICS BOX ALONG WITH  & ELECTRONICS & CABLE PLACEMENT -  placement of parts on right panel with X/Y as centre
 //                name         sizeX  sizeY  depth thick, lasercut   cable_bundle      DuetE            Duex            PSU        SSR            RPi
@@ -75,7 +76,8 @@ elec_custom     = ["ELEC.BOX", 410,   310,   59 ,   6,     false,  [-84,146.5,0]
 // ENCLOSURE BOX - size and shape - left unconstrained from the frame
 // not properly parametric yet, but this is a reasonable hack.
 //                        X    Y    Z
-enclosure_rc300zl     = frame_rc300zl  + [150, 3, -200];
+function enclosure_height_above_frame() = panel_thickness() ;
+enclosure_rc300zl     = frame_rc300zl  + [150, panel_thickness() * 2, -200];
 enclosure_rc300zlt    = frame_rc300zlt + [150, 3, -200];
 
 enclosure_rc300zl4040 = [590, 555, 245];
@@ -129,7 +131,9 @@ extrusion20 = ["2020 Extrusion", 20, 4];
 extrusion30 = ["3030 Extrusion", 30, 5];
 extrusion40 = ["4040 Extrusion", 40, 6];
 
-
+//This should be per machine
+function aluminium_part_depth() = 6 ;  // is this being used anymore?
+function bearing_block()   = false ;  // use ZLT-style bearing blocks on the leadscrews
 
 // *************************************************************************************************************************************************
 
@@ -153,7 +157,7 @@ function bed_thickness()    = $bed[4];
 function leadscrew_length()   = $leadscrew_specs[1];
 function leadscrew_diameter() = $leadscrew_specs[2];
 
-function frame_size() = $frame_size;
+
 function halo_size() = $halo_size;
 
 function rail_lengths()  = [$rail_specs.x[0], $rail_specs.y[0], $rail_specs.z[0]];
