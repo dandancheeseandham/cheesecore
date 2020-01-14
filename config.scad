@@ -13,8 +13,8 @@ $draft = true;
 
 //                        sizeX sizeY sizeZ
 //Standard
-frame_rc300zl           = [490, 455, 445];
-frame_rc300zlt          = [490, 455, 745];
+frame_rc300zl           = [460, 425, 415] + [30,30,30]; // + [30,30,30] is for 15mm corner cubes at each end
+frame_rc300zlt          = [460, 425, 715] + [30,30,30]; // + [30,30,30] is for 15mm corner cubes at each end
 //Experimental
 frame_rc300zl4040       = [590, 555, 545];
 frame_rc300_steel300zl  = [490, 455, 445];
@@ -135,14 +135,13 @@ bed_custom  = ["BED", [425, 442],      295,        [435, 442],        8];
 // Extrusion information
 //                              nominal size
 //                                   nominal screw size
-extrusion15 = ["1515 Extrusion", 15, 3];
+extrusion15 = ["1515 Extrusion", 15, 3];  // standard extrusion for RailCore II
 extrusion20 = ["2020 Extrusion", 20, 4];
 extrusion30 = ["3030 Extrusion", 30, 5];
 extrusion40 = ["4040 Extrusion", 40, 6];
 
 //This should be per machine
 function aluminium_part_depth() = 6 ;  // is this being used anymore?
-function bearing_block()   = false ;  // use ZLT-style bearing blocks on the leadscrews
 
 // *************************************************************************************************************************************************
 
@@ -212,3 +211,5 @@ function enclosure_size()   = $enclosure_size ;
 // CONSTRAINTS
 // This sets how far from centerline of the machine the idler stack on the x-carriages is.
 function motor_pulley_link() = frame_size().y / 2 - rail_height(rail_profiles().x) - carriage_height(rail_profiles().x) - extrusion_width() ;
+
+function bearing_block() = false;  ;  // use ZLT-style bearing blocks on the leadscrews - will come on automatically if leadscrew height > 500

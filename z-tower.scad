@@ -45,7 +45,7 @@ module z_tower(z_position=0) {
   translate ([-leadscrew_x_offset,0,5])
     coupler();
 
-    if (bearing_block() == true) {
+    if (bearing_block() == true || leadscrew_length() > 500) {
       //  bearing_block();
       translate ([-leadscrew_x_offset, 0, epsilon])
         bearing_block_v3();
