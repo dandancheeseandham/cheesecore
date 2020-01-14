@@ -9,16 +9,16 @@ use <demo.scad>
 
 demo() {
   // Standard lostapathy ZL hinge for a 5mm acrylic door
-  translate([0, 0 ,0])  
-    panelside_hinge( $draft = false); 
-  translate([0 , 0,  acrylic_door_thickness()])  
+  translate([0, 0 ,0])
+    panelside_hinge( $draft = false);
+  translate([0 , 0,  acrylic_door_thickness()])
     doorside_hinge();
-   
+
   // ZLT 6mm acrylic with doors that need to be 10mm closer to each other (extension = 5mm , on each hinge/door)
-  translate ([0,-120,0]) 
-    panelside_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false); 
-  translate ([0,-120,0])  
-    doorside_hinge(); 
+  translate ([0,-120,0])
+    panelside_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false);
+  translate ([0,-120,0])
+    doorside_hinge();
 }
 
 function hole_distance_from_edge() = 7.5 ;
@@ -37,28 +37,28 @@ module panelside_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension
 
   // origin is top screwhole. Makes placing on panels easier
   color(printed_part_color())
-    render() 
+    render()
       difference() {
         union() {
 
         // draw main arm
-        translate ([-door_hinge_x()/2,-door_hinge_y/2,0 ]) 
+        translate ([-door_hinge_x()/2,-door_hinge_y/2,0 ])
           roundedCube([door_hinge_x(), door_hinge_y, door_hinge_z], r=rounding(), x=true, y=true, z=true);
-          
+
         // raised part of hinge to accommodate arms
-        translate ([-door_hinge_x()/2,-hinge_arm_body_y()/2,0]) 
+        translate ([-door_hinge_x()/2,-hinge_arm_body_y()/2,0])
           roundedCube([door_hinge_x() + extension,hinge_arm_body_y(),hinge_arms_z], r=rounding(), x=true, y=true, z=true);
-          
+
         // hinge arms. The 10 is an overlap to prevent the join being rounded off.
-        mirror_y() 
-          translate ([door_hinge_x()/2 - 10 ,hinge_arm_body_y()/2-hinge_arms_y(),0]) 
+        mirror_y()
+          translate ([door_hinge_x()/2 - 10 ,hinge_arm_body_y()/2-hinge_arms_y(),0])
             roundedCube([extension + hinge_arms_x() + 10 ,hinge_arms_y(),hinge_arms_z], r=rounding(), x=true, y=true, z=true);
       }
-      mirror_y() 
-        translate ([0,door_hinge_y/2-hole_distance_from_edge(),0])   
+      mirror_y()
+        translate ([0,door_hinge_y/2-hole_distance_from_edge(),0])
           poly_cylinder(1.5, 30);
-      translate ([door_hinge_x()/2 + extension + 5,150,acrylic_door_thickness]) 
-        rotate ([90,0,0]) 
+      translate ([door_hinge_x()/2 + extension + 5,150,acrylic_door_thickness])
+        rotate ([90,0,0])
           poly_cylinder(screw_type/2, 300);
     }
 }
@@ -68,49 +68,54 @@ module doorside_hinge() {
   panel_hinge_width = 27.5 ;
   panel_hinge_depth = 6.25 ;
   shape_overlap = 15 ;
-  
+
 color(printed_part_color())
 
 //panel_hinge_width + hinge_arms_x() + extrusion_width()
 
  translate ([panel_hinge_width + hinge_arms_x() + extrusion_width(),0,panel_hinge_depth]) rotate ([0,180,0])
  render() difference(){
-    union () {     
+    union () {
       // side with larger rounded corners
       difference() {
-        translate ([0,-hinge_arm_body_y()/2,0]) 
-          roundedCube([panel_hinge_width-5,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=false,$draft=false);       
+        translate ([0,-hinge_arm_body_y()/2,0])
+          roundedCube([panel_hinge_width-5,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=false,$draft=false);
             // take a 10mm cube off to corners, to add a 10mm rounded corner
-        mirror_y()   
-          translate ([-epsilon,-hinge_arm_body_y()/2-epsilon,-epsilon]) 
+        mirror_y()
+          translate ([-epsilon,-hinge_arm_body_y()/2-epsilon,-epsilon])
               cube([10+epsilon,10+epsilon,10]);
           }
           // mid-section
           translate ([shape_overlap,-hinge_arm_body_y()/2,0])
             roundedCube([panel_hinge_width-shape_overlap,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=true,$draft=false);
-          
-          // hinge area  
-          translate ([panel_hinge_width-shape_overlap,15-hinge_arm_body_y()/2,0]) 
+
+          // hinge area
+          translate ([panel_hinge_width-shape_overlap,15-hinge_arm_body_y()/2,0])
             roundedCube([hinge_arms_x()+shape_overlap,(hinge_arm_body_y()/2-hinge_arms_y())*2-0.5,panel_hinge_depth], r=rounding(), x=true, y=true, z=true,$draft=false);
             // roundedCube([hinge_arms_x()+shape_overlap,(hinge_arm_body_y()/2-hinge_arms_y())*2-0.5,panel_hinge_depth], r=rounding(), x=true, y=true, z=true,$draft=false);  // 90 deg
 
           // 10mm rounded corners
-          mirror_y()   
-            translate ([0,0,panel_hinge_depth/2])  
-              rotate ([0,0,180]) 
-                mirror_z()  
-                  translate ([-10,hinge_arm_body_y()/2-10,0]) 
+          mirror_y()
+            translate ([0,0,panel_hinge_depth/2])
+              rotate ([0,0,180])
+                mirror_z()
+                  translate ([-10,hinge_arm_body_y()/2-10,0])
                     rounded_cylinder(r=10, h = panel_hinge_depth/2, r2 = rounding(), ir = 0, angle = 90);
     }
-   translate ([6,0,0]) 
+
+//holes to attach to door
+
+   translate ([6,0,0])
     poly_cylinder(1.5, 30);
-   mirror_y() 
-    translate ([6,25,0]) 
+   mirror_y()
+    translate ([6,25,0])
       poly_cylinder(1.5, 30);
-    translate ([panel_hinge_width+hinge_arms_x()-3.75,150,2.63]) 
-        rotate ([90,0,0]) 
-          poly_cylinder(1.38, 300);   
-      
+
+//hole to create hinge
+    translate ([panel_hinge_width+hinge_arms_x()-3.75,150,2.63])
+        rotate ([90,0,0])
+          poly_cylinder(1.38, 300);
+
   }
 }
 
@@ -169,7 +174,7 @@ Thanks to Sergio Vilches for the initial code inspiration
 module roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef], $fn=128)
 
 {
-if ($draft == true) 
+if ($draft == true)
 {
   cube(dim);
 }

@@ -10,7 +10,7 @@ $draft = true;
 // *************************************************************************************************************************************************
 
 // FRAME
-function frame_size() = $frame_size;
+
 //                        sizeX sizeY sizeZ
 //Standard
 frame_rc300zl           = [490, 455, 445];
@@ -24,17 +24,23 @@ frame_rc300_custom      = [490, 500, 460];
 
 
 // Panel Options - Sides, halo and doors.
-//                              Panel               Door                   Halo
-//                            thickness  radius  thickness      radius   present  X     Y  thickness
+//                        Panel              Door       Extend
+//                      thickness  radius thickness     panels by
 //Standard
-panels_rc300       = ["PANELS",[6,          5],   0.25 * inch,     true,  [130, 30,  3]];
-panels_rc300zlt    = ["PANELS",[6,          5],   0.25 * inch,     true,  [130, 30,  3]];
+panel_rc300imperi = ["PANELS",6,   5,     6.35,         0 ];
+panel_rc300al_met = ["PANELS",6,   5,     3,            0 ];
+panel_rc300zlt    = ["PANELS",6,   5,     6,            0 ];
+
 //Experimental
-panels_steel300zl  = ["PANELS",[6,          5],   5,               true,  [130, 30,  3]];
-panels_steel300zl2 = ["PANELS",[6,          5],   5,               true,  [130, 30,  3]];
-panels_custom      = ["PANELS",[6,          5],   5,               true,  [130, 30,  3]];
+panels_steel300zl  = ["PANELS",6,        5,   5,               true,  [130, 30,  3]];
+panels_steel300zl2 = ["PANELS",6,        5,   5,               true,  [130, 30,  3]];
+panels_custom      = ["PANELS",6,        5,   5,               true,  [130, 30,  3]];
+
+function potato_thickness() = $panels[1];
+
+function side_panel_thickness() = 6;
 function panel_radius() = 5;
-function panel_thickness() = 4 ;
+function extend() = 0; //extend() panels by this to make the sides bigger.
 function panel_screw_offset()  = extrusion_width() + 35 ; // 50 in original 1515 machine
 // Max allowable distance between screws on front panels
 function max_panel_screw_spacing() = 100 ;
@@ -76,8 +82,8 @@ elec_custom     = ["ELEC.BOX", 410,   310,   59 ,   6,     false,  [-84,146.5,0]
 // ENCLOSURE BOX - size and shape - left unconstrained from the frame
 // not properly parametric yet, but this is a reasonable hack.
 //                        X    Y    Z
-function enclosure_height_above_frame() = panel_thickness() ;
-enclosure_rc300zl     = frame_rc300zl  + [150, panel_thickness() * 2, -200];
+function enclosure_height_above_frame() = 0 ;
+enclosure_rc300zl     = frame_rc300zl  + [150, side_panel_thickness() * 2, -200];
 enclosure_rc300zlt    = frame_rc300zlt + [150, 3, -200];
 
 enclosure_rc300zl4040 = [590, 555, 245];
@@ -90,12 +96,12 @@ enclosure_custom      = frame_rc300_custom + [150, 3, -200];
 
 //function minimum_addition()  = 150 ; //backwards compatibility until extended sides are in play.
 ///function extra_x() = 0 ;
-//function extra_y() = panel_thickness();
+//function extra_y() = side_panel_thickness();
 
-function halo_thickness() = 4 ;
-halo_rc300zl                  = [frame_rc300zl.x + 150, frame_rc300zl.y + panel_thickness() * 2, halo_thickness()];
+
+halo_rc300zl                  = [frame_rc300zl.x + 150, frame_rc300zl.y + side_panel_thickness() * 2, 4];
 halo_rc300zlNEMA23            = [+160,+15];
-//halo_rc300zl                  = frame_rc300zl + [frame_size().x,frame_size().y + minimum_addition(),panel_thickness()];
+//halo_rc300zl                  = frame_rc300zl + [frame_size().x,frame_size().y + minimum_addition(),side_panel_thickness()];
 halo_rc300steel300zlv1        = [638, 465 ,4];
 halo_rc300steel300zlv2        = [640, 465 ,4];
 halo_rc300steel300zlv2nema23  = [640+40, 465 ,4];
@@ -106,20 +112,23 @@ halo_rc300steel300zlv2nema23  = [640+40, 465 ,4];
 
 // LEADSCREW_SPECS
 //                        Name          height diameter
-leadscrew_rc300zl   = ["LEADSCREW_SPECS", 400, 8];
-leadscrew_rc300zlt  = ["LEADSCREW_SPECS", 700, 8];
-
+//Standard
+leadscrew_rc300zl       = ["LEADSCREW_SPECS", 400, 8];
+leadscrew_rc300zlt      = ["LEADSCREW_SPECS", 700, 8];
+//Experimental
 leadscrew_rc_steel300zl = ["LEADSCREW_SPECS", 420, 8];
-leadscrew_rc_steel300zl2 = ["LEADSCREW_SPECS", 420, 8];
-leadscrew_zl4040    = ["LEADSCREW_SPECS", 500, 8];
-leadscrew_rc_custom = ["LEADSCREW_SPECS", 420, 8];
+leadscrew_rc_steel300zl2= ["LEADSCREW_SPECS", 420, 8];
+leadscrew_zl4040        = ["LEADSCREW_SPECS", 500, 8];
+leadscrew_rc_custom     = ["LEADSCREW_SPECS", 420, 8];
 
 // BED
 //             name  bed_plate_size   motor space  bed_overall_size  bed thickness
+//Standard
 bed_rc300   = ["BED", [325, 342],      255,        [335, 342],        0.25 * inch];
-
+//Experimental
 bed_tinycore= ["BED", [150, 167],      100,        [160, 167],        0.25 * inch];
 bed_custom  = ["BED", [425, 442],      295,        [435, 442],        8];
+
 // NOTE: CAN X SIZE CONSTRAIN TO EXTRUSION & RAIL SIZE?
 
 // MANUFACTURER DEFINED
@@ -148,6 +157,20 @@ leadscrew_y_offset = 30 ; // taken off z yoke in fusion
 
 function NEMAtypeXY() = $NEMA_XY ;
 function NEMAtypeZ()  = $NEMA_Z ;
+function extrusion_width      (extrusion_type = $extrusion_type) = extrusion_type[1];
+function extrusion_screw_size (extrusion_type = $extrusion_type) = extrusion_type[2];
+
+function frame_size() = $frame_size;
+
+// *** THESE MOVE THE IDLER POSITION ON THE HALO
+move_inner = 2.5 ;
+move_outer = -12.5 ;
+
+function idler_offset_outer()      =  move_outer - 1.5 ;
+function halo_idler_offset_outer() =  move_outer ;
+function idler_offset_inner()      =  move_inner - 22.5;
+function halo_idler_offset_inner() =  move_inner ;
+
 
 function bed_plate_size()   = $bed[1];
 function bed_ear_spacing()  = $bed[2];
@@ -158,7 +181,8 @@ function leadscrew_length()   = $leadscrew_specs[1];
 function leadscrew_diameter() = $leadscrew_specs[2];
 
 
-function halo_size() = $halo_size;
+function halo_size()          = $halo_size;
+function halo_thickness()     = $halo_size.z ;
 
 function rail_lengths()  = [$rail_specs.x[0], $rail_specs.y[0], $rail_specs.z[0]];
 function rail_profiles() = [$rail_specs.x[1], $rail_specs.y[1], $rail_specs.z[1]];
@@ -183,8 +207,7 @@ function rpi_placement()    = $elecbox[11] ;
 
 function enclosure_size()   = $enclosure_size ;
 
-function extrusion_width      (extrusion_type = $extrusion_type) = extrusion_type[1];
-function extrusion_screw_size (extrusion_type = $extrusion_type) = extrusion_type[2];
+
 
 // CONSTRAINTS
 // This sets how far from centerline of the machine the idler stack on the x-carriages is.

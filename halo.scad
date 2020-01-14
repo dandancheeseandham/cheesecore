@@ -125,7 +125,7 @@ module panel_mounting_screws(x, y)
   *translate ([-frame_size().x / 2 + -20 + extrusion_width()/2, motor_pulley_link(),0]) // rear left idler
       cylinder(d=3.3, h=60);
 
-  *translate ([-20 + extrusion_width()/2 - frame_size().x / 2 - NEMA_width(NEMAtypeXY())/2 + panel_thickness(), -motor_pulley_link() - pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley),0])
+  *translate ([-20 + extrusion_width()/2 - frame_size().x / 2 - NEMA_width(NEMAtypeXY())/2 + side_panel_thickness(), -motor_pulley_link() - pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley),0])
       cylinder(d=3.3, h=60);
 
 
@@ -137,22 +137,20 @@ module panel_mounting_screws(x, y)
   // make motor holes for NEMA motors.
   translate([frame_size().x / 2 - extrusion_width(), 0, 0])
     mirror_y() {
-      translate([panel_thickness() + extrusion_width() + NEMA_width(NEMAtypeXY())/2 + 10, motor_pulley_link() + 11 , 0])
+      translate([side_panel_thickness() + extrusion_width() + NEMA_width(NEMAtypeXY())/2 + 10, motor_pulley_link() + 11 , 0])
         make_motorholes();
 }
 
 // IDLER HOLES with 2.5mm holes for 3mm tap.
   translate([-frame_size().x / 2, 0, 0]){
     mirror_y() {
-      translate([-panel_thickness() - NEMA_width(NEMAtypeXY())/2 - 12.5, motor_pulley_link() + 11 , -10])
-        cylinder(d=2.5, h=60);   //// FURTHEST IDLER
+      #translate([-side_panel_thickness() - NEMA_width(NEMAtypeXY())/2 + halo_idler_offset_outer(), motor_pulley_link() + 11 , -5])
+        cylinder(d=2.5, h=35);   //// FURTHEST IDLER
 
-    translate([-extrusion_width()+2.5, motor_pulley_link(),-10])
-      cylinder(d=2.5, h=60);   //// inner IDLER
+    #translate([-extrusion_width()+halo_idler_offset_inner(), motor_pulley_link(),-5])
+      cylinder(d=2.5, h=35);   //// inner IDLER
            }
          }
-
-
 
 }
 
@@ -171,7 +169,7 @@ screwsize = 3;
 module long_motor_holes(type) {
   function part_thickness() = 10;  // part_thickness  of aluminium part in mm
   function NEMAadjust() = 8 ;
-//translate ([-extrusion_width() - panel_thickness() - NEMA_width(type)/2, 0, 0])
+//translate ([-extrusion_width() - side_panel_thickness() - NEMA_width(type)/2, 0, 0])
   hull() {
     translate([NEMAadjust()/2, 0,-epsilon])
       cylinder(h=part_thickness() + 2 * epsilon, d=NEMA_boss_radius(type) * 2 + 3);
@@ -184,7 +182,7 @@ translate([(-mount_length/2-NEMAadjust())/2, 0, 0])
     hull() {
       translate([NEMA_hole_pitch(type)/2+NEMAadjust()/2, NEMA_hole_pitch(type)/2, -epsilon-30 ])
       // FIXME this needs to be a hole() not a cylinder
-      //cylinder(d=3.3, h=panel_thickness() + 2 * epsilon);
+      //cylinder(d=3.3, h=side_panel_thickness() + 2 * epsilon);
       cylinder(d=3.3, h=60);
       translate([NEMA_hole_pitch(type)/2-NEMAadjust()/2, NEMA_hole_pitch(type)/2, -epsilon-30 ])
       cylinder(d=3.3, h=60);

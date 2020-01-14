@@ -17,12 +17,12 @@ module longscrewhole(screwhole_length,Mscrew,screwhole_increase) {
 }
 module motor_holes(type = NEMA17) {
   translate([0, 0, -epsilon])
-    cylinder(h=panel_thickness() + 2 * epsilon, d=NEMA_boss_radius(NEMA17) * 2 + 1);
+    cylinder(h=side_panel_thickness() + 2 * epsilon, d=NEMA_boss_radius(NEMA17) * 2 + 1);
 
   mirror_xy() {
     translate([NEMA_hole_pitch(type)/2, NEMA_hole_pitch(type)/2, -epsilon-30 ])
       // FIXME this needs to be a hole() not a cylinder
-      //cylinder(d=3.3, h=panel_thickness() + 2 * epsilon);
+      //cylinder(d=3.3, h=side_panel_thickness() + 2 * epsilon);
       cylinder(d=3.3, h=60);
       *echo("hole pitch",NEMA_hole_pitch(type));
   }

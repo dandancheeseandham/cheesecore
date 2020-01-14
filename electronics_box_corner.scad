@@ -58,13 +58,6 @@ module electronics_box_corner(cornersize, acrylicdepth ,height, ledgewidth , led
 }
 
 demo() {
-  *translate ([60,0,-50])
-    rotate ([0,0,90])
-    import("railcorestls/lostapathy/electronics-box-corner.stl");
-  *translate ([0,60,-50])
-    rotate ([0,-90,90])
-    import("railcorestls/Electronics_Box_Corner.stl");
-
   // "standard" box
   electronics_box_corner(cornersize = 15, acrylicdepth = 6,height = 60, ledgewidth = 10 , ledgethickness = 4, holesize = 3.5);
 

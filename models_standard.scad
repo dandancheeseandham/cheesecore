@@ -9,12 +9,12 @@ module rc300zl(position = [0, 0, 0]) {
   $frame_size         = frame_rc300zl;
   $rail_specs         = rails_rc300zl;
   $enclosure_size     = enclosure_rc300zl;
-  $halo_size          = halo_rc300zl ;
+  $halo_size          = halo_rc300zl;
 
-  $leadscrew_specs    = leadscrew_rc300zl ;
+  $leadscrew_specs    = leadscrew_rc300zl;
   $front_window_size  = front_window_zl;
   $bed                = bed_rc300;
-
+  $panels             = panel_rc300al_met;
   $elecbox            = elec_ZL;
   $branding_name      = "Original ZL";
 

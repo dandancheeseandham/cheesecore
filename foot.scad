@@ -75,7 +75,7 @@ module foot(height = 50) {
 
 module feet(height = 50) {
   extrusion = extrusion_width();
-  translate([0, 0, -frame_size().z / 2 - panel_thickness()])
+  translate([0, 0, -frame_size().z / 2 - side_panel_thickness()])
     mirror_xy() {
       translate([-frame_size().x / 2, -frame_size().y / 2, -height]) foot(height = height);
     }

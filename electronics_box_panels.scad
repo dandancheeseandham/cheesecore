@@ -18,7 +18,7 @@ function screwz() = ( box_size_z()/2 - move_corners_adjust() + 20);
 
 
 module electronics_box_panels_assembly() {
-  translate([frame_size().x / 2 + panel_thickness(), 0, 0])
+  translate([frame_size().x / 2 + side_panel_thickness(), 0, 0])
     rotate ([0,0,90]) {
       place_four_corners();
 
@@ -159,7 +159,7 @@ module make_panel(length,electronicscabinet_box_depth,stepper_cables,IEC) {
   }
 
   demo() {
-    translate([frame_size().x / 2 + panel_thickness(), 0, 0])
+    translate([frame_size().x / 2 + side_panel_thickness(), 0, 0])
         rotate ([0,0,90]) {
           translate ([0,0,0])
             electronics_box();

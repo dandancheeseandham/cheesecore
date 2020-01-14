@@ -19,14 +19,11 @@ module corexy_belts(position = [0, 0]) {
   // Location of steppers in x
   // FIXME: the stepper offset works for the stepper, but the idler moves also.
   gap_for_screws = 6; //
-  stepper_offset = NEMA_width(NEMAtypeXY())/2 + panel_thickness() + gap_for_screws;
+  stepper_offset = NEMA_width(NEMAtypeXY())/2 + side_panel_thickness() + gap_for_screws;
 
-  // *** THESE ARE DEPENDENT ON THE IDLER POSITION
-  idler_offset_inner =  -20;  //tie this to the pulley location - these are relative to the centre of the extrusion on the left side
-  idler_offset_outer =  -20;  //tie this to the pulley location - these are relative to the centre of the extrusion on the left side
 /*
-  idler_offset_inner =  0;  //tie this to the pulley location - these are relative to the centre of the extrusion on the left side
-  idler_offset_outer =  0;  //tie this to the pulley location - these are relative to the centre of the extrusion on the left side
+  idler_offset_outer() =  0;  //tie this to the pulley location - these are relative to the centre of the extrusion on the left side
+  idler_offset_inner() =  0;  //tie this to the pulley location - these are relative to the centre of the extrusion on the left side
 */
   //stepper_location = extrusion_length.x/2 + stepper_offset;
 
@@ -44,8 +41,8 @@ module corexy_belts(position = [0, 0]) {
   lower_path = [
     [[carriage_stack.x, -carriage_stack.y ], GT2x20_plain_idler, true, true], // front idler stack
     [[frame_size().x / 2 + stepper_offset , -carriage_stack.y - pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley)], GT2x16_pulley, false, true], // front stepper
-    [[ idler_offset_inner + extrusion_width()/2 - frame_size().x / 2 - stepper_offset, -motor_pulley_link() - pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // front left idler
-    [[-frame_size().x / 2 + idler_offset_outer + extrusion_width()/2, motor_pulley_link()], GT2x20_toothed_idler, false, true], // rear left idler
+    [[ idler_offset_outer() + extrusion_width()/2 - frame_size().x / 2 - stepper_offset, -motor_pulley_link() - pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // front left idler
+    [[-frame_size().x / 2 + idler_offset_inner() + extrusion_width()/2, motor_pulley_link()], GT2x20_toothed_idler, false, true], // rear left idler
     [[carriage_stack.x, carriage_stack.y ], GT2x20_toothed_idler, false, true],  // rear idler stack
     [[carriage_stack.x, ypos + 7], GT2x20_plain_idler, false, false],  // fake idler to offset belt
     [[carriage_stack.x, ypos - 7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
@@ -53,8 +50,8 @@ module corexy_belts(position = [0, 0]) {
 
   upper_path = [
     [[carriage_stack.x, -carriage_stack.y ], GT2x20_toothed_idler, false, true], // front idler stack
-    [[-frame_size().x / 2 + idler_offset_outer + extrusion_width()/2, -motor_pulley_link()], GT2x20_toothed_idler, false, true], // front left idler
-    [[idler_offset_inner + extrusion_width()/2 - frame_size().x / 2 - stepper_offset, motor_pulley_link()+pulley_pr(GT2x20_plain_idler)+pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // rear left idler
+    [[-frame_size().x / 2 + idler_offset_inner() + extrusion_width()/2, -motor_pulley_link()], GT2x20_toothed_idler, false, true], // front left idler
+    [[idler_offset_outer() + extrusion_width()/2 - frame_size().x / 2 - stepper_offset, motor_pulley_link()+pulley_pr(GT2x20_plain_idler)+pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // rear left idler
     [[frame_size().x / 2  + stepper_offset, carriage_stack.y+pulley_pr(GT2x20_plain_idler) + pulley_pr(GT2x16_pulley)], GT2x20um_pulley, false, true], // rear stepper
     [[carriage_stack.x, carriage_stack.y ], GT2x20_plain_idler, true, true],  // rear idler stack
     [[carriage_stack.x, ypos + 7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
@@ -82,7 +79,7 @@ module corexy_belts(position = [0, 0]) {
     belt(type=belt, points=path, gap=10, gap_pt=[0,  belt_pitch_height(belt) - belt_thickness(belt) / 2]);
 
   }
-  function aluminium_idler_mount_test() = [idler_offset_inner + extrusion_width()/2 - frame_size().x / 2 - stepper_offset, -motor_pulley_link() - pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley)];
+  function aluminium_idler_mount_test() = [idler_offset_outer() + extrusion_width()/2 - frame_size().x / 2 - stepper_offset, -motor_pulley_link() - pulley_pr(GT2x20_plain_idler) - pulley_pr(GT2x16_pulley)];
   //echo (aluminium_idler_mount_test());
 }
 

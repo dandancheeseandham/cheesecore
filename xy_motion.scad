@@ -30,7 +30,7 @@ movefortension = 0;  //increase to move NEMA motor out for adjustments
 horizontal_placement = 11 ;
  translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
   mirror_y() {
-    translate([panel_thickness() + extrusion_width() + NEMA_width(NEMAtypeXY())/2 + movefortension + gap_for_screws, motor_pulley_link() + horizontal_placement , 0])
+    translate([side_panel_thickness() + extrusion_width() + NEMA_width(NEMAtypeXY())/2 + movefortension + gap_for_screws, motor_pulley_link() + horizontal_placement , 0])
       rotate([0, 0, 180]) NEMA(NEMAtypeXY());
     }
   }

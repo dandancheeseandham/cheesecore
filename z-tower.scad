@@ -38,7 +38,7 @@ module z_tower(z_position=0) {
   carriage_position = frame_size().z / 2 - z_position - offset_z_rails().z/2 + offset_nozzle_carriage().z ;
 
   // NEMA 17 Z motors
-  translate ([-leadscrew_x_offset,0, -panel_thickness()])
+  translate ([-leadscrew_x_offset,0, -side_panel_thickness()])
     NEMA(NEMAtypeZ());
 
   //Coupler is connected to the NEMA17 motor
