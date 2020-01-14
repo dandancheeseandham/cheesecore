@@ -50,7 +50,7 @@ module halo() {
                 clearance_hole(nominal_d=3, h=50);
 
 //holes
-holes_row_position = 50 ;
+holes_row_position = 50 ; // modify this to change where the holes are on the halo
           translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 210 , 25])
             clearance_hole(nominal_d=8.5, h=50);  // for  for M10 tap thread
             translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 190 , 25])

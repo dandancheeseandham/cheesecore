@@ -71,9 +71,13 @@ module printer(position = [0, 0, 0]) {
 module report() {
   echo ("*================================================*");
   echo ("BRANDING NAME: " , $branding_name);
-  echo ("Extrusions dimensions: " , frame_size());
+  echo ("Extrusion width:", extrusion_width());
+  echo ("Extrusion _screw_size:", extrusion_screw_size());
+  echo ("Frame total dimensions: " , frame_size());
+  echo ("Extrusions only dimensions: " , frame_size() - [30,30,30]);
   echo ("Halo dimensions: " , halo_size());
-  echo ("Top Enclosure dimensions: ", enclosure_size());
+  echo ("Top Enclosure total dimensions: ", enclosure_size());
+  echo ("Top Enclosure extrusion dimensions: ", enclosure_size() - [30,30,30]);
   echo ("------------------------------------------");
   echo ("Leadscrew length: ",leadscrew_length());
   echo ("Leadscrew diameter: ",leadscrew_diameter());
@@ -87,6 +91,11 @@ module report() {
   echo ("bed_ear_spacing() :", bed_ear_spacing() );
   echo ("bed_overall_size() :", bed_overall_size() );
   echo ("bed_thickness() :", bed_thickness() );
+  echo ("------------------------------------------");
+  echo ("ELECTRONICS BOX");
+  echo ("box_size_y() :",  box_size_y() );
+  echo ("box_size_z() :", box_size_z() );
+  echo ("box_depth() ) :", box_depth() );
   echo ("------------------------------------------");
   echo ("panels:",$panels[1]);
   echo ("side_panel_thickness()",side_panel_thickness() );
