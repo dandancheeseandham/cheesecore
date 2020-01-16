@@ -44,6 +44,7 @@ GT2x16_pulley_5b     = ["GT2x16_pulley_5b",     "GT2RD5", 16,  9.68, GT2x6,  6.5
 GT2x20_plain_idler_5b= ["GT2x20_plain_idler_5b", "GT2",    0, 12.0,  GT2x6,  6.5,  18, 0,   4, 18.0, 1.0, 0, 0,    false,         0];
 //Gt2 20 tooth idlers (6) 5mm ID
 GT2x20_tooth_idler_5b= ["GT2x20_tooth_idler_5b", "GT2",   20, 12.22, GT2x6,  6.5,  18, 0,   5, 18.0, 1.0, 0, 0,    false,         0];
+GT2x_magnum          = ["GT2x_magnum",           "GT2",   ,0, 31   , GT2x6,  6.5,  14, 0,   5, 44.5, 1.0, 3, 10,    false,        0];
 
 pulleys = [T5x10_pulley,
            T2p5x16_pulley,
@@ -53,6 +54,7 @@ pulleys = [T5x10_pulley,
            GT2x20_toothed_idler,
            GT2x20_plain_idler,
            GT2x16_toothed_idler,
-           GT2x16_plain_idler];
+           GT2x16_plain_idler,
+           GT2x_magnum];
 
 use <pulley.scad>

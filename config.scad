@@ -83,7 +83,7 @@ elec_custom     = ["ELEC.BOX", 410,   310,   59 ,   6,     false,  [-84,146.5,0]
 // not properly parametric yet, but this is a reasonable hack.
 //                        X    Y    Z
 function enclosure_height_above_frame() = 0 ;
-enclosure_rc300zl     = frame_rc300zl  + [150, side_panel_thickness() * 2, -200];
+enclosure_rc300zl     = frame_rc300zl  + [150, side_panel_thickness() * 2, -195];
 enclosure_rc300zlt    = frame_rc300zlt + [150, 3, -200];
 
 enclosure_rc300zl4040 = [590, 555, 245];
@@ -162,7 +162,8 @@ function extrusion_screw_size (extrusion_type = $extrusion_type) = extrusion_typ
 function frame_size() = $frame_size;
 
 // *** THESE MOVE THE IDLER POSITION ON THE HALO
-move_inner = 2.5 ;
+//move_inner = 2.5 ;
+move_inner = -4.5 ;
 move_outer = -12.5 ;
 
 function idler_offset_outer()      =  move_outer - 1.5 ;

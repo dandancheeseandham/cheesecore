@@ -7,6 +7,7 @@ use <lib/holes.scad>
 use <lib/layout.scad>
 use <door_hinge.scad>
 use <screwholes.scad>
+use <constants.scad>
 use <demo.scad>
 
 
@@ -65,29 +66,74 @@ module panel_mounting_screws(x, y) {
   }
 }
 
-module bottom_panel() {
+module top_panel() {
+
+  intersection() {
+    panel(enclosure_size().x, enclosure_size().y);
+    translate ([0, -extrusion_width($extrusion_type)*2, side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().y-extrusion_width($extrusion_type)*3,side_panel_thickness()+epsilon*4], panel_radius());
+
+    // Deboss instructions on panel
+    //deboss_depth = 3;
+    //color("#333333")
+      //translate([0, -enclosure_size().y/2 + 50, side_panel_thickness() - deboss_depth + epsilon])
+        //linear_extrude(deboss_depth)
+          //text("lid lifts up", halign="center", size=25);
+  }
+}
+
+
+module top_panel_1() {
 
   difference() {
     panel(enclosure_size().x, enclosure_size().y);
     // Deboss instructions on panel
-    deboss_depth = 3;
-    color("#333333")
-      translate([0, -enclosure_size().y/2 + 50, side_panel_thickness() - deboss_depth + epsilon])
-        linear_extrude(deboss_depth)
-          text("lid lifts up", halign="center", size=25);
+    //deboss_depth = 3;
+    //color("#333333")
+      //translate([0, -enclosure_size().y/2 + 50, side_panel_thickness() - deboss_depth + epsilon])
+        //linear_extrude(deboss_depth)
+          //text("lid lifts up", halign="center", size=25);
+          translate ([0, -extrusion_width($extrusion_type)*2, side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().y-extrusion_width($extrusion_type)*3,side_panel_thickness()+epsilon*4], panel_radius());
+
+          color(acrylic2_color())
+          *translate ([-(enclosure_size().x-60)/2, (enclosure_size().z-extrusion_width($extrusion_type))/2-panel_radius() ,-(+epsilon)])
+              cube([enclosure_size().x-60, panel_radius()+epsilon,side_panel_thickness()+epsilon*4]);
+
   }
 }
 
-module front_panel() {
-  difference()
+module front_panel_1() {
+  difference(){
     panel(enclosure_size().x, enclosure_size().z-extrusion_width($extrusion_type));
+    translate ([0, extrusion_width($extrusion_type), side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().z-extrusion_width($extrusion_type)*3,side_panel_thickness()+epsilon*4], panel_radius());
+
+    color(acrylic2_color())
+     translate ([-(enclosure_size().x-60)/2, (enclosure_size().z-extrusion_width($extrusion_type))/2-panel_radius() ,-(+epsilon)])
+        cube([enclosure_size().x-60, panel_radius()+epsilon,side_panel_thickness()+epsilon*4]);
+
     // Deboss instructions on panel
-    deboss_depth = 3;
-    color("#333333")
-      translate([0, -enclosure_size().z/2 + 150, side_panel_thickness() - deboss_depth + epsilon])
-        linear_extrude(deboss_depth)
-          text("lid lifts up", halign="center", size=25);
+    //deboss_depth = 3;
+    //color("#333333")
+    //  translate([0, -enclosure_size().z/2 + 150, side_panel_thickness() - deboss_depth + epsilon])
+        //linear_extrude(deboss_depth)
+          //text("lid lifts up", halign="center", size=25);
 }
+}
+
+module front_panel() {
+union(){
+  intersection(){
+    panel(enclosure_size().x, enclosure_size().z-extrusion_width($extrusion_type));
+    translate ([0, extrusion_width($extrusion_type), side_panel_thickness()/2-epsilon])
+      rounded_rectangle([enclosure_size().x-60, enclosure_size().z-extrusion_width($extrusion_type)*3,side_panel_thickness()+epsilon*4], panel_radius());
+}
+color(acrylic2_color())
+ translate ([-(enclosure_size().x-60)/2, (enclosure_size().z-extrusion_width($extrusion_type))/2-panel_radius() ,-(+epsilon*4)])
+    cube([enclosure_size().x-60, panel_radius(),side_panel_thickness()+epsilon*4]);
+  }
+}
+
+
+
 
 module enclosure_hinges() {
   mirror_x()
@@ -113,9 +159,13 @@ module back_panel() {
 }
 
 module enclosure_side_panels() {
-  translate([0, 0, enclosure_size().z / 2]) bottom_panel();
-  translate([0, -(enclosure_size().y)/2, extrusion_width($extrusion_type)/2]) rotate([90,0,0]) front_panel();
-  translate([-enclosure_size().x / 2 - side_panel_thickness(), 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
+  explode = 50;
+  translate([0, -explode, enclosure_size().z / 2 + explode]) top_panel();
+  translate([0, 0, enclosure_size().z / 2]) top_panel_1();
+  translate([0, -(enclosure_size().y)/2 - explode, extrusion_width($extrusion_type)/2 + explode]) rotate([90,0,0]) front_panel();
+  translate([0, -(enclosure_size().y)/2, extrusion_width($extrusion_type)/2]) rotate([90,0,0]) front_panel_1()
+//# translate ([-enclosure_size().x /2 - side_panel_thickness(), 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
+# translate ([0,0,-600]) rotate([90,0,90]) side_panel();
   // FIXME: should move this into a right_side_panel() module and call that.
   translate ([enclosure_size().x / 2, 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
   translate ([0, enclosure_size().y / 2 + side_panel_thickness(),extrusion_width($extrusion_type)/2]) rotate([90,0,0]) back_panel();

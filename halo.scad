@@ -60,11 +60,11 @@ holes_row_position = 50 ; // modify this to change where the holes are on the ha
 
           translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 170 , 25])
             clearance_hole(nominal_d=2.5, h=50);   // for 3mm tap
-          translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 150 , 25])
+  *        translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 150 , 25])
             clearance_hole(nominal_d=3, h=50);  // for 3mm hole
-          translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 130 , 25])
+  *        translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 130 , 25])
             clearance_hole(nominal_d=4, h=50);  // for 4mm hole for standard PTFE tube
-          translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 110 , 25])
+  *        translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 120 , 25])
             clearance_hole(nominal_d=4, h=50);  // for 4mm hole for standard PTFE tube
 
           *translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 90 , 25])

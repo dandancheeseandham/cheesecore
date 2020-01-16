@@ -77,7 +77,7 @@ module report() {
   echo ("Extrusions only dimensions: " , frame_size() - [30,30,30]);
   echo ("Halo dimensions: " , halo_size());
   echo ("Top Enclosure total dimensions: ", enclosure_size());
-  echo ("Top Enclosure extrusion dimensions: ", enclosure_size() - [30,30,30]);
+  echo ("Top Enclosure extrusion dimensions: ", enclosure_size() - [30,30,15]);
   echo ("------------------------------------------");
   echo ("Leadscrew length: ",leadscrew_length());
   echo ("Leadscrew diameter: ",leadscrew_diameter());

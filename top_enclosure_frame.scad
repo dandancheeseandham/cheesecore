@@ -12,11 +12,17 @@ module z_extrusions() {
 }
 
 module x_extrusions() {
-  mirror_y() {
+   {
     translate([0, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
       rotate([0,90,0])
         extrusion(enclosure_size().x - 2 * extrusion_width());
   }
+
+  {
+   translate([0, -enclosure_size().y / 2 + extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
+     rotate([0,90,0])
+       extrusion(enclosure_size().x - 4 * extrusion_width());
+ }
 }
 
 module y_extrusions() {
