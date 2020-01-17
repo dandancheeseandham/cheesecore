@@ -66,11 +66,11 @@ module panel_mounting_screws(x, y) {
   }
 }
 
-module top_panel() {
+module top_panel_door() {
 
   intersection() {
-    panel(enclosure_size().x, enclosure_size().y);
-    translate ([0, -extrusion_width($extrusion_type)*2, side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().y-extrusion_width($extrusion_type)*3,side_panel_thickness()+epsilon*4], panel_radius());
+    panel(enclosure_size().x, enclosure_size().y + side_panel_thickness());
+    translate ([0, -extrusion_width($extrusion_type)*2-doorgap/2, side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60-doorgap, enclosure_size().y-extrusion_width($extrusion_type)*3-doorgap,side_panel_thickness()+epsilon*4], panel_radius());
 
     // Deboss instructions on panel
     //deboss_depth = 3;
@@ -82,7 +82,7 @@ module top_panel() {
 }
 
 
-module top_panel_1() {
+module top_panel() {
 
   difference() {
     panel(enclosure_size().x, enclosure_size().y);
@@ -101,7 +101,7 @@ module top_panel_1() {
   }
 }
 
-module front_panel_1() {
+module front_panel() {
   difference(){
     panel(enclosure_size().x, enclosure_size().z-extrusion_width($extrusion_type));
     translate ([0, extrusion_width($extrusion_type), side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().z-extrusion_width($extrusion_type)*3,side_panel_thickness()+epsilon*4], panel_radius());
@@ -119,16 +119,16 @@ module front_panel_1() {
 }
 }
 
-module front_panel() {
-union(){
+module front_panel_door() {
+#union(){
   intersection(){
-    panel(enclosure_size().x, enclosure_size().z-extrusion_width($extrusion_type));
-    translate ([0, extrusion_width($extrusion_type), side_panel_thickness()/2-epsilon])
-      rounded_rectangle([enclosure_size().x-60, enclosure_size().z-extrusion_width($extrusion_type)*3,side_panel_thickness()+epsilon*4], panel_radius());
+    panel(enclosure_size().x, enclosure_size().z-extrusion_width($extrusion_type) );
+    translate ([0, extrusion_width($extrusion_type)+doorgap/4, side_panel_thickness()/2-epsilon])
+      rounded_rectangle([enclosure_size().x-extrusion_width * 4-doorgap, enclosure_size().z-extrusion_width($extrusion_type)*3,side_panel_thickness()+epsilon*4], panel_radius());
 }
-color(acrylic2_color())
- translate ([-(enclosure_size().x-60)/2, (enclosure_size().z-extrusion_width($extrusion_type))/2-panel_radius() ,-(+epsilon*4)])
-    cube([enclosure_size().x-60, panel_radius(),side_panel_thickness()+epsilon*4]);
+#color(acrylic2_color())
+ translate ([-(enclosure_size().x)/2 - extrusion_width*2 + doorgap/2, (enclosure_size().z-extrusion_width($extrusion_type))/2-panel_radius()+doorgap/4 ,-(+epsilon*4)])
+    cube([enclosure_size().x + panel_radius() - extrusion_width * 4-doorgap, panel_radius(),side_panel_thickness()+epsilon*4]);
   }
 }
 
@@ -152,6 +152,11 @@ module side_panel() {
   panel(enclosure_size(). y, enclosure_size().z-extrusion_width($extrusion_type)/2);
 }
 
+module left_side_panel() {
+  panel(enclosure_size(). y, enclosure_size().z-extrusion_width($extrusion_type)/2);
+}
+
+
 module back_panel() {
   panel(enclosure_size().x, enclosure_size().z-extrusion_width($extrusion_type)/2);
   translate(DuetE_placement()-[0,0,-epsilon])
@@ -159,14 +164,15 @@ module back_panel() {
 }
 
 module enclosure_side_panels() {
-  explode = 50;
-  translate([0, -explode, enclosure_size().z / 2 + explode]) top_panel();
-  translate([0, 0, enclosure_size().z / 2]) top_panel_1();
-  translate([0, -(enclosure_size().y)/2 - explode, extrusion_width($extrusion_type)/2 + explode]) rotate([90,0,0]) front_panel();
-  translate([0, -(enclosure_size().y)/2, extrusion_width($extrusion_type)/2]) rotate([90,0,0]) front_panel_1()
-//# translate ([-enclosure_size().x /2 - side_panel_thickness(), 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
-# translate ([0,0,-600]) rotate([90,0,90]) side_panel();
+  explode = 0;
+  translate([0, -explode - side_panel_thickness(), enclosure_size().z / 2 + explode + side_panel_thickness()]) top_panel_door();
+  translate([0, 0, enclosure_size().z / 2]) top_panel();
+  translate([0, -(enclosure_size().y)/2 - explode -side_panel_thickness(), extrusion_width($extrusion_type)/2 + side_panel_thickness() + explode]) rotate([90,0,0]) front_panel_door();
+  translate([0, -(enclosure_size().y)/2, extrusion_width($extrusion_type)/2]) rotate([90,0,0]) front_panel()
+//# translate ([-enclosure_size().x /2 - side_panel_thickness(), 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) left_side_panel();
+  //translate ([0,0,0]) rotate([90,0,90]) side_panel();
   // FIXME: should move this into a right_side_panel() module and call that.
+  #translate ([enclosure_size().x / 2, 100, extrusion_width($extrusion_type)/2+200]) rotate([90,0,90]) left_side_panel();
   translate ([enclosure_size().x / 2, 0, extrusion_width($extrusion_type)/2]) rotate([90,0,90]) side_panel();
   translate ([0, enclosure_size().y / 2 + side_panel_thickness(),extrusion_width($extrusion_type)/2]) rotate([90,0,0]) back_panel();
 }

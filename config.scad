@@ -9,12 +9,12 @@ include <nopscadlib/vitamins/stepper_motors.scad>
 $draft = true;
 // *************************************************************************************************************************************************
 
-// FRAME
-
+// FRAME - either specify frame size complete or specify extrusion sizes and addon the "framecornercubes()""
 //                        sizeX sizeY sizeZ
 //Standard
-frame_rc300zl           = [460, 425, 415] + [30,30,30]; // + [30,30,30] is for 15mm corner cubes at each end
-frame_rc300zlt          = [460, 425, 715] + [30,30,30]; // + [30,30,30] is for 15mm corner cubes at each end
+frame_rc300zl           = [460, 425, 415] + framecornercubes();
+frame_rc300zlt          = [460, 425, 715] + framecornercubes();
+
 //Experimental
 frame_rc300zl4040       = [590, 555, 545];
 frame_rc300_steel300zl  = [490, 455, 445];
@@ -83,7 +83,7 @@ elec_custom     = ["ELEC.BOX", 410,   310,   59 ,   6,     false,  [-84,146.5,0]
 // not properly parametric yet, but this is a reasonable hack.
 //                        X    Y    Z
 function enclosure_height_above_frame() = 0 ;
-enclosure_rc300zl     = frame_rc300zl  + [150, side_panel_thickness() * 2, -195];
+enclosure_rc300zl     = frame_rc300zl  + [150, side_panel_thickness() * 2, - 250];
 enclosure_rc300zlt    = frame_rc300zlt + [150, 3, -200];
 
 enclosure_rc300zl4040 = [590, 555, 245];
@@ -207,7 +207,9 @@ function rpi_placement()    = $elecbox[11] ;
 
 function enclosure_size()   = $enclosure_size ;
 
-
+// FIXME: corner cubes frame hack
+function framecornercubes() = [30,30,30]; // add 15mm corner cubes to each end of the frame so we can specify EXTRUSION sizes for the frame
+function top_enclosure_cornercubes() = [30,30,30]; // add 15mm corner cubes to each end of the frame so we can specify EXTRUSION sizes for the frame
 
 // CONSTRAINTS
 // This sets how far from centerline of the machine the idler stack on the x-carriages is.
