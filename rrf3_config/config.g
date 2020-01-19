@@ -151,13 +151,15 @@ M308 S0 P"exp.thermistor6" Y"thermistor" A"bed_heat" T100000 B3950 R4700 H0 L0  
 M143 H0 S130                                                                    ; Maximum bed temperature
 M308 S8 P"exp.thermistor7" Y"thermistor" A"keenovo" T100000 B3950 R4700  H0 L0  ; Silicone heater thermistor on x7
 
-; #### Chamber - Heater 3
-;M141 H3                        ; heater 3 is the chamber heater (not enabled yet)
-;M305 P3 R4700 T100000 B3950    ; heater 3 is monitored by a 100K thermistor with B=3950 and a 4.7K series resistor  (not enabled yet)
-;M301 H3 B1                     ; use bang-bang control for the chamber heater  (not enabled yet)
+; #### Chamber - Heater 3 - (not enabled yet)
+;M141 H3                        
+;M950 H3 C"exp.heater3" T3                                                           ; heater 3 is the chamber heater 
+;M308 S3 P"exp.thermistor3" Y"thermistor" A"keenovo" T100000 B3950 R4700  H0 L0  ; Set Sensor 3 as 100K thermistor with B=3950 and a 4.7K series resistor
+;M301 H3 B1                                                                      ; use bang-bang control for the chamber heater
+;M106 P3 S1 H1 T50:80 C"Chamber"
 
 ; #### Electronics Cabinet
-M308 S10 Y"mcu-temp" A"mcu-temp"
+M308 S10 Y"mcu-temp" A"mcu-temp" ; Set MCU on Sensor 10
 M106 P7 T35:55 H10 C"Elec.Cab.1" ; Electronics cooling fan that starts to turn on when the MCU temperature (virtual heater 100) reaches 45C
 M106 P8 T35:55 H10 C"Elec.Cab.2" ; and reaches full speed when the MCU temperature reaches 55C or if any TMC2660 drivers
                                           ; (N.B. If a fan is configured to trigger on a virtual heater whose sensor represents TMC2660 driver over-temperature
