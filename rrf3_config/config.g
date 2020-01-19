@@ -124,7 +124,7 @@ M558 H10 A1 T3000 S0.02                     ; Z probe - raise probe height.
                                             ; H10 - dive height
                                             ; A bigger dive height prevents a situation where the bed is out of alignment by more than the dive 
                                             ; height on any corner, which can crash the hot-end into the bed while moving the head in XY.
-                                            ; Probing speed and travel speed are similarly reduced in case the Z probe isn't connected properly 
+                                            ; Probing speed and travel speed are similarly reduced in case the Z probe is not connected properly 
                                             ; (or disconnects later after moving to a point) giving the user more time to stop.
 
 ; #### Probing configuration
