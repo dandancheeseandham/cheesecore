@@ -122,10 +122,10 @@ M106 P2 S0 H-1 C"Part"                      ; (Part cooling fan) Set fan 2 value
 M558 P1 C"^zprobe.in"                       ; _RRF3_ IR Probe connected to Z probe IN pin
 M558 H10 A1 T3000 S0.02                     ; Z probe - raise probe height.
                                             ; H10 - dive height
-                                            ; A bigger dive height prevents a situation where the bed is out of alignment by more than the dive height
-                                            ; on any corner, which can crash the hot-end into the bed while moving the head in XY.
-                                            ; Probing speed and travel speed are similarly reduced in case the Z probe isn't connected properly (or
-                                            ; disconnects later after moving to a point) giving the user more time to stop.
+                                            ; A bigger dive height prevents a situation where the bed is out of alignment by more than the dive 
+                                            ; height on any corner, which can crash the hot-end into the bed while moving the head in XY.
+                                            ; Probing speed and travel speed are similarly reduced in case the Z probe isn't connected properly 
+                                            ; (or disconnects later after moving to a point) giving the user more time to stop.
 
 ; #### Probing configuration
 M558 P1                                     ; IR probe
