@@ -60,19 +60,31 @@ module rc300steel300zl2(position = [0, 0, 0]) {
 
 // CHEESEANDHAM'S "ZL+"
 module steel300zl(position = [0, 0, 0]) {
-  $front_window_size = front_window_zl;
-  $extrusion_type = extrusion15;
-  $NEMA_XY = NEMA17;
-  $NEMA_Z = NEMA17;
-  $frame_size = frame_rc300_steel300zl;
-  $rail_specs = rails_steel300zl;
-  $leadscrew_specs = leadscrew_rc_steel300zl;
-  $bed = bed_rc300;
+
+  $NEMA_XY            = NEMA17;
+  $NEMA_Z             = NEMA17;
+  $extrusion_type     = extrusion15;
+
+  $frame_size         = frame_rc300_steel300zl;
+  $rail_specs         = rails_steel300zl;
+  $enclosure_size     = enclosure_steel300zl;
+  $halo_size          = halo_rc300_steel300zl ;
+
+  $leadscrew_specs    = leadscrew_rc_steel300zl;
+  $front_window_size  = front_window_zl;
+  $bed                = bed_rc300;
+  $panels             = panel_rc300al_met;
   $elecbox = elec_steel300zl ; //electronics box size and placements
-  $branding_name = "cheesecore ZL+";
-  $enclosure_size = enclosure_steel300zl;
-  children();
+  $branding_name = "Cheesecore ZL";
+    children();
 }
+
+
+
+
+
+
+
 
 
 

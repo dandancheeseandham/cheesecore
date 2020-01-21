@@ -52,7 +52,7 @@ module top_enclosure() {
   translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + halo_thickness() + enclosure_height_above_frame()]) {
     enclosure_frame();
      %enclosure_side_panels();
-    enclosure_hinges();
+    *enclosure_hinges();
     enclosure_handle();
   }
   *printed_interface_arrangement();
@@ -74,10 +74,11 @@ module report() {
   echo ("Extrusion width:", extrusion_width());
   echo ("Extrusion _screw_size:", extrusion_screw_size());
   echo ("Frame total dimensions: " , frame_size());
-  echo ("Extrusions only dimensions: " , frame_size() - [30,30,30]);
+  echo ("Extrusions only dimensions: " , frame_size() - framecornercubes());
+  echo ("Frame corner cubes: ",framecornercubes());
   echo ("Halo dimensions: " , halo_size());
   echo ("Top Enclosure total dimensions: ", enclosure_size());
-  echo ("Top Enclosure extrusion dimensions: ", enclosure_size() - [30,30,15]);
+  echo ("Top Enclosure extrusion dimensions: ", enclosure_size() - top_enclosure_cornercubes());
   echo ("------------------------------------------");
   echo ("Leadscrew length: ",leadscrew_length());
   echo ("Leadscrew diameter: ",leadscrew_diameter());
