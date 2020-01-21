@@ -1,3 +1,4 @@
+// vim: set nospell:
 use <../models_standard.scad>
 use <../models_experimental.scad>
 

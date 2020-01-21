@@ -1,3 +1,4 @@
+// vim: set nospell:
 use <export_config.scad>
 use <../bearing_block.scad>
 

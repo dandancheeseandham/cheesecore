@@ -17,24 +17,24 @@ frame_rc300zlt          = [460, 425, 715] + framecornercubes();
 
 //Experimental
 frame_rc300zl4040       = [590, 555, 545];
-frame_rc300_steel300zl  = [490, 455, 445];
+frame_rc300_steel300zl  = [460, 445, 415] + framecornercubes();
 frame_rc300_steel300zl2 = [490, 500, 460];
 frame_rc300_custom      = [490, 500, 460];
 
 
 
 // Panel Options - Sides, halo and doors.
-//                        Panel              Door       Extend
-//                      thickness  radius thickness     panels by
+//                        Panel              Door     Extend
+//                      thickness  radius thickness   panels by
 //Standard
-panel_rc300imperi = ["PANELS",6,   5,     6.35,         0 ];
-panel_rc300al_met = ["PANELS",6,   5,     3,            0 ];
-panel_rc300zlt    = ["PANELS",6,   5,     6,            0 ];
+panel_rc300imperi = ["PANELS",6,   5,     6.35,        0 ];
+panel_rc300al_met = ["PANELS",6,   5,     3,           0 ];
+panel_rc300zlt    = ["PANELS",6,   5,     6,           0 ];
 
 //Experimental
-panels_steel300zl  = ["PANELS",6,        5,   5,               true,  [130, 30,  3]];
-panels_steel300zl2 = ["PANELS",6,        5,   5,               true,  [130, 30,  3]];
-panels_custom      = ["PANELS",6,        5,   5,               true,  [130, 30,  3]];
+panels_steel300zl  = ["PANELS",6,  5,     5,           0 ];
+panels_steel300zl2 = ["PANELS",6,  5,     5,           0 ];
+panels_custom      = ["PANELS",6,  5,     5,           0 ];
 
 function potato_thickness() = $panels[1];
 
@@ -62,8 +62,8 @@ rails_rc300zlt    = [[400, MGN12], [400, MGN12], [700, MGN12]];
 //Experimental
 
 rails_rc300zl4040 = [[500, MGN15], [500, MGN12], [500, MGN15]];
-rails_steel300zl  = [[400, MGN12], [400, MGN12], [400, MGN12]];
-rails_steel300zl2 = [[420, MGN12], [445, MGN12], [420, MGN12]];
+rails_steel300zl  = [[420, MGN12], [420, MGN12], [420, MGN12]];
+rails_steel300zl2 = [[420, MGN12], [645, MGN12], [420, MGN12]];
 rails_custom      = [[420, MGN12], [445, MGN12], [420, MGN12]];
 
 
@@ -102,6 +102,7 @@ enclosure_custom      = frame_rc300_custom + [150, 3, -200];
 halo_rc300zl                  = [frame_rc300zl.x + 150, frame_rc300zl.y + side_panel_thickness() * 2, 4];
 halo_rc300zlNEMA23            = [+160,+15];
 //halo_rc300zl                  = frame_rc300zl + [frame_size().x,frame_size().y + minimum_addition(),side_panel_thickness()];
+halo_rc300_steel300zl         = [frame_rc300_steel300zl.x + 150, frame_rc300_steel300zl.y + side_panel_thickness() * 2, 4];
 halo_rc300steel300zlv1        = [638, 465 ,4];
 halo_rc300steel300zlv2        = [640, 465 ,4];
 halo_rc300steel300zlv2nema23  = [640+40, 465 ,4];
@@ -111,15 +112,15 @@ halo_rc300steel300zlv2nema23  = [640+40, 465 ,4];
 
 
 // LEADSCREW_SPECS
-//                        Name          height diameter
+//                        Name          height diameter   number of holes    Holes PCD
 //Standard
-leadscrew_rc300zl       = ["LEADSCREW_SPECS", 400, 8];
-leadscrew_rc300zlt      = ["LEADSCREW_SPECS", 700, 8];
+leadscrew_rc300zl       = ["LEADSCREW_SPECS", 400, 8,     4,                 16];
+leadscrew_rc300zlt      = ["LEADSCREW_SPECS", 700, 8,     4,                 16];
 //Experimental
-leadscrew_rc_steel300zl = ["LEADSCREW_SPECS", 420, 8];
-leadscrew_rc_steel300zl2= ["LEADSCREW_SPECS", 420, 8];
-leadscrew_zl4040        = ["LEADSCREW_SPECS", 500, 8];
-leadscrew_rc_custom     = ["LEADSCREW_SPECS", 420, 8];
+leadscrew_rc_steel300zl = ["LEADSCREW_SPECS", 540, 8,     4,                 16];
+leadscrew_rc_steel300zl2= ["LEADSCREW_SPECS", 420, 8,     4,                 16];
+leadscrew_zl4040        = ["LEADSCREW_SPECS", 500, 8,     4,                 16];
+leadscrew_rc_custom     = ["LEADSCREW_SPECS", 420, 8,     4,                 16];
 
 // BED
 //             name  bed_plate_size   motor space  bed_overall_size  bed thickness
@@ -177,8 +178,10 @@ function bed_ear_spacing()  = $bed[2];
 function bed_overall_size() = $bed[3];
 function bed_thickness()    = $bed[4];
 
-function leadscrew_length()   = $leadscrew_specs[1];
-function leadscrew_diameter() = $leadscrew_specs[2];
+function leadscrew_length()           = $leadscrew_specs[1];
+function leadscrew_diameter()         = $leadscrew_specs[2];
+function leadscrew_number_of_holes()  = $leadscrew_specs[3];
+function leadscrew_pcd()              = $leadscrew_specs[4];
 
 
 function halo_size()          = $halo_size;
