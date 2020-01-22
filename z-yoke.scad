@@ -10,8 +10,9 @@ module z_yoke() {
   extrusion_width = extrusion_width();
   carriage_type = rail_carriage(rail_profiles().z);
 
-  part_thickness = 7.5;
-  extra_mount_length = 5; // how much longer to make the mount so we can have the horizontal pieces below the mounting screws
+  part_thickness = 8.8;
+  extra_mount_length = 6; // how much longer to make the mount so we can have the horizontal pieces below the mounting screws
+
   color(printed_part_color()) {
     difference() {
       // mount face to attach to rail carriage
@@ -24,10 +25,19 @@ module z_yoke() {
           carriage_hole_positions(carriage_type) {
             clearance_hole(nominal_d=3, h=100);
           }
+      //Add an extra MGN12 short carriage type
+      *translate([50,0,-2.5])
+        rotate([0,90,0])
+          carriage_hole_positions(MGN12_short_ca) {
+            clearance_hole(nominal_d=3, h=100);
+              }
+
+
+          //
     }
 
     // flat bed mounting ear
-    translate([0,0,-carriage_length(carriage_type/2) - extra_mount_length]) {
+    translate([0,0,-carriage_length(carriage_type/2) - extra_mount_length ]) {
       linear_extrude(part_thickness) {
         difference() {
           z_yoke_bed_mount_profile(extrusion_width);
@@ -37,13 +47,13 @@ module z_yoke() {
     }
 
     // reinforcing rib
-    hull() {
+    *hull() {
       // top corner
-      translate([- part_thickness, -part_thickness/2, carriage_length(carriage_type) /2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
+      translate([- part_thickness, -part_thickness/2, carriage_length(carriage_type) /2 - epsilon]) cube([epsilon, part_thickness , epsilon ]);
       // corner near ear
-      translate([-ear_extent(), -part_thickness/2, - carriage_length(carriage_type) / 2 +extra_mount_length/2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
+      translate([-ear_extent(), -part_thickness/2, - carriage_length(carriage_type) / 2 - extra_mount_length  - epsilon]) cube([epsilon , part_thickness, epsilon]);
       // base/inside corner
-      translate([- part_thickness, -part_thickness/2, -carriage_length(carriage_type) / 2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
+      translate([- part_thickness, -part_thickness/2, -carriage_length(carriage_type) / 2 - extra_mount_length/2 - epsilon]) cube([epsilon , part_thickness, epsilon]);
     }
   }
 }
@@ -55,8 +65,9 @@ function ear_extent() = (frame_size().x - 4 * extrusion_width() - 2 * carriage_h
 module z_yoke_bed_mount_profile(extrusion_width) {
   assert(extrusion_width != undef, "Must specify extrusion_width");
   carriage_type = rail_carriage(rail_profiles().z);
-
   // around leadscrew out to bed ear
+
+difference(){
   hull() {
     // FIXME: base this on the leadscrew anti-backlash nut size
     translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset])
@@ -64,12 +75,14 @@ module z_yoke_bed_mount_profile(extrusion_width) {
     translate([-ear_extent() + 20 / 2, -leadscrew_y_offset])
       rounded_square([20, 30], r=2.5);
   }
+}
   // bridge from bed ear to upright bracket
   hull() {
     translate([-ear_extent()+2.5, carriage_width(carriage_type)/2 - 2.5]) circle(r=2.5);
     translate([-1, carriage_width(carriage_type)/2 - 1]) square(1);
     translate([-ear_extent(),-leadscrew_y_offset]) square([ear_extent(), epsilon]);
   }
+
 }
 
 module z_yoke_holes_profile(extrusion_width) {
@@ -104,7 +117,9 @@ if (number_holes == 4) {
 }
 
 if (number_holes == 6) {
-  translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset]) {
+
+  translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset])
+  rotate ([0,0,8]){
     mirror_xy() {
       rotate(60) translate([leadscrew_pcd()/2, 0]) circle(d=3.4);
       translate([leadscrew_pcd()/2, 0]) circle(d=3.4);
