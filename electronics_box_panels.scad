@@ -36,7 +36,7 @@ module electronics_box_panels_assembly() {
         rotate ([0,90,0])
           left_side_panel();
 
-      translate ([0, -box_depth(), 0])
+      *translate ([0, -box_depth(), 0])
         rotate ([90,0,0])
           electronics_cover_panel();
       // FIXME: bug spotted when no electronics is rendered included with panels.

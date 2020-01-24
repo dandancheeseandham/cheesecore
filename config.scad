@@ -71,6 +71,7 @@ rails_custom      = [[420, MGN12], [445, MGN12], [420, MGN12]];
 // ELECTRONICS BOX ALONG WITH  & ELECTRONICS & CABLE PLACEMENT -  placement of parts on right panel with X/Y as centre
 //                name         sizeX  sizeY  depth thick, lasercut   cable_bundle      DuetE            Duex            PSU        SSR            RPi
 elec_ZL         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,     true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
+elec_ZL_Duet3   = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,     true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 elec_ZLT        = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,     true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 
 elec_new_ZL     = ["ELEC.BOX", 340,   270,   59 ,   6,     true,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
@@ -125,7 +126,7 @@ leadscrew_rc_custom     = ["LEADSCREW_SPECS", 420, 8,     4,                 16]
 // BED
 //             name  bed_plate_size   motor space  bed_overall_size  bed thickness
 //Standard
-bed_rc300   = ["BED", [325, 342],      255,        [335, 342],        0.25 * inch];
+bed_rc300   = ["BED", [325, 342],      255,        [335, 342],        5];
 //Experimental
 bed_tinycore= ["BED", [150, 167],      100,        [160, 167],        0.25 * inch];
 bed_custom  = ["BED", [425, 442],      295,        [435, 442],        8];
@@ -143,6 +144,7 @@ extrusion40 = ["4040 Extrusion", 40, 6];
 
 //This should be per machine
 function aluminium_part_depth() = 6 ;  // is this being used anymore?
+function back_panel_enclosure() = false;
 
 // *************************************************************************************************************************************************
 

@@ -41,7 +41,7 @@ module fan_guard(type, name = false, thickness = fan_guard_thickness(), spokes =
     hole = fan_aperture(type) / 2;
     max_ring_pitch = finger_width + wall;
     inner_ring = max_ring_pitch / 2;
-    gap = hole + wall / 2 - inner_ring;
+    gap = hole + wall / 2 - inner_ring ;
     rings = ceil(gap / max_ring_pitch);
     ring_pitch = gap / rings;
     spoke_end = grill && fan_aperture(type) > fan_bore(type) ? hole - ring_pitch : hole;
