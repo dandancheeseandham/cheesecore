@@ -1,7 +1,7 @@
 include <config.scad>
 
 // CUSTOMCORE FOR DEBUGGING/QUICK RENDERING
-module customcore(position = [0, 0, 0]) {
+module customcore() {
   $front_window_size = front_window_zl;
   $extrusion_type = extrusion15;
   $NEMA_XY = NEMA17;
@@ -18,7 +18,7 @@ module customcore(position = [0, 0, 0]) {
 
 
 // 2020 based on ORIGINAL RAILCORE II ZL
-module 2020core(position = [0, 0, 0]) {
+module 2020core() {
   $front_window_size  = front_window_zl;
   $extrusion_type     = extrusion20;
   $NEMA_XY            = NEMA23;

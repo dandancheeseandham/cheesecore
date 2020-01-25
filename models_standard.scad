@@ -1,7 +1,7 @@
 include <config.scad>
 
 // ORIGINAL RAILCORE II ZL
-module rc300zl(position = [0, 0, 0]) {
+module rc300zl() {
   $NEMA_XY            = NEMA17;
   $NEMA_Z             = NEMA17;
   $extrusion_type     = extrusion15;
@@ -23,7 +23,7 @@ module rc300zl(position = [0, 0, 0]) {
 }
 
 // ORIGINAL RAILCORE II ZLT
-module rc300zlt(position = [0, 0, 0]) {
+module rc300zlt() {
   $front_window_size  = front_window_zlt;
   $extrusion_type     = extrusion15;
   $NEMA_XY            = NEMA17;
