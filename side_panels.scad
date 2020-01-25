@@ -83,7 +83,7 @@ module bottom_panel(bottom_braces=true) {
         // left side holes
         mirror_y() {
           translate([-frame_size().x / 2 + extrusion_width() + leadscrew_x_offset , bed_ear_spacing() / 2, 0])
-            motor_holes();
+            motor_holes(NEMAtypeZ());
 
 
       /*  mirror_x(){
@@ -97,7 +97,7 @@ module bottom_panel(bottom_braces=true) {
         }
         // right side holes
         translate([frame_size().x / 2 - extrusion_width() - leadscrew_x_offset, 0, 0])
-          motor_holes();
+          motor_holes(NEMAtypeZ());
       }
       // Deboss a name in the bottom panel
       deboss_depth = 1;
