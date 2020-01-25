@@ -10,9 +10,9 @@ use <demo.scad>
 module xy_motion(position = [0, 0, 0]) {
   // FIXME: this is not a final height for belts
   belt_height = 13;
-  pulley_position_on_x_carriage = 208 ;
+  pulley_position_on_x_carriage = 40 ;
   translate ([0, 0, frame_size().z / 2 + belt_height])
-    corexy_belts([position.x-  pulley_position_on_x_carriage, position.y]);
+    corexy_belts([-frame_size().x / 2 + position.x + pulley_position_on_x_carriage, position.y]);
 
 /* PENDING REMOVAL
 // IDLER MOUNTS
