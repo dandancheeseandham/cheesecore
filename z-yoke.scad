@@ -4,22 +4,24 @@ use <demo.scad>
 use <lib/layout.scad>
 use <lib/holes.scad>
 use <nopscadlib/vitamins/rail.scad>
+use <nopscadlib/utils/fillet.scad>
 
 // The origin of the z-yoke is the center of the mounting point on the linear rail carriage
 module z_yoke() {
   extrusion_width = extrusion_width();
   carriage_type = rail_carriage(rail_profiles().z);
-
-  part_thickness = 7.5;
+  railmount = 50;
+  part_thickness = 8.8;
   extra_mount_length = 5; // how much longer to make the mount so we can have the horizontal pieces below the mounting screws
   color(printed_part_color()) {
     difference() {
       // mount face to attach to rail carriage
       translate([-part_thickness/2, 0, -extra_mount_length/2])
-        cube([part_thickness, carriage_width(carriage_type), carriage_length(carriage_type) + extra_mount_length], center=true);
+      rotate ([0,90,0])
+        rounded_rectangle([carriage_length(carriage_type) + extra_mount_length,carriage_width(carriage_type),part_thickness], 2);
 
       // need to use holes, not cylinders.  counterbore?
-      translate([50,0,0])
+      translate([railmount,0,0])
         rotate([0,90,0])
           carriage_hole_positions(carriage_type) {
             clearance_hole(nominal_d=3, h=100);
@@ -77,7 +79,7 @@ module z_yoke_holes_profile(extrusion_width) {
   carriage_type = rail_carriage(rail_profiles().z);
 
   // FIXME: should be driven off leadscrew nut size
-  translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset]) circle(d=leadscrew_diameter()); // leadscrew nut hole
+  translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset]) circle(d=leadscrew_diameter()+leadscrew_clearance()); // leadscrew nut hole
 
   // slot for bed moungint screws
   // FIXME: the +10 term here and in the lower translate is made up.  Should derive this from
@@ -98,7 +100,7 @@ module holes(number_holes){
 if (number_holes == 4) {
   translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset]) {
     mirror_xy() {
-      rotate(45) translate([leadscrew_pcd()/2, 0]) circle(d=3.4);
+      rotate(45) translate([leadscrew_pcd1()/2, 0]) circle(d=3.4);
     }
   }
 }
@@ -106,11 +108,26 @@ if (number_holes == 4) {
 if (number_holes == 6) {
   translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset]) {
     mirror_xy() {
-      rotate(60) translate([leadscrew_pcd()/2, 0]) circle(d=3.4);
-      translate([leadscrew_pcd()/2, 0]) circle(d=3.4);
+      rotate(60) translate([leadscrew_pcd1()/2, 0]) circle(d=3.4);
+      translate([leadscrew_pcd1()/2, 0]) circle(d=3.4);
     }
   }
 }
+
+if (number_holes == 8) {
+  translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset]) {
+    rotate ([0,0,45])
+    mirror_xy() {
+      rotate(45) translate([leadscrew_pcd1()/2, 0])
+        circle(d=leadscrew_nut_screwholes());
+
+    }
+    mirror_xy(){
+      rotate(45) translate([leadscrew_pcd2()/2, 0]) circle(d=leadscrew_nut_screwholes());
+    }
+  }
+}
+
 }
     }
 

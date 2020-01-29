@@ -32,9 +32,9 @@ module enclosure() {
   bottom_braces = false ;
   frame(bottom_braces);
   all_side_panels(bottom_braces);
-  hinges();
-  %doors();
-  feet(height=50);
+  *hinges();
+  *%doors();
+  feet(height=feetheight());
  }
 
 //FIXME: position isn't quite right
@@ -58,13 +58,13 @@ module top_enclosure() {
   *printed_interface_arrangement();
 }
 
-module printer(position = [0, 0, 0]) {
+module printer(position = [90, 90, 0]) {
   validate();
   enclosure();
   kinematics(position);
   *electronics_box_contents();
-  electronics_box_panels_assembly();
-  top_enclosure();
+  *electronics_box_panels_assembly();
+  *top_enclosure();
   report();
 }
 
@@ -102,4 +102,6 @@ module report() {
   echo ("side_panel_thickness()",side_panel_thickness() );
   echo ("potatoes:",potato_thickness() );
   echo ("------------------------------------------");
+  echo ("");
+  echo ("max_panel_screw_spacing():",max_panel_screw_spacing());
 }

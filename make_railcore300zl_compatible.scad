@@ -2,5 +2,5 @@
 use <models_standard.scad>
 use <core.scad>
 
-rc300zl(position = [80, 90, 30])
-  printer();
+rc300zl()
+  printer(position = [80, 90, 30]);

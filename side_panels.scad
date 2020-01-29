@@ -17,14 +17,14 @@ use <electronics_box_panels.scad>
 
 error = 0.2; //reduce panels by this size to account for whatever+-cutting error there is
 
-module panel(x, y,addx) {
+module panel(x, y,addx=0,addy=0) {
   assert(x != undef, "Must specify panel x dimension");
   assert(y != undef, "Must specify panel y dimension");
 
   difference() {
     color(panel_color())
-      translate ([0, 0, side_panel_thickness()/2])
-      rounded_rectangle([x+addx-error, y, side_panel_thickness()-error], panel_radius());
+      translate ([0, -addy/2, side_panel_thickness()/2])
+      rounded_rectangle([x+addx-error, y+addy-error, side_panel_thickness()], panel_radius());
     // Color the holes darker for contrast
     color(panel_color_holes()) {
       panel_mounting_screws(x, y);
@@ -55,7 +55,6 @@ module panel_mounting_screws(x, y)
   // How far between screws
   screw_spacing_x = extent_x / (screws_x - 1);
   screw_spacing_y = extent_y / (screws_y - 1);
-
   mirror_y() {
     for (a =[0:(screws_x - 1)]) {
       translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), y / 2 - extrusion_width() / 2, -epsilon])
@@ -76,7 +75,7 @@ module panel_mounting_screws(x, y)
 // BOTTOM PANEL
 module bottom_panel(bottom_braces=true) {
   difference() {
-    panel(frame_size().x, frame_size().y,extend());
+    panel(frame_size().x, frame_size().z,extendx(),0);
 
     color(panel_color_holes()) {
       translate([bed_offset.x, bed_offset.y, 0]) {
@@ -136,8 +135,9 @@ module front_panel() {
   min_y_gap = (frame_size().z - front_window_size().y) / 2 - abs(front_window_offset().y);
   assert(min_y_gap >= extrusion_width(), "Window cannot overlap extrusion in Z");
 
+
   difference() {
-    panel(frame_size().x, frame_size().z,extend());
+    panel(frame_size().x, frame_size().z,extendx(),extendy());
 
     //remove window in front panel
     color(panel_color_holes())
@@ -226,11 +226,11 @@ translate([0, -frame_size().y / 2 - side_panel_thickness() - epsilon, 0])
 }
 
 module side_panel() {
-  panel(frame_size(). y, frame_size().z,0);
+  panel(frame_size(). y, frame_size().z,0,extendy());
 }
 
 module back_panel() {
-  panel(frame_size().x, frame_size().z,extend());
+  panel(frame_size().x, frame_size().z,extendx(),extendy());
 }
 
 module right_panel() {
