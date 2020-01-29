@@ -40,7 +40,7 @@ function potato_thickness() = $panels[0] ;
 function side_panel_thickness() = 3; // $panels[1]
 function panel_radius() = 5; // $panels[2]
 function extendx() = 0; // extendx() panels by this to make the sides bigger.
-function extendy() = 103; // extendx() panels by this to make the sides bigger.
+function extendy() = 0; // extendx() panels by this to make the sides bigger.
 function panel_screw_offset()  = extrusion_width() + 35 ; // // $panels[5] - 50 in original 1515 machine
 // Max allowable distance between screws on front panels
 function max_panel_screw_spacing() = 50;// $panels[4] ;

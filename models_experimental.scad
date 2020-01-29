@@ -17,7 +17,7 @@ module customcore(position = [0, 0, 0]) {
   $rail_specs         = rails_custom;
   $leadscrew_specs    = leadscrew_rc_custom;
   $bed                = bed_standard_rc300;
-  //$feet_depth         = 50 ;
+  $feet_depth         = 50 ;
   children();
 }
 
@@ -38,7 +38,7 @@ module 2020core(position = [0, 0, 0]) {
   $rail_specs         = rails__original_rc300zl;
   $leadscrew_specs    = leadscrew_original_rc300zl;
   $bed                = bed_standard_rc300;
-  //$feet_depth         = 50 ;
+  $feet_depth         = 50 ;
   children();
 }
 
@@ -58,7 +58,7 @@ module cheesecore300zl1(position = [0, 0, 0]) {
   $rail_specs         = rails_cheesecore300zl;
   $leadscrew_specs    = leadscrew_original_rc300zl;
   $bed                = bed_standard_rc300;
-  //$feet_depth       = 50 ;
+  $feet_depth         = 50 ;
   children();
 }
 
@@ -79,7 +79,7 @@ module cheesecore300zl2(position = [0, 0, 0]) {
   $rail_specs         = rails_cheesecore300zl2;
   $leadscrew_specs    = leadscrew_rc_steel300zl2;
   $bed                = bed_standard_rc300;
-  //$feet_depth       = 50 ;
+  $feet_depth         = 50 ;
     children();
 }
 
@@ -100,7 +100,7 @@ module cheesecore300zl3(position = [0, 0, 0]) {
   $rail_specs         = rails_cheesecore300zl2;
   $leadscrew_specs    = leadscrew_rc_steel300zl2;
   $bed                = bed_standard_rc300;
-  //$feet_depth       = 50 ;
+  $feet_depth         = 50 ;
   children();
 }
 
@@ -121,7 +121,7 @@ module rc300zl40(position = [0, 0, 0]) {
   $rail_specs         = rails_rc300zl4040;
   $leadscrew_specs    = leadscrew_zl4040;
   $bed                = bed_custom;
-  //$feet_depth       = 50 ;
+  $feet_depth         = 50 ;
   children();
 }
 
@@ -148,5 +148,6 @@ module derbycore(position = [50, 50, 0]) {
   $enclosure_size     = [360, 425, 315] + [40,40,40] + [150, side_panel_thickness() * 2, -150];
   $panels             = panel_rc300zlt;
   $halo_size          = [400 + 150, 465 + side_panel_thickness() * 2, 4];
+  $feet_depth         = 50 ;
   children();
 }
