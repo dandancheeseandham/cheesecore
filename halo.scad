@@ -105,21 +105,20 @@ module panel_mounting_screws(x, y)
 // long holes on X axis
   mirror_y() {
     for (a =[0:(screws_x - 2)]) {
-      translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), y / 2 - extrusion_width() / 2, -epsilon])
+      translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a) + extrusion_width() / 2, y / 2 - extrusion_width() / 2, -epsilon])
         // FIXME - this should be a hole() not a cylinder
         //cylinder(h=halo_thickness() + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
-        longscrewhole(frame_size().y/5,3,0.25);
+        longscrewhole((frame_size().y-130)/3,3,0.25);
 
     }
   }
   // long holes on Y axis
-  fudge_to_centre = 10 ;
-  mirror_x() {
+    mirror_x() {
       for (a =[0:(screws_y - 2)]) {
-      translate ([x / 2 - extrusion_width() / 2, -y / 2 + panel_screw_offset() + (screw_spacing_y * a) + fudge_to_centre, -epsilon])
+      translate ([x / 2 - extrusion_width() / 2, -y / 2 + panel_screw_offset() + (screw_spacing_y * a) + extrusion_width() / 2, -epsilon])
         // FIXME - this should be a hole not a cylinder
         //cylinder(h=halo_thickness() + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
-      rotate ([0,0,90]) longscrewhole(100,3,0.25);
+      rotate ([0,0,90]) longscrewhole((frame_size().y-130)/3,3,0.25);
 
 
   *translate ([-frame_size().x / 2 + -20 + extrusion_width()/2, motor_pulley_link(),0]) // rear left idler
