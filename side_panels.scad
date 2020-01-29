@@ -4,6 +4,7 @@ use <nopscadlib/vitamins/stepper_motor.scad>
 include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
 include <nopscadlib/vitamins/stepper_motors.scad>
+include <nopscadlib/vitamins/ssr.scad>
 use <lib/holes.scad>
 use <lib/layout.scad>
 use <door_hinge.scad>
@@ -230,18 +231,39 @@ module side_panel() {
 }
 
 module back_panel() {
-  panel(frame_size().x, frame_size().z,extend());
+  if (back_panel_enclosure() == false) {
+    panel(frame_size().x, frame_size().z,extend());
+  }
+
+  if (back_panel_enclosure() == true) {
+    difference()
+    {
+      panel(frame_size().x, frame_size().z,extend());
+      color(panel_color_holes()) {
+        rotate([90,0,0]) mirror_xz() {
+            //#translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
+            translate([screwy(),-40,screwz()]) rotate([-90,0,0]) cylinder(d=3,h=150);  // FIXME: Use polyhole, check mounting fits Meanwell too
+          }
+      }
+    }
+  }
+
 }
 
 module right_panel() {
-  // FIXME: should move this into a right_side_panel() module and call that.
+  #ssr_hole_positions(ssrs[0]);
   difference() {
    side_panel();
     color(panel_color_holes()) {
-    translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon); // cable bundle - correct for ZL
-    translate(DuetE_placement())  pcb_holes(DuetE);  // correct for ZL
-    translate(Duex5_placement())  pcb_holes(Duex5);  //correct for ZL
+    translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon);
+    translate(DuetE_placement())  pcb_holes(DuetE);
+    translate(DuetE_placement())  pcb_holes(Duet3E);
+    translate(Duex5_placement())  pcb_holes(Duex5);
+    translate(rpi_placement())    pcb_holes(RPI3);
     translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
+    #translate(ssr_placement()) rotate([0,0,180]) ssr_hole_positions(ssrs[0]);
+    //*translate(Duet3Exp)  pcb_holes(Duet3Exp);
+
 
 // ### FIXME : Use technique on acrylic housing
 

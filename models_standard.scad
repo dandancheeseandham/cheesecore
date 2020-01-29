@@ -15,7 +15,7 @@ module rc300zl(position = [0, 0, 0]) {
   $front_window_size  = front_window_zl;
   $bed                = bed_rc300;
   $panels             = panel_rc300al_met;
-  $elecbox            = elec_ZL;
+  $elecbox            = elec_ZL_Duet3;
   $branding_name      = "Original ZL";
 
   //$feet_depth         = 50 ;

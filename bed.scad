@@ -32,7 +32,7 @@ translate (bed_frame_offset)
 
       //side_mounted_holes();
        strain_relief_holes();
-       earthing_hole();
+       *earthing_hole();
     }
   }
 }
@@ -41,8 +41,8 @@ translate (bed_frame_offset)
 module strain_relief_holes(){
 
 // Mounting holes for wire restraint on the side where cables go.
-translate ([bed_plate_size().x / 2 - 5, -35, bed_thickness()+1]) hole(d=2, h=20);
-translate ([bed_plate_size().x / 2 - 5, -55, bed_thickness()+1]) hole(d=2, h=20);
+translate ([bed_plate_size().x / 2 - 5, -35, bed_thickness()+1]) hole(d=3.2, h=20);
+translate ([bed_plate_size().x / 2 - 5, -55, bed_thickness()+1]) hole(d=3.2, h=20);
 }
 
 
@@ -71,7 +71,7 @@ module thermistor_channel() {
     linear_extrude(2.5+epsilon) {
       hull() {
         circle(d=3);
-        translate([5000,0]) circle(d=3);
+        #translate([5000,0]) circle(d=3);
       }
     }
   }

@@ -33,7 +33,7 @@ module enclosure() {
   frame(bottom_braces);
   all_side_panels(bottom_braces);
   hinges();
-  %doors();
+  *%doors();
   feet(height=50);
  }
 
@@ -62,9 +62,9 @@ module printer(position = [0, 0, 0]) {
   validate();
   enclosure();
   kinematics(position);
-  *electronics_box_contents();
+  electronics_box_contents();
   electronics_box_panels_assembly();
-  top_enclosure();
+  *top_enclosure();
   report();
 }
 
