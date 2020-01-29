@@ -37,11 +37,11 @@ function yoke_z_offset_from_base(z_position) = offset_bed_from_frame([0, 0, z_po
 module z_tower(z_position=0) {
   carriage_position = frame_size().z / 2 - z_position - offset_z_rails().z/2 + offset_nozzle_carriage().z ;
 
-  // NEMA 17 Z motors
+  // Z motors
   translate ([-leadscrew_x_offset,0, -side_panel_thickness()])
     NEMA(NEMAtypeZ());
 
-  //Coupler is connected to the NEMA17 motor
+  //Coupler is connected to the motor
   translate ([-leadscrew_x_offset,0,5])
     coupler();
 
@@ -55,7 +55,7 @@ module z_tower(z_position=0) {
   // The +20 puts the leadscrew above the end of the shaft a bit.  This is not
   // an exact science between stepper output shaft may vary in ways we don't have modeled
   // here.
-  translate ([-leadscrew_x_offset, 0, NEMA_shaft_length(NEMA17)])
+  translate ([-leadscrew_x_offset, 0, NEMA_shaft_length(NEMAtypeZ())])
     leadscrew();
 
   // Anti Backlash nut - connected to the leadscrew
@@ -93,7 +93,7 @@ module z_tower(z_position=0) {
     //echo("Passing rail position of: ", position);
     //echo("extrusion_length.z",extrusion_length.z);
     echo("extrusion_width" , extrusion_width() );
-    echo("NEMA_shaft_length(type)" , NEMA_shaft_length(NEMA17) );
+    echo("NEMA_shaft_length(type)" , NEMA_shaft_length(NEMAtypeZ()) );
   }
 }
 

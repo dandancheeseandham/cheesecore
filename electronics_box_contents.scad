@@ -11,15 +11,19 @@ module electronics_box_contents() {
   // ask lostapathy "why?"
   translate([frame_size().x / 2 + side_panel_thickness(), 0, 0])
     rotate([90,0,90]) {
-      translate(DuetE_placement()) pcb_assembly(DuetE, 12, 3); // DuetE
-      translate(Duex5_placement()) pcb_assembly(Duex5, 12 , 3); // Duex5
+      *translate(DuetE_placement()) pcb_assembly(DuetE, 12, 3); // DuetE
+      *translate(Duex5_placement()) pcb_assembly(Duex5, 12 , 3); // Duex5
+
+      translate(DuetE_placement()) pcb_assembly(Duet3E, 12, 3); // Duet3 Ehternet
+      *translate(Duex5_placement()) pcb_assembly(Duet3Exp, 12 , 3); // Duet3 Expansion
+
       translate(psu_placement()) rotate([0,0,90])   psu(S_250_48);
       translate(psu_placement()) rotate([0,0,90])   psu_screw_positions(S_250_48)
         translate_z(5)
                 screw_and_washer(psu_screw(S_250_48), 8);
-      translate(ssr_placement()) rotate([0,0,180]) ssr_assembly(ssrs[0], M3_cap_screw, 3);
-      translate(ssr_placement()) rotate([0,0,180]) ssr_shroud_fastened_assembly(SSR25DA, 12,6,SSR25DA);
-    //  translate(rpi_placement()) rotate([0,0,180]) pcb(RPI3);
+      *translate(ssr_placement()) rotate([0,0,180]) ssr_assembly(ssrs[0], M3_cap_screw, 3);
+      *translate(ssr_placement()) rotate([0,0,180]) ssr_shroud_fastened_assembly(SSR25DA, 12,6,SSR25DA);
+      translate(rpi_placement()) rotate([0,0,0]) pcb(RPI3);
 
 
 /*

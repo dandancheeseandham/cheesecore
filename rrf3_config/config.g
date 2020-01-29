@@ -1,6 +1,8 @@
-; Configuration file for RailcoreII ZL Series Printers
+; #######################################################################
+; ###### RRF3 Configuration file for RailcoreII ZL Series Printers ######
+; #######################################################################
 
-; Debugging
+; #### Debugging
 M111 S0                     ; Debug off
 M929 P"eventlog.txt" S1     ; Start logging to file eventlog.txt
 M550 P"RailCore"            ; Machine name and Netbios name (can be anything you like)
@@ -9,7 +11,7 @@ M540 PDE:AD:BE:EF:CA:FE     ; Set MAC address (unused on DuetWifi)
 M552 S1                     ; Enable networking
 M552 P0.0.0.0               ; Use DHCP
 
-; General preferences
+; #### General preferences
 M555 P2                     ; Set output to look like Marlin
 M575 P1 B57600 S1           ; Comms parameters for PanelDue
 G21                         ; Work in millimetres
@@ -116,15 +118,14 @@ M106 P6 S1 H1 T45 C"Hotend"                 ; Set fan 1. Thermostatic control is
 M106 P2 S0 H-1 C"Part"                      ; (Part cooling fan) Set fan 2 value, Thermostatic control is OFF
 
 ; #### Z probe
-; Z probe and compensation definition
-
+; #### Z probe and compensation definition
 M558 P1 C"^zprobe.in"                       ; _RRF3_ IR Probe connected to Z probe IN pin
 M558 H10 A1 T3000 S0.02                     ; Z probe - raise probe height.
                                             ; H10 - dive height
-                                            ; A bigger dive height prevents a situation where the bed is out of alignment by more than the dive height
-                                            ; on any corner, which can crash the hot-end into the bed while moving the head in XY.
-                                            ; Probing speed and travel speed are similarly reduced in case the Z probe isn't connected properly (or
-                                            ; disconnects later after moving to a point) giving the user more time to stop.
+                                            ; A bigger dive height prevents a situation where the bed is out of alignment by more than the dive 
+                                            ; height on any corner, which can crash the hot-end into the bed while moving the head in XY.
+                                            ; Probing speed and travel speed are similarly reduced in case the Z probe is not connected properly 
+                                            ; (or disconnects later after moving to a point) giving the user more time to stop.
 
 ; #### Probing configuration
 M558 P1                                     ; IR probe
@@ -148,24 +149,19 @@ M557 X30:280 Y30:280 P2                     ; Set Mesh for probe
 M950 H0 C"bedheat" T0                                                           ;_RRF3_ define Bed heater is on bedheat
 M308 S0 P"exp.thermistor6" Y"thermistor" A"bed_heat" T100000 B3950 R4700 H0 L0  ;_RRF3_ Bed thermistor, connected to bedtemp on Duet2
 M143 H0 S130                                                                    ; Maximum bed temperature
+M308 S8 P"exp.thermistor7" Y"thermistor" A"keenovo" T100000 B3950 R4700  H0 L0  ; Silicone heater thermistor on x7
 
-
-; #### Chamber - Heater 3
-;M141 H3                        ; heater 3 is the chamber heater (not enabled yet)
-;M305 P3 R4700 T100000 B3950    ; heater 3 is monitored by a 100K thermistor with B=3950 and a 4.7K series resistor  (not enabled yet)
-;M301 H3 B1                     ; use bang-bang control for the chamber heater  (not enabled yet)
+; #### Chamber - Heater 3 - (not enabled yet)
+;M141 H3                        
+;M950 H3 C"exp.heater3" T3                                                           ; heater 3 is the chamber heater 
+;M308 S3 P"exp.thermistor3" Y"thermistor" A"keenovo" T100000 B3950 R4700  H0 L0  ; Set Sensor 3 as 100K thermistor with B=3950 and a 4.7K series resistor
+;M301 H3 B1                                                                      ; use bang-bang control for the chamber heater
+;M106 P3 S1 H1 T50:80 C"Chamber"
 
 ; #### Electronics Cabinet
-; MCU temperature is defined by firmware as virtual heater 100 in RRF2
-; TMC2660 driver overheat flags are defined by firmware as virtual heaters 101 and 102 in RRF2
-; Need to migrate to RRF3
-
-M308 S10 Y"mcu-temp" A"mcu-temp"
+M308 S10 Y"mcu-temp" A"mcu-temp" ; Set MCU on Sensor 10
 M106 P7 T35:55 H10 C"Elec.Cab.1" ; Electronics cooling fan that starts to turn on when the MCU temperature (virtual heater 100) reaches 45C
-M106 P8 T35:55 H10 C"Elec.Cab.2" ; and reaches full speed when the MCU temperature reaches 65C or if any TMC2660 drivers
-                                          ; (virtual heaters 101 and 102) report that they are over-temperature
-                                          ; F parameter is ignored for fans connected to the fan outputs of a Duex 2 or Duex 5 because those
-                                          ; outputs don't support variable PWM frequency.
+M106 P8 T35:55 H10 C"Elec.Cab.2" ; and reaches full speed when the MCU temperature reaches 55C or if any TMC2660 drivers
                                           ; (N.B. If a fan is configured to trigger on a virtual heater whose sensor represents TMC2660 driver over-temperature
                                           ; flags, then when the fan turns on it will delay the reporting of an over-temperature warning for the corresponding drivers
                                           ; for a few seconds, to give the fan time to cool the driver down.)
@@ -175,14 +171,14 @@ M106 P8 T35:55 H10 C"Elec.Cab.2" ; and reaches full speed when the MCU temperatu
 M579 X1.0027 Y1.0027 Z1.0011              ; Scale Cartesian axes
 M572 D0 S0.05                             ; Pressure advance compensation
 
-; #### Default heater model
-;M307 H0 A270.7 C90.4 D6.7 B0 S1.0          ; Default Bed Heater Parameters, before tuning / if config-override.g is missing
-
-M307 H0 A186.9 C972.5 D5.3 S1.00 V24.2 B0   ; 300W bed heater settings. (Overridden by config-override.g, but here in case config-override.g fails)
-M307 H1 A508.1 C249.0 D3.8 S1.00 V24.2 B0   ; E3D Gold hotend settings.(Overridden by config-override.g, but here in case config-override.g fails)
+; #### Default heater model (Overridden by config-override.g, but here in case config-override.g fails)
+;M307 H0 A270.7 C90.4 D6.7 B0 S1.0          ; 700W Bed Heater settings.
+M307 H0 A186.9 C972.5 D5.3 S1.00 V24.2 B0   ; 300W Bed Heater settings.
+M307 H1 A508.1 C249.0 D3.8 S1.00 V24.2 B0   ; E3D Gold hotend settings.
 
 
 ; #### Finish startup
-G91 G1 Z0.001 F99999 S2                   ; engage motors to solidify bed.
-M98 P"/sys/config-user.g"                 ; Load custom user config (designed to be able to be empty, so feel free to comment out)
+G91 G1 Z0.001 F99999 S2                   ; engage motors to prevent bed from moving after power on.
+
+;M98 P"/sys/config-user.g"                 ; Load custom user config (designed to be able to be empty, so feel free to comment out)
 M501                                      ; Load saved parameters from non-volatile memory

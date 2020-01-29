@@ -1,6 +1,6 @@
 // vim: set nospell:
 use <export_config.scad>
-use <lib/layout.scad>
+use <../lib/layout.scad>
 use <../z-bracket.scad>
 
 export_artifacts() {

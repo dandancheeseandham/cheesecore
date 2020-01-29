@@ -32,8 +32,8 @@ module enclosure() {
   bottom_braces = false ;
   frame(bottom_braces);
   all_side_panels(bottom_braces);
-  *hinges();
-  *%doors();
+  hinges();
+  %doors();
   feet(height=feetheight());
  }
 
@@ -62,8 +62,8 @@ module printer(position = [90, 90, 0]) {
   validate();
   enclosure();
   kinematics(position);
-  *electronics_box_contents();
-  *electronics_box_panels_assembly();
+  electronics_box_contents();
+  electronics_box_panels_assembly();
   *top_enclosure();
   report();
 }
