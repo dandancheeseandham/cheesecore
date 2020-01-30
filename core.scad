@@ -40,6 +40,7 @@ module enclosure() {
 module kinematics(position) {
   xy_motion(position);
   z_towers(z_position = position[2]);
+  flex_plate(offset_bed_from_frame(position));
   bed(offset_bed_from_frame(position));
   x_rails(position.x);
   y_carriage(position);
