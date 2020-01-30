@@ -18,7 +18,8 @@ function screwz() = ( box_size_z()/2 - move_corners_adjust() + 20);
 
 
 module electronics_box_panels_assembly() {
-  translate([frame_size().x / 2 + side_panel_thickness(), 0, 0])
+  {
+  translate([frame_size().x / 2 + side_panel_thickness(), 0, -movedown()])
     rotate ([0,0,90]) {
       place_four_corners();
 
@@ -36,15 +37,43 @@ module electronics_box_panels_assembly() {
         rotate ([0,90,0])
           left_side_panel();
 
-      *translate ([0, -box_depth(), 0])
+      translate ([0, -box_depth(), 0])
         rotate ([90,0,0])
           electronics_cover_panel();
       // FIXME: bug spotted when no electronics is rendered included with panels.
       //echo ("frame",frame_size().x);
       //echo ("box", box_size_z());
+
   }
 }
+if (back_panel_enclosure() == true) {
+  translate([0, frame_size().y / 2 + side_panel_thickness(), -movedown()])
+    rotate ([0,0,180]) {
+      place_four_corners();
 
+      translate ([-box_size_y()/2, -box_depth(), box_size_z()/2 + move_panels_outwards_adjust()/2])
+      top_panel();
+
+      translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness()])
+      bottom_panel();
+
+      translate ([box_size_y()/2 + move_panels_outwards_adjust()/2, -box_depth(), box_size_z()/2])
+        rotate ([0,90,0])
+        right_side_panel();
+
+      translate ([-box_size_y()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness(), -box_depth(), box_size_z()/2])
+        rotate ([0,90,0])
+          left_side_panel();
+
+      translate ([0, -box_depth(), 0])
+        rotate ([90,0,0])
+          electronics_cover_panel();
+
+
+
+}
+}
+}
 module place_four_corners() {
   mirror_xz() {
     translate ([-box_size_y()/2 + move_corners_adjust(), -box_depth(), box_size_z() / 2 - move_corners_adjust()])

@@ -207,3 +207,8 @@ module enclosure_side_panels() {
   translate ([enclosure_size().x / 2, 0, extrusion_width()/2]) rotate([90,0,90]) right_side_panel();
   translate ([0, enclosure_size().y / 2 + side_panel_thickness(),extrusion_width()/2]) rotate([90,0,0]) back_panel();
 }
+
+demo()
+{
+  enclosure_side_panels();
+}

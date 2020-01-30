@@ -83,6 +83,6 @@ module feet(height = 50) {
 
 demo() {
   // feet();
-  foot(height=50);
+  foot(height=25);
   //foot_base_profile(15);
 }
