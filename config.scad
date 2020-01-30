@@ -28,30 +28,29 @@ frame_rc300_custom      = [490, 500, 460];
 //Standard
 panels_imperial  = ["PANELS",0.25 * inch,  5,    0.25 * inch,       0,         50];
 panels_metric    = ["PANELS",6,            5,          5,           0,         50];
-panels_aluminium = ["PANELS",4,            5,          6,           0,         50];
+panels_aluminium = ["PANELS",3,            5,          6,           0,         50];
 panels_steel     = ["PANELS",2,            5,          6,           0,         50];
 //Experimental
 panels_custom    = ["PANELS",6,            5,          5,           0,         35+20];
 
-//test function
-function potato_thickness() = $panels[0] ;
-
-//why can 6 work, but not $panels[1]???
-function side_panel_thickness() = 3; // $panels[1]
-function panel_radius() = 5; // $panels[2]
-function extendx() = 0; // extendx() panels by this to make the sides bigger.
-function extendy() = 0; // extendx() panels by this to make the sides bigger.
-function panel_screw_offset()  = extrusion_width() + 35 ; // // $panels[5] - 50 in original 1515 machine
+// FIXME: Why does a number work, but not $panels[1]???
+function side_panel_thickness()     = 2 ; // $panels[1]
+function panel_radius()             = 5; // $panels[2]
+function extendx()                  = 0; // extendx() panels by this to make the sides bigger.
+function extendy()                  = 0; // extendx() panels by this to make the sides bigger.
+function panel_screw_offset()       = extrusion_width() + 35 ; // // $panels[5] - 50 in original 300ZL and 300ZLT with 1515 extrusion. 42.5 in the 250ZL
 // Max allowable distance between screws on front panels
-function max_panel_screw_spacing() = 50;// $panels[4] ;
-function feetheight() = $feet_depth;
-//function feetheight() = 100;
+function max_panel_screw_spacing()  = 100 ;// maximum spacing allowed for the panels (exactly 100 for the 250ZL, FIXME: test this )
+function feetheight()               = $feet_depth;
+function bottom_braces()            = false ;
+function back_panel_enclosure()     = false;  // is there an additional electronics box on the rear panel? FIXME: FInish off and allow conduit holes.
+
 // FRONT WINDOW / DOOR
 //                            name       sizeXY   depth thick
 function acrylic_door_thickness() = 0.25 * inch ; // EU would be 6mm
 //UNMEASURED front_window_original_250zl   = ["WINDOW_TYPE", [420, 385], 10, [0, 5]];
 front_window_original_150mini = ["WINDOW_TYPE", [245, 210], 10, [0, 5]];
-front_window_original_250zl   = ["WINDOW_TYPE", [420, 385], 10, [0, 5]];
+front_window_original_250zl   = ["WINDOW_TYPE", [370, 335], 10, [0, 5]];
 front_window_original_300zl   = ["WINDOW_TYPE", [420, 385], 10, [0, 5]];
 front_window_original_300zlt  = ["WINDOW_TYPE", [410, 645], 10, [0, 0]];
 front_window_custom           = ["WINDOW_TYPE", [420, 385], 10, [0, 0]];
@@ -64,58 +63,62 @@ rails__original_rc250zl   = [[350, MGN12], [350, MGN12], [350, MGN12]];
 rails__original_rc300zl   = [[400, MGN12], [400, MGN12], [400, MGN12]];
 rails__original_rc300zlt  = [[400, MGN12], [400, MGN12], [700, MGN12]];
 //Experimental
-rails_rc300zl4040       = [[500, MGN15], [500, MGN12], [500, MGN15]];
-rails_cheesecore300zl   = [[420, MGN12], [420, MGN12], [420, MGN12]];
-rails_cheesecore300zl2  = [[420, MGN12], [645, MGN12], [420, MGN12]];
-rails_custom            = [[420, MGN12], [445, MGN12], [420, MGN12]];
+rails_rc300zl4040         = [[500, MGN15], [500, MGN12], [500, MGN15]];
+rails_cheesecore300zl     = [[420, MGN12], [420, MGN12], [420, MGN12]];
+rails_cheesecore300zl2    = [[420, MGN12], [645, MGN12], [420, MGN12]];
+rails_custom              = [[420, MGN12], [445, MGN12], [420, MGN12]];
 
 // ELECTRONICS BOX ALONG WITH  & ELECTRONICS & CABLE PLACEMENT -  placement of parts on right panel with X/Y as centre
-//                name         sizeX  sizeY  depth thick, lasercut   cable_bundle      DuetE            Duex            PSU        SSR            RPi
-elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,     true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
-elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,     true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
+//                                                      DIMENSIONS               |       POSITIONS
+//                           name        sizeX  sizeY  depth thick, move lasercut   cable_bundle      DuetE            Duex            PSU        SSR            RPi
+//                                                                  box
+//Standard                                                         down
+elecbox_original_rc150mini= ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
+elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-400/2+106.68,390/2-101+25], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
+elecbox_original_rc300zl  = ["ELEC.BOX", 348.9, 288.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
+elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
+//Experimental
+elec_ZL_Duet3             = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
+elec_new_ZL               = ["ELEC.BOX", 340,   270,   59 ,   6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
+elec_new_ZL_cheese        = ["ELEC.BOX", 348.9, 288.9, 59 ,   6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
+elec_new_ZLT              = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,166.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [80,30,0], [30,-110,0] , [-90,-140,0]] ;
+elec_steel300zl           = ["ELEC.BOX", 350,   260,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [80,30,0], [70,-130,0] , [-60,-130,0]] ;
+elec_cheesecore           = ["ELEC.BOX", 410,   290,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-130,0]] ;
+elec_miniplaceh           = ["ELEC.BOX", 118.9, 58.9,  59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
+elec_custom               = ["ELEC.BOX", 410,   310,   59 ,   6,    25,    false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
 
-elec_ZL_Duet3   = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,     true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
-elec_new_ZL     = ["ELEC.BOX", 340,   270,   59 ,   6,     true,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
-elec_new_ZLT    = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,     true,  [-84,166.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [80,30,0], [30,-110,0] , [-90,-140,0]] ;
-elec_steel300zl = ["ELEC.BOX", 350,   260,   59 ,   6,     true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [80,30,0], [70,-130,0] , [-60,-130,0]] ;
-elec_cheesecore = ["ELEC.BOX", 410,   290,   59 ,   6,     true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-130,0]] ;
-elec_miniplaceh = ["ELEC.BOX", 118.9, 58.9,  59 ,   6,     true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
-
-elec_custom     = ["ELEC.BOX", 410,   310,   59 ,   6,     false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
-
-
-
-//function minimum_addition()  = 150 ; //backwards compatibility until extended sides are in play.
-//function extra_x() = 0 ;
-//function extra_y() = side_panel_thickness();
 
 // HALO - Just XYZ at the moment. Z is panel thickness
+// can be defined as unconstrained from the frame, or constrained using frame variables.
+//Standard
 halo_rc150mini                = [frame_original_rc150mini.x + 125 , frame_original_rc150mini.y + side_panel_thickness() * 2, 4];
 halo_rc250zl                  = [frame_original_rc250zl.x + 150, frame_original_rc250zl.y + side_panel_thickness() * 2, 4];
 halo_rc300zl                  = [frame_original_rc300zl.x + 150, frame_original_rc300zl.y + side_panel_thickness() * 2, 4];
 halo_rc300zlt                 = [frame_original_rc300zlt.x + 150, frame_original_rc300zlt.y + side_panel_thickness() * 2, 4];
-halo_rc300zlNEMA23            = [+160,+15];
-//halo_rc300zl                  = frame_rc300zl + [frame_size().x,frame_size().y + minimum_addition(),side_panel_thickness()];
+//Experimental
+halo_rc300zlNEMA23            = [frame_original_rc300zl.x + 160, frame_original_rc300zl.y + side_panel_thickness() * 2 + 15, 4];
 halo_rc300_steel300zl         = [frame_rc300_steel300zl.x + 150, frame_rc300_steel300zl.y + side_panel_thickness() * 2, 4];
 halo_rc300steel300zlv1        = [638, 465 ,4];
 halo_rc300steel300zlv2        = [640, 465 ,4];
 halo_rc300steel300zlv2nema23  = [640+40, 465 ,4];
 
 
-// ENCLOSURE BOX - size and shape - left unconstrained from the frame
-// not properly parametric yet, but this is a reasonable hack.
+// ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
 //                        X    Y    Z
-function enclosure_height_above_frame() = 0 ;
-enclosure_rc150mini   = [frame_original_rc150mini.x + 150+5 + 15, frame_original_rc150mini.y + side_panel_thickness() * 2+5 + 15, 200];
-enclosure_rc300zl     = frame_original_rc300zl  + [150, side_panel_thickness() * 2, - 250];
-enclosure_rc300zlt    = frame_original_rc300zlt + [150, 3, -200];
-
+//Standard
+enclosure_rc150mini   = [halo_rc150mini.x, halo_rc150mini.y, 200];;
+enclosure_rc250zl     = [halo_rc250zl.x, halo_rc250zl.y, 200];
+enclosure_rc300zl     = [halo_rc300zl.x, halo_rc300zl.y, 200];
+enclosure_rc300zlt    = [halo_rc300zlt.x, halo_rc300zlt.y, 200];
+//Experimental
 enclosure_rc300zl4040 = [590, 555, 245];
 enclosure_steel300zl  = [633, 459, 245];
 enclosure_cheesecore300zl = [490, 500, 245];
 enclosure_custom      = frame_rc300_custom + [150, 3, -200];
+function enclosure_height_above_frame() = 0 ; // For the printed interface arrangement. Uneeeded with the cheesecore halo. but Left for backwards compatibility.
 
 // LEADSCREW_SPECS
+// PCD holes are for the leadscrew nut diameter to the holes. Two are available on the Z-yoke.
 //                        Name          height diameter   number of holes    PCD hole1 PCD hole2  hole size
 //Standard
 leadscrew_original_rc150mini= ["LEADSCREW_SPECS", 270, 8,     8,                 16,       22,          3.4];
@@ -127,7 +130,7 @@ leadscrew_rc_steel300zl = ["LEADSCREW_SPECS", 540, 8,     4,                 16,
 leadscrew_rc_steel300zl2= ["LEADSCREW_SPECS", 420, 8,     4,                 16,       22,          3.4];
 leadscrew_zl4040        = ["LEADSCREW_SPECS", 500, 8,     4,                 16,       22,          3.4];
 leadscrew_rc_custom     = ["LEADSCREW_SPECS", 420, 8,     4,                 16,       22,          3.4];
-function leadscrew_clearance() = 2; //clearance required around the leadscrew
+function leadscrew_clearance() = 2; //central hole leadscrew clearance required for around the leadscrew so it does not hit the printed/milled part.
 
 // BED
 //                      name  bed_plate_size   motor space  bed_overall_size  bed thickness
@@ -137,6 +140,8 @@ bed_standard_rc250    = ["BED", [275, 281],      205,        [335, 342],        
 bed_standard_rc300    = ["BED", [325, 342],      255,        [335, 342],        0.25 * inch];
 //Experimental
 bed_custom            = ["BED", [425, 442],      295,        [435, 442],        8];
+// FIXME: what is the bed_overall_size for? Is it needed?
+
 
 // NOTE: CAN X SIZE CONSTRAIN TO EXTRUSION & RAIL SIZE?
 
@@ -150,8 +155,7 @@ extrusion30 = ["3030 Extrusion", 30, 5];
 extrusion40 = ["4040 Extrusion", 40, 6];
 
 //This should be per machine
-function aluminium_part_depth() = 6 ;  // is this being used anymore?
-function back_panel_enclosure() = false;
+
 
 // *************************************************************************************************************************************************
 
@@ -169,7 +173,7 @@ function NEMAtypeZ()  = $NEMA_Z ;
 function extrusion_width      (extrusion_type = $extrusion_type) = extrusion_type[1];
 function extrusion_screw_size (extrusion_type = $extrusion_type) = extrusion_type[2];
 function frame_size() = $frame_size;
-
+function panels() = $panels;
 // *** THESE MOVE THE IDLER POSITION ON THE HALO
 //move_inner = 2.5 ;
 move_inner = -4.5 ;
@@ -205,20 +209,21 @@ function box_size_y() = $elecbox[1] ;
 function box_size_z() = $elecbox[2] ;
 function box_depth()   = $elecbox[3] ;
 function acrylic_thickness()  = $elecbox[4] ;
-function laser_cut_vents()    = $elecbox[5] ;
+function movedown()           = $elecbox[5] ;
+function laser_cut_vents()    = $elecbox[6] ;
 
-function cable_bundle_hole_placement() = $elecbox[6] ;
-function DuetE_placement()  = $elecbox[7] ;
-function Duex5_placement()  = $elecbox[8] ;
-function psu_placement()    = $elecbox[9] ;
-function ssr_placement()    = $elecbox[10] ;
-function rpi_placement()    = $elecbox[11] ;
+function cable_bundle_hole_placement() = $elecbox[7] ;
+function DuetE_placement()  = $elecbox[8] ;
+function Duex5_placement()  = $elecbox[9] ;
+function psu_placement()    = $elecbox[10] ;
+function ssr_placement()    = $elecbox[11] ;
+function rpi_placement()    = $elecbox[12] ;
 
 function enclosure_size()   = $enclosure_size ;
 
 // FIXME: corner cubes frame hack
-function framecornercubes() = [30,30,30]; // add 15mm corner cubes to each end of the frame so we can specify EXTRUSION sizes for the frame
-function top_enclosure_cornercubes() = [30,30,30]; // add 15mm corner cubes to each end of the frame so we can specify EXTRUSION sizes for the frame
+function framecornercubes() = [15*2,15*2,15*2]; // add 15mm corner cubes to each end of the frame so we can specify EXTRUSION sizes for the frame
+function top_enclosure_cornercubes() = [15*2,15*2,15*2]; // add 15mm corner cubes to each end of the frame so we can specify EXTRUSION sizes for the frame
 
 // CONSTRAINTS
 // This sets how far from centerline of the machine the idler stack on the x-carriages is.

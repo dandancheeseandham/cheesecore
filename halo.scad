@@ -33,7 +33,6 @@ module halo() {
     difference() {
       color(panel_color())
         translate ([0, 0, halo_thickness()/2])
-          //rounded_rectangle([frame_size().x + extra_x() + minimum_addition(), frame_size().y + halo_thickness()  + extra_y (), halo_thickness()], panel_radius());
           rounded_rectangle([halo_size().x , halo_size().y, halo_thickness()], panel_radius());
       // Color the holes darker for contrast
       color(panel_color_holes()) {

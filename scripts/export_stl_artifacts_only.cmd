@@ -1,5 +1,6 @@
 @echo off
-cd /D "%~dp0\build"
+cd /D "%~dp0"
+cd "..\build"
 
 REM # Command to call openscad
 set OPENSCAD=openscad-nightly

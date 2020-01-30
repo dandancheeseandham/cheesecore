@@ -28,7 +28,7 @@ module rc300zlt(position = [0, 0, 0]) {
   $extrusion_type     = extrusion15;
 
   $frame_size         = frame_original_rc300zlt;
-  $panels             = panel_imperial;
+  $panels             = panels_imperial;
   $enclosure_size     = enclosure_rc300zlt;
   $halo_size          = halo_rc300zlt;
   $front_window_size  = front_window_original_300zlt;
@@ -49,11 +49,11 @@ module rc250zl(position = [0, 0, 0]) {
   $extrusion_type     = extrusion15;
 
   $frame_size         = frame_original_rc250zl;
-  $panels             = panel_imperial;
-  //$enclosure_size     = enclosure_rc300zl;
-  //$halo_size          = halo_rc300zl;
-  //$front_window_size  = front_window_original_300zl;
-  //$elecbox            = elecbox_original_rc300zl;
+  $panels             = panels_imperial;
+  $enclosure_size     = enclosure_rc250zl;
+  $halo_size          = halo_rc250zl;
+  $front_window_size  = front_window_original_250zl;
+  $elecbox            = elecbox_original_rc250zl;
   $branding_name      = "Original 250ZL";
 
   $rail_specs         = rails__original_rc250zl;

@@ -13,7 +13,9 @@ module z_yoke() {
   railmount = 12.5;
   part_thickness = 7.8;
   extra_mount_length = 0; // how much longer to make the mount so we can have the horizontal pieces below the mounting screws
+
   color(printed_part_color()) {
+
     difference() {
       // "mounted face" to attach to rail carriage
       translate([-part_thickness/2, 0, -extra_mount_length/2-railmount])
@@ -32,7 +34,7 @@ module z_yoke() {
 translate([0,-16,-railmount+epsilon/2])
   fillet(1.6, part_thickness, center = true);
 //fillet removal
-  translate([-17,-16,-railmount+epsilon/2])
+  translate([-25,-15,-railmount+epsilon/2])
   rotate([0,180,0])
     fillet(1.6, part_thickness, center = true);
 
@@ -78,17 +80,17 @@ function ear_extent() = (frame_size().x - 4 * extrusion_width() - 2 * carriage_h
 module z_yoke_bed_mount_profile(extrusion_width) {
   assert(extrusion_width != undef, "Must specify extrusion_width");
   carriage_type = rail_carriage(rail_profiles().z);
-shrink = 2;
+shrink = 0;
   // around leadscrew out to bed ear
   hull() {
     // FIXME: base this on the leadscrew anti-backlash nut size
     translate([carriage_height(carriage_type) + extrusion_width - leadscrew_x_offset, -leadscrew_y_offset])
       circle(d=leadscrew_y_offset-shrink);
-
-    translate([-ear_extent() + 20 / 2, -leadscrew_y_offset])
+length_of_mount = 5;
+    translate([-ear_extent() + length_of_mount / 2, -leadscrew_y_offset])
       rounded_square([10.1, 30-shrink], r=2.5);
   }
-  minimise = 21.5;
+  minimise = 13.5;
   // bridge from bed ear to upright bracket
   hull() {
     translate([-ear_extent()+2.5+minimise, carriage_width(carriage_type)/2 - 2.5]) circle(r=2.5);
@@ -111,11 +113,11 @@ module z_yoke_holes_profile(extrusion_width) {
   derivedearextentbedtablength = 12 ;
   //6.5 = move
   // 27.5 = long
-  movehole = 8.5 ;
+  movehole = 0 ;
   translate([-ear_extent()+derivedearextentbedtablength+movehole, -leadscrew_y_offset]) {
     hull() {
       circle(d=3.3);
-      translate([-ear_extent()+18+movehole, 0]) circle(d=3.3);
+      translate([-ear_extent()+28, 0]) circle(d=3.3);
     }
   }
 
