@@ -126,19 +126,21 @@ module ear_profile() {
   }
 }
 
-module flex_plate() {
+module flex_plate(bed_frame_offset) {
   plate_thickness = 0.25;
   ear_width = 50;
-  color([0.7, 0.7, 0.7]) {
-    translate([0, 0, bed_thickness()]) {
-      rounded_rectangle([bed_plate_size().x, bed_plate_size().y, plate_thickness], bed_radius);
-      mirror_x() {
-        translate([bed_plate_size().x/2 - ear_width/2,-bed_plate_size().y /2, 0]) {
-          rounded_rectangle([ear_width, 30, plate_thickness], bed_radius);
-          //rounded_rectangle([50, 12, plate_thickness], bed_radius);
-          difference() {
-            translate([-ear_width/2-bed_radius,-bed_radius, 0]) square(bed_radius);
-            translate([-ear_width/2-bed_radius,-bed_radius,0]) circle(r=bed_radius);
+  translate (bed_frame_offset) {
+    color([0.7, 0.7, 0.7]) {
+      translate([0, 0, bed_thickness()]) {
+        rounded_rectangle([bed_plate_size().x, bed_plate_size().y, plate_thickness], bed_radius);
+        mirror_x() {
+          translate([bed_plate_size().x/2 - ear_width/2,-bed_plate_size().y /2, 0]) {
+            rounded_rectangle([ear_width, 30, plate_thickness], bed_radius);
+            //rounded_rectangle([50, 12, plate_thickness], bed_radius);
+            difference() {
+              translate([-ear_width/2-bed_radius,-bed_radius, 0]) square(bed_radius);
+              translate([-ear_width/2-bed_radius,-bed_radius,0]) circle(r=bed_radius);
+            }
           }
         }
       }
