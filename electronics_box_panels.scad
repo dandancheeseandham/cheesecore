@@ -41,8 +41,6 @@ module electronics_box_panels_assembly() {
         rotate ([90,0,0])
           electronics_cover_panel();
       // FIXME: bug spotted when no electronics is rendered included with panels.
-      //echo ("frame",frame_size().x);
-      //echo ("box", box_size_z());
 
   }
 }

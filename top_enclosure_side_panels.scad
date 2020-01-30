@@ -95,13 +95,6 @@ color(acrylic_color())
     panel(enclosure_size().x, enclosure_size().y );
     translate ([0, -extrusion_width()*2-doorgap/2, side_panel_thickness()/2-epsilon])
     rounded_rectangle([enclosure_size().x-extrusion_width()*2-doorgap, enclosure_size().y-extrusion_width()-doorgap,side_panel_thickness()+epsilon*4], panel_radius());
-
-    // Deboss instructions on panel
-    //deboss_depth = 3;
-    //color("#333333")
-      //translate([0, -enclosure_size().y/2 + 50, side_panel_thickness() - deboss_depth + epsilon])
-        //linear_extrude(deboss_depth)
-          //text("lid lifts up", halign="center", size=25);
   }
 }
 
@@ -111,18 +104,11 @@ color(acrylic_color())
 union(){
   intersection(){
     panel(enclosure_size().x, enclosure_size().z-extrusion_width()  + side_panel_thickness() );
-  //translate ([0, extrusion_width()+doorgap/4, side_panel_thickness()/2-epsilon])
-      //rounded_rectangle([enclosure_size().x-extrusion_width * 4-doorgap, enclosure_size().z-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());
-
-    //*translate ([0, extrusion_width(), side_panel_thickness()/2-epsilon])
-    // rounded_rectangle([enclosure_size().x-extrusion_width * 4-doorgap, enclosure_size().z-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());
        translate ([0, extrusion_width(), side_panel_thickness()/2-epsilon])
        rounded_rectangle([enclosure_size().x-extrusion_width()*2,enclosure_size().z-extrusion_width()*2 + side_panel_thickness()*2,side_panel_thickness()+epsilon*4], panel_radius());
 
 
 }
-
-   //translate ([-(enclosure_size().x)/2 + doorgap/2 , (enclosure_size().z-extrusion_width())/2-panel_radius()+doorgap/4 ,-(+epsilon*4)])
    *translate ([-(enclosure_size().x)/2 + extrusion_width() + doorgap/2 , (enclosure_size().z-extrusion_width())/2-panel_radius()+doorgap/4 ,-(+epsilon*4)])
                     cube([enclosure_size().x-extrusion_width()*6 , panel_radius(),side_panel_thickness()+epsilon*4]);
   }
@@ -132,13 +118,7 @@ union(){
 module top_panel() {
   difference() {
     panel(enclosure_size().x, enclosure_size().y);
-    // Deboss instructions on panel
-    //deboss_depth = 3;
-    //color("#333333")
-      //translate([0, -enclosure_size().y/2 + 50, side_panel_thickness() - deboss_depth + epsilon])
-        //linear_extrude(deboss_depth)
-          //text("lid lifts up", halign="center", size=25);
-          translate ([0, -extrusion_width()*2, side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().y-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());
+        translate ([0, -extrusion_width()*2, side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().y-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());
 
           color(acrylic2_color())
           *translate ([-(enclosure_size().x-60)/2, (enclosure_size().z-extrusion_width())/2-panel_radius() ,-(+epsilon)])
@@ -155,13 +135,6 @@ module front_panel() {
     color(acrylic2_color())
      translate ([-(enclosure_size().x-60)/2, (enclosure_size().z-extrusion_width())/2-panel_radius() ,-(+epsilon)])
         cube([enclosure_size().x-60, panel_radius()+epsilon,side_panel_thickness()+epsilon*4]);
-
-    // Deboss instructions on panel
-    //deboss_depth = 3;
-    //color("#333333")
-    //  translate([0, -enclosure_size().z/2 + 150, side_panel_thickness() - deboss_depth + epsilon])
-        //linear_extrude(deboss_depth)
-          //text("lid lifts up", halign="center", size=25);
 }
 }
 

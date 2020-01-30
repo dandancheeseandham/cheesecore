@@ -29,9 +29,8 @@ translate (bed_frame_offset)
               bed_ear();
       }
       thermistor_channel();
-
       //side_mounted_holes();
-       strain_relief_holes();
+      strain_relief_holes();
        *earthing_hole();
     }
   }

@@ -175,7 +175,6 @@ function extrusion_screw_size (extrusion_type = $extrusion_type) = extrusion_typ
 function frame_size() = $frame_size;
 function panels() = $panels;
 // *** THESE MOVE THE IDLER POSITION ON THE HALO
-//move_inner = 2.5 ;
 move_inner = -4.5 ;
 move_outer = -12.5 ;
 function idler_offset_outer()      =  move_outer - 1.5 ;
