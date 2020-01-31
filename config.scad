@@ -37,7 +37,7 @@ panels_custom    = ["PANELS",6,            5,          5,           0,         3
 function side_panel_thickness()     = 2 ; // $panels[1]
 function panel_radius()             = 5; // $panels[2]
 function extendx()                  = 0; // extendx() panels by this to make the sides bigger.
-function extendy()                  = 0; // extendx() panels by this to make the sides bigger.
+function extendz()                  = 0; // extend panels down to cover the feet. 53 covers the feet
 function panel_screw_offset()       = extrusion_width() + 35 ; // // $panels[5] - 50 in original 300ZL and 300ZLT with 1515 extrusion. 42.5 in the 250ZL
 // Max allowable distance between screws on front panels
 function max_panel_screw_spacing()  = 100 ;// maximum spacing allowed for the panels (exactly 100 for the 250ZL, FIXME: test this )

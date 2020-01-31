@@ -129,7 +129,7 @@ module front_panel() {
 
 
   difference() {
-    panel(frame_size().x, frame_size().z,extendx(),extendy());
+    panel(frame_size().x, frame_size().z,extendx(),extendz());
     //remove window in front panel
     color(panel_color_holes())
       translate ([front_window_offset().x, front_window_offset().y, side_panel_thickness() / 2])
@@ -220,19 +220,19 @@ translate([0, -frame_size().y / 2 - side_panel_thickness() - epsilon, 0])
 }
 
 module side_panel() {
-  panel(frame_size(). y, frame_size().z, 0, extendy());
+  panel(frame_size(). y, frame_size().z, 0, extendz());
 }
 
 module back_panel() {
 //if no back electronic box then just create the panel
 if (back_panel_enclosure() == false) {
-    panel(frame_size().x, frame_size().z,extendx(),extendy());
+    panel(frame_size().x, frame_size().z,extendx(),extendz());
   }
 //if back electronic box then make holes
   if (back_panel_enclosure() == true) {
     difference()
     {
-      panel(frame_size().x, frame_size().z,extendx(),extendy());
+      panel(frame_size().x, frame_size().z,extendx(),extendz());
       color(panel_color_holes())
       translate ([0,-movedown() ,0]){
         rotate([90,0,0]) mirror_xz() {
