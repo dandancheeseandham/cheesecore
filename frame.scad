@@ -6,7 +6,7 @@ use <lib/layout.scad>
 use <demo.scad>
 
 module z_extrusions() {
-//color("Black")
+//color("Black")  //Colours are for later documentation identification
   mirror_xy() {
     translate([frame_size().x / 2 - extrusion_width() / 2, frame_size().y / 2 - extrusion_width() / 2, 0])
       extrusion(frame_size().z - 2 * extrusion_width());

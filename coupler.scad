@@ -8,72 +8,72 @@
 use <demo.scad>
 
 // Height of the coupler, half for the motor shaft and half for the rod
-couplerHeight = 30;
+function coupler_height() = 30;
 // External diameter of the coupler
-couplerExternalDiameter = 20;
+coupler_external_diameter = 20;
 // Diameter of the motor shaft
-motorShaftDiameter = 5;
+motor_shaft_diameter = 5;
 // Diameter of the rod
-threadedRodDiameter = 7.9;
+threaded_rod_diameter = 7.9;
 // Diameter of the screw thread
-screwDiameter = 3.4;
-screwHeadDiameter = 7;
+screw_diameter = 3.4;
+screw_head_diameter = 7;
 screwThreadLength = 10;
 // Width across flats of the nut (wrench size)
-nutWidth = 5.7;
-nutThickness = 3;
+nut_width = 5.7;
+nut_thickness = 3;
 // Gap between the two halves
-halvesDistance = 0.5;
+halves_distance = 0.5;
 // Portion of the shaft inside the coupler
-shaftLen = couplerHeight/2;
+shaft_length = coupler_height()/2;
 // Portion of the rod inside the coupler
-rodLen = couplerHeight/2;
-shaftScrewsDistance = motorShaftDiameter+screwDiameter+1;
-rodScrewsDistance = threadedRodDiameter+screwDiameter+1;
+rod_length = coupler_height()/2;
+shaft_screws_distance = motor_shaft_diameter+screw_diameter+1;
+rod_screws_distance = threaded_rod_diameter+screw_diameter+1;
 
-little = 0.01; // just a little number
-big = 100; // just a big number
+just_a_little_number = 0.01; // just a little number
+just_a_big_number = 100; // just a big number
 
 module coupler() {
   color(alum_commercial_part_color()) {
     difference() {
       // main body
-      cylinder(d=couplerExternalDiameter, h=shaftLen + rodLen);
+      cylinder(d=coupler_external_diameter, h=shaft_length + rod_length);
       // shaft
-      translate([0,0,-little])
-        cylinder(d=motorShaftDiameter, h=shaftLen+2*little);
+      translate([0,0,-just_a_little_number])
+        cylinder(d=motor_shaft_diameter, h=shaft_length+2*just_a_little_number);
       // rod
-      translate([0,0,shaftLen])
-        cylinder(d=threadedRodDiameter, h=rodLen+little);
+      translate([0,0,shaft_length])
+        cylinder(d=threaded_rod_diameter, h=rod_length+just_a_little_number);
       // screws
-      translate([0,shaftScrewsDistance/2,shaftLen/2])
+      translate([0,shaft_screws_distance/2,shaft_length/2])
         rotate([90,0,90])
           screw();
-      translate([0,-shaftScrewsDistance/2,shaftLen/2])
+      translate([0,-shaft_screws_distance/2,shaft_length/2])
         rotate([90,0,270])
           screw();
-      translate([0,rodScrewsDistance/2,shaftLen+rodLen/2])
+      translate([0,rod_screws_distance/2,shaft_length+rod_length/2])
         rotate([90,0,90])
           screw();
-      translate([0,-rodScrewsDistance/2,shaftLen+rodLen/2])
+      translate([0,-rod_screws_distance/2,shaft_length+rod_length/2])
         rotate([90,0,270])
           screw();
       // cut between the two halves
-      cube([halvesDistance,big,big], center=true);
+      cube([halves_distance,just_a_big_number,just_a_big_number], center=true);
     }
   }
 }
 
 module screw() {
   // thread
-  cylinder(d=screwDiameter, h=big, center=true);
+  cylinder(d=screw_diameter, h=just_a_big_number, center=true);
   // head
-  translate([0,0,(screwThreadLength-nutThickness)/2])
-    cylinder(d=screwHeadDiameter, h=big);
+  translate([0,0,(screwThreadLength-nut_thickness)/2])
+    cylinder(d=screw_head_diameter, h=just_a_big_number);
   // nut
-  translate([0,0,-(screwThreadLength-nutThickness)/2])
+  translate([0,0,-(screwThreadLength-nut_thickness)/2])
     rotate([180,0,30])
-      cylinder(d=nutWidth*2*tan(30), h=big, $fn=6);
+      cylinder(d=nut_width*2*tan(30), h=just_a_big_number, $fn=6);
 }
 
 demo() {

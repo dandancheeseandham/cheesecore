@@ -141,7 +141,7 @@ bed_standard_rc300    = ["BED", [325, 342],      255,        [335, 342],        
 //Experimental
 bed_custom            = ["BED", [425, 442],      295,        [435, 442],        8];
 // FIXME: what is the bed_overall_size for? Is it needed?
-
+function flex_plate_thickness() = 0.9;
 
 // NOTE: CAN X SIZE CONSTRAIN TO EXTRUSION & RAIL SIZE?
 
