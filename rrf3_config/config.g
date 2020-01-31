@@ -12,17 +12,17 @@ M552 S1                     ; Enable networking
 M552 P0.0.0.0               ; Use DHCP
 
 ; #### General preferences
-M555 P2                     ; Set output to look like Marlin
-M575 P1 B57600 S1           ; Comms parameters for PanelDue
+M555 P0                     ; Set output to look like RepRap_Firmware
+;M575 P1 B57600 S1          ; Comms parameters for PanelDue (not installed)
 G21                         ; Work in millimetres
 G90                         ; Send absolute coordinates...
 M83                         ; ...but relative extruder moves
 
 ; #### Networking and Communications
 M552 S1                     ; Enable WiFi
-M586 P1 S1                  ; Enable  FTP (default) S0 to disable
+M586 P1 S1                  ; Enable FTP
 ;M551 P"myrap"              ; Machine password (used for FTP), leave disabled for anonymous login on a local network.
-M586 P2 S1                  ; Enable Telnet (default) S1 to disable
+M586 P2 S1                  ; Enable Telnet
 
 ; #### Axis and motor configuration
 M669 K1                     ; CoreXY mode
@@ -117,6 +117,11 @@ M570 H1 P5 T25                              ; Configure heater fault detection
 M106 P6 S1 H1 T45 C"Hotend"                 ; Set fan 1. Thermostatic control is ON for Heater 1 (Hotend fan)
 M106 P2 S0 H-1 C"Part"                      ; (Part cooling fan) Set fan 2 value, Thermostatic control is OFF
 
+; #### Filament options
+;M200 D1.75                                  ; Set filament diameter for future volumetric extrusion.
+; Volumetric extrusion is an option you can set in some slicers whereby all extrusion amounts are specified in mm3 (cubic millimetres) of filament instead of mm of filament. 
+; This makes the gcode independent of the filament diameter, potentially allowing the same gcode to run on different printers.
+
 ; #### Z probe
 ; #### Z probe and compensation definition
 M558 P1 C"^zprobe.in"                       ; _RRF3_ IR Probe connected to Z probe IN pin
@@ -148,7 +153,7 @@ M557 X30:280 Y30:280 P2                     ; Set Mesh for probe
 ; #### Bed - Heater 0
 M950 H0 C"bedheat" T0                                                           ;_RRF3_ define Bed heater is on bedheat
 M308 S0 P"exp.thermistor6" Y"thermistor" A"bed_heat" T100000 B3950 R4700 H0 L0  ;_RRF3_ Bed thermistor, connected to bedtemp on Duet2
-M143 H0 S130                                                                    ; Maximum bed temperature
+M143 H0 S120                                                                    ; Maximum bed temperature, if using a magbed this is important!
 M308 S8 P"exp.thermistor7" Y"thermistor" A"keenovo" T100000 B3950 R4700  H0 L0  ; Silicone heater thermistor on x7
 
 ; #### Chamber - Heater 3 - (not enabled yet)
