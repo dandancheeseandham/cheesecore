@@ -17,7 +17,7 @@ module rc300zl(position = [0, 0, 0]) {
   $rail_specs         = rails__original_rc300zl;
   $leadscrew_specs    = leadscrew_original_rc300zl;
   $bed                = bed_standard_rc300;
-  $feet_depth       = 50 ;
+  $feet_depth         = 50 ;
   children();
 }
 
@@ -38,7 +38,7 @@ module rc300zlt(position = [0, 0, 0]) {
   $rail_specs         = rails__original_rc300zlt;
   $leadscrew_specs    = leadscrew_original_rc300zlt;
   $bed                = bed_standard_rc300;
-  $feet_depth       = 50 ;
+  $feet_depth         = 50 ;
   children();
 }
 

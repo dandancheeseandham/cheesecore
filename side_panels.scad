@@ -77,7 +77,7 @@ module panel_mounting_screws(x, y)
 // BOTTOM PANEL
 module bottom_panel(bottom_braces=true) {
   difference() {
-    panel(frame_size().x, frame_size().y,extendx(),0);
+    panel(frame_size().x, frame_size().y,extend_bottom_panel_x(),0);
 // make Z motor holes to mount NEMA motors
     color(panel_color_holes()) {
       translate([bed_offset.x, bed_offset.y, 0]) {
@@ -129,7 +129,7 @@ module front_panel() {
 
 
   difference() {
-    panel(frame_size().x, frame_size().z,extendx(),extendz());
+    panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
     //remove window in front panel
     color(panel_color_holes())
       translate ([front_window_offset().x, front_window_offset().y, side_panel_thickness() / 2])
@@ -226,13 +226,13 @@ module side_panel() {
 module back_panel() {
 //if no back electronic box then just create the panel
 if (back_panel_enclosure() == false) {
-    panel(frame_size().x, frame_size().z,extendx(),extendz());
+    panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
   }
 //if back electronic box then make holes
   if (back_panel_enclosure() == true) {
     difference()
     {
-      panel(frame_size().x, frame_size().z,extendx(),extendz());
+      panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
       color(panel_color_holes())
       translate ([0,-movedown() ,0]){
         rotate([90,0,0]) mirror_xz() {

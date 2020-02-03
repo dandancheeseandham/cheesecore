@@ -79,7 +79,7 @@ module report() {
   echo ("Halo dimensions: " , halo_size());
   echo ("Top Enclosure total dimensions: ", enclosure_size());
   echo ("Top Enclosure extrusion dimensions: ", enclosure_size() - top_enclosure_cornercubes());
-  echo ("bottom panel in core:",frame_size().x, frame_size().z,extendx());
+  echo ("bottom panel in core:",frame_size().x, frame_size().z,extend_front_and_rear_x());
   echo ("framecornercubes()",framecornercubes());
   echo ("------------------------------------------");
   echo ("Leadscrew length: ",leadscrew_length());

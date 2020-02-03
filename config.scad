@@ -36,7 +36,8 @@ panels_custom    = ["PANELS",6,            5,          5,           0,         3
 // FIXME: Why does a number work, but not $panels[1]???
 function side_panel_thickness()     = 2 ; // $panels[1]
 function panel_radius()             = 5; // $panels[2]
-function extendx()                  = 0; // extendx() panels by this to make the sides bigger.
+function extend_front_and_rear_x()  = 0; // extend_front_and_rear_x() panels by this to make the sides bigger.
+function extend_bottom_panel_x()    = 0; // extend_front_and_rear_x() panels by this to make the sides bigger.
 function extendz()                  = 0; // extend panels down to cover the feet. 53 covers the feet
 function panel_screw_offset()       = extrusion_width() + 35 ; // // $panels[5] - 50 in original 300ZL and 300ZLT with 1515 extrusion. 42.5 in the 250ZL
 // Max allowable distance between screws on front panels
@@ -80,7 +81,7 @@ elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,
 //Experimental
 elec_ZL_Duet3             = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 elec_new_ZL               = ["ELEC.BOX", 340,   270,   59 ,   6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
-elec_new_ZL_cheese        = ["ELEC.BOX", 348.9, 288.9, 59 ,   6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
+elec_new_ZL_cheese        = ["ELEC.BOX", 392.9, 288.9,(150/2),6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
 elec_new_ZLT              = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,166.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [80,30,0], [30,-110,0] , [-90,-140,0]] ;
 elec_steel300zl           = ["ELEC.BOX", 350,   260,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [80,30,0], [70,-130,0] , [-60,-130,0]] ;
 elec_cheesecore           = ["ELEC.BOX", 410,   290,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-130,0]] ;

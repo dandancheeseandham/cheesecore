@@ -1,5 +1,25 @@
 include <config.scad>
 
+module rc300zlwithcheese(position = [0, 0, 0]) {
+  $NEMA_XY            = NEMA17;
+  $NEMA_Z             = NEMA17;
+  $extrusion_type     = extrusion15;
+
+  $frame_size         = frame_original_rc300zl;
+  $panels             = panels_metric;
+  $enclosure_size     = enclosure_rc300zl;
+  $halo_size          = halo_rc300zl;
+  $front_window_size  = front_window_original_300zl;
+  $elecbox            = elec_new_ZL_cheese;
+  $branding_name      = "Original 300ZL";
+
+  $rail_specs         = rails__original_rc300zl;
+  $leadscrew_specs    = leadscrew_original_rc300zl;
+  $bed                = bed_standard_rc300;
+  $feet_depth         = 50 ;
+  children();
+}
+
 // CUSTOMCORE FOR DEBUGGING/QUICK RENDERING
 module customcore(position = [0, 0, 0]) {
   $NEMA_XY            = NEMA17;
@@ -73,8 +93,8 @@ module cheesecore300zl2(position = [0, 0, 0]) {
   $enclosure_size     = enclosure_cheesecore300zl;
   $halo_size          = halo_rc300steel300zlv2;
   $front_window_size  = front_window_original_300zl;
-  $elecbox = elec_cheesecore; //electronics box size and placements
-  $branding_name = "cheesecore ZL2";
+  $elecbox            = elec_cheesecore; //electronics box size and placements
+  $branding_name      = "cheesecore ZL2";
 
   $rail_specs         = rails_cheesecore300zl2;
   $leadscrew_specs    = leadscrew_rc_steel300zl2;
@@ -94,8 +114,8 @@ module cheesecore300zl3(position = [0, 0, 0]) {
   $enclosure_size     = enclosure_cheesecore300zl;
   $halo_size          = halo_rc300steel300zlv2;
   $front_window_size  = front_window_original_300zl;
-  $elecbox = elec_cheesecore; //electronics box size and placements
-  $branding_name = "cheesecore ZL2";
+  $elecbox            = elec_cheesecore; //electronics box size and placements
+  $branding_name      = "cheesecore ZL3";
 
   $rail_specs         = rails_cheesecore300zl2;
   $leadscrew_specs    = leadscrew_rc_steel300zl2;

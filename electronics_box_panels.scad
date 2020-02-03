@@ -18,7 +18,8 @@ function screwz() = ( box_size_z()/2 - move_corners_adjust() + 20);
 
 
 module electronics_box_panels_assembly() {
-  {
+
+if (extend_front_and_rear_x() == 0) {
   translate([frame_size().x / 2 + side_panel_thickness(), 0, -movedown()])
     rotate ([0,0,90]) {
       place_four_corners();
@@ -44,6 +45,7 @@ module electronics_box_panels_assembly() {
 
   }
 }
+
 if (back_panel_enclosure() == true) {
   translate([0, frame_size().y / 2 + side_panel_thickness(), -movedown()])
     rotate ([0,0,180]) {
@@ -71,6 +73,22 @@ if (back_panel_enclosure() == true) {
 
 }
 }
+
+if (extend_front_and_rear_x() != 0) {
+  translate([frame_size().x / 2 + side_panel_thickness(), 0, -movedown()])
+    rotate ([0,0,90]) {
+      place_four_corners();
+      translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness()])
+      bottom_panel();
+      translate ([0, -box_depth(), 0])
+        rotate ([90,0,0])
+          electronics_cover_panel_extended();
+
+}
+}
+
+
+
 }
 module place_four_corners() {
   mirror_xz() {
@@ -97,8 +115,8 @@ module left_side_panel(){
   difference()
     {
     make_panel (box_size_z(),box_depth(),stepper_cables = false, IEC = false);
-    translate ([70,30,0])  fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
-    translate ([180,30,0]) fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
+    translate ([70, box_depth()-29,0])  fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
+    translate ([180,box_depth()-29,0]) fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
    }
 }
 
@@ -146,6 +164,51 @@ module electronics_cover_panel()
         }
     }
   }
+
+  module electronics_cover_panel_extended()
+  {
+    // FIXME : draw in 2d then extrude
+    // vent configuration
+    vent_length = 78 ;
+    vent_height = 3 ;
+    gap_between_vents = 4.5 ;
+
+      difference() {
+        color(acrylic2_color())
+          difference () {
+            translate ([0, 0, acrylic_thickness()/2])
+              rounded_rectangle([frame_size(). y, frame_size().z + extendz(), acrylic_thickness()],acrylic_cover_corner_rounding());
+              rotate([90,0,0]) mirror_xz() translate([screwy(),-50,screwz()]) rotate([-90,0,0]) cylinder(d=3,h=100);  // FIXME: Use polyhole, check mounting fits Meanwell too
+            //16 vents
+            if (laser_cut_vents() == true)
+            translate(psu_placement() + [-40,90,0])  {
+              for(vents = [0 : 23])
+                translate ([0,0-(vents*(vent_height + gap_between_vents)),-20])
+                  longscrewhole(vent_length,vent_height,0);
+            }
+            if (laser_cut_vents() == false)
+              translate(psu_placement() + [-91/2,-131/2,-40/2])
+                cube ([91,131,40]);
+  /*
+            // FIXME : These should probably be on the left hand panel as cooling occurs from the bottom on the Duet.
+            if (laser_cut_vents() == true) {
+              %translate(DuetE_placement()-[0,0,-epsilon])
+                fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
+              %translate(Duex5_placement()-[0,0,-epsilon])
+                fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
+            }
+
+            if (laser_cut_vents() == false) {
+              translate(DuetE_placement())
+                cube ([40,40,40]);
+              translate(Duex5_placement())
+                cube ([40,40,40]);
+              }
+              */
+          }
+      }
+    }
+
 
 module make_panel(length,electronicscabinet_box_depth,stepper_cables,IEC) {
     // FIXME: draw this in 2d then extrude
