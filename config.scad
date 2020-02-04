@@ -33,6 +33,8 @@ panels_steel     = ["PANELS",2,            5,          6,           0,         5
 //Experimental
 panels_custom    = ["PANELS",6,            5,          5,           0,         35+20];
 
+extend_x = 110;
+
 // FIXME: Why does a number work, but not $panels[1]???
 function side_panel_thickness()     = 2 ; // $panels[1]
 function panel_radius()             = 5; // $panels[2]
@@ -81,10 +83,10 @@ elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,
 //Experimental
 elec_ZL_Duet3             = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 elec_new_ZL               = ["ELEC.BOX", 340,   270,   59 ,   6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
-elec_new_ZL_cheese        = ["ELEC.BOX", 392.9, 288.9,(150/2),6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
+elec_new_ZL_cheese        = ["ELEC.BOX", 350,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
 elec_new_ZLT              = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,166.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [80,30,0], [30,-110,0] , [-90,-140,0]] ;
 elec_steel300zl           = ["ELEC.BOX", 350,   260,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [80,30,0], [70,-130,0] , [-60,-130,0]] ;
-elec_cheesecore           = ["ELEC.BOX", 410,   290,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-130,0]] ;
+elec_cheesecore           = ["ELEC.BOX", 392.9, 290,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-130,0]] ;
 elec_miniplaceh           = ["ELEC.BOX", 118.9, 58.9,  59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
 elec_custom               = ["ELEC.BOX", 410,   310,   59 ,   6,    25,    false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
 
@@ -102,6 +104,7 @@ halo_rc300_steel300zl         = [frame_rc300_steel300zl.x + 150, frame_rc300_ste
 halo_rc300steel300zlv1        = [638, 465 ,4];
 halo_rc300steel300zlv2        = [640, 465 ,4];
 halo_rc300steel300zlv2nema23  = [640+40, 465 ,4];
+halo_rc300zlwithcheese        = [frame_original_rc300zl.x + extend_x*2, frame_original_rc300zl.y + side_panel_thickness() * 2, 4];
 
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
@@ -116,6 +119,7 @@ enclosure_rc300zl4040 = [590, 555, 245];
 enclosure_steel300zl  = [633, 459, 245];
 enclosure_cheesecore300zl = [490, 500, 245];
 enclosure_custom      = frame_rc300_custom + [150, 3, -200];
+enclosure_rc300zlwithcheese = [halo_rc300zlwithcheese.x, halo_rc300zl.y, 200];
 function enclosure_height_above_frame() = 0 ; // For the printed interface arrangement. Uneeeded with the cheesecore halo. but Left for backwards compatibility.
 
 // LEADSCREW_SPECS

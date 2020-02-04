@@ -7,8 +7,8 @@ module rc300zlwithcheese(position = [0, 0, 0]) {
 
   $frame_size         = frame_original_rc300zl;
   $panels             = panels_metric;
-  $enclosure_size     = enclosure_rc300zl;
-  $halo_size          = halo_rc300zl;
+  $enclosure_size     = enclosure_rc300zlwithcheese;
+  $halo_size          = halo_rc300zlwithcheese;
   $front_window_size  = front_window_original_300zl;
   $elecbox            = elec_new_ZL_cheese;
   $branding_name      = "Original 300ZL";

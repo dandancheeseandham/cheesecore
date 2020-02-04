@@ -2,7 +2,7 @@
 include <config.scad>
 use <nopscadlib/vitamins/stepper_motor.scad>
 include <nopscadlib/vitamins/stepper_motors.scad>
-use <lib/fan_grill_difference.scad>
+use <fan_guard_removal.scad>
 use <lib/holes.scad>
 use <lib/layout.scad>
 use <door_hinge.scad>
@@ -16,7 +16,8 @@ module panel(x, y) {
   assert(y != undef, "Must specify panel y dimension");
 
   difference() {
-    color(acrylic2_color())
+    //color(acrylic2_color())
+    color(panel_color())
       translate ([0, 0, side_panel_thickness()/2])
       rounded_rectangle([x, y, side_panel_thickness()], panel_radius());
     // Color the holes darker for contrast
@@ -30,28 +31,6 @@ module panel(x, y) {
     }
   }
 }
-
-
-module panel_plus(x, y) {
-  assert(x != undef, "Must specify panel x dimension");
-  assert(y != undef, "Must specify panel y dimension");
-
-  difference() {
-    color(acrylic2_color())
-      translate ([0, 0, side_panel_thickness()/2])
-      rounded_rectangle([x, y+side_panel_thickness()*2-fitting_error, side_panel_thickness()], panel_radius());
-    // Color the holes darker for contrast
-    color(panel_color_holes()) {
-      panel_mounting_screws(x, y);
-      // Access screws to corner cubes
-      mirror_xy() {
-        translate([x / 2 - extrusion_width() / 2, y / 2 - extrusion_width() / 2, -epsilon])
-          cylinder(d=extrusion_width() * 0.5, h = side_panel_thickness() + 2 * epsilon);
-      }
-    }
-  }
-}
-
 
 function panel_screw_extent(panel_length) = panel_length - 2 * panel_screw_offset() ;
 function panel_screw_count(panel_length) = ceil(panel_screw_extent(panel_length) / max_panel_screw_spacing()) + 1 ;
@@ -89,7 +68,7 @@ module panel_mounting_screws(x, y) {
 }
 
 module top_panel_door() {
-color(acrylic_color())
+//color(acrylic2_color())
 
   intersection() {
     panel(enclosure_size().x, enclosure_size().y );
@@ -100,7 +79,7 @@ color(acrylic_color())
 
 module front_panel_door() {
 //color(acrylic2_color())
-color(acrylic_color())
+color(acrylic2_color())
 union(){
   intersection(){
     panel(enclosure_size().x, enclosure_size().z-extrusion_width()  + side_panel_thickness() );
@@ -165,9 +144,13 @@ module left_side_panel() {
 
 
 module back_panel() {
+  difference(){
   panel(enclosure_size().x, enclosure_size().z-extrusion_width()/2);
-  translate(DuetE_placement()-[0,0,-epsilon])
-    fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
+mirror_x(){
+  translate([-100,0,-epsilon])
+    fan_guard_removal(size = 80,thickness = acrylic_thickness());
+  }
+  }
 }
 
 module enclosure_side_panels() {

@@ -74,7 +74,8 @@ color(printed_part_color())
 //panel_hinge_width + hinge_arms_x() + extrusion_width()
 
  translate ([panel_hinge_width + hinge_arms_x() + extrusion_width(),0,panel_hinge_depth]) rotate ([0,180,0])
- render() difference(){
+ render() 
+ difference(){
     union () {
       // side with larger rounded corners
       difference() {

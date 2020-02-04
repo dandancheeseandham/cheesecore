@@ -6,10 +6,10 @@ use <demo.scad>
 
 module anti_backlash_nut(screw_size) {
   color("#b5a642") {
-    render()
-      difference() {
-        union() {
-          translate([0,0,32]) cylinder(d=16, h=4);
+    difference() {
+      union() {
+        translate([0,0,32])
+          cylinder(d=16, h=4);
           cylinder(d=12, h=36);
           cylinder(d=30, h=4);
         }

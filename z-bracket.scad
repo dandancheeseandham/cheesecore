@@ -12,9 +12,8 @@ module z_bracket(extrusion_type) {
   corner_radius = 2;
 
   color(printed_part_color())
-    render() // FIXME: this render() prevents an artifact in the assembled printer, but model seems put together fine on it's own?
-      difference() {
-        union() {
+    difference() {
+      union() {
 
           // horizontal leg
           hull() {

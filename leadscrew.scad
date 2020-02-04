@@ -9,5 +9,5 @@ module leadscrew() {
 }
 
 demo() {
-  leadscrew(leadscrew_length,leadscrewwidth);
+  leadscrew();
 }

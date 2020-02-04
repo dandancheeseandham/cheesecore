@@ -5,7 +5,7 @@ use <screwholes.scad>
 include <nopscadlib/core.scad>
 use <lib/holes.scad>
 use <lib/layout.scad>
-use <lib/fan_grill_difference.scad>
+use <fan_guard_removal.scad>
 use <electronics_box_corner.scad>
 use <demo.scad>
 
@@ -111,12 +111,13 @@ module right_side_panel() {
 }
 
 module left_side_panel(){
-  color(acrylic_color()) render()
+  color(acrylic_color())
+  //render()
   difference()
     {
     make_panel (box_size_z(),box_depth(),stepper_cables = false, IEC = false);
-    translate ([70, box_depth()-29,0])  fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
-    translate ([180,box_depth()-29,0]) fan_grill_difference(32,3.5,40,8 ,acrylic_thickness()+epsilon);
+    translate ([70, box_depth()-29,acrylic_thickness()/2])  fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
+    translate ([180,box_depth()-29,acrylic_thickness()/2]) fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
    }
 }
 
@@ -252,6 +253,6 @@ module make_panel(length,electronicscabinet_box_depth,stepper_cables,IEC) {
     translate([frame_size().x / 2 + side_panel_thickness(), 0, 0])
         rotate ([0,0,90]) {
           translate ([0,0,0])
-            electronics_box();
+            electronics_box_panels_assembly();
   }
 }
