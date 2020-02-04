@@ -50,7 +50,7 @@ module panel_mounting_screws(x, y) {
   screw_spacing_x = extent_x / (screws_x - 1);
   screw_spacing_y = extent_y / (screws_y - 1);
 
-  mirror_y() {
+  {
     for (a =[0:(screws_x - 1)]) {
       translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), y / 2 - extrusion_width() / 2, -epsilon])
         // FIXME - this should be a hole() not a cylinder
@@ -68,7 +68,7 @@ module panel_mounting_screws(x, y) {
 }
 
 module top_panel_door() {
-//color(acrylic2_color())
+color(acrylic2_color())
 
   intersection() {
     panel(enclosure_size().x, enclosure_size().y );
