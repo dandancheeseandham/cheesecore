@@ -83,10 +83,10 @@ shrink = 0;
   // around leadscrew out to bed ear
   hull() {
     // FIXME: base this on the leadscrew anti-backlash nut size
-    translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset, -leadscrew_y_offset])
-      circle(d=leadscrew_y_offset-shrink);
+    translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
+      circle(d=leadscrew_y_offset()-shrink);
 length_of_mount = 5;
-    translate([-ear_extent() + length_of_mount / 2, -leadscrew_y_offset])
+    translate([-ear_extent() + length_of_mount / 2, -leadscrew_y_offset()])
       rounded_square([10.1, 30-shrink], r=2.5);
   }
   minimise = 13.5;
@@ -94,7 +94,7 @@ length_of_mount = 5;
   hull() {
     translate([-ear_extent()+2.5+minimise, carriage_width(carriage_type)/2 - 2.5]) circle(r=2.5);
     translate([-1, carriage_width(carriage_type)/2 - 1]) square(1);
-    translate([-ear_extent()+minimise,-leadscrew_y_offset]) square([ear_extent()-minimise, epsilon]);
+    translate([-ear_extent()+minimise,-leadscrew_y_offset()]) square([ear_extent()-minimise, epsilon]);
   }
 }
 
@@ -103,7 +103,7 @@ module z_yoke_holes_profile() {
   carriage_type = rail_carriage(rail_profiles().z);
 
   // FIXME: should be driven off leadscrew nut size
-  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset, -leadscrew_y_offset])
+  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
     circle(d=leadscrew_diameter()+leadscrew_clearance()); // leadscrew nut hole
 
   // slot for bed moungint screws
@@ -113,7 +113,7 @@ module z_yoke_holes_profile() {
   //6.5 = move
   // 27.5 = long
   movehole = 0 ;
-  translate([-ear_extent()+derivedearextentbedtablength+movehole, -leadscrew_y_offset]) {
+  translate([-ear_extent()+derivedearextentbedtablength+movehole, -leadscrew_y_offset()]) {
     hull() {
       circle(d=3.3);
       translate([-ear_extent()+28, 0]) circle(d=3.3);
@@ -126,7 +126,7 @@ module holes(number_holes){
     // the holes to screw the leadscrew in
     // FIXME: made up this pattern, should come from anti-backlash nut
 if (number_holes == 4) {
-  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset, -leadscrew_y_offset]) {
+  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()]) {
     mirror_xy() {
       rotate(45) translate([leadscrew_pcd1()/2, 0]) circle(d=leadscrew_nut_screwholes());
     }
@@ -134,7 +134,7 @@ if (number_holes == 4) {
 }
 
 if (number_holes == 6) {
-  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset, -leadscrew_y_offset]) {
+  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()]) {
     mirror_xy() {
       rotate(60) translate([leadscrew_pcd1()/2, 0]) circle(d=leadscrew_nut_screwholes());
       translate([leadscrew_pcd1()/2, 0]) circle(d=3.4);
@@ -143,7 +143,7 @@ if (number_holes == 6) {
 }
 
 if (number_holes == 8) {
-  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset, -leadscrew_y_offset]) {
+  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()]) {
     rotate ([0,0,45])
     mirror_xy() {
       rotate(45) translate([leadscrew_pcd2()/2, 0]) circle(d=leadscrew_nut_screwholes());

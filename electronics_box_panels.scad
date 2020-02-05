@@ -16,23 +16,21 @@ function acrylic_cover_corner_rounding() = 14 ; // rounding acrylic cover to mat
 function screwy() = (-box_size_y()/2 + move_corners_adjust() - 20);
 function screwz() = ( box_size_z()/2 - move_corners_adjust() + 20);
 
-
 module electronics_box_panels_assembly() {
-
 if (extend_front_and_rear_x() == 0) {
   translate([frame_size().x / 2 + side_panel_thickness(), 0, -movedown()])
     rotate ([0,0,90]) {
       place_four_corners();
 
       translate ([-box_size_y()/2, -box_depth(), box_size_z()/2 + move_panels_outwards_adjust()/2])
-      top_panel();
+        top_panel();
 
       translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness()])
-      bottom_panel();
+        bottom_panel();
 
       translate ([box_size_y()/2 + move_panels_outwards_adjust()/2, -box_depth(), box_size_z()/2])
         rotate ([0,90,0])
-        right_side_panel();
+          right_side_panel();
 
       translate ([-box_size_y()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness(), -box_depth(), box_size_z()/2])
         rotate ([0,90,0])
@@ -42,8 +40,7 @@ if (extend_front_and_rear_x() == 0) {
         rotate ([90,0,0])
           electronics_cover_panel();
       // FIXME: bug spotted when no electronics is rendered included with panels.
-
-  }
+    }
 }
 
 if (back_panel_enclosure() == true) {
@@ -52,27 +49,24 @@ if (back_panel_enclosure() == true) {
       place_four_corners();
 
       translate ([-box_size_y()/2, -box_depth(), box_size_z()/2 + move_panels_outwards_adjust()/2])
-      top_panel();
+        top_panel();
 
       translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness()])
-      bottom_panel();
+        bottom_panel();
 
       translate ([box_size_y()/2 + move_panels_outwards_adjust()/2, -box_depth(), box_size_z()/2])
         rotate ([0,90,0])
-        right_side_panel();
+          left_side_panel();
 
       translate ([-box_size_y()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness(), -box_depth(), box_size_z()/2])
         rotate ([0,90,0])
-          left_side_panel();
+          right_side_panel();
 
       translate ([0, -box_depth(), 0])
         rotate ([90,0,0])
           electronics_cover_panel();
-
-
-
-}
-}
+        }
+  }
 
 if (extend_front_and_rear_x() != 0) {
   translate([frame_size().x / 2 + side_panel_thickness(), 0, -movedown()])
@@ -84,46 +78,42 @@ if (extend_front_and_rear_x() != 0) {
         rotate ([90,0,0])
           electronics_cover_panel_extended();
 
-}
+    }
+  }
 }
 
-
-
-}
 module place_four_corners() {
   mirror_xz() {
     translate ([-box_size_y()/2 + move_corners_adjust(), -box_depth(), box_size_z() / 2 - move_corners_adjust()])
       electronics_box_corner(cornersize = 15, acrylicdepth = acrylic_thickness() ,height = box_depth(), ledgewidth = 10 , ledgethickness = 4, , holesize = 3.5); ;  //electronics box corners
-    }
+  }
 }
-
 
 module top_panel() {
-    make_panel(box_size_y(), box_depth(), stepper_cables = true, IEC = false);
-}
+  make_panel(box_size_y(), box_depth(), stepper_cables = true, IEC = false);
+  }
 
 module bottom_panel() {
   make_panel(box_size_y(),box_depth(),stepper_cables = false);
-}
+  }
 
 module right_side_panel() {
   make_panel (box_size_z(),box_depth(),stepper_cables = false, IEC = true);
-}
+  }
 
-module left_side_panel(){
+module left_side_panel() {
   color(acrylic_color())
-  //render()
-  difference()
-    {
-    make_panel (box_size_z(),box_depth(),stepper_cables = false, IEC = false);
-    translate ([70, box_depth()-29,acrylic_thickness()/2])  fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
-    translate ([180,box_depth()-29,acrylic_thickness()/2]) fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
-   }
-}
+    difference() {
+      make_panel (box_size_z(),box_depth(),stepper_cables = false, IEC = false);
+      translate ([70, box_depth()-29,acrylic_thickness()/2])
+        fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
+      translate ([180,box_depth()-29,acrylic_thickness()/2])
+        fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
+    }
+  }
 
 
-module electronics_cover_panel()
-{
+module electronics_cover_panel() {
   // FIXME : draw in 2d then extrude
   // vent configuration
   vent_length = 78 ;
@@ -134,8 +124,12 @@ module electronics_cover_panel()
       color(acrylic2_color())
         difference () {
           translate ([0, 0, acrylic_thickness()/2])
-            rounded_rectangle([box_size_y()+acrylic_thickness()/2+expand_acrylic_cover_adjustment()*2, box_size_z()+acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2, acrylic_thickness()],acrylic_cover_corner_rounding());
-            rotate([90,0,0]) mirror_xz() translate([screwy(),-50,screwz()]) rotate([-90,0,0]) cylinder(d=3,h=100);  // FIXME: Use polyhole, check mounting fits Meanwell too
+            rounded_rectangle([box_size_y() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), box_size_z() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), acrylic_thickness()], acrylic_cover_corner_rounding());
+            rotate([90,0,0])
+              mirror_xz()
+                translate([screwy(),-50,screwz()])
+                  rotate([-90,0,0])
+                    cylinder(d=3,h=100);  // FIXME: Use polyhole, check mounting fits Meanwell too
           //16 vents
           if (laser_cut_vents() == true)
           translate(psu_placement() + [-40,90,0])  {
@@ -163,11 +157,10 @@ module electronics_cover_panel()
             }
             */
         }
+      }
     }
-  }
 
-  module electronics_cover_panel_extended()
-  {
+  module electronics_cover_panel_extended() {
     // FIXME : draw in 2d then extrude
     // vent configuration
     vent_length = 78 ;
@@ -228,12 +221,10 @@ module make_panel(length,electronicscabinet_box_depth,stepper_cables,IEC) {
             translate ([length/2-topscrewhole_x,box_depth()/2-topscrewhole_y,20])
               clearance_hole(nominal_d=3, h=50);
 
-
         if (stepper_cables) {
           translate ([length/2,0,0])
             mirror_x()
               translate ([length/2 - 20,box_depth(), -15]) cylinder(h=30, r1=7.5, r2=7.5, center=false);
-
         }
 
         if (IEC == true) {
@@ -244,7 +235,6 @@ module make_panel(length,electronicscabinet_box_depth,stepper_cables,IEC) {
             linear_repeat(extent = [0, 39.7, 0], count = 2)
               mirror([0, 0, 1]) clearance_hole(nominal_d=3, h=25);
         }
-
       }
     }
   }

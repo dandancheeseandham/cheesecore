@@ -29,8 +29,8 @@ module corexy_belts(position = [0, 0]) {
 
   // Where to position the crossover
   // FIXME: this is a hack that doesn't account for the bed offset of geometry
-  bed_offset_of_geometry = 150;
-  ypos = position.y - bed_offset_of_geometry;
+  offset_bed_of_geometry = 150;
+  ypos = position.y - offset_bed_of_geometry;
 
   // FIXME: we use 16 tooth pulley instead of 20
   // FIXME: extract out vars for idler types to shorten this?
@@ -108,8 +108,8 @@ module corexy_belts_magnum(position = [0, 0]) {
 
   // Where to position the crossover
   // FIXME: this is a hack that doesn't account for the bed offset of geometry
-  bed_offset_of_geometry = 150;
-  ypos = position.y - bed_offset_of_geometry;
+  offset_bed_of_geometry = 150;
+  ypos = position.y - offset_bed_of_geometry;
 
   // FIXME: we use 16 tooth pulley instead of 20
   // FIXME: extract out vars for idler types to shorten this?

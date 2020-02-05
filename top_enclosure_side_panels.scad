@@ -19,7 +19,7 @@ module panel(x, y) {
     //color(acrylic2_color())
     color(panel_color())
       translate ([0, 0, side_panel_thickness()/2])
-      rounded_rectangle([x, y, side_panel_thickness()], panel_radius());
+      rounded_rectangle([x-fitting_error(), y-fitting_error(), side_panel_thickness()], panel_radius());
     // Color the holes darker for contrast
     color(panel_color_holes()) {
       panel_mounting_screws(x, y);
@@ -135,17 +135,17 @@ module enclosure_hinges() {
 
 
 module right_side_panel() {
-  panel(enclosure_size().y, enclosure_size().z-extrusion_width()/2);
+  panel(enclosure_size().y, enclosure_size().z-extrusion_width());
 }
 
 module left_side_panel() {
-  panel(enclosure_size().y, enclosure_size().z-extrusion_width()/2);
+  panel(enclosure_size().y, enclosure_size().z-extrusion_width());
 }
 
 
 module back_panel() {
   difference(){
-  panel(enclosure_size().x, enclosure_size().z-extrusion_width()/2);
+  panel(enclosure_size().x, enclosure_size().z-extrusion_width());
 mirror_x(){
   translate([-100,0,-epsilon])
     fan_guard_removal(size = 80,thickness = acrylic_thickness());

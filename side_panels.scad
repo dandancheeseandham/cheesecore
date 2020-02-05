@@ -13,11 +13,6 @@ use <halo.scad>
 use <demo.scad>
 use <electronics_box_panels.scad>
 
-
-//FIXME add exhaust on back for side panels
-
-error = 0.2; //reduce panels by this size to account for whatever+-cutting error there is
-
 module panel(x, y,addx=0,addy=0) {
   assert(x != undef, "Must specify panel x dimension");
   assert(y != undef, "Must specify panel y dimension");
@@ -25,7 +20,7 @@ module panel(x, y,addx=0,addy=0) {
   difference() {
     color(panel_color())
       translate ([0, -addy/2, side_panel_thickness()/2])
-      rounded_rectangle([x+addx-error, y+addy-error, side_panel_thickness()], panel_radius());
+      rounded_rectangle([x+addx-fitting_error(), y+addy-fitting_error(), side_panel_thickness()], panel_radius());
     // Color the holes darker for contrast
     color(panel_color_holes()) {
       panel_mounting_screws(x, y);
@@ -80,14 +75,14 @@ module bottom_panel(bottom_braces=true) {
     panel(frame_size().x, frame_size().y,extend_bottom_panel_x(),0);
 // make Z motor holes to mount NEMA motors
     color(panel_color_holes()) {
-      translate([bed_offset.x, bed_offset.y, 0]) {
+      translate([bed_offset().x, bed_offset().y, 0]) {
         // left side holes
         mirror_y() {
-          translate([-frame_size().x / 2 + extrusion_width() + leadscrew_x_offset , bed_ear_spacing() / 2, 0])
+          translate([-frame_size().x / 2 + extrusion_width() + leadscrew_x_offset() , bed_ear_spacing() / 2, 0])
             motor_holes(NEMAtypeZ());
         }
         // right side holes
-        translate([frame_size().x / 2 - extrusion_width() - leadscrew_x_offset, 0, 0])
+        translate([frame_size().x / 2 - extrusion_width() - leadscrew_x_offset(), 0, 0])
           motor_holes(NEMAtypeZ());
       }
       // Deboss a name in the bottom panel
@@ -112,7 +107,7 @@ module bottom_panel(bottom_braces=true) {
 if (bottom_braces) {
   mirror_x() {
       for (a =[0:(screws_y - 1)]) {
-        translate ([frame_size().x / 2 - extrusion_width() * 1.5 - 2 * leadscrew_x_offset,-y / 2 + panel_screw_offset() + (screw_spacing_y * a), -epsilon])
+        translate ([frame_size().x / 2 - extrusion_width() * 1.5 - 2 * leadscrew_x_offset(),-y / 2 + panel_screw_offset() + (screw_spacing_y * a), -epsilon])
           // FIXME - this should be a hole not a cylinder
           cylinder(h=side_panel_thickness() + 2 * epsilon + 20, d=clearance_hole_size(extrusion_screw_size()));
         }
