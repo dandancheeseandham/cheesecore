@@ -23,25 +23,26 @@ frame_rc300_steel300zl2 = [490, 500, 460];
 frame_rc300_custom      = [490, 500, 460];
 
 // PANEL - Sides, halo and doors.
-//                        Panel                   Door          Extend       Panel Screw
-//                      thickness        radius thickness       panels by X   Offset
+//                                  Panel                 Door          Extend       Panel Screw
+//                                thickness      radius thickness       panels by X   Offset
 //Standard
-panels_imperial  = ["PANELS",0.25 * inch,  5,    0.25 * inch,       0,         50];
-panels_metric    = ["PANELS",6,            5,          5,           0,         50];
-panels_aluminium = ["PANELS",3,            5,          6,           0,         50];
-panels_steel     = ["PANELS",2,            5,          6,           0,         50];
+panels_imperial_250zl   = ["PANELS",0.25 * inch,  5,    0.25 * inch,       0,         42.5];
+panels_imperial         = ["PANELS",0.25 * inch,  5,    0.25 * inch,       0,         50];
+panels_metric           = ["PANELS",6,            5,          5,           0,         50];
+panels_aluminium        = ["PANELS",3,            5,          6,           0,         50];
+panels_steel            = ["PANELS",2,            5,          6,           0,         50];
 //Experimental
-panels_custom    = ["PANELS",6,            5,          5,           0,         35+20];
+panels_custom           = ["PANELS",6,            5,          5,           0,         35+20];
 
 extend_x = 110;
 
 // FIXME: Why does a number work, but not $panels[1]???
-function side_panel_thickness()     = 2 ; // $panels[1]
-function panel_radius()             = 5; // $panels[2]
-function extend_front_and_rear_x()  = 0; // extend_front_and_rear_x() panels by this to make the sides bigger.
+function side_panel_thickness()     = $panels[1] ; // $panels[1]
+function panel_radius()             = $panels[2]; // $panels[2]
+function extend_front_and_rear_x()  = $panels[4]; // extend_front_and_rear_x() panels by this to make the sides bigger.
 function extend_bottom_panel_x()    = 0; // extend_front_and_rear_x() panels by this to make the sides bigger.
 function extendz()                  = 0; // extend panels down to cover the feet. 53 covers the feet
-function panel_screw_offset()       = extrusion_width() + 35 ; // // $panels[5] - 50 in original 300ZL and 300ZLT with 1515 extrusion. 42.5 in the 250ZL
+function panel_screw_offset()       = $panels[5] ; // // $panels[5] - 50 in original 300ZL and 300ZLT with 1515 extrusion. 42.5 in the 250ZL
 // Max allowable distance between screws on front panels
 function max_panel_screw_spacing()  = 100 ;// maximum spacing allowed for the panels (exactly 100 for the 250ZL, FIXME: test this )
 function feetheight()               = $feet_depth;
@@ -94,33 +95,35 @@ elec_custom               = ["ELEC.BOX", 410,   310,   59 ,   6,    25,    false
 // HALO - Just XYZ at the moment. Z is panel thickness
 // can be defined as unconstrained from the frame, or constrained using frame variables.
 //Standard
-halo_rc150mini                = [frame_original_rc150mini.x + 125 , frame_original_rc150mini.y + side_panel_thickness() * 2, 4];
-halo_rc250zl                  = [frame_original_rc250zl.x + 150, frame_original_rc250zl.y + side_panel_thickness() * 2, 4];
-halo_rc300zl                  = [frame_original_rc300zl.x + 150, frame_original_rc300zl.y + side_panel_thickness() * 2, 4];
-halo_rc300zlt                 = [frame_original_rc300zlt.x + 150, frame_original_rc300zlt.y + side_panel_thickness() * 2, 4];
+halo_rc150mini                = [125 , 0, 4];
+halo_rc250zl                  = [150 , 0, 4];
+halo_rc300zl                  = [150 , 0, 4];
+halo_rc300zlt                 = [150 , 0, 4];
 //Experimental
-halo_rc300zlNEMA23            = [frame_original_rc300zl.x + 160, frame_original_rc300zl.y + side_panel_thickness() * 2 + 15, 4];
-halo_rc300_steel300zl         = [frame_rc300_steel300zl.x + 150, frame_rc300_steel300zl.y + side_panel_thickness() * 2, 4];
-halo_rc300steel300zlv1        = [638, 465 ,4];
-halo_rc300steel300zlv2        = [640, 465 ,4];
-halo_rc300steel300zlv2nema23  = [640+40, 465 ,4];
-halo_rc300zlwithcheese        = [frame_original_rc300zl.x + extend_x*2, frame_original_rc300zl.y + side_panel_thickness() * 2, 4];
+halo_rc300zlNEMA23            = [160 ,15, 4];
+halo_rc300_steel300zl         = [150 , 0, 4];
+halo_rc300steel300zlv1        = [150 , 0, 4];
+halo_rc300steel300zlv2        = [150 , 0, 4];
+halo_rc300steel300zlv2nema23  = [40  , 0 ,4];
+//halo_rc300zlwithcheese        = [frame_original_rc300zl.x + extend_x*2, frame_original_rc300zl.y + side_panel_thickness() * 2, 4];
+halo_rc300zlwithcheese        = [75*2, 0, 4];
 
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
 //                        X    Y    Z
 //Standard
-enclosure_rc150mini   = [halo_rc150mini.x, halo_rc150mini.y, 200];;
-enclosure_rc250zl     = [halo_rc250zl.x, halo_rc250zl.y, 200];
-enclosure_rc300zl     = [halo_rc300zl.x, halo_rc300zl.y, 200];
-enclosure_rc300zlt    = [halo_rc300zlt.x, halo_rc300zlt.y, 200];
+enclosure_rc150mini   = [0, 0, 200];
+enclosure_rc250zl     = [0, 0, 200];
+enclosure_rc300zl     = [0, 0, 200];
+enclosure_rc300zlt    = [0, 0, 200];
 //Experimental
-enclosure_rc300zl4040 = [590, 555, 245];
-enclosure_steel300zl  = [633, 459, 245];
-enclosure_cheesecore300zl = [490, 500, 245];
-enclosure_custom      = frame_rc300_custom + [150, 3, -200];
-enclosure_rc300zlwithcheese = [halo_rc300zlwithcheese.x, halo_rc300zl.y, 200];
+enclosure_rc300zl4040 = [0, 0, 245];
+enclosure_steel300zl  = [0, 0, 245];
+enclosure_cheesecore300zl = [0, 0, 245];
+enclosure_custom      = [0, 0, 200];
+enclosure_rc300zlwithcheese = [0, 0, 200];
 function enclosure_height_above_frame() = 0 ; // For the printed interface arrangement. Uneeeded with the cheesecore halo. but Left for backwards compatibility.
+// FIXME: X and Y are pointless. Integrate enclosure height above frame too.
 
 // LEADSCREW_SPECS
 // PCD holes are for the leadscrew nut diameter to the holes. Two are available on the Z-yoke.
@@ -199,8 +202,8 @@ function leadscrew_pcd1()             = $leadscrew_specs[4];
 function leadscrew_pcd2()             = $leadscrew_specs[5];
 function leadscrew_nut_screwholes()   = $leadscrew_specs[6];
 
-function halo_size()          = $halo_size;
-function halo_thickness()     = $halo_size.z ;
+function halo_size()          = [$halo_size.x + frame_size().x, $halo_size.y + frame_size().y + side_panel_thickness() * 2,$halo_size.z];
+function halo_thickness()     = $halo_size.z ; // FIXME: This can be searched and replaced with halosize.z
 
 function rail_lengths()  = [$rail_specs.x[0], $rail_specs.y[0], $rail_specs.z[0]];
 function rail_profiles() = [$rail_specs.x[1], $rail_specs.y[1], $rail_specs.z[1]];
@@ -209,9 +212,9 @@ function front_window_size()   = $front_window_size[1];
 function front_window_radius() = $front_window_size[2];
 function front_window_offset() = $front_window_size[3];
 
-function box_size_y() = $elecbox[1] ;
-function box_size_z() = $elecbox[2] ;
-function box_depth()   = $elecbox[3] ;
+function box_size_y()         = $elecbox[1] ;
+function box_size_z()         = $elecbox[2] ;
+function box_depth()          = $elecbox[3] ;
 function acrylic_thickness()  = $elecbox[4] ;
 function movedown()           = $elecbox[5] ;
 function laser_cut_vents()    = $elecbox[6] ;
@@ -223,7 +226,7 @@ function psu_placement()    = $elecbox[10] ;
 function ssr_placement()    = $elecbox[11] ;
 function rpi_placement()    = $elecbox[12] ;
 
-function enclosure_size()   = $enclosure_size ;
+function enclosure_size()   = [halo_size().x, halo_size().y ,$enclosure_size.z];
 
 // FIXME: corner cubes frame hack
 function framecornercubes() = [15*2,15*2,15*2]; // add 15mm corner cubes to each end of the frame so we can specify EXTRUSION sizes for the frame

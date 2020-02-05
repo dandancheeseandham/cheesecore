@@ -12,9 +12,9 @@ module z_bracket(extrusion_type) {
   corner_radius = 2;
 
   color(printed_part_color())
-    difference() {
-      union() {
-
+    render() // removes artifacts in preview
+      difference() {
+        union() {
           // horizontal leg
           hull() {
             cube([extrusion_width(), 1, thickness]);
