@@ -124,17 +124,20 @@ module ear_profile() {
 }
 
 module flex_plate(bed_frame_offset) {
-ear_width = 50;
+  ear_width = 50;
   translate (bed_frame_offset) {
     color([0.7, 0.7, 0.7]) {
       translate([0, 0, bed_thickness()]) {
+        // FIXME: we should draw the whole flex plate in 2d and extrude it once, rather than mixing a bunch of 3d solids
         rounded_rectangle([bed_plate_size().x, bed_plate_size().y, flex_plate_thickness()], bed_radius);
         mirror_x() {
           translate([bed_plate_size().x/2 - ear_width/2,-bed_plate_size().y /2, 0]) {
             rounded_rectangle([ear_width, 30, flex_plate_thickness()], bed_radius);
-            difference() {
-              translate([-ear_width/2-bed_radius,-bed_radius, 0]) square(bed_radius);
-              translate([-ear_width/2-bed_radius,-bed_radius,0]) circle(r=bed_radius);
+            linear_extrude(1) {
+              difference() {
+                translate([-ear_width/2-bed_radius,-bed_radius, 0]) square(bed_radius);
+                translate([-ear_width/2-bed_radius,-bed_radius,0]) circle(r=bed_radius);
+              }
             }
           }
         }
