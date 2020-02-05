@@ -32,7 +32,9 @@ panels_metric           = ["PANELS",6,            5,      0,0,0,   50,          
 panels_aluminium        = ["PANELS",3,            5,      0,0,0,   50,            100,       false];
 panels_steel            = ["PANELS",2,            5,      0,0,0,   50,            100,       false];
 //Experimental
-panels_custom           = ["PANELS",6,            5,      150,0,53,   55,            100,       false];
+panels_custom           = ["PANELS",6,            5,      150,0,53,55,            100,       false];
+panels_cheese           = ["PANELS",6,            5,      0,0,0,   50,            100,       false];
+
 
 function fitting_error() = 0.22; //reduce panels by this size to account for whatever +- cutting error there may be
 
@@ -44,7 +46,7 @@ function extend_bottom_panel_x()    = $panels[4] ; // extend_front_and_rear_x() 
 function extendz()                  = $panels[5] ; // extend panels down to cover the feet. 53 covers the feet
 function panel_screw_offset()       = $panels[6] ;  // // $panels[5] - 50 in original 300ZL and 300ZLT with 1515 extrusion. 42.5 in the 250ZL
 function max_panel_screw_spacing()  = $panels[7] ;  // maximum spacing allowed for the panels (exactly 100 for the 250ZL, FIXME: test this )
-function bottom_braces()            = $panels[8] ;
+function include_bottom_braces()    = $panels[8] ;
 
 function feetheight()               = $feet_depth;
 
@@ -69,6 +71,7 @@ rails_rc300zl4040         = [[500, MGN15], [500, MGN12], [500, MGN15]];
 rails_cheesecore300zl     = [[420, MGN12], [420, MGN12], [420, MGN12]];
 rails_cheesecore300zl2    = [[420, MGN12], [645, MGN12], [420, MGN12]];
 rails_custom              = [[420, MGN12], [445, MGN12], [420, MGN12]];
+rails__misumi_rc300zlt    = [[420, MGN12], [420, MGN12], [470, MGN12]];
 
 // ELECTRONICS BOX ALONG WITH  & ELECTRONICS & CABLE PLACEMENT -  placement of parts on right panel with X/Y as centre
 //                                                      DIMENSIONS               |       POSITIONS

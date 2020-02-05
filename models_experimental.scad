@@ -6,12 +6,12 @@ module rc300zlwithcheese(position = [0, 0, 0]) {
   $extrusion_type     = extrusion15;
 
   $frame_size         = frame_original_rc300zl;
-  $panels             = panels_metric;
+  $panels             = panels_cheese;
   $enclosure_size     = enclosure_rc300zlwithcheese;
   $halo_size          = halo_rc300zlwithcheese;
   $front_window_size  = front_window_original_300zl;
   $elecbox            = elec_new_ZL_cheese;
-  $branding_name      = "Original 300ZL";
+  $branding_name      = "Cheese 300ZL";
 
   $rail_specs         = rails__original_rc300zl;
   $leadscrew_specs    = leadscrew_original_rc300zl;
@@ -110,7 +110,7 @@ module cheesecore300zl3(position = [0, 0, 0]) {
   $extrusion_type     = extrusion15;
 
   $frame_size         = frame_rc300_steel300zl;
-  $panels             = panels_metric;
+  $panels             = panels_cheese;
   $enclosure_size     = enclosure_cheesecore300zl;
   $halo_size          = halo_rc300steel300zlv2;
   $front_window_size  = front_window_original_300zl;

@@ -45,6 +45,8 @@ module report() {
   echo ("extend_front_and_rear_x() : ",extend_front_and_rear_x());
   echo ("extend_bottom_panel_x() : ",extend_bottom_panel_x());
   echo ("extendz() : ",extendz());
+  echo ("include_bottom_braces() :",include_bottom_braces() );
   echo ("------------------------------------------");
+  echo ("");
   echo ("");
 }

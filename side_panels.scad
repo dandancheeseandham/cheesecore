@@ -70,7 +70,7 @@ module panel_mounting_screws(x, y)
 }
 
 // BOTTOM PANEL
-module bottom_panel(bottom_braces=true) {
+module bottom_panel() {
   difference() {
     panel(frame_size().x, frame_size().y,extend_bottom_panel_x(),0);
 // make Z motor holes to mount NEMA motors
@@ -104,7 +104,7 @@ module bottom_panel(bottom_braces=true) {
     screw_spacing_x = extent_x / (screws_x - 1);
     screw_spacing_y = extent_y / (screws_y - 1);
 // FIXME: IF BRACES THEN
-if (bottom_braces) {
+if (include_bottom_braces()) {
   mirror_x() {
       for (a =[0:(screws_y - 1)]) {
         translate ([frame_size().x / 2 - extrusion_width() * 1.5 - 2 * leadscrew_x_offset(),-y / 2 + panel_screw_offset() + (screw_spacing_y * a), -epsilon])
@@ -272,9 +272,9 @@ module pcb_holes(type) { // Holes for PCB's
 }
 
 
-module all_side_panels(braces) {
+module all_side_panels() {
   translate([0, 0, -frame_size().z / 2 - side_panel_thickness()])
-    bottom_panel(bottom_braces=braces);
+    bottom_panel();
 
   translate([0, -(frame_size().y)/2, 0])
     rotate([90,0,0])
@@ -298,5 +298,5 @@ module all_side_panels(braces) {
 
 
 demo() {
-  all_side_panels(braces=true) ;
+  all_side_panels() ;
 }
