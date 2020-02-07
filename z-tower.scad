@@ -101,6 +101,5 @@ module z_towers(z_position = 0) {
 }
 
 demo() {
-  //z_towers(z_position = 0);
   z_tower(100);
 }

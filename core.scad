@@ -12,6 +12,7 @@ use <z-tower.scad>
 use <rail.scad>
 use <electronics_box_panels.scad>
 use <electronics_box_contents.scad>
+use <electronics_box_assembly.scad>
 use <validation.scad>
 use <top_enclosure_parts.scad>
 use <top_enclosure_side_panels.scad>
@@ -63,9 +64,9 @@ module printer(position = [90, 90, 0]) {
   validate();
   enclosure();
   kinematics(position);
-  *door_assembly();
-  *electronics_box_contents();
-  electronics_box_panels_assembly();
-  *top_enclosure();
+  door_assembly();
+  electronics_box_contents();
+  electronics_box_assembly();
+  top_enclosure();
   report();
 }

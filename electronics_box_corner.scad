@@ -7,61 +7,65 @@ use <lib/holes.scad>
 use <lib/layout.scad>
 use <demo.scad>
 
-module electronics_box_corner(cornersize, acrylicdepth ,height, ledgewidth , ledgethickness, holesize) {
+module electronics_box_corner() {
   color(printed_part_color())
     rotate ([90,270,0])
-    translate ([cornersize+ledgewidth-(ledgewidth-10),cornersize+ledgewidth-(ledgewidth-10),-height]) {
+    translate ([elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),-box_depth()]) {
       union() {
         difference () {
-          cylinder(h=height, r1=cornersize, r2=cornersize, center=false);
-          translate ([-5,-5,-height/2])
-            cylinder(h=height*2, r1=holesize/2, r2=holesize/2, center=false);
+          cylinder(h=box_depth(), r1=elec_corner_size(), r2=elec_corner_size(), center=false);
+          translate ([-5,-5,-box_depth()/2])
+            cylinder(h=box_depth()*2, r1=elec_corner_holesize()/2, r2=elec_corner_holesize()/2, center=false);
         }
 
         // top left cube
-        translate ([-cornersize,0,0])
-          cube ([cornersize,cornersize,height]);
+        translate ([-elec_corner_size(),0,0])
+          cube ([elec_corner_size(),elec_corner_size(),box_depth()]);
         //bottom right cube
-        translate ([0,-cornersize,0])
-          cube ([cornersize,cornersize,height]);
+        translate ([0,-elec_corner_size(),0])
+          cube ([elec_corner_size(),elec_corner_size(),box_depth()]);
 
         // first "ledge"
-        translate ([-cornersize,cornersize-ledgethickness-acrylicdepth,0])
+        translate ([-elec_corner_size(),elec_corner_size()-elec_corner_ledge_thickness()-acrylic_thickness(),0])
           rotate ([0,0,90]) {
             ledge();
             rotate ([0,0,90])
-              fillet (1.5,height);
+              fillet (1.5,box_depth());
           }
 
         // second "ledge"
-        translate ([cornersize-ledgethickness-acrylicdepth,-ledgewidth-cornersize,0]) {
+        translate ([elec_corner_size()-elec_corner_ledge_thickness()-acrylic_thickness(),-elec_corner_ledge_width()-elec_corner_size(),0]) {
           ledge();
-          translate ([0,ledgewidth,0])
+          translate ([0,elec_corner_ledge_width(),0])
             rotate ([0,0,180])
-            fillet (1.5,height);
+            fillet (1.5,box_depth());
         }
       }
     }
 
   module ledge() {
-    translate ([ledgethickness/2,ledgewidth/2,height/2])
+    translate ([elec_corner_ledge_thickness()/2,elec_corner_ledge_width()/2,box_depth()/2])
       difference() {
-        translate ([-ledgethickness/2,-ledgewidth/2,-height/2])
-          cube ([ledgethickness,ledgewidth,height]);
+        translate ([-elec_corner_ledge_thickness()/2,-elec_corner_ledge_width()/2,-box_depth()/2])
+          cube ([elec_corner_ledge_thickness(),elec_corner_ledge_width(),box_depth()]);
         mirror_z() {
-          translate ([-height/2,0,(height/2-15)])
+          translate ([-box_depth()/2,0,(box_depth()/2-15)])
             rotate ([0,90,0])
-            cylinder(200,holesize/2,holesize/2);
+            cylinder(200,elec_corner_holesize()/2,elec_corner_holesize()/2);
         }
       }
   }
 }
 
-demo() {
-  // "standard" box
-  electronics_box_corner(cornersize = 15, acrylicdepth = 6,height = 60, ledgewidth = 10 , ledgethickness = 4, holesize = 3.5);
+module electronics_box_corner_hole(){
+  rotate ([90,270,0])
+    translate ([elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),-box_depth()]) {
+      translate ([-5,-5,-box_depth()/2])
+        cylinder(h=box_depth()*2, r1=elec_corner_holesize()/2, r2=elec_corner_holesize()/2, center=false);
+    }
+}
 
-  //lostapathy version for heat inserts with thicker "ledge"
-  translate ([60,0,0])
-    electronics_box_corner(cornersize = 15, acrylicdepth = 6.6 ,height = 60, ledgewidth = 10 , ledgethickness = 7, holesize = 4.75);
+demo() {
+  electronics_box_corner();
+  electronics_box_corner_hole();
 }

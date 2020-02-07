@@ -13,8 +13,28 @@ module rc300zlwithcheese(position = [0, 0, 0]) {
   $elecbox            = elec_new_ZL_cheese;
   $branding_name      = "Cheese 300ZL";
 
-  $rail_specs         = rails__original_rc300zl;
+  $rail_specs         = rails__misumi_rc300zlt;
   $leadscrew_specs    = leadscrew_original_rc300zl;
+  $bed                = bed_standard_rc300;
+  $feet_depth         = 50 ;
+  children();
+}
+
+module rc300zltwithcheese(position = [0, 0, 0]) {
+  $NEMA_XY            = NEMA23;
+  $NEMA_Z             = NEMA17;
+  $extrusion_type     = extrusion15;
+
+  $frame_size         = frame_cheese_rc300zlt;
+  $panels             = panels_cheese;
+  $enclosure_size     = enclosure_rc300zlwithcheese;
+  $halo_size          = halo_rc300zltwithcheese;
+  $front_window_size  = front_window_original_300zl;
+  $elecbox            = elec_300zl_with_cheese;
+  $branding_name      = "300ZL with Cheese";
+
+  $rail_specs         = rails__misumi_rc300zlt;
+  $leadscrew_specs    = leadscrew_rc300zl_with_cheese;
   $bed                = bed_standard_rc300;
   $feet_depth         = 50 ;
   children();

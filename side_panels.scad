@@ -129,6 +129,14 @@ module front_panel() {
     color(panel_color_holes())
       translate ([front_window_offset().x, front_window_offset().y, side_panel_thickness() / 2])
         rounded_rectangle([front_window_size().x, front_window_size().y, side_panel_thickness() + 2 * epsilon], front_window_radius());
+// IF EXTENDED PANELS AND NEMA23 MOTORS, MAKE A HOLE!
+    if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23")){
+
+      echo("NEMAtypeXY()[0]",NEMAtypeXY()[0]);
+      translate([288,210, side_panel_thickness() / 2])
+    rounded_rectangle([80,80,side_panel_thickness() + 2 * epsilon], front_window_radius());
+  }
+
   }
   // DEBUG cube
   //translate([-frame_size().x / 2 , -frame_size().z / 2 , side_panel_thickness()])  cube ([10,frame_size().z,10]);
@@ -221,7 +229,12 @@ module side_panel() {
 module back_panel() {
 //if no back electronic box then just create the panel
 if (back_panel_enclosure() == false) {
+    difference(){
     panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
+if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
+    translate([288,210, side_panel_thickness() / 2])
+    rounded_rectangle([80,80,side_panel_thickness() + 2 * epsilon], front_window_radius());
+}
   }
 //if back electronic box then make holes
   if (back_panel_enclosure() == true) {

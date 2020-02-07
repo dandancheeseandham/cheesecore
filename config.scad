@@ -21,6 +21,9 @@ frame_rc300zl4040       = [590, 555, 545];
 frame_rc300_steel300zl  = [460, 445, 415] + [15*2,15*2,15*2];
 frame_rc300_steel300zl2 = [490, 500, 460];
 frame_rc300_custom      = [490, 500, 460];
+frame_cheese_rc300zl    = [460, 425, 415] + [15*2,15*2,15*2];
+frame_cheese_rc300zlt   = [460, 425+20, 415+20] + [15*2,15*2,15*2];
+
 
 // PANEL - Sides, halo and doors.
 //                                  Panel        panel    Extend   Panel Screw  max panel    Bottom
@@ -33,10 +36,10 @@ panels_aluminium        = ["PANELS",3,            5,      0,0,0,   50,          
 panels_steel            = ["PANELS",2,            5,      0,0,0,   50,            100,       false];
 //Experimental
 panels_custom           = ["PANELS",6,            5,      150,0,53,55,            100,       false];
-panels_cheese           = ["PANELS",6,            5,      0,0,0,   50,            100,       false];
+panels_cheese           = ["PANELS",3,            3,      105*2,0,53,50,          100,       false];
 
 
-function fitting_error() = 0.22; //reduce panels by this size to account for whatever +- cutting error there may be
+function fitting_error() = 0.25; //reduce panels by this size to account for whatever +- cutting error there may be
 
 // FIXME: Why does a number work, but not $panels[1]???
 function side_panel_thickness()     = $panels[1] ;
@@ -71,11 +74,11 @@ rails_rc300zl4040         = [[500, MGN15], [500, MGN12], [500, MGN15]];
 rails_cheesecore300zl     = [[420, MGN12], [420, MGN12], [420, MGN12]];
 rails_cheesecore300zl2    = [[420, MGN12], [645, MGN12], [420, MGN12]];
 rails_custom              = [[420, MGN12], [445, MGN12], [420, MGN12]];
-rails__misumi_rc300zlt    = [[420, MGN12], [420, MGN12], [470, MGN12]];
+rails__misumi_rc300zlt    = [[420, MGN12], [420, MGN12], [420, MGN12]];
 
 // ELECTRONICS BOX ALONG WITH  & ELECTRONICS & CABLE PLACEMENT -  placement of parts on right panel with X/Y as centre
 //                                                      DIMENSIONS               |       POSITIONS
-//                           name        sizeX  sizeY  depth thick, move lasercut   cable_bundle      DuetE            Duex            PSU        SSR            RPi
+//                           name        sizeX  sizeZ  depth thick, move lasercut   cable_bundle      DuetE            Duex            PSU        SSR            RPi
 //                                                                  box
 //Standard                                                         down
 elecbox_original_rc150mini= ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
@@ -91,6 +94,8 @@ elec_steel300zl           = ["ELEC.BOX", 350,   260,   59 ,   6,    25,    true,
 elec_cheesecore           = ["ELEC.BOX", 392.9, 290,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-130,0]] ;
 elec_miniplaceh           = ["ELEC.BOX", 118.9, 58.9,  59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
 elec_custom               = ["ELEC.BOX", 410,   310,   59 ,   6,    25,    false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
+//elec_300zl_with_cheese    = ["ELEC.BOX", 350+20,290+20,95 ,   6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
+elec_300zl_with_cheese    = ["ELEC.BOX", 445-32,380,   99 ,   6,    60,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
 
 function back_panel_enclosure()     = false;  // is there an additional electronics box on the rear panel? FIXME: FInish off and allow conduit holes.
 
@@ -109,7 +114,7 @@ halo_rc300steel300zlv1        = [150 , 0, 4];
 halo_rc300steel300zlv2        = [150 , 0, 4];
 halo_rc300steel300zlv2nema23  = [40  , 0 ,4];
 halo_rc300zlwithcheese        = [75*2, 0, 4];
-
+halo_rc300zltwithcheese       = [105*2 ,0, 4];
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
 //                             X  Y   Z
@@ -124,6 +129,7 @@ enclosure_steel300zl        = [0, 0, 245];
 enclosure_cheesecore300zl   = [0, 0, 245];
 enclosure_custom            = [0, 0, 200];
 enclosure_rc300zlwithcheese = [0, 0, 200];
+enclosure_rc300zltwithcheese= [0, 0, 200];
 function enclosure_height_above_frame() = 0 ; // For the printed interface arrangement. Uneeeded with the cheesecore halo. but Left for backwards compatibility.
 // FIXME: X and Y are pointless. Integrate enclosure height above frame too.
 
@@ -140,6 +146,8 @@ leadscrew_rc_steel300zl = ["LEADSCREW_SPECS", 540, 8,     4,                 16,
 leadscrew_rc_steel300zl2= ["LEADSCREW_SPECS", 420, 8,     4,                 16,       22,          3.4];
 leadscrew_zl4040        = ["LEADSCREW_SPECS", 500, 8,     4,                 16,       22,          3.4];
 leadscrew_rc_custom     = ["LEADSCREW_SPECS", 420, 8,     4,                 16,       22,          3.4];
+leadscrew_rc300zl_with_cheese = ["LEADSCREW_SPECS", 440, 8,     8,                 16,       22,          3.4];
+
 function leadscrew_clearance() = 2; //central hole leadscrew clearance required for around the leadscrew so it does not hit the printed/milled part.
 // These define how far from the part origin of the z-tower the leadscrew is
 function leadscrew_x_offset() = 20 ; // how far in x the centerline of the leadscrew is from the inside edge of the frame extrusions
@@ -229,3 +237,17 @@ function enclosure_size()   = [halo_size().x, halo_size().y ,$enclosure_size.z];
 // This sets how far from centerline of the machine the idler stack on the x-carriages is.
 function motor_pulley_link()  = frame_size().y / 2 - rail_height(rail_profiles().x) - carriage_height(rail_profiles().x) - extrusion_width() ;
 function bearing_block()      = false;  ;  // use ZLT-style bearing blocks on the leadscrews - will come on automatically if leadscrew height > 500
+
+// electronics box
+function expand_acrylic_cover_adjustment() = 29 ;  // rounded corners for cover, to match the printed corners.
+function move_panels_outwards_adjust() = 49 ;  // 48.5 based on existing corners
+function move_corners_adjust() = 9.5 ;  // move the corners by this
+function acrylic_cover_corner_rounding() = 14 ; // rounding acrylic cover to match the corners
+function screwy() = (-box_size_y()/2 + move_corners_adjust() - 20);
+function screwz() = ( box_size_z()/2 - move_corners_adjust() + 20);
+
+//ELECTRONICS BOX CORNERS
+function elec_corner_size() = 15;
+function elec_corner_ledge_width() = 10;
+function elec_corner_ledge_thickness() = 7;   //lostapathy setting - 4 is standard
+function elec_corner_holesize() = 4.75;    // lostapathy setting - 3.5 is standard
