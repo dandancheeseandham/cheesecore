@@ -3,10 +3,9 @@ include <colors.scad>
 include <prefs.scad>
 include <constants.scad>
 use <validation.scad>
-use <core.scad>
 include <nopscadlib/vitamins/rails.scad>
 include <nopscadlib/vitamins/stepper_motors.scad>
-$draft = true;
+
 // *************************************************************************************************************************************************
 
 // FRAME - either specify frame size complete or specify extrusion sizes and addon the corner cubes e.g. [15*2,15*2,15*2] for 15mm corner cubes.

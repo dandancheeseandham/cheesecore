@@ -62,7 +62,7 @@ module remove_vents() {
   vent_length = 78;
   vent_height = 3;
   gap_between_vents = 4.5 ;
-  vent_offset = [-40,25,0];
+  vent_offset = [-40,80,0];
 
   rotate ([270,0,0])
     translate(psu_placement()+vent_offset) {
@@ -73,18 +73,25 @@ module remove_vents() {
 }
 
 module remove_printed_vent_area() {
-  translate(psu_placement() + [-91/2,-131/2,-40/2])
+  translate(psu_placement() + vent_offset + [-91/2,-131/2,-40/2])
       cube ([91,131,40]);
 }
 
 module electronics_cover_panel() {
 // FIXME : draw in 2d then extrude
 // vent configuration
-translate([0,-box_depth()-acrylic_thickness(),0])
-    difference() {
+translate([0,-box_depth(),0])
+rotate ([180,0,0])
+  difference() {
+      difference() {
       color(acrylic2_color())
       panel_cover([box_size_y() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), box_size_z() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), acrylic_thickness()], acrylic_cover_corner_rounding());
     }
+    place_four_holes_for_corners();
+      if (laser_cut_vents() == true) remove_vents();
+      if (laser_cut_vents() == false) remove_printed_vent_area();
+    }
+
 }
 
 module electronics_cabinet_side_panel(length){

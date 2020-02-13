@@ -10,13 +10,13 @@ use <demo.scad>
 demo() {
   // Standard lostapathy ZL hinge for a 5mm acrylic door
   translate([0, 0 ,0])
-    panelside_hinge( $draft = false);
+    panelside_hinge();
   translate([0 , 0,  acrylic_door_thickness()])
     doorside_hinge();
 
   // ZLT 6mm acrylic with doors that need to be 10mm closer to each other (extension = 5mm , on each hinge/door)
   translate ([0,-120,0])
-    panelside_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3 , $draft = false);
+    panelside_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3);
   translate ([0,-120,0])
     doorside_hinge();
 }
@@ -26,9 +26,9 @@ function rounding() = 1.5 ; // rounding() of edges
 function hinge_arm_body_y() = 70 ;  // raised section and panel hinge_y
 function hinge_arms_x() = 8.75  ;  // size for hinge arm ..
 function hinge_arms_y() = 14.75 ; // y size of arms - Standard for hinges
-function door_hinge_x()= extrusion_width($extrusion_type) ;   // hinge is the width of the extrusion
+function door_hinge_x()= extrusion_width() ;   // hinge is the width of the extrusion
 
-module panelside_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension = 0 ,screw_type =3, $draft = true) {
+module panelside_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension = 0 ,screw_type =3) {
   door_hinge_y = screw_distance + (hole_distance_from_edge() * 2) ;   // this is so it fits the panels depending on the distance between screws.
   door_hinge_z = 5.25 ;
   //door_hinge_z = 0.25 + acrylic_door_thickness ;   // Used to be parametric: Needs counterbore to work
@@ -74,13 +74,13 @@ color(printed_part_color())
 //panel_hinge_width + hinge_arms_x() + extrusion_width()
 
  translate ([panel_hinge_width + hinge_arms_x() + extrusion_width(),0,panel_hinge_depth]) rotate ([0,180,0])
- render() 
+ render()
  difference(){
     union () {
       // side with larger rounded corners
       difference() {
         translate ([0,-hinge_arm_body_y()/2,0])
-          roundedCube([panel_hinge_width-5,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=false,$draft=false);
+          roundedCube([panel_hinge_width-5,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=false);
             // take a 10mm cube off to corners, to add a 10mm rounded corner
         mirror_y()
           translate ([-epsilon,-hinge_arm_body_y()/2-epsilon,-epsilon])
@@ -88,13 +88,11 @@ color(printed_part_color())
           }
           // mid-section
           translate ([shape_overlap,-hinge_arm_body_y()/2,0])
-            roundedCube([panel_hinge_width-shape_overlap,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=true,$draft=false);
+            roundedCube([panel_hinge_width-shape_overlap,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=true);
 
           // hinge area
           translate ([panel_hinge_width-shape_overlap,15-hinge_arm_body_y()/2,0])
-            roundedCube([hinge_arms_x()+shape_overlap,(hinge_arm_body_y()/2-hinge_arms_y())*2-0.5,panel_hinge_depth], r=rounding(), x=true, y=true, z=true,$draft=false);
-            // roundedCube([hinge_arms_x()+shape_overlap,(hinge_arm_body_y()/2-hinge_arms_y())*2-0.5,panel_hinge_depth], r=rounding(), x=true, y=true, z=true,$draft=false);  // 90 deg
-
+            roundedCube([hinge_arms_x()+shape_overlap,(hinge_arm_body_y()/2-hinge_arms_y())*2-0.5,panel_hinge_depth], r=rounding(), x=true, y=true, z=true);
           // 10mm rounded corners
           mirror_y()
             translate ([0,0,panel_hinge_depth/2])
@@ -175,11 +173,7 @@ Thanks to Sergio Vilches for the initial code inspiration
 module roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef], $fn=128)
 
 {
-if ($draft == true)
-{
-  cube(dim);
-}
-else
+
 
 {
   translate([(center==true ? (-(dim[0]/2)) : 0), (center==true ? (-(dim[1]/2)) : 0), (center==true ? (-(dim[2]/2)) : 0)])

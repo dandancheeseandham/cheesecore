@@ -1,7 +1,7 @@
 // vim: set nospell:
 use <export_config.scad>
-use <../door_hinge.scad>
+use <../top_enclosure_side_panels.scad>
 
 export_artifacts() {
-      panelside_hinge();
-  }
+  top_panel_door();
+}
