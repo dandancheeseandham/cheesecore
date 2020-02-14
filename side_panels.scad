@@ -12,6 +12,7 @@ use <screwholes.scad>
 use <halo.scad>
 use <demo.scad>
 use <electronics_box_panels.scad>
+use <door_hinge.scad>
 
 module panel(x, y,addx=0,addy=0) {
   assert(x != undef, "Must specify panel x dimension");
@@ -182,7 +183,6 @@ module door() {
             // Larger corners that mirror the opening
             translate([front_window_size().x / 2 - front_window_radius(), front_window_size().y / 2 - door_overlap])
               circle(r = door_radius_outside_corners);
-
           }
         }
       }
@@ -193,14 +193,15 @@ module door() {
         translate ([40,180,-10])
           poly_cylinder(1.5, 30);
 
-translate ([0,-5,0])
-mirror_y()
-translate ([193.75,129.25,0]) {
-      translate ([6,0,-10])
-       poly_cylinder(1.5, 30);
-      mirror_y()
-       translate ([6,25,-10])
-         poly_cylinder(1.5, 30);
+
+*translate ([0,-5,0])
+  mirror_y()
+    translate ([193.75,129.25,0]) {
+        translate ([6,0,-10])
+          poly_cylinder(1.5, 30);
+        mirror_y()
+          translate ([6,25,-10])
+            poly_cylinder(1.5, 30);
        }
 }
     }

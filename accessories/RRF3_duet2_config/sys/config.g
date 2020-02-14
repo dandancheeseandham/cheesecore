@@ -75,7 +75,7 @@ M92 E415                          ; Extruder steps/mm - 1.8 deg/step Steps/mm (S
 ; ####  Set axis minima:maxima switch positions
 ; Adjust to suit your machine and to make X=0 and Y=0 the edges of the bed
 ;M208 X0:250 Y0:250 Z-0.2:230     ; Conservative 300ZL/T settings (or 250ZL) ; These values are conservative to start with, adjust during commissioning.
-M208 X0:300 Y-8:300 Z0:610        ; 300ZLT
+M208 X-2:300 Y-8:300 Z0:610        ; 300ZLT
 
 
 ; #### Heaters
@@ -135,7 +135,7 @@ M558 H10 A1 T3000 S0.02                     ; Z probe - raise probe height.
 ; #### Probing configuration
 M558 P1                                     ; IR probe
 G31 X0 Y35 P500                             ; Probe offset and "stop" value.
-G31 Z0.58                                   ; Probe Z height (papertest)
+G31 Z2                                      ; Probe Z height. 
 M558 A1 S0.01                               ; Probing : (A) number of probes  (S) accuracy over multiple probes.
                                             ; (T) travel speed and (H) height are set in sys/macros
 ; ##### Mesh

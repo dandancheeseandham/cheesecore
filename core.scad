@@ -70,3 +70,8 @@ module printer(position = [90, 90, 0]) {
   top_enclosure();
   report();
 }
+
+module justdoors() {
+  hinges();
+  %doors();
+}

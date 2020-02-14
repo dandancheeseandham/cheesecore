@@ -6,6 +6,7 @@ use <lib/holes.scad>
 use <lib/layout.scad>
 use <screwholes.scad>
 use <demo.scad>
+use <side_panels.scad>
 
 demo() {
   // Standard lostapathy ZL hinge for a 5mm acrylic door
@@ -27,6 +28,11 @@ function hinge_arm_body_y() = 70 ;  // raised section and panel hinge_y
 function hinge_arms_x() = 8.75  ;  // size for hinge arm ..
 function hinge_arms_y() = 14.75 ; // y size of arms - Standard for hinges
 function door_hinge_x()= extrusion_width() ;   // hinge is the width of the extrusion
+
+
+function panel_hinge_width() = 27.5 ;
+function panel_hinge_depth() = 6.25 ;
+function shape_overlap() = 15 ;
 
 module panelside_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension = 0 ,screw_type =3) {
   door_hinge_y = screw_distance + (hole_distance_from_edge() * 2) ;   // this is so it fits the panels depending on the distance between screws.
@@ -65,59 +71,62 @@ module panelside_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension
 
 module doorside_hinge() {
 
-  panel_hinge_width = 27.5 ;
-  panel_hinge_depth = 6.25 ;
-  shape_overlap = 15 ;
 
 color(printed_part_color())
 
-//panel_hinge_width + hinge_arms_x() + extrusion_width()
+//panel_hinge_width() + hinge_arms_x() + extrusion_width()
 
- translate ([panel_hinge_width + hinge_arms_x() + extrusion_width(),0,panel_hinge_depth]) rotate ([0,180,0])
+ translate ([panel_hinge_width() + hinge_arms_x() + extrusion_width(),0,panel_hinge_depth()]) rotate ([0,180,0])
  render()
  difference(){
     union () {
       // side with larger rounded corners
       difference() {
         translate ([0,-hinge_arm_body_y()/2,0])
-          roundedCube([panel_hinge_width-5,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=false);
+          roundedCube([panel_hinge_width()-5,hinge_arm_body_y(),panel_hinge_depth()], r=rounding(), x=true, y=true, z=false);
             // take a 10mm cube off to corners, to add a 10mm rounded corner
         mirror_y()
           translate ([-epsilon,-hinge_arm_body_y()/2-epsilon,-epsilon])
               cube([10+epsilon,10+epsilon,10]);
           }
           // mid-section
-          translate ([shape_overlap,-hinge_arm_body_y()/2,0])
-            roundedCube([panel_hinge_width-shape_overlap,hinge_arm_body_y(),panel_hinge_depth], r=rounding(), x=true, y=true, z=true);
+          translate ([shape_overlap(),-hinge_arm_body_y()/2,0])
+            roundedCube([panel_hinge_width()-shape_overlap(),hinge_arm_body_y(),panel_hinge_depth()], r=rounding(), x=true, y=true, z=true);
 
           // hinge area
-          translate ([panel_hinge_width-shape_overlap,15-hinge_arm_body_y()/2,0])
-            roundedCube([hinge_arms_x()+shape_overlap,(hinge_arm_body_y()/2-hinge_arms_y())*2-0.5,panel_hinge_depth], r=rounding(), x=true, y=true, z=true);
+          translate ([panel_hinge_width()-shape_overlap(),15-hinge_arm_body_y()/2,0])
+            roundedCube([hinge_arms_x()+shape_overlap(),(hinge_arm_body_y()/2-hinge_arms_y())*2-0.5,panel_hinge_depth()], r=rounding(), x=true, y=true, z=true);
           // 10mm rounded corners
           mirror_y()
-            translate ([0,0,panel_hinge_depth/2])
+            translate ([0,0,panel_hinge_depth()/2])
               rotate ([0,0,180])
                 mirror_z()
                   translate ([-10,hinge_arm_body_y()/2-10,0])
-                    rounded_cylinder(r=10, h = panel_hinge_depth/2, r2 = rounding(), ir = 0, angle = 90);
+                    rounded_cylinder(r=10, h = panel_hinge_depth()/2, r2 = rounding(), ir = 0, angle = 90);
     }
 
 //holes to attach to door
-
-   translate ([6,0,0])
+#translate ([6,0,-10])
     poly_cylinder(1.5, 30);
-   mirror_y()
-    translate ([6,25,0])
+   #mirror_y()
+    translate ([6,25,-10])
       poly_cylinder(1.5, 30);
-
 //hole to create hinge
-    translate ([panel_hinge_width+hinge_arms_x()-3.75,150,2.63])
+    translate ([panel_hinge_width()+hinge_arms_x()-3.75,150,2.63])
         rotate ([90,0,0])
           poly_cylinder(1.38, 300);
 
   }
 }
 
+module panel_holes(){
+{   #translate ([6,0,-10])
+    poly_cylinder(1.5, 300);
+   #mirror_y()
+    translate ([6,25,-10])
+      poly_cylinder(1.5, 300);
+    }
+}
 // everything below here is for creating a rounded cube (or a preview that is just a cube), and can be swapped out with other similar code..
 
 /*
