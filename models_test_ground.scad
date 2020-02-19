@@ -26,25 +26,7 @@ module rc300zl_compatible_with_sides(position = [0, 0, 0]) {
 
 
 
-module rc300zlwithcheese(position = [0, 0, 0]) {
-  $NEMA_XY            = NEMA17;
-  $NEMA_Z             = NEMA17;
-  $extrusion_type     = extrusion15;
 
-  $frame_size         = frame_original_rc300zl;
-  $panels             = panels_cheese;
-  $enclosure_size     = eenclosure_rc_standard;
-  $halo_size          = halo_rc;
-  $front_window_size  = front_window_original_300zl;
-  $elecbox            = elecbox_300_large;
-  $branding_name      = "Cheese 300ZL";
-
-  $rail_specs         = rails_misumi_420XY_470Z;
-  $leadscrew_specs    = leadscrew_original_rc300zl;
-  $bed                = bed_standard_rc300;
-  $feet_depth         = 50 ;
-  children();
-}
 
 module rc300zltwithcheese(position = [0, 0, 0]) {
   $NEMA_XY            = NEMA23;

@@ -46,7 +46,7 @@ if (extend_front_and_rear_x() != 0) {
 }
 
 module electronics_box() {
-  translate([frame_size().x / 2 , 0, -movedown()])
+  translate([frame_size().x / 2 + side_panel_thickness() , 0, -movedown()])
     rotate ([0,0,90]) {
       {
         place_four_corners();

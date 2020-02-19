@@ -42,7 +42,7 @@ module 300ZL_2020_420Y(position = [0, 0, 0]) {
     children();
   }
 
-  module 300ZL_2020(position = [0, 0, 0]) {
+module 300ZL_2020(position = [0, 0, 0]) {
     $NEMA_XY            = NEMA17;
     $NEMA_Z             = NEMA17;
     $extrusion_type     = extrusion20;
@@ -54,6 +54,26 @@ module 300ZL_2020_420Y(position = [0, 0, 0]) {
     $front_window_size  = front_window_original_300zl;
     $elecbox            = elecbox_300_large;
     $branding_name      = "300ZL/2020";
+
+    $rail_specs         = rails_original_rc300zl;
+    $leadscrew_specs    = leadscrew_original_rc300zl;
+    $bed                = bed_standard_rc300;
+    $feet_depth         = 50 ;
+    children();
+  }
+
+module cheesecore_300zl(position = [0, 0, 0]) {
+    $NEMA_XY            = NEMA17;
+    $NEMA_Z             = NEMA17;
+    $extrusion_type     = extrusion15;
+
+    $frame_size         = frame_original_rc300zl;
+    $panels             = panels_aluminium;
+    $enclosure_size     = enclosure_rc_standard;
+    $halo_size          = halo_rc;
+    $front_window_size  = front_window_original_300zl;
+    $elecbox            = elecbox_300_large;
+    $branding_name      = "Cheese 300ZL";
 
     $rail_specs         = rails_original_rc300zl;
     $leadscrew_specs    = leadscrew_original_rc300zl;
