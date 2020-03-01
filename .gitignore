@@ -12,3 +12,6 @@ times.txt
 prefs.scad
 ignored/*
 ignore/*
+*.dxf
+*.iges
+*.cb

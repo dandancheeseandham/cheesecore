@@ -14,7 +14,7 @@ coupler_external_diameter = 20;
 // Diameter of the motor shaft
 motor_shaft_diameter = 5;
 // Diameter of the rod
-threaded_rod_diameter = 7.9;
+threaded_rod_diameter = 8;
 // Diameter of the screw thread
 screw_diameter = 3.4;
 screw_head_diameter = 7;
