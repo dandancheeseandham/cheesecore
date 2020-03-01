@@ -52,7 +52,7 @@ module frame() {
   if(include_bottom_braces()) {
     mirror_x() {
       //color("Blue")
-      translate([frame_size().x / 2 - extrusion_width() * 1.5 - 2 * leadscrew_x_offset(), 0, extrusion_width() / 2 - frame_size().z / 2])
+      translate([frame_size().x / 2 - extrusion_width() * 2 - 2 * leadscrew_x_offset(), 0, extrusion_width() / 2 - frame_size().z / 2])
         rotate([90, 0, 0])
           extrusion(frame_size().y - 2 * extrusion_width());
     }

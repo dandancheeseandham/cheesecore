@@ -3,10 +3,9 @@ include <colors.scad>
 include <prefs.scad>
 include <constants.scad>
 use <validation.scad>
-use <core.scad>
 include <nopscadlib/vitamins/rails.scad>
 include <nopscadlib/vitamins/stepper_motors.scad>
-$draft = true;
+
 // *************************************************************************************************************************************************
 
 // FRAME - either specify frame size complete or specify extrusion sizes and addon the corner cubes e.g. [15*2,15*2,15*2] for 15mm corner cubes.
@@ -17,64 +16,50 @@ frame_original_rc250zl  = [400, 370, 360] + [15*2,15*2,15*2];
 frame_original_rc300zl  = [460, 425, 415] + [15*2,15*2,15*2];
 frame_original_rc300zlt = [460, 425, 715] + [15*2,15*2,15*2];
 //Experimental
-frame_rc300zl4040       = [590, 555, 545];
-frame_rc300_steel300zl  = [460, 445, 415] + [15*2,15*2,15*2];
-frame_rc300_steel300zl2 = [490, 500, 460];
 frame_rc300_custom      = [490, 500, 460];
-frame_cheese_rc300zl    = [460, 425, 415] + [15*2,15*2,15*2];
-frame_cheese_rc300zlt   = [460, 425+20, 415+20] + [15*2,15*2,15*2];
+//Test-ground
+frame_rc300zl4040       = [590, 555, 545];
 
 
 // PANEL - Sides, halo and doors.
-//                                  Panel        panel    Extend   Panel Screw  max panel    Bottom
-//                                thickness      radius   panels   Offset       screw space  braces?
+//                                  Panel        panel    Extend      Panel Screw  max panel    Bottom
+//                                thickness      radius   panels      Offset       screw space  braces?
 //Standard
-panels_imperial_250zl   = ["PANELS",0.25 * inch,  5,      0,0,0,   42.5,          101,       false];
-panels_imperial         = ["PANELS",0.25 * inch,  5,      0,0,0,   50,            100,       true];
-panels_metric           = ["PANELS",6,            5,      0,0,0,   50,            100,       true];
-panels_aluminium        = ["PANELS",3,            5,      0,0,0,   50,            100,       false];
-panels_steel            = ["PANELS",2,            5,      0,0,0,   50,            100,       false];
+panels_imperial_250zl   = ["PANELS",0.25 * inch,  5,      0,0,0,      42.5,          101,       false];
+panels_imperial         = ["PANELS",0.25 * inch,  5,      0,0,0,      50,            100,       true];
+panels_metric           = ["PANELS",6,            5,      0,0,0,      50,            100,       true];
+panels_aluminium        = ["PANELS",3,            5,      0,0,0,      50,            100,       false];
+panels_steel            = ["PANELS",2,            5,      0,0,0,      50,            100,       false];
 //Experimental
-panels_custom           = ["PANELS",6,            5,      150,0,53,55,            100,       false];
-panels_cheese           = ["PANELS",3,            3,      105*2,0,53,50,          100,       false];
-
-
+panels_custom           = ["PANELS",6,            5,      150,0,53,   55,            100,       false];
+panels_cheese           = ["PANELS",3,            3,      105*2,0,53, 50,            100,       false];
 function fitting_error() = 0.25; //reduce panels by this size to account for whatever +- cutting error there may be
-
-// FIXME: Why does a number work, but not $panels[1]???
-function side_panel_thickness()     = $panels[1] ;
-function panel_radius()             = $panels[2] ;
-function extend_front_and_rear_x()  = $panels[3] ; // extend_front_and_rear_x() panels by this to make the sides bigger.
-function extend_bottom_panel_x()    = $panels[4] ; // extend_front_and_rear_x() panels by this to make the sides bigger.
-function extendz()                  = $panels[5] ; // extend panels down to cover the feet. 53 covers the feet
-function panel_screw_offset()       = $panels[6] ;  // // $panels[5] - 50 in original 300ZL and 300ZLT with 1515 extrusion. 42.5 in the 250ZL
-function max_panel_screw_spacing()  = $panels[7] ;  // maximum spacing allowed for the panels (exactly 100 for the 250ZL, FIXME: test this )
-function include_bottom_braces()    = $panels[8] ;
-
 function feetheight()               = $feet_depth;
 
 // FRONT WINDOW / DOOR
 //                            name                sizeXY   radius   offset    door thickness
-//UNMEASURED front_window_original_250zl   = ["WINDOW_TYPE", [420, 385], 10, [0, 5]];
+//Standard
 front_window_original_150mini = ["WINDOW_TYPE", [245, 210], 10,     [0, 5],   0.25 * inch];
 front_window_original_250zl   = ["WINDOW_TYPE", [370, 335], 10,     [0, 5],   0.25 * inch];
 front_window_original_300zl   = ["WINDOW_TYPE", [420, 385], 10,     [0, 5],   6];
 front_window_original_300zlt  = ["WINDOW_TYPE", [410, 645], 10,     [0, 0],   6];
+//Experimental
 front_window_custom           = ["WINDOW_TYPE", [420, 385], 10,     [0, 0],   6];
 
 // RAILS
-//                  sizeX  Xtype  sizeY  Ytype    sizeZ Ztype
+//                           sizeX  Xtype  sizeY  Ytype    sizeZ Ztype
 //Standard
-rails__original_rc150mini = [[245, MGN12], [245, MGN12], [245, MGN12]];
-rails__original_rc250zl   = [[350, MGN12], [350, MGN12], [350, MGN12]];
-rails__original_rc300zl   = [[400, MGN12], [400, MGN12], [400, MGN12]];
-rails__original_rc300zlt  = [[400, MGN12], [400, MGN12], [700, MGN12]];
+rails_original_rc150mini = [[245, MGN12], [245, MGN12], [245, MGN12]];
+rails_original_rc250zl   = [[350, MGN12], [350, MGN12], [350, MGN12]];
+rails_original_rc300zl   = [[400, MGN12], [400, MGN12], [400, MGN12]];
+rails_original_rc300zlt  = [[400, MGN12], [400, MGN12], [700, MGN12]];
 //Experimental
-rails_rc300zl4040         = [[500, MGN15], [500, MGN12], [500, MGN15]];
-rails_cheesecore300zl     = [[420, MGN12], [420, MGN12], [420, MGN12]];
-rails_cheesecore300zl2    = [[420, MGN12], [645, MGN12], [420, MGN12]];
-rails_custom              = [[420, MGN12], [445, MGN12], [420, MGN12]];
-rails__misumi_rc300zlt    = [[420, MGN12], [420, MGN12], [420, MGN12]];
+rails_misumi_395         = [[395, MGN12], [395, MGN12], [395, MGN12]];
+rails_misumi_420         = [[420, MGN12], [420, MGN12], [420, MGN12]];
+rails_misumi_420XY_470Z  = [[420, MGN12], [420, MGN12], [470, MGN12]];
+// Test-ground (can be deleted)
+rails_300zl_4040         = [[500, MGN15], [500, MGN12], [500, MGN15]];
+rails_custom             = [[420, MGN9] , [445, MGN12], [420, MGN15]];
 
 // ELECTRONICS BOX ALONG WITH  & ELECTRONICS & CABLE PLACEMENT -  placement of parts on right panel with X/Y as centre
 //                                                      DIMENSIONS               |       POSITIONS
@@ -83,53 +68,38 @@ rails__misumi_rc300zlt    = [[420, MGN12], [420, MGN12], [420, MGN12]];
 //Standard                                                         down
 elecbox_original_rc150mini= ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-400/2+106.68,390/2-101+25], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
-elecbox_original_rc300zl  = ["ELEC.BOX", 348.9, 288.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
+elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
-elec_ZL_Duet3             = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
-elec_new_ZL               = ["ELEC.BOX", 340,   270,   59 ,   6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[30,-110,0] , [-90,-140,0]] ;
-elec_new_ZL_cheese        = ["ELEC.BOX", 350,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
-elec_new_ZLT              = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,166.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [80,30,0], [30,-110,0] , [-90,-140,0]] ;
-elec_steel300zl           = ["ELEC.BOX", 350,   260,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [80,30,0], [70,-130,0] , [-60,-130,0]] ;
+elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
+elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
+// Test-ground (can be deleted)
 elec_cheesecore           = ["ELEC.BOX", 392.9, 290,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-130,0]] ;
 elec_miniplaceh           = ["ELEC.BOX", 118.9, 58.9,  59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
 elec_custom               = ["ELEC.BOX", 410,   310,   59 ,   6,    25,    false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
-//elec_300zl_with_cheese    = ["ELEC.BOX", 350+20,290+20,95 ,   6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
-elec_300zl_with_cheese    = ["ELEC.BOX", 445-32,380,   99 ,   6,    60,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
+elec_rc300zltwithcheese   = ["ELEC.BOX", 445-32,380,   99 ,   6,    60,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
+
 
 function back_panel_enclosure()     = false;  // is there an additional electronics box on the rear panel? FIXME: FInish off and allow conduit holes.
 
 // HALO - Just XYZ at the moment. Z is panel thickness
 //                        XY
 //                      addition
-//Standard
+//Standard, halo for 250ZL,300ZL and 300ZLT is the same
 halo_rc150mini                = [125 , 0, 4];
-halo_rc250zl                  = [150 , 0, 4];
-halo_rc300zl                  = [150 , 0, 4];
-halo_rc300zlt                 = [150 , 0, 4];
+halo_rc                       = [75*2 , 0, 4];
 //Experimental
-halo_rc300zlNEMA23            = [160 ,15, 4];
-halo_rc300_steel300zl         = [150 , 0, 4];
-halo_rc300steel300zlv1        = [150 , 0, 4];
-halo_rc300steel300zlv2        = [150 , 0, 4];
-halo_rc300steel300zlv2nema23  = [40  , 0 ,4];
-halo_rc300zlwithcheese        = [75*2, 0, 4];
-halo_rc300zltwithcheese       = [105*2 ,0, 4];
+halo_rc_NEMA23                = [80*2 ,15, 4];
+halo_rc_cheese                = [105*2 ,0, 4];
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
 //                             X  Y   Z
 //Standard
-enclosure_rc150mini         = [0, 0, 200];
-enclosure_rc250zl           = [0, 0, 200];
-enclosure_rc300zl           = [0, 0, 200];
-enclosure_rc300zlt          = [0, 0, 200];
+enclosure_rc_standard          = [0, 0, 200];
 //Experimental
-enclosure_rc300zl4040       = [0, 0, 245];
-enclosure_steel300zl        = [0, 0, 245];
-enclosure_cheesecore300zl   = [0, 0, 245];
-enclosure_custom            = [0, 0, 200];
-enclosure_rc300zlwithcheese = [0, 0, 200];
-enclosure_rc300zltwithcheese= [0, 0, 200];
+enclosure_large                = [0, 0, 245];
+enclosure_custom               = [0, 0, 200];
+
 function enclosure_height_above_frame() = 0 ; // For the printed interface arrangement. Uneeeded with the cheesecore halo. but Left for backwards compatibility.
 // FIXME: X and Y are pointless. Integrate enclosure height above frame too.
 
@@ -142,11 +112,9 @@ leadscrew_original_rc250zl  = ["LEADSCREW_SPECS", 400, 8,     8,                
 leadscrew_original_rc300zl  = ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc300zlt = ["LEADSCREW_SPECS", 700, 8,     4,                 16,       22,          3.4];
 //Experimental
-leadscrew_rc_steel300zl = ["LEADSCREW_SPECS", 540, 8,     4,                 16,       22,          3.4];
-leadscrew_rc_steel300zl2= ["LEADSCREW_SPECS", 420, 8,     4,                 16,       22,          3.4];
-leadscrew_zl4040        = ["LEADSCREW_SPECS", 500, 8,     4,                 16,       22,          3.4];
-leadscrew_rc_custom     = ["LEADSCREW_SPECS", 420, 8,     4,                 16,       22,          3.4];
-leadscrew_rc300zl_with_cheese = ["LEADSCREW_SPECS", 440, 8,     8,                 16,       22,          3.4];
+leadscrew_zl4040            = ["LEADSCREW_SPECS", 500, 8,     4,                 16,       22,          3.4];
+leadscrew_rc_custom         = ["LEADSCREW_SPECS", 420, 8,     4,                 16,       22,          3.4];
+
 
 function leadscrew_clearance() = 2; //central hole leadscrew clearance required for around the leadscrew so it does not hit the printed/milled part.
 // These define how far from the part origin of the z-tower the leadscrew is
@@ -232,6 +200,15 @@ function ssr_placement()    = $elecbox[11] ;
 function rpi_placement()    = $elecbox[12] ;
 
 function enclosure_size()   = [halo_size().x, halo_size().y ,$enclosure_size.z];
+
+function side_panel_thickness()     = $panels[1] ;
+function panel_radius()             = $panels[2] ;
+function extend_front_and_rear_x()  = $panels[3] ; // extend_front_and_rear_x() panels by this to make the sides bigger.
+function extend_bottom_panel_x()    = $panels[4] ; // extend_front_and_rear_x() panels by this to make the sides bigger.
+function extendz()                  = $panels[5] ; // extend panels down to cover the feet. 53 covers the feet
+function panel_screw_offset()       = $panels[6] ;  // // $panels[5] - 50 in original 300ZL and 300ZLT with 1515 extrusion. 42.5 in the 250ZL
+function max_panel_screw_spacing()  = $panels[7] ;  // maximum spacing allowed for the panels (exactly 100 for the 250ZL, FIXME: test this )
+function include_bottom_braces()    = $panels[8] ;
 
 // CONSTRAINTS
 // This sets how far from centerline of the machine the idler stack on the x-carriages is.

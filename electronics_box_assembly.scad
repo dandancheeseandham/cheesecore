@@ -25,7 +25,7 @@ if (extend_front_and_rear_x() != 0) {
       rotate ([0,0,90]) {
         place_four_corners();
         difference() {
-        filament_storage_panel();
+        %filament_storage_panel();
         place_four_holes_for_corners();
       }
       translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness()])
@@ -36,7 +36,7 @@ if (extend_front_and_rear_x() != 0) {
       rotate ([0,0,270]) {
         place_four_corners();
         difference() {
-        filament_storage_panel();
+        %filament_storage_panel();
         place_four_holes_for_corners();
       }
       translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness()])
@@ -46,16 +46,12 @@ if (extend_front_and_rear_x() != 0) {
 }
 
 module electronics_box() {
-  translate([frame_size().x / 2 + side_panel_thickness(), 0, -movedown()])
+  translate([frame_size().x / 2 + side_panel_thickness() , 0, -movedown()])
     rotate ([0,0,90]) {
-      place_four_corners();
-      difference() {
+      {
+        place_four_corners();
         electronics_cover_panel();
-        place_four_holes_for_corners();
-        if (laser_cut_vents() == true) remove_vents();
-        if (laser_cut_vents() == false) remove_printed_vent_area();
       }
-
       translate ([-box_size_y()/2, -box_depth(), box_size_z()/2 + move_panels_outwards_adjust()/2])
         top_panel();
       translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness()])
@@ -68,7 +64,6 @@ module electronics_box() {
           left_side_panel();
       }
   }
-
 
 module place_four_corners() {
   mirror_xz() {

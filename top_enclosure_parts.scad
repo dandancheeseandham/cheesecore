@@ -16,11 +16,7 @@ use <demo.scad>
  use <nopscadlib/printed/handle.scad>
 
 demo(){
-  *enclosure_fitting(100,200,true);
-  *pass_thru_idler(100,100,0,0);
-  *translate ([0, 0, -frame_size().z / 2 - 150])
-    top_enclosure_all($extrusion_type);
-  printed_interface_arrangement(height = 45,acrylic_thickness = 7);
+    top_enclosure();
 }
 
 module printed_interface_arrangement(height = 45,acrylic_thickness = 7)
