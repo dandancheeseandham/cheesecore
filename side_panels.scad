@@ -285,6 +285,10 @@ module pcb_holes(type) { // Holes for PCB's
     }
 }
 
+module left_panel(){
+side_panel();
+  bolt_holes();
+}
 
 module all_side_panels() {
   translate([0, 0, -frame_size().z / 2 - side_panel_thickness()])
@@ -296,7 +300,7 @@ module all_side_panels() {
 
   translate([-frame_size().x / 2 - side_panel_thickness(), 0, 0])
     rotate([90,0,90])
-      side_panel();
+      left_panel();
 
   translate ([frame_size().x / 2, 0, 0])
     rotate([90,0,90])

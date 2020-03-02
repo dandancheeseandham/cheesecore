@@ -9,12 +9,17 @@
 // GPL v3.0
 //
 //
+
 use <nopscadlib/utils/core/teardrops.scad> //nopscadlib library
 use <nopscadlib/utils/core/global.scad> //nopscadlib library
-
+use <demo.scad>
+include <nopscadlib/core.scad>
+include <nopscadlib/lib.scad>
+include <lib/layout.scad>
 //variable defines, all in mm
 //##overall spool dimensions##
-max_spool_width=50;
+
+max_spool_width=40;
 min_spool_id=22; //624ZZ
 spool_id_clearance=1; //minimum clearance between the spool holder and the inside of a spool
 
@@ -60,7 +65,7 @@ rotate([90,0,0])
         //use a teardrop to make it printable without support.
         teardrop(filament_holder_length, max_filament_holder_od/2,true,true);
 
-      //cut out for bearings  
+      //cut out for bearings
       translate([0,(max_filament_holder_od-min_filament_holder_id),0])
         cube([min_spool_id+5,
               min_filament_holder_id/2,
@@ -85,13 +90,13 @@ module mounting_plate(){
 						rounded_rectangle([mounting_plate_height,mounting_plate_width,mounting_plate_thickness-3],2,true);
 					translate([0,0,-(filament_holder_length)/2 +bearing_stack_wall_thickness/2+0.5])
 						cylinder(h=1, r=max_filament_holder_od/2, $fn=fn_resolution,center=true);
-					}				
+					}
 
 				//bolt holes
 				for(i=[-1,1])
 					for(j=[-1,1])
 						translate([j*mounting_plate_height/2 - j*fastener_washer_clearance_radius,
-										i*mounting_plate_width/2 -i*fastener_washer_clearance_radius 
+										i*mounting_plate_width/2 -i*fastener_washer_clearance_radius
 														+ (mounting_plate_width-max_filament_holder_od)/2,
 										-(filament_holder_length+mounting_plate_thickness)/2])
 						{
@@ -100,6 +105,21 @@ module mounting_plate(){
 								teardrop(40, fastener_washer_clearance_radius,true,true);
 						}
 		}
+}
+
+module bolt_holes(){
+  translate ([0,0,(filament_holder_length+mounting_plate_thickness)/2])
+  for(i=[-1,1])
+    for(j=[-1,1])
+      translate([j*mounting_plate_height/2 - j*fastener_washer_clearance_radius,
+              i*mounting_plate_width/2 -i*fastener_washer_clearance_radius
+                      + (mounting_plate_width-max_filament_holder_od)/2,
+              -(filament_holder_length+mounting_plate_thickness)/2])
+      {
+        cylinder(100, fastener_clearance_radius,true,true);
+        *translate([0,0,(mounting_plate_thickness-2)/2+20])
+          cylinder(40, fastener_washer_clearance_radius,true,true);
+      }
 }
 
 
@@ -167,7 +187,8 @@ module bearing_stack_assembly(){
 }
 
 module spool_holder_assembly(){
-	main_tube();
+color("DarkRed") {
+  main_tube();
 	rotate([90,0,0]){
 		mounting_plate();
 		translate([0,(max_filament_holder_od-min_filament_holder_id)/2,-(max_spool_width/2- (bearing_stack_wall_thickness+
@@ -179,9 +200,73 @@ module spool_holder_assembly(){
 			rotate([0,0,90])
 				bearing_stack_assembly();
 		}
+    }
 }
 
-if(1)
-	spool_holder_assembly();
-else
-	spool_holder_stl();
+module spool1kg(){
+  // 1 kg spool
+  mirror_z()
+  {
+difference (){
+union(){
+cylinder (d=88.9,h=73.152/2);
+translate ([0,0,73.152/2]) cylinder (d=203.2,h=3);
+}
+translate ([0,0,-2])  cylinder (d=52.8,h=75);
+}
+}
+}
+
+module spool2kg(){
+  // 1 kg spool
+  mirror_z()
+  {
+difference (){
+union(){
+cylinder (d=88.9,h=101.6/2);
+translate ([0,0,101.6/2]) cylinder (d=298.452,h=3);
+}
+translate ([0,0,-2])  cylinder (d=52.07,h=75);
+}
+}
+}
+
+module spool4kg(){
+  // 1 kg spool
+  mirror_z()
+  {
+difference (){
+union(){
+cylinder (d=88.9,h=101.6/2);
+translate ([0,0,101.6/2]) cylinder (d=298.452,h=3);
+}
+translate ([0,0,-2])  cylinder (d=52.07,h=75);
+}
+}
+}
+
+demo(){
+bolt_holes();
+  //spool_holder_assembly();
+  //rotate ([90,0,0]) translate ([0,00,0]) spool2kg();
+  //translate ([300,0,0]) spool1kg();
+	//spool_holder_assembly();
+	//spool_holder_stl();
+
+}
+
+module cheese_spool_assembly(){
+  //spool();
+  mirror_y()
+    translate([-frame_size().x / 2 - side_panel_thickness() - 80, 110, 110])
+      rotate ([0,0,270]){
+        spool_holder_assembly();
+        rotate ([90,0,0]) translate ([0,-10,0]) spool1kg();
+      }
+
+  translate([-frame_size().x / 2 - side_panel_thickness() - 80, 0, -30])
+      rotate ([0,0,270]) {
+        spool_holder_assembly();
+        rotate ([90,0,0]) translate ([0,-10,15]) spool2kg();
+}
+}
