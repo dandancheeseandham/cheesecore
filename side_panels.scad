@@ -262,7 +262,9 @@ module right_panel() {
     translate(DuetE_placement())  pcb_holes(DuetE);
     translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
     translate(Duex5_placement())  pcb_holes(Duex5);
-    *translate(rpi_placement())    pcb_holes(RPI3);
+    translate(Duex5_placement()+[+57.5,-36,0]) pcb_holes(Duet3Exp);
+
+    translate(rpi_placement()) rotate([0,0,180]) pcb_holes(RPI3);
     translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
     #translate(ssr_placement()) rotate([0,0,180]) ssr_hole_positions(ssrs[0]);
     //*translate(Duet3Exp)  pcb_holes(Duet3Exp);

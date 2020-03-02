@@ -19,7 +19,7 @@ module x_carriage()
   shoulder_bolt = 5 ;    //FIXME needs accurate measurement
 
   //orient for the printer
-  translate([-carr_pos_x, -carriage_z/2, 0]) rotate([90,0,0]) {
+  translate([-carr_pos_x, -carriage_z/2 - 3, 0]) rotate([90,0,0]) {   // FIXME -3 is a hack.
     color(alum_part_color()) {
       difference(){
         rounded_rectangle([carriage_x,  carriage_y, carriage_z], 5.5);

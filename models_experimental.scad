@@ -72,7 +72,7 @@ module cheesecore_300zl(position = [0, 0, 0]) {
     $enclosure_size     = enclosure_rc_standard;
     $halo_size          = halo_rc;
     $front_window_size  = front_window_original_300zl;
-    $elecbox            = elecbox_300_large;
+    $elecbox            = elecbox_300_Duet3 ;
     $branding_name      = "Cheese 300ZL";
 
     $rail_specs         = rails_original_rc300zl;

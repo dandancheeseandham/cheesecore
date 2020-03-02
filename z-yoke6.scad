@@ -10,7 +10,7 @@ use <nopscadlib/utils/fillet.scad>
 module z_yoke() {
   carriage_type = rail_carriage(rail_profiles().z);
   railmount = 12.5;
-  part_thickness = 7.8;
+  part_thickness = 10;
   extra_mount_length = 0; // how much longer to make the mount so we can have the horizontal pieces below the mounting screws
 
   color(printed_part_color()) {
@@ -32,25 +32,25 @@ module z_yoke() {
 //fillet rail to leadscrew
 translate([0,-16,-railmount+epsilon/2])
   fillet(1.6, part_thickness, center = true);
-//fillet removal
-  translate([-25,-15,-railmount+epsilon/2])
+//where removed, add a fillet
+  translate([-20.5,-16,-railmount+epsilon/2+0.05])
   rotate([0,180,0])
     fillet(1.6, part_thickness, center = true);
 
 
 
 //fillets to connect mounted face to main body
+translate([0, 0, -12.4])
 color(printed_part_color())
-  translate([-part_thickness, 0, -extra_mount_length/2-railmount+3.8])
+mirror_z() {
+  translate([-part_thickness, 0, part_thickness/2])
     rotate ([90,0,180])
-      fillet(4, carriage_width(carriage_type), center = true);
+      fillet(3.2, carriage_width(carriage_type), center = true);
+}
 
-translate([-part_thickness, 0, -extra_mount_length/2-railmount-3.8])
-  rotate ([270,0,180])
-    fillet(4, carriage_width(carriage_type), center = true);
 
     // flat bed mounting ear
-    translate([0,0,-carriage_length(carriage_type/2) - extra_mount_length+1]) {
+    translate([0,0,-carriage_length(carriage_type)/2-0.05]) {
       linear_extrude(part_thickness) {
         difference() {
           z_yoke_bed_mount_profile();
@@ -79,17 +79,18 @@ function ear_extent() = (frame_size().x - 4 * extrusion_width() - 2 * carriage_h
 module z_yoke_bed_mount_profile() {
   assert(extrusion_width() != undef, "Must specify extrusion_width()");
   carriage_type = rail_carriage(rail_profiles().z);
-shrink = 0;
+shrink = 2;
+length_of_mount = 5;
   // around leadscrew out to bed ear
   hull() {
     // FIXME: base this on the leadscrew anti-backlash nut size
     translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
       circle(d=leadscrew_y_offset()-shrink);
-length_of_mount = 5;
+
     translate([-ear_extent() + length_of_mount / 2, -leadscrew_y_offset()])
       rounded_square([10.1, 30-shrink], r=2.5);
   }
-  minimise = 13.5;
+  minimise = 10;
   // bridge from bed ear to upright bracket
   hull() {
     translate([-ear_extent()+2.5+minimise, carriage_width(carriage_type)/2 - 2.5]) circle(r=2.5);
@@ -116,7 +117,7 @@ module z_yoke_holes_profile() {
   translate([-ear_extent()+derivedearextentbedtablength+movehole, -leadscrew_y_offset()]) {
     hull() {
       circle(d=3.3);
-      translate([-ear_extent()+28, 0]) circle(d=3.3);
+      translate([-ear_extent()+20, 0]) circle(d=3.3);
     }
   }
 

@@ -49,7 +49,7 @@ module halo() {
                 clearance_hole(nominal_d=3, h=50);
 
 //holes
-holes_row_position = 50 ; // modify this to change where the holes are on the halo
+holes_row_position = 52 ; // modify this to change where the holes are on the halo
           translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 210 , 25])
             clearance_hole(nominal_d=8.5, h=50);  // for  for M10 tap thread
             translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 190 , 25])
@@ -142,11 +142,11 @@ module panel_mounting_screws(x, y)
 // IDLER HOLES with 2.5mm holes for 3mm tap.
   translate([-frame_size().x / 2, 0, 0]){
     mirror_y() {
-      #translate([-side_panel_thickness() - NEMA_width(NEMAtypeXY())/2 + halo_idler_offset_outer(), motor_pulley_link() + 11 , -5])
+      translate([-side_panel_thickness() - NEMA_width(NEMAtypeXY())/2 + halo_idler_offset_outer(), motor_pulley_link() + 11 , -5])
         cylinder(d=2.5, h=35);   //// FURTHEST IDLER
 
-    #translate([-extrusion_width()+halo_idler_offset_inner(), motor_pulley_link(),-5])
-      cylinder(d=2.5, h=35);   //// inner IDLER
+      translate([-extrusion_width()+halo_idler_offset_inner(), motor_pulley_link(),-5])
+        cylinder(d=2.5, h=35);   //// inner IDLER
            }
          }
 

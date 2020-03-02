@@ -30,7 +30,7 @@ module railcore_300ZLT_compatible(position = [0, 0, 0]) {
   $frame_size         = frame_original_rc300zlt;
   $panels             = panels_imperial;
   $enclosure_size     = enclosure_rc_standard;
-  $halo_size          = halo_rct;
+  $halo_size          = halo_rc;
   $front_window_size  = front_window_original_300zlt;
   $elecbox            = elecbox_original_rc300zlt;
   $branding_name      = "Original 300ZLT";
@@ -51,7 +51,7 @@ module railcore_250ZL_compatible(position = [0, 0, 0]) {
   $frame_size         = frame_original_rc250zl;
   $panels             = panels_imperial;
   $enclosure_size     = enclosure_rc_standard;
-  $halo_size          = halo_rc250zl;
+  $halo_size          = halo_rc;
   $front_window_size  = front_window_original_250zl;
   $elecbox            = elecbox_original_rc250zl;
   $branding_name      = "Original 250ZL";
@@ -64,7 +64,7 @@ module railcore_250ZL_compatible(position = [0, 0, 0]) {
 }
 
 // rc150mini - based on a bit of info about the bed from steve :)
-module railcore_150_compatible(position = [80, 80, 20]) {
+module railcore_150ZL_compatible(position = [80, 80, 20]) {
   $NEMA_XY            = NEMA17;
   $NEMA_Z             = NEMA17;
   $extrusion_type     = extrusion15;

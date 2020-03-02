@@ -71,10 +71,10 @@ elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,
 elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
-elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
-elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
+elecbox_300_large         = ["ELEC.BOX", 350,   300,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-30,-130,0]] ;
+elecbox_300_Duet3         = ["ELEC.BOX", 350,   300,   59,    6,    25,    true,   [-84,146.5,0], [-135,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-150,-60,0]] ;
 // Test-ground (can be deleted)
-elec_cheesecore           = ["ELEC.BOX", 392.9, 290,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-130,0]] ;
+elec_cheesecore           = ["ELEC.BOX", 392.9, 290,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-140,0]] ;
 elec_miniplaceh           = ["ELEC.BOX", 118.9, 58.9,  59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
 elec_custom               = ["ELEC.BOX", 410,   310,   59 ,   6,    25,    false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
 elec_rc300zltwithcheese   = ["ELEC.BOX", 445-32,380,   99 ,   6,    60,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
@@ -127,8 +127,9 @@ function leadscrew_y_offset() = 30 ; // taken off z yoke in fusion
 //Standard
 bed_standard_rc150mini= ["BED", [150, 167],      100,        [160, 167],        0.25 * inch,  [0, -12.5],   0.9];
 bed_standard_rc250    = ["BED", [275, 281],      205,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
-bed_standard_rc300    = ["BED", [325, 342],      255,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
+bed_standard_rc300    = ["BED", [341, 325],      255,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
 //Experimental
+bed_cheese_rc300      = ["BED", [325, 341],      255,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
 bed_custom            = ["BED", [425, 442],      295,        [435, 442],        8,            [0, -12.5],   0.9];
 // bed offset = How far to offset the bed from center of frame
 // FIXME: what is the bed_overall_size for? Is it needed?
@@ -154,7 +155,7 @@ function extrusion_screw_size (extrusion_type = $extrusion_type) = extrusion_typ
 function frame_size() = $frame_size;
 function panels() = $panels;
 // *** THESE MOVE THE IDLER POSITION ON THE HALO
-move_inner = -4.5 ;
+move_inner = -8.5 ;
 move_outer = -12.5 ;
 function idler_offset_outer()      =  move_outer - 1.5 ;
 function halo_idler_offset_outer() =  move_outer ;
