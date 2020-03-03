@@ -338,6 +338,23 @@ module all_side_panels() {
       translate([0, 0, frame_size().z / 2 ])
         halo();
 }
+/*
+module cheese_spool_assembly_eh(){
+  //spool();
+  mirror_y()
+    translate([-frame_size().x / 2 - side_panel_thickness() - 80, 110, 110])
+      rotate ([0,0,270]){
+        spool_holder_assembly();
+        rotate ([90,0,0]) translate ([0,-10,0]) spool1kg();
+      }
+
+  translate([-frame_size().x / 2 - side_panel_thickness() - 80, 0, -30])
+      rotate ([0,0,270]) {
+        spool_holder_assembly();
+        rotate ([90,0,0]) translate ([0,-10,15]) spool2kg();
+}
+}
+*/
 
 
 demo() {

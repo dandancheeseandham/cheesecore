@@ -127,7 +127,7 @@ module electronics_cabinet_side_panel(length){
 }
 
 module filament_storage_panel() {
-  translate([0,-box_depth()-acrylic_thickness()/2,movedown()/2+5])
+  translate([0,-box_depth()-acrylic_thickness()/2,-20])
     color(acrylic2_color())
       panel_cover([frame_size().y-fitting_error(), frame_size().z + feetheight()-fitting_error(), acrylic_thickness()],1);
 }
