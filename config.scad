@@ -32,7 +32,7 @@ panels_aluminium        = ["PANELS",3,            5,      0,0,0,      50,       
 panels_steel            = ["PANELS",2,            5,      0,0,0,      50,            100,       false];
 //Experimental
 panels_custom           = ["PANELS",6,            5,      150,0,53,   55,            100,       false];
-panels_cheese           = ["PANELS",3,            3,      105*2,0,53, 50,            100,       false];
+panels_cheese           = ["PANELS",3,            3,      125*2,0,53, 50,            100,       false];
 function fitting_error() = 0.25; //reduce panels by this size to account for whatever +- cutting error there may be
 function feetheight()               = $feet_depth;
 
@@ -90,7 +90,7 @@ halo_rc150mini                = [125 , 0, 4];
 halo_rc                       = [75*2 , 0, 4];
 //Experimental
 halo_rc_NEMA23                = [80*2 ,15, 4];
-halo_rc_cheese                = [105*2 ,0, 4];
+halo_rc_cheese                = [125*2 ,0, 4];
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
 //                             X  Y   Z

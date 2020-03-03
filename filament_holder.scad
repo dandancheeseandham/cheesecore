@@ -9,9 +9,8 @@
 // GPL v3.0
 //
 //
-
-use <nopscadlib/utils/core/teardrops.scad> //nopscadlib library
 use <nopscadlib/utils/core/global.scad> //nopscadlib library
+//use <nopscadlib/utils/core/teardrops.scad> //nopscadlib library
 use <demo.scad>
 include <nopscadlib/core.scad>
 include <nopscadlib/lib.scad>
@@ -19,14 +18,48 @@ include <lib/layout.scad>
 //variable defines, all in mm
 //##overall spool dimensions##
 
-max_spool_width=40;
-min_spool_id=22; //624ZZ
+
+//
+//Yet Another Filament Spool Holder
+//
+//Designed for the Lasercut Mende90 but can be fitted on most printers with
+//a flat surface to bolt it onto.
+//
+//tony@think3dprint3d.com
+//
+// GPL v3.0
+//
+// it uses two libraries from the mendel90 design, available from here:
+//
+// https://github.com/T3P3/Mendel90/tree/LaserCut/scad
+// teardrops.scad
+// utils.scad
+//
+//for the thingiverse customiser the fucntions have been included in this file.
+
+// preview[view:south west, tilt:top diagonal]
+
+//variable defines, all in mm
+
+//##customiser variables##//
+// The maximum width of the spool or spools
+max_spool_width=90; //[30:150]
+
+//bearing outer diameter 13=624ZZ,21=608ZZ
+bearing_od=0; //[13,22]
+//bearing inner diameter 4=624ZZ,8=608ZZ
+bearing_id=4; //[4,8]
+//bearing thickness 5=624ZZ 7=608ZZ
+bearing_thickness=5; //[5,7]
+//use 25 for 624ZZ and 31 for 608ZZ
+min_spool_id=25; //[25,32]
+
+/* [Hidden] */
+
+
 spool_id_clearance=1; //minimum clearance between the spool holder and the inside of a spool
 
 //##bearing variables##
-bearing_od=0; //624ZZ bearing
-bearing_id=8; //624ZZ bearing
-bearing_thickness=7;
 bearing_washer_thickness=0.5; //M4 washer
 bearing_washer_radius=9/2; //M4 washer
 bearing_clearance=0; //clearance between the bearings and the spool holder
@@ -66,7 +99,7 @@ rotate([90,0,0])
         teardrop(filament_holder_length, max_filament_holder_od/2,true,true);
 
       //cut out for bearings
-      translate([0,(max_filament_holder_od-min_filament_holder_id),0])
+      translate([0,(max_filament_holder_od-min_spool_id*4/7),0])
         cube([min_spool_id+5,
               min_filament_holder_id/2,
               filament_holder_length-bearing_stack_wall_thickness*2],center=true);
@@ -77,7 +110,8 @@ rotate([90,0,0])
         cube([min_filament_holder_id, min_filament_holder_id/2,filament_holder_length-bearing_stack_wall_thickness*2],center=true);
 
   }
-   rotate([90,180,0]) translate ([0,-2,filament_holder_length/2]) teardrop(5, max_filament_holder_od/2+2,true,true);
+
+ rotate([90,180,0]) translate ([0,-2,filament_holder_length/2]) teardrop(5, max_filament_holder_od/2+2,true,true);
 }
 
 //The plate that holds the main tube to the side of the printer
@@ -105,21 +139,6 @@ module mounting_plate(){
 								teardrop(40, fastener_washer_clearance_radius,true,true);
 						}
 		}
-}
-
-module bolt_holes(){
-  translate ([0,0,(filament_holder_length+mounting_plate_thickness)/2])
-  for(i=[-1,1])
-    for(j=[-1,1])
-      translate([j*mounting_plate_height/2 - j*fastener_washer_clearance_radius,
-              i*mounting_plate_width/2 -i*fastener_washer_clearance_radius
-                      + (mounting_plate_width-max_filament_holder_od)/2,
-              -(filament_holder_length+mounting_plate_thickness)/2])
-      {
-        cylinder(100, fastener_clearance_radius,true,true);
-        *translate([0,0,(mounting_plate_thickness-2)/2+20])
-          cylinder(40, fastener_washer_clearance_radius,true,true);
-      }
 }
 
 
@@ -187,25 +206,18 @@ module bearing_stack_assembly(){
 }
 
 module spool_holder_assembly(){
-color("DarkRed") {
-  main_tube();
+  color ("DarkRed")
+translate ([0,-max_spool_width/2-mounting_plate_thickness/2-15,0]) {
+	main_tube();
 	rotate([90,0,0]){
 		mounting_plate();
-		translate([0,(max_filament_holder_od-min_filament_holder_id)/2,-(max_spool_width/2- (bearing_stack_wall_thickness+
-              bearing_washer_thickness*2+bearing_thickness*2))])
-			rotate([0,180,-90])
-				bearing_stack_assembly();
-		translate([0,(max_filament_holder_od-min_filament_holder_id)/2,(max_spool_width/2- (bearing_stack_wall_thickness+
-              bearing_washer_thickness*2+bearing_thickness*2))])
-			rotate([0,0,90])
-				bearing_stack_assembly();
-		}
-    }
+				}
+}
 }
 
 module spool1kg(){
   // 1 kg spool
-  mirror_z()
+color ("Yellow")   mirror_z()
   {
 difference (){
 union(){
@@ -219,7 +231,7 @@ translate ([0,0,-2])  cylinder (d=52.8,h=75);
 
 module spool2kg(){
   // 1 kg spool
-  mirror_z()
+color ("Yellow")  mirror_z()
   {
 difference (){
 union(){
@@ -246,8 +258,8 @@ translate ([0,0,-2])  cylinder (d=52.07,h=75);
 }
 
 demo(){
-bolt_holes();
-  //spool_holder_assembly();
+//bolt_holes();
+  spool_holder_assembly();
   //rotate ([90,0,0]) translate ([0,00,0]) spool2kg();
   //translate ([300,0,0]) spool1kg();
 	//spool_holder_assembly();
@@ -255,18 +267,26 @@ bolt_holes();
 
 }
 
-module cheese_spool_assembly(){
-  //spool();
-  mirror_y()
-    translate([-frame_size().x / 2 - side_panel_thickness() - 80, 110, 110])
-      rotate ([0,0,270]){
-        spool_holder_assembly();
-        rotate ([90,0,0]) translate ([0,-10,0]) spool1kg();
-      }
 
-  translate([-frame_size().x / 2 - side_panel_thickness() - 80, 0, -30])
-      rotate ([0,0,270]) {
-        spool_holder_assembly();
-        rotate ([90,0,0]) translate ([0,-10,15]) spool2kg();
+// From:
+// https://github.com/T3P3/Mendel90/tree/LaserCut/scad
+// teardrops.scad
+module teardrop_2D(r, truncate = true) {
+    difference() {
+        union() {
+            circle(r = r, $fn=100);
+            translate([0,r / sqrt(2),0])
+                rotate([0,0,45])
+                    square([r, r], center = true);
+        }
+        if(truncate)
+            translate([0, r * 2, 0])
+                square([2 * r, 2 * r], center = true);
+    }
 }
-}
+// From:
+// https://github.com/T3P3/Mendel90/tree/LaserCut/scad
+// teardrops.scad
+module teardrop(h, r, center, truncate = true)
+    linear_extrude(height = h, convexity = 2, center = center)
+        teardrop_2D(r, truncate);

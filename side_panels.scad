@@ -13,6 +13,7 @@ use <halo.scad>
 use <demo.scad>
 use <electronics_box_panels.scad>
 use <door_hinge.scad>
+use <filament_holder.scad>
 
 module panel(x, y,addx=0,addy=0) {
   assert(x != undef, "Must specify panel x dimension");
@@ -287,7 +288,18 @@ module pcb_holes(type) { // Holes for PCB's
 
 module left_panel(){
 side_panel();
-  bolt_holes();
+bolt_holes();
+m = 40;
+mirror_x()
+translate ([107.5,120,0]) {
+  rotate ([270,180,0]) spool_holder_assembly(90);
+  translate ([0,-13,-60]) spool1kg();
+}
+
+//translate ([0,-13,-50]) spool1kg();
+n=40;
+rotate ([270,180,0]) translate ([0,0,-n]) spool_holder_assembly(155);
+translate ([0,-13-n,-63]) spool2kg();
 }
 
 module all_side_panels() {
@@ -313,6 +325,23 @@ module all_side_panels() {
       translate([0, 0, frame_size().z / 2 ])
         halo();
 }
+/*
+module cheese_spool_assembly_eh(){
+  //spool();
+  mirror_y()
+    translate([-frame_size().x / 2 - side_panel_thickness() - 80, 110, 110])
+      rotate ([0,0,270]){
+        spool_holder_assembly();
+        rotate ([90,0,0]) translate ([0,-10,0]) spool1kg();
+      }
+
+  translate([-frame_size().x / 2 - side_panel_thickness() - 80, 0, -30])
+      rotate ([0,0,270]) {
+        spool_holder_assembly();
+        rotate ([90,0,0]) translate ([0,-10,15]) spool2kg();
+}
+}
+*/
 
 
 demo() {
