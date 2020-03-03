@@ -13,6 +13,9 @@ use <halo.scad>
 use <demo.scad>
 use <electronics_box_panels.scad>
 use <door_hinge.scad>
+use <filament_holder.scad>
+use <filament_holder2kg.scad>
+
 
 module panel(x, y,addx=0,addy=0) {
   assert(x != undef, "Must specify panel x dimension");
@@ -262,9 +265,18 @@ module right_panel() {
     translate(DuetE_placement())  pcb_holes(DuetE);
     translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
     translate(Duex5_placement())  pcb_holes(Duex5);
-    *translate(rpi_placement())    pcb_holes(RPI3);
-    translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
-    #translate(ssr_placement()) rotate([0,0,180]) ssr_hole_positions(ssrs[0]);
+    translate(rpi_placement())    pcb_holes(RPI3);
+    //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
+    translate(psu_placement()+[0,115,-10]) rotate([0,0,90]) cylinder(40,3,3);
+    translate(ssr_placement() + [0,0,-20]) rotate ([0,0,90]) {
+      mirror_x()
+        translate ([47.5/2,0,0])
+          cylinder(h=140,d=5);
+    }
+    *translate(ssr_placement()) ssr_hole_positions(AQA411VL);
+
+    // cube ([50,50,50]);
+    //ssr_hole_positions(ssrs[0]);
     //*translate(Duet3Exp)  pcb_holes(Duet3Exp);
 
 
@@ -286,8 +298,21 @@ module pcb_holes(type) { // Holes for PCB's
 }
 
 module left_panel(){
-side_panel();
-  bolt_holes();
+  topx = 105;
+  topy = 105;
+  bottomx = 0;
+  bottomy = -30;
+difference() {
+  side_panel();
+  // remove holes for filament spool holders
+  mirror_x () translate ([topx,topy,0]) bolt_holes();
+  translate ([bottomx,bottomy,0]) bolt_holes();
+}
+mirror_x () translate ([topx,topy,0]) spool1kg();
+//place filament spool holders
+mirror_x () translate ([topx,topy,0]) spool_holder_assembly();
+*translate ([bottomx,bottomy,0]) spool_holder_assembly2kg();
+*spool2kg();
 }
 
 module all_side_panels() {

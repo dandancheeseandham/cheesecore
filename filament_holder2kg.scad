@@ -19,7 +19,7 @@ include <lib/layout.scad>
 //variable defines, all in mm
 //##overall spool dimensions##
 
-max_spool_width=57;
+max_spool_width=90;
 min_spool_id=22; //624ZZ
 spool_id_clearance=1; //minimum clearance between the spool holder and the inside of a spool
 
@@ -186,56 +186,12 @@ module bearing_stack_assembly(){
   }
 }
 
-module spool_holder_assembly(max_spool_width){
+module spool_holder_assembly2kg(max_spool_width){
   echo ("max_spool_width", max_spool_width);
     translate ([0,0,-(filament_holder_length+mounting_plate_thickness)/2]) color("DarkRed") {
   main_tube(max_spool_width);
 	mounting_plate(max_spool_width);
 	}
-}
-
-module spool1kg(){
-  // 1 kg spool
-  spoolwidth = 73.152 ;
-  spoollipwidth = 3;
-  translate ([0,-10,-47])   mirror_z()
-  {
-difference (){
-union(){
-cylinder (d=88.9,h=spoolwidth/2);
-translate ([0,0,(spoolwidth-(spoollipwidth*2))/2]) cylinder (d=203.2,h=spoollipwidth);
-}
-translate ([0,0,-2])  cylinder (d=52.8,h=spoolwidth+1*2); //cut out centre
-}
-}
-}
-
-module spool2kg(){
-  // 1 kg spool
-  translate ([0,-40,-62])  mirror_z()
-  {
-difference (){
-union(){
-cylinder (d=88.9,h=101.6/2);
-translate ([0,0,101.6/2]) cylinder (d=298.452,h=3);
-}
-translate ([0,0,-2])  cylinder (d=52.07,h=75);
-}
-}
-}
-
-module spool4kg(){
-  // 1 kg spool
-  mirror_z()
-  {
-difference (){
-union(){
-cylinder (d=88.9,h=101.6/2);
-translate ([0,0,101.6/2]) cylinder (d=298.452,h=3);
-}
-translate ([0,0,-2])  cylinder (d=52.07,h=75);
-}
-}
 }
 
 demo(){

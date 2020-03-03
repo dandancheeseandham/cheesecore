@@ -49,16 +49,16 @@ module halo() {
                 clearance_hole(nominal_d=3, h=50);
 
 //holes
-holes_row_position = 50 ; // modify this to change where the holes are on the halo
-          translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 210 , 25])
+holes_row_position = 60 ; // modify this to change where the holes are on the halo
+          translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 195 , 25])
             clearance_hole(nominal_d=8.5, h=50);  // for  for M10 tap thread
-            translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 190 , 25])
+            translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 175 , 25])
               clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
 
 
 
-          translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 170 , 25])
-            clearance_hole(nominal_d=2.5, h=50);   // for 3mm tap
+  *      translate([frame_size().x / 2 + holes_row_position , 0  , -25])
+              cylinder(d=20, h = 50);   // for 3mm tap
   *        translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 150 , 25])
             clearance_hole(nominal_d=3, h=50);  // for 3mm hole
   *        translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 130 , 25])

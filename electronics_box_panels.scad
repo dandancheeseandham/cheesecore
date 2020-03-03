@@ -94,6 +94,21 @@ rotate ([180,0,0])
 
 }
 
+module filament_cover_panel() {
+// FIXME : draw in 2d then extrude
+// vent configuration
+*translate([0,-box_depth(),0])
+rotate ([180,0,0])
+  difference() {
+      difference() {
+      color(acrylic2_color())
+      panel_cover([box_size_y() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), box_size_z() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), acrylic_thickness()], acrylic_cover_corner_rounding());
+    }
+        }
+
+}
+
+
 module electronics_cabinet_side_panel(length){
   // FIXME: draw this in 2d then extrude
   topscrewhole_x = 4.5 ;

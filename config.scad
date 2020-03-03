@@ -71,7 +71,7 @@ elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,
 elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
-elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
+elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]] ;
 elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 // Test-ground (can be deleted)
 elec_cheesecore           = ["ELEC.BOX", 392.9, 290,   59 ,   6,    25,    true,   [-104,146.5,0],[-105,70,0],     [-105,-40,0],     [90,30,0], [70,-130,0] , [-60,-130,0]] ;
@@ -87,7 +87,8 @@ function back_panel_enclosure()     = false;  // is there an additional electron
 //                      addition
 //Standard, halo for 250ZL,300ZL and 300ZLT is the same
 halo_rc150mini                = [125 , 0, 4];
-halo_rc                       = [75*2 , 0, 4];
+//halo_rc                       = [75*2 , 0, 4];
+halo_rc                       = [90*2+3 , 6, 4];
 //Experimental
 halo_rc_NEMA23                = [80*2 ,15, 4];
 halo_rc_cheese                = [105*2 ,0, 4];
