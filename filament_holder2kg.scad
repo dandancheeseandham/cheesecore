@@ -106,7 +106,7 @@ module mounting_plate(max_spool_width){
 						}
 		}
 }
-
+/*
 module bolt_holes(){
   rotate([180,0,180]) translate ([0,0,(filament_holder_length+mounting_plate_thickness)/2])
   for(i=[-1,1])
@@ -121,7 +121,7 @@ module bolt_holes(){
           cylinder(40, fastener_washer_clearance_radius,true,true);
       }
 }
-
+*/
 
 //each bearing stack has two printed ends
 module bearing_end(edge=true){

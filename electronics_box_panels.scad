@@ -55,6 +55,8 @@ module left_side_panel() {
         fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
       translate ([180,box_depth()-29,acrylic_thickness()/2])
         fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
+      translate ([210,box_depth()-20,-10])
+          cube([60,21,30]);
     }
   }
 

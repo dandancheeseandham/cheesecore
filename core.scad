@@ -65,7 +65,7 @@ module printer(position = [90, 90, 0]) {
   enclosure();
   kinematics(position);
   *door_assembly();
-  *electronics_box_contents();
+  electronics_box_contents();
   electronics_box_assembly(panelon = true);
   *top_enclosure();
   report();

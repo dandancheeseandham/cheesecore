@@ -264,6 +264,7 @@ module right_panel() {
     translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon);
     translate(DuetE_placement())  pcb_holes(DuetE);
     translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
+    translate(Duex5_placement()) pcb_holes(Duet3Exp); // Duet3 Expansion
     translate(Duex5_placement())  pcb_holes(Duex5);
     translate(rpi_placement())    pcb_holes(RPI3);
     //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
@@ -311,8 +312,8 @@ difference() {
 mirror_x () translate ([topx,topy,0]) spool1kg();
 //place filament spool holders
 mirror_x () translate ([topx,topy,0]) spool_holder_assembly();
-*translate ([bottomx,bottomy,0]) spool_holder_assembly2kg();
-*spool2kg();
+translate ([bottomx,bottomy,0]) spool_holder_assembly2kg();
+spool2kg();
 }
 
 module all_side_panels() {
