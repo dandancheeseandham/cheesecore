@@ -305,8 +305,8 @@ difference() {
 mirror_x () translate ([topx,topy,0]) spool1kg();
 //place filament spool holders
 mirror_x () translate ([topx,topy,0]) spool_holder_assembly();
-translate ([bottomx,bottomy,0]) spool_holder_assembly2kg();
-spool2kg();
+translate ([bottomx,bottomy,0]) spool_holder_assembly();
+//spool1kg();
 }
 
 module all_side_panels() {

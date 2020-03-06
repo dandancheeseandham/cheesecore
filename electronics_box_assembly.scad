@@ -29,21 +29,21 @@ if (back_panel_enclosure() == true) {
 if (extend_front_and_rear_x() != 0) {
     translate([frame_size().x / 2 + side_panel_thickness(), 0, -movedown()])
       rotate ([0,0,90]) {
-        place_four_corners();
+        place_four_electronics_box_corners();
         difference() {
-        %filament_storage_panel();
-        place_four_holes_for_corners();
+        %enclosure_electronics_storage_panel();
+        place_four_holes_for_electronics_corners();
       }
       translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness()])
         bottom_panel();
       }
 
-      translate([-frame_size().x / 2 - side_panel_thickness(), 0, -movedown()])
+      translate([-frame_size().x / 2 - side_panel_thickness(), 0, 0])
       rotate ([0,0,270]) {
-        place_four_corners();
+        place_four_filament_box_corners();
         difference() {
-        %filament_storage_panel();
-        place_four_holes_for_corners();
+        %filament_cover_panel();
+        place_four_holes_for_filament_box_corners();
       }
       translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness()])
         bottom_panel();
@@ -55,7 +55,7 @@ module electronics_box(panelon) {
   translate([frame_size().x / 2 + side_panel_thickness() , 0, -movedown()])
     rotate ([0,0,90]) {
       {
-        place_four_corners();
+        place_four_electronics_box_corners();
         //if panelon == true electronics_cover_panel();
       }
       translate ([-box_size_y()/2, -box_depth(), box_size_z()/2 + move_panels_outwards_adjust()/2])
@@ -71,11 +71,31 @@ module electronics_box(panelon) {
       }
   }
 
+  module cheesecore_filament_box(panelon) {
+    translate([frame_size().x / 2 + side_panel_thickness() , 0, -movedown()])
+      rotate ([0,0,90]) {
+        {
+          place_four_filament_box_corners();
+          //if panelon == true electronics_cover_panel();
+        }
+        translate ([-filament_box_size_y()/2, -filament_box_depth(), filament_box_size_z()/2 + move_panels_outwards_adjust()/2])
+          top_panel();
+        translate ([-filament_box_size_y()/2,-filament_box_depth(),-filament_box_size_z()/2 - move_panels_outwards_adjust()/2 - filament_acrylic_thickness()])
+          bottom_panel();
+        translate ([filament_box_size_y()/2 + filament_move_panels_outwards_adjust()/2, -filament_box_depth(), box_size_z()/2])
+          rotate ([0,90,0])
+            right_side_panel();
+        translate ([-box_size_y()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness(), -box_depth(), box_size_z()/2])
+          rotate ([0,90,0])
+            left_side_panel();
+        }
+    }
+
   module filament_box() {
     translate([frame_size().x / 2 + side_panel_thickness() , 0, -movedown()])
       rotate ([0,0,90]) {
         {
-          place_four_corners();
+          place_four_electronics_box_corners();
           filament_cover_panel();
         }
         translate ([-box_size_y()/2, -box_depth(), box_size_z()/2 + move_panels_outwards_adjust()/2])
@@ -91,16 +111,31 @@ module electronics_box(panelon) {
         }
     }
 
-module place_four_corners() {
+module place_four_electronics_box_corners() {
   mirror_xz() {
     translate ([-box_size_y()/2 + move_corners_adjust(), -box_depth(), box_size_z() / 2 - move_corners_adjust()])
       electronics_box_corner();  //electronics box corners
   }
 }
 
-module place_four_holes_for_corners() {
+module place_four_holes_for_electronics_corners() {
   mirror_xz() {
     translate ([-box_size_y()/2 + move_corners_adjust(), -box_depth(), box_size_z() / 2 - move_corners_adjust()])
+      electronics_box_corner_hole();  //electronics box corners
+  }
+}
+
+
+module place_four_filament_box_corners() {
+  mirror_xz() {
+    translate ([-filament_box_size_y()/2 + move_corners_adjust(), -filament_box_depth(), filament_box_size_z() / 2 - move_corners_adjust()])
+      electronics_box_corner();  //electronics box corners
+  }
+}
+
+module place_four_holes_for_filament_box_corners() {
+  mirror_xz() {
+    translate ([-filament_box_size_y()/2 + move_corners_adjust(), -filament_box_depth(), filament_box_size_z() / 2 - move_corners_adjust()])
       electronics_box_corner_hole();  //electronics box corners
   }
 }

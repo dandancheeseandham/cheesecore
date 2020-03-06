@@ -19,7 +19,7 @@ include <lib/layout.scad>
 //variable defines, all in mm
 //##overall spool dimensions##
 
-max_spool_thickness=57;
+max_spool_thickness=55;
 min_spool_id=22; //624ZZ
 spool_id_clearance=1; //minimum clearance between the spool holder and the inside of a spool
 
