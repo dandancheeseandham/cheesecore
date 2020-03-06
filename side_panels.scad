@@ -173,6 +173,9 @@ module door() {
 
 
   door_radius_outside_corners = front_window_radius() + door_overlap;
+*color("Pink")
+  translate ([0,-front_window_size().y/2 -door_overlap,0])
+  cube ([front_window_size().x/2 + door_overlap , front_window_size().y + door_overlap*2,5]);
   difference() {
     // Outline of the door
     color(acrylic2_color()) {
@@ -190,22 +193,13 @@ module door() {
         }
       }
 
-      //FIXME: horrible manual placement
-      translate ([20,180,-10])
-        poly_cylinder(1.5, 30);
-        translate ([40,180,-10])
-          poly_cylinder(1.5, 30);
+translate ([0,-5,0])
+mirror_y()
+translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanelholes();
+//poly_cylinder(1.5, 30);
+//-y / 2 + panel_screw_offset() + (screw_spacing_y * a)
+//
 
-
-*translate ([0,-5,0])
-  mirror_y()
-    translate ([193.75,129.25,0]) {
-        translate ([6,0,-10])
-          poly_cylinder(1.5, 30);
-        mirror_y()
-          translate ([6,25,-10])
-            poly_cylinder(1.5, 30);
-       }
 }
     }
 
@@ -248,7 +242,7 @@ if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
       color(panel_color_holes())
       translate ([0,-movedown() ,0]){
         rotate([90,0,0]) mirror_xz() {
-            //#translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
+            //translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
             translate([screwy(),-40,screwz()]) rotate([-90,0,0]) cylinder(d=3,h=150);  // FIXME: Use polyhole, check mounting fits Meanwell too
           }
       }
@@ -257,16 +251,15 @@ if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
 }
 
 module right_panel() {
-  #ssr_hole_positions(ssrs[0]);
   difference() {
    side_panel(); //call side panel then difference all the electronics mounting holes
     color(panel_color_holes()) translate ([0,-movedown() ,0]) {
     translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon);
     translate(DuetE_placement())  pcb_holes(DuetE);
     translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
-    translate(Duex5_placement()) pcb_holes(Duet3Exp); // Duet3 Expansion
+    translate(Duex5_placement()+[37.5,-36,0]) pcb_holes(Duet3Exp); // Duet3 Expansion
     translate(Duex5_placement())  pcb_holes(Duex5);
-    translate(rpi_placement())    pcb_holes(RPI3);
+    translate(rpi_placement())  rotate([0,0,180])  pcb_holes(RPI3);
     //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
     translate(psu_placement()+[0,115,-10]) rotate([0,0,90]) cylinder(40,3,3);
     translate(ssr_placement() + [0,0,-20]) rotate ([0,0,90]) {
@@ -283,7 +276,7 @@ module right_panel() {
 
 // ### FIXME : Use technique on acrylic housing
 rotate([90,0,0]) mirror_xz() {
-    //#translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
+    //translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
     translate([screwy(),-40,screwz()]) rotate([-90,0,0]) cylinder(d=3,h=150);  // FIXME: Use polyhole, check mounting fits Meanwell too
   }
   }

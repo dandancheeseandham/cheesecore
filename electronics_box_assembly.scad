@@ -13,7 +13,8 @@ use <demo.scad>
 module electronics_box_assembly(panelon = false) {
 
 if (extend_front_and_rear_x() == 0)
-  {electronics_box();
+  {
+    electronics_box();
     *translate([0, 0, 0])
       rotate ([0,0,180])
         filament_box();

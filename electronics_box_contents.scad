@@ -20,7 +20,7 @@ module electronics_box_contents() {
       //translate(ssr_placement()) rotate([0,0,180]) ssr_assembly(AQA411VL, M3_cap_screw, 3);
       translate(ssr_placement()) rotate([0,0,90]) ssr(AQA411VL);
       //translate(ssr_placement()) rotate([0,0,180]) ssr_shroud_fastened_assembly(AQA411VL, 12,6,AQA411VL);
-      translate(rpi_placement()+[-71,36,0]) rotate([0,0,180]) pcb(RPI3);
+      translate(rpi_placement()) rotate([0,0,180]) pcb(RPI3);
 /*
 //below is development crap which can be removed later.
 //playing with the idea of a RJ45 coupler for DuetEthernet versions

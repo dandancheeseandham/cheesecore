@@ -81,11 +81,23 @@ holes_row_position = 60 ; // modify this to change where the holes are on the ha
   }
   // DEBUG cube
   *translate([-frame_size().x / 2 , -frame_size().z / 2 , halo_size().z])  cube ([10,frame_size().z,10]);
+  shoulder_bolts();
 }
 
 
 //longscrewhole(screwhole_length,Mscrew,screwhole_increase)
 
+module   shoulder_bolts()
+{translate([-frame_size().x / 2, 0, 0]){
+  mirror_y() {
+    translate([-side_panel_thickness() - NEMA_width(NEMAtypeXY())/2 + halo_idler_offset_outer(), motor_pulley_link() + 11 , -5])
+      cylinder(d=2.5, h=35);   //// FURTHEST IDLER
+
+  translate([-extrusion_width()+halo_idler_offset_inner(), motor_pulley_link(),-5])
+    cylinder(d=2.5, h=35);   //// inner IDLER
+  }
+}
+}
 
 module panel_mounting_screws(x, y)
 {
@@ -142,13 +154,15 @@ module panel_mounting_screws(x, y)
 // IDLER HOLES with 2.5mm holes for 3mm tap.
   translate([-frame_size().x / 2, 0, 0]){
     mirror_y() {
-      #translate([-side_panel_thickness() - NEMA_width(NEMAtypeXY())/2 + halo_idler_offset_outer(), motor_pulley_link() + 11 , -5])
+      translate([-side_panel_thickness() - NEMA_width(NEMAtypeXY())/2 + halo_idler_offset_outer(), motor_pulley_link() + 11 , -5])
         cylinder(d=2.5, h=35);   //// FURTHEST IDLER
 
-    #translate([-extrusion_width()+halo_idler_offset_inner(), motor_pulley_link(),-5])
+    translate([-extrusion_width()+halo_idler_offset_inner(), motor_pulley_link(),-5])
       cylinder(d=2.5, h=35);   //// inner IDLER
            }
          }
+
+
 
 }
 

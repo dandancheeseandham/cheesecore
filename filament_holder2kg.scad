@@ -187,7 +187,6 @@ module bearing_stack_assembly(){
 }
 
 module spool_holder_assembly2kg(max_spool_width){
-  echo ("max_spool_width", max_spool_width);
     translate ([0,0,-(filament_holder_length+mounting_plate_thickness)/2]) color("DarkRed") {
   main_tube(max_spool_width);
 	mounting_plate(max_spool_width);
