@@ -298,14 +298,23 @@ module left_panel(){
   bottomy = -30;
 difference() {
   side_panel();
-  // remove holes for filament spool holders
-  mirror_x () translate ([topx,topy,0]) bolt_holes();
-  translate ([bottomx,bottomy,0]) bolt_holes();
+  // remove 3 sets of holes for filament spool holders
+  mirror_x ()
+    translate ([topx,topy,0])
+      bolt_holes();
+  translate ([bottomx,bottomy,0])
+    bolt_holes();
 }
-mirror_x () translate ([topx,topy,0]) spool1kg();
+// Add the 1kg spools at the top
+mirror_x ()
+  translate ([topx,topy,0])
+    spool1kg();
 //place filament spool holders
-mirror_x () translate ([topx,topy,0]) spool_holder_assembly();
-translate ([bottomx,bottomy,0]) spool_holder_assembly();
+mirror_x ()
+  translate ([topx,topy,0])
+    spool_holder_assembly();
+translate ([bottomx,bottomy,0])
+  spool_holder_assembly(); //central spool holder for larger spools. e.g. This can be swapped with a 2kg spool holder
 //spool1kg();
 }
 

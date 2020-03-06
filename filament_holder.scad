@@ -19,7 +19,7 @@ include <lib/layout.scad>
 //variable defines, all in mm
 //##overall spool dimensions##
 
-max_spool_thickness=55;
+max_spool_thickness=51;
 min_spool_id=22; //624ZZ
 spool_id_clearance=1; //minimum clearance between the spool holder and the inside of a spool
 
@@ -200,7 +200,7 @@ module spool1kg() {
   spool_diameter = 203.2 ;
   hub_diameter = 52.8 ;
   hub_counterbore_diameter = 88.9;
-  translate ([0,-10,-47])   mirror_z()
+  translate ([0,-18,-43])   mirror_z()
   {
     difference () {
       union() {
