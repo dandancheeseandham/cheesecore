@@ -94,9 +94,9 @@ function back_panel_enclosure()     = false;  // is there an additional electron
 //Standard, halo for 250ZL,300ZL and 300ZLT is the same
 halo_rc150mini                = [125 , 0, 4];
 //halo_rc                       = [75*2 , 0, 4];
-halo_rc                       = [95*2 , 6, 4];
+halo_rc                       = [95*2 , 6, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
 //Experimental
-halo_rc_NEMA23                = [80*2 ,15, 4];
+halo_rc_NEMA23                = [95*2 ,15, 4];
 halo_rc_cheese                = [125*2 ,0, 4];
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
