@@ -19,7 +19,7 @@ include <lib/layout.scad>
 //variable defines, all in mm
 //##overall spool dimensions##
 
-max_spool_thickness=51;
+max_spool_width=90;
 min_spool_id=22; //624ZZ
 spool_id_clearance=1; //minimum clearance between the spool holder and the inside of a spool
 
@@ -42,7 +42,7 @@ min_filament_holder_id = bearing_od+bearing_clearance;
 max_filament_holder_od = min_spool_id-spool_id_clearance;
 filament_holder_wall_thickness= max_filament_holder_od-min_filament_holder_id;
 echo("filament_holder_wall_thickness: ", filament_holder_wall_thickness);
-filament_holder_length=max_spool_thickness+bearing_stack_bolt_length;
+filament_holder_length=max_spool_width+bearing_stack_bolt_length;
 echo("filament_holder_length: ", filament_holder_length);
 
 //##mounting plate##
@@ -58,7 +58,7 @@ fn_resolution=100; //quality vs render time
 print_clearance=0.1; //additional clearance between two printed objects
 
 //The "peg" like tube the filament reel will sit on
-module main_tube(max_spool_thickness){
+module main_tube(max_spool_width){
 
     difference(){
       rotate([0,180,180])//truncated part facing down
@@ -81,7 +81,7 @@ module main_tube(max_spool_thickness){
 }
 
 //The plate that holds the main tube to the side of the printer
-module mounting_plate(max_spool_thickness){
+module mounting_plate(max_spool_width){
      $fn=fn_resolution;//smooth rounded rectangle
 		rotate([90,180,180]) rotate ([270,180,0]) difference(){
 				hull(){
@@ -106,7 +106,7 @@ module mounting_plate(max_spool_thickness){
 						}
 		}
 }
-
+/*
 module bolt_holes(){
   rotate([180,0,180]) translate ([0,0,(filament_holder_length+mounting_plate_thickness)/2])
   for(i=[-1,1])
@@ -121,7 +121,7 @@ module bolt_holes(){
           cylinder(40, fastener_washer_clearance_radius,true,true);
       }
 }
-
+*/
 
 //each bearing stack has two printed ends
 module bearing_end(edge=true){
@@ -186,59 +186,11 @@ module bearing_stack_assembly(){
   }
 }
 
-module spool_holder_assembly(max_spool_thickness){
+module spool_holder_assembly2kg(max_spool_width){
     translate ([0,0,-(filament_holder_length+mounting_plate_thickness)/2]) color("DarkRed") {
-  main_tube(max_spool_thickness);
-	mounting_plate(max_spool_thickness);
+  main_tube(max_spool_width);
+	mounting_plate(max_spool_width);
 	}
-}
-
-module spool1kg() {
-  // 1 kg spool
-  spool_thickness = 73.152 ;
-  spool_lip_width = 3;
-  spool_diameter = 203.2 ;
-  hub_diameter = 52.8 ;
-  hub_counterbore_diameter = 88.9;
-  translate ([0,-18,-43])   mirror_z()
-  {
-    difference () {
-      union() {
-        cylinder (d=hub_counterbore_diameter,h=spool_thickness/2);
-        translate ([0,0,(spool_thickness-(spool_lip_width*2))/2]) cylinder (d=spool_diameter,h=spool_lip_width);
-      }
-      translate ([0,0,-2])
-        cylinder (d=hub_diameter,h=spool_thickness+1*2); //cut out centre
-      }
-    }
-  }
-
-module spool2kg(){
-  // 1 kg spool
-  translate ([0,-40,-62])  mirror_z()
-  {
-difference (){
-union(){
-cylinder (d=88.9,h=101.6/2);
-translate ([0,0,101.6/2]) cylinder (d=298.452,h=3);
-}
-translate ([0,0,-2])  cylinder (d=52.07,h=75);
-}
-}
-}
-
-module spool4kg(){
-  // 1 kg spool
-  mirror_z()
-  {
-difference (){
-union(){
-cylinder (d=88.9,h=101.6/2);
-translate ([0,0,101.6/2]) cylinder (d=298.452,h=3);
-}
-translate ([0,0,-2])  cylinder (d=52.07,h=75);
-}
-}
 }
 
 demo(){
@@ -268,7 +220,6 @@ module cheese_spool_assembly(){
         rotate ([90,0,0]) translate ([0,-10,15]) spool2kg();
 }
 }
-
 
 //
 // Mendel90

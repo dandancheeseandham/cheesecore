@@ -68,7 +68,7 @@ module thermistor_channel() {
     linear_extrude(2.5+epsilon) {
       hull() {
         circle(d=3);
-        #translate([5000,0]) circle(d=3);
+        translate([5000,0]) circle(d=3);
       }
     }
   }

@@ -27,7 +27,8 @@
 //
 SSR10DA = [ "SSR10DA", "Robodigg 10A",                  58, 45, 33, 2.5, 5, 47, 9  ];
 SSR25DA = [ "SSR25DA", "Fotek 25A",                     63, 45, 23, 4.6, 5, 47, 10 ];
+AQA411VL = [ "AQA411VL", "Panasonic 25A",               53, 40, 23, 4.6, 5, 47.5,10 ];
 
-ssrs = [SSR25DA, SSR10DA];
+ssrs = [SSR25DA, SSR10DA, AQA411VL];
 
 use <ssr.scad>

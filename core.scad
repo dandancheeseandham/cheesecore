@@ -19,6 +19,7 @@ use <top_enclosure_side_panels.scad>
 use <top_enclosure_frame.scad>
 use <xy_motion.scad>
 use <y_carriage.scad>
+use <door_hinge.scad>
 include <report.scad>
 
 ver = version();
@@ -66,9 +67,9 @@ module printer(position = [90, 90, 0]) {
   kinematics(position);
   door_assembly();
   electronics_box_contents();
-  electronics_box_assembly();
+  electronics_box_assembly(panelon = true);
   top_enclosure();
-  report();
+    report();
 }
 
 module justdoors() {

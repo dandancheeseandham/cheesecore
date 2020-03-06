@@ -9,16 +9,17 @@ use <demo.scad>
 use <side_panels.scad>
 
 demo() {
+  hinges();
   // Standard lostapathy ZL hinge for a 5mm acrylic door
-  translate([0, 0 ,0])
+*  translate([0, 0 ,0])
     panelside_hinge();
-  translate([0 , 0,  acrylic_door_thickness()])
+*  translate([0 , 0,  acrylic_door_thickness()])
     doorside_hinge();
 
   // ZLT 6mm acrylic with doors that need to be 10mm closer to each other (extension = 5mm , on each hinge/door)
-  translate ([0,-120,0])
+*  translate ([0,-120,0])
     panelside_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3);
-  translate ([0,-120,0])
+*  translate ([0,-120,0])
     doorside_hinge();
 }
 
@@ -63,7 +64,7 @@ module panelside_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension
       mirror_y()
         translate ([0,door_hinge_y/2-hole_distance_from_edge(),0])
           poly_cylinder(1.5, 30);
-      translate ([door_hinge_x()/2 + extension + 5,150,acrylic_door_thickness])
+      translate ([door_hinge_x()/2 + extension + 5,150,acrylic_door_thickness+2])
         rotate ([90,0,0])
           poly_cylinder(screw_type/2, 300);
     }
@@ -76,7 +77,7 @@ color(printed_part_color())
 
 //panel_hinge_width() + hinge_arms_x() + extrusion_width()
 
- translate ([panel_hinge_width() + hinge_arms_x() + extrusion_width(),0,panel_hinge_depth()]) rotate ([0,180,0])
+ translate ([panel_hinge_width() + hinge_arms_x() + extrusion_width(),0,panel_hinge_depth()] + [1.25,0,-1.6]) rotate ([0,180,0])
  render()
  difference(){
     union () {
@@ -105,27 +106,65 @@ color(printed_part_color())
                     rounded_cylinder(r=10, h = panel_hinge_depth()/2, r2 = rounding(), ir = 0, angle = 90);
     }
 
+newpanelholes();
+
+
+/*
+  {
+      translate ([6,0,-10])
+        poly_cylinder(1.5, 300);
+      mirror_y()
+        translate ([6,25,-10])
+          poly_cylinder(1.5, 300);
+
+
+}
+*/
+
+  }
+}
+
+
+module newpanelholes(){
 //holes to attach to door
-#translate ([6,0,-10])
+translate ([6,0,-10])
     poly_cylinder(1.5, 30);
-   #mirror_y()
+  mirror_y()
     translate ([6,25,-10])
       poly_cylinder(1.5, 30);
 //hole to create hinge
     translate ([panel_hinge_width()+hinge_arms_x()-3.75,150,2.63])
         rotate ([90,0,0])
           poly_cylinder(1.38, 300);
-
-  }
 }
 
+
 module panel_holes(){
-{   #translate ([6,0,-10])
-    poly_cylinder(1.5, 300);
-   #mirror_y()
-    translate ([6,25,-10])
-      poly_cylinder(1.5, 300);
+{
+      mirror_y()
+        translate ([193.75,129.25,0]) {
+            translate ([6,0,-50])
+              poly_cylinder(1.5, 300);
+            mirror_y()
+              translate ([6,25,-50])
+                poly_cylinder(1.5, 300);
+
     }
+}
+}
+
+module panel_holes2(){
+{
+      mirror_y()
+        translate ([193.75,134.75,0]) {
+            translate ([6,0,-50])
+              poly_cylinder(1.5, 300);
+            mirror_y()
+              translate ([6,25,-50])
+                poly_cylinder(1.5, 300);
+
+    }
+}
 }
 // everything below here is for creating a rounded cube (or a preview that is just a cube), and can be swapped out with other similar code..
 

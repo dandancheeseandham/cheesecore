@@ -13,6 +13,9 @@ use <halo.scad>
 use <demo.scad>
 use <electronics_box_panels.scad>
 use <door_hinge.scad>
+use <filament_holder.scad>
+use <filament_holder2kg.scad>
+
 
 module panel(x, y,addx=0,addy=0) {
   assert(x != undef, "Must specify panel x dimension");
@@ -170,6 +173,9 @@ module door() {
 
 
   door_radius_outside_corners = front_window_radius() + door_overlap;
+*color("Pink")
+  translate ([0,-front_window_size().y/2 -door_overlap,0])
+  cube ([front_window_size().x/2 + door_overlap , front_window_size().y + door_overlap*2,5]);
   difference() {
     // Outline of the door
     color(acrylic2_color()) {
@@ -187,22 +193,13 @@ module door() {
         }
       }
 
-      //FIXME: horrible manual placement
-      translate ([20,180,-10])
-        poly_cylinder(1.5, 30);
-        translate ([40,180,-10])
-          poly_cylinder(1.5, 30);
+translate ([0,-5,0])
+mirror_y()
+translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanelholes();
+//poly_cylinder(1.5, 30);
+//-y / 2 + panel_screw_offset() + (screw_spacing_y * a)
+//
 
-
-*translate ([0,-5,0])
-  mirror_y()
-    translate ([193.75,129.25,0]) {
-        translate ([6,0,-10])
-          poly_cylinder(1.5, 30);
-        mirror_y()
-          translate ([6,25,-10])
-            poly_cylinder(1.5, 30);
-       }
 }
     }
 
@@ -245,7 +242,7 @@ if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
       color(panel_color_holes())
       translate ([0,-movedown() ,0]){
         rotate([90,0,0]) mirror_xz() {
-            //#translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
+            //translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
             translate([screwy(),-40,screwz()]) rotate([-90,0,0]) cylinder(d=3,h=150);  // FIXME: Use polyhole, check mounting fits Meanwell too
           }
       }
@@ -254,23 +251,32 @@ if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
 }
 
 module right_panel() {
-  #ssr_hole_positions(ssrs[0]);
   difference() {
    side_panel(); //call side panel then difference all the electronics mounting holes
     color(panel_color_holes()) translate ([0,-movedown() ,0]) {
     translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon);
     translate(DuetE_placement())  pcb_holes(DuetE);
     translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
+    translate(Duex5_placement()+[37.5,-36,0]) pcb_holes(Duet3Exp); // Duet3 Expansion
     translate(Duex5_placement())  pcb_holes(Duex5);
-    *translate(rpi_placement())    pcb_holes(RPI3);
-    translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
-    #translate(ssr_placement()) rotate([0,0,180]) ssr_hole_positions(ssrs[0]);
+    translate(rpi_placement())  rotate([0,0,180])  pcb_holes(RPI3);
+    //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
+    translate(psu_placement()+[0,115,-10]) rotate([0,0,90]) cylinder(40,3,3);
+    translate(ssr_placement() + [0,0,-20]) rotate ([0,0,90]) {
+      mirror_x()
+        translate ([47.5/2,0,0])
+          cylinder(h=140,d=5);
+    }
+    *translate(ssr_placement()) ssr_hole_positions(AQA411VL);
+
+    // cube ([50,50,50]);
+    //ssr_hole_positions(ssrs[0]);
     //*translate(Duet3Exp)  pcb_holes(Duet3Exp);
 
 
 // ### FIXME : Use technique on acrylic housing
 rotate([90,0,0]) mirror_xz() {
-    //#translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
+    //translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
     translate([screwy(),-40,screwz()]) rotate([-90,0,0]) cylinder(d=3,h=150);  // FIXME: Use polyhole, check mounting fits Meanwell too
   }
   }
@@ -285,6 +291,32 @@ module pcb_holes(type) { // Holes for PCB's
     }
 }
 
+module left_panel(){
+  topx = 105;
+  topy = 105;
+  bottomx = 0;
+  bottomy = -30;
+difference() {
+  side_panel();
+  // remove 3 sets of holes for filament spool holders
+  mirror_x ()
+    translate ([topx,topy,0])
+      bolt_holes();
+  translate ([bottomx,bottomy,0])
+    bolt_holes();
+}
+// Add the 1kg spools at the top
+mirror_x ()
+  translate ([topx,topy,0])
+    spool1kg();
+//place filament spool holders
+mirror_x ()
+  translate ([topx,topy,0])
+    spool_holder_assembly();
+translate ([bottomx,bottomy,0])
+  spool_holder_assembly(); //central spool holder for larger spools. e.g. This can be swapped with a 2kg spool holder
+//spool1kg();
+}
 
 module all_side_panels() {
   translate([0, 0, -frame_size().z / 2 - side_panel_thickness()])
@@ -296,7 +328,7 @@ module all_side_panels() {
 
   translate([-frame_size().x / 2 - side_panel_thickness(), 0, 0])
     rotate([90,0,90])
-      side_panel();
+      left_panel();
 
   translate ([frame_size().x / 2, 0, 0])
     rotate([90,0,90])
@@ -309,6 +341,23 @@ module all_side_panels() {
       translate([0, 0, frame_size().z / 2 ])
         halo();
 }
+/*
+module cheese_spool_assembly_eh(){
+  //spool();
+  mirror_y()
+    translate([-frame_size().x / 2 - side_panel_thickness() - 80, 110, 110])
+      rotate ([0,0,270]){
+        spool_holder_assembly();
+        rotate ([90,0,0]) translate ([0,-10,0]) spool1kg();
+      }
+
+  translate([-frame_size().x / 2 - side_panel_thickness() - 80, 0, -30])
+      rotate ([0,0,270]) {
+        spool_holder_assembly();
+        rotate ([90,0,0]) translate ([0,-10,15]) spool2kg();
+}
+}
+*/
 
 
 demo() {

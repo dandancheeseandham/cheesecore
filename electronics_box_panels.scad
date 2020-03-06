@@ -51,10 +51,12 @@ module left_side_panel() {
     difference() {
       electronics_cabinet_side_panel (box_size_z());
       //FANS GUARDS
-      translate ([70, box_depth()-29,acrylic_thickness()/2])
+      translate ([70, box_depth()-22,acrylic_thickness()/2])
         fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
-      translate ([180,box_depth()-29,acrylic_thickness()/2])
+      translate ([180,box_depth()-22,acrylic_thickness()/2])
         fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
+      translate ([210,box_depth()-20,-10])
+          cube([60,21,30]);
     }
   }
 
@@ -87,12 +89,27 @@ rotate ([180,0,0])
       color(acrylic2_color())
       panel_cover([box_size_y() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), box_size_z() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), acrylic_thickness()], acrylic_cover_corner_rounding());
     }
-    place_four_holes_for_corners();
+    place_four_holes_for_electronics_corners();
       if (laser_cut_vents() == true) remove_vents();
       if (laser_cut_vents() == false) remove_printed_vent_area();
     }
 
 }
+
+module filament_cover_panel() {
+// FIXME : draw in 2d then extrude
+// vent configuration
+translate([0,-25,0])
+rotate ([180,0,0])
+  difference() {
+      difference() {
+      color(acrylic2_color())
+      panel_cover([box_size_y() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), box_size_z() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), acrylic_thickness()], acrylic_cover_corner_rounding());
+    }
+        }
+
+}
+
 
 module electronics_cabinet_side_panel(length){
   // FIXME: draw this in 2d then extrude
@@ -111,11 +128,13 @@ module electronics_cabinet_side_panel(length){
   }
 }
 
-module filament_storage_panel() {
-  translate([0,-box_depth()-acrylic_thickness()/2,movedown()/2+5])
+module enclosure_electronics_storage_panel() {
+  translate([0,-box_depth()-acrylic_thickness()/2,0])
     color(acrylic2_color())
       panel_cover([frame_size().y-fitting_error(), frame_size().z + feetheight()-fitting_error(), acrylic_thickness()],1);
 }
+
+
 
 module panel_cover(panel_dims,panel_rounding) {
 rotate([270,0,0])

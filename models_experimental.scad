@@ -68,16 +68,41 @@ module cheesecore_300zl(position = [0, 0, 0]) {
     $extrusion_type     = extrusion15;
 
     $frame_size         = frame_original_rc300zl;
+    //$panels             = panels_cheese;
     $panels             = panels_aluminium;
     $enclosure_size     = enclosure_rc_standard;
+    //$halo_size          = halo_rc_cheese;
     $halo_size          = halo_rc;
     $front_window_size  = front_window_original_300zl;
     $elecbox            = elecbox_300_large;
+    //$elecbox            = elec_cheesecore;
+    //$elecbox = ["ELEC.BOX", 393,   361,   124,    6,    0,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
     $branding_name      = "Cheese 300ZL";
 
     $rail_specs         = rails_original_rc300zl;
     $leadscrew_specs    = leadscrew_original_rc300zl;
     $bed                = bed_standard_rc300;
     $feet_depth         = 50 ;
+    $filament_box       = filament_box_cheesecore;
     children();
   }
+
+  module cheesecore_300zl_withsides(position = [0, 0, 0]) {
+      $NEMA_XY            = NEMA17;
+      $NEMA_Z             = NEMA17;
+      $extrusion_type     = extrusion15;
+
+      $frame_size         = frame_original_rc300zl;
+      $panels             = panels_aluminium;
+      $enclosure_size     = enclosure_rc_standard;
+      $halo_size          = halo_rc;
+      $front_window_size  = front_window_original_300zl;
+      $elecbox            = elecbox_300_large;
+      $branding_name      = "Cheese 300ZL";
+
+      $rail_specs         = rails_original_rc300zl;
+      $leadscrew_specs    = leadscrew_original_rc300zl;
+      $bed                = bed_standard_rc300;
+      $feet_depth         = 50 ;
+      children();
+    }
