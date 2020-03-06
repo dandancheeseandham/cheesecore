@@ -51,9 +51,9 @@ module left_side_panel() {
     difference() {
       electronics_cabinet_side_panel (box_size_z());
       //FANS GUARDS
-      translate ([70, box_depth()-29,acrylic_thickness()/2])
+      translate ([70, box_depth()-22,acrylic_thickness()/2])
         fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
-      translate ([180,box_depth()-29,acrylic_thickness()/2])
+      translate ([180,box_depth()-22,acrylic_thickness()/2])
         fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
       translate ([210,box_depth()-20,-10])
           cube([60,21,30]);
