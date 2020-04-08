@@ -130,15 +130,14 @@ function leadscrew_y_offset() = 30 ; // taken off z yoke in fusion
 
 // BED
 
-//                      name  bed_plate_size   ear space  bed_overall_size  bed thickness     bed offset   flexplate thickness
+//                      name  bed_plate_size   ear space  bed thickness     bed offset   flexplate thickness
 //Standard
-bed_standard_rc150mini= ["BED", [150, 167],      100,        [160, 167],        0.25 * inch,  [0, -12.5],   0.9];
-bed_standard_rc250    = ["BED", [275, 281],      205,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
-bed_standard_rc300    = ["BED", [325, 342],      255,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
+bed_standard_rc150mini= ["BED", [150, 167],      100,     0.25 * inch,  [0, -12.5],   0.9];
+bed_standard_rc250    = ["BED", [281, 275],      205,     0.25 * inch,  [0, -12.5],   0.9];
+bed_standard_rc300    = ["BED", [341, 325],      255,     0.25 * inch,  [0, -12.5],   0.9];
 //Experimental
-bed_custom            = ["BED", [425, 442],      295,        [435, 442],        8,            [0, -12.5],   0.9];
+bed_custom            = ["BED", [425, 442],      295,     8,            [0, -12.5],   0.9];
 // bed offset = How far to offset the bed from center of frame
-// FIXME: what is the bed_overall_size for? Is it needed?
 
 // MANUFACTURER DEFINED
 // Extrusion information
@@ -170,10 +169,9 @@ function halo_idler_offset_inner() =  move_inner ;
 
 function bed_plate_size()       = $bed[1];
 function bed_ear_spacing()      = $bed[2];
-function bed_overall_size()     = $bed[3];
-function bed_thickness()        = $bed[4];
-function bed_offset()           = $bed[5];
-function flex_plate_thickness() = $bed[6];
+function bed_thickness()        = $bed[3];
+function bed_offset()           = $bed[4];
+function flex_plate_thickness() = $bed[5];
 
 function leadscrew_length()           = $leadscrew_specs[1];
 function leadscrew_diameter()         = $leadscrew_specs[2];
