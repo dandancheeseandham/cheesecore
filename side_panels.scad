@@ -173,9 +173,7 @@ module door() {
 
 
   door_radius_outside_corners = front_window_radius() + door_overlap;
-*color("Pink")
-  translate ([0,-front_window_size().y/2 -door_overlap,0])
-  cube ([front_window_size().x/2 + door_overlap , front_window_size().y + door_overlap*2,5]);
+
   difference() {
     // Outline of the door
     color(acrylic2_color()) {

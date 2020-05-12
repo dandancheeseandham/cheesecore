@@ -48,7 +48,7 @@ module enclosure_frame() {
   corner_cubes();
 
   // This cube is just for debugging - it makes sure the space between brace and outside extrusion is correct
-  //#translate([-enclosure_size().x / 2 + extrusion_width(), 0, -enclosure_size().z / 2+ 40]) cube([40, 100, 100]);
+  //translate([-enclosure_size().x / 2 + extrusion_width(), 0, -enclosure_size().z / 2+ 40]) cube([40, 100, 100]);
   assert(leadscrew_x_offset() == 20, "leadscrew_x_offset() sets placement of stepper and bottom braces.  Must be 20 unless we do something besides NEMA17 z motors");
 }
 
