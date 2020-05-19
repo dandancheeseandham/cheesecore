@@ -17,7 +17,7 @@ if (extend_front_and_rear_x() == 0)
     electronics_box();
     *translate([0, 0, 0])
       rotate ([0,0,180])
-        filament_box();
+        cheesecore_filament_box();
   }
 
 if (back_panel_enclosure() == true) {
@@ -125,7 +125,7 @@ module place_four_holes_for_electronics_corners() {
   }
 }
 
-
+/*
 module place_four_filament_box_corners() {
   mirror_xz() {
     translate ([-filament_box_size_y()/2 + move_corners_adjust(), -filament_box_depth(), filament_box_size_z() / 2 - move_corners_adjust()])
@@ -139,3 +139,4 @@ module place_four_holes_for_filament_box_corners() {
       electronics_box_corner_hole();  //electronics box corners
   }
 }
+*/
