@@ -3,5 +3,5 @@ use <models_standard.scad>
 use <models_experimental.scad>
 use <models_test_ground.scad>
 use <core.scad>
-  cheesecore_300zl()
+  cheesecore_300zl_withsides()
     printer(position = [80, 90, 30]);

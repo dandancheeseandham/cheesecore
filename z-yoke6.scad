@@ -30,10 +30,11 @@ module z_yoke() {
             }
     }
 //fillet rail to leadscrew
-translate([0,-16,-railmount+epsilon/2])
+translate([0,-15,-railmount+epsilon/2])
   fillet(1.6, part_thickness, center = true);
-//fillet removal
-  translate([-25,-15,-railmount+epsilon/2])
+
+//fillet removal for chunk removal
+  *translate([-16.5,-15,-railmount+epsilon/2])
   rotate([0,180,0])
     fillet(1.6, part_thickness, center = true);
 
@@ -49,7 +50,7 @@ translate([-part_thickness, 0, -extra_mount_length/2-railmount-3.8])
   rotate ([270,0,180])
     fillet(4, carriage_width(carriage_type), center = true);
 
-    // flat bed mounting ear
+  // flat bed mounting ear
     translate([0,0,-carriage_length(carriage_type/2) - extra_mount_length+1]) {
       linear_extrude(part_thickness) {
         difference() {
@@ -60,7 +61,7 @@ translate([-part_thickness, 0, -extra_mount_length/2-railmount-3.8])
       }
     }
 
-    // reinforcing rib
+    // reinforcing rib (plastic version)
     *hull() {
       // top corner
       translate([- part_thickness, -part_thickness/2, carriage_length(carriage_type) /2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
@@ -89,7 +90,7 @@ length_of_mount = 5;
     translate([-ear_extent() + length_of_mount / 2, -leadscrew_y_offset()])
       rounded_square([10.1, 30-shrink], r=2.5);
   }
-  minimise = 13.5;
+  minimise = -2.55;
   // bridge from bed ear to upright bracket
   hull() {
     translate([-ear_extent()+2.5+minimise, carriage_width(carriage_type)/2 - 2.5]) circle(r=2.5);
@@ -113,10 +114,11 @@ module z_yoke_holes_profile() {
   //6.5 = move
   // 27.5 = long
   movehole = 0 ;
+  longerhole = 21;
   translate([-ear_extent()+derivedearextentbedtablength+movehole, -leadscrew_y_offset()]) {
     hull() {
       circle(d=3.3);
-      translate([-ear_extent()+28, 0]) circle(d=3.3);
+      translate([-ear_extent()+longerhole, 0]) circle(d=3.3);
     }
   }
 

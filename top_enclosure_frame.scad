@@ -3,6 +3,8 @@ include <config.scad>
 use <extrusion.scad>
 use <corner_cube.scad>
 use <lib/layout.scad>
+use <demo.scad>
+use <extrusion_spacers.scad>
 
 module z_extrusions() {
   mirror_xy() {
@@ -52,4 +54,6 @@ module enclosure_frame() {
   assert(leadscrew_x_offset() == 20, "leadscrew_x_offset() sets placement of stepper and bottom braces.  Must be 20 unless we do something besides NEMA17 z motors");
 }
 
+demo(){
 enclosure_frame();
+}

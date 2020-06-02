@@ -15,7 +15,7 @@ use <electronics_box_panels.scad>
 use <door_hinge.scad>
 use <filament_holder.scad>
 use <filament_holder2kg.scad>
-
+use <fan_guard_removal.scad>
 
 module panel(x, y,addx=0,addy=0) {
   assert(x != undef, "Must specify panel x dimension");
@@ -30,8 +30,8 @@ module panel(x, y,addx=0,addy=0) {
       panel_mounting_screws(x, y);
       // Access screws to corner cubes
       mirror_xy() {
-        translate([x / 2 - extrusion_width() / 2, y / 2 - extrusion_width() / 2, -epsilon])
-          cylinder(d=extrusion_width() * 0.5, h = side_panel_thickness() + 2 * epsilon);
+        translate([(x - extrusion_width() ) / 2, (y - extrusion_width() ) / 2, -epsilon])
+          cylinder(d=extrusion_width() / 2, h = side_panel_thickness() + 2 * epsilon);
       }
     }
   }
@@ -90,7 +90,7 @@ module bottom_panel() {
           motor_holes(NEMAtypeZ());
       }
       // Deboss a name in the bottom panel
-      deboss_depth = 1;
+      deboss_depth = 0;
       translate([0, -frame_size().y/2 + extrusion_width() + 35, side_panel_thickness() - deboss_depth + epsilon])
         linear_extrude(deboss_depth)
           text($branding_name, halign="center", size=35, font = "Helvetica");
@@ -133,13 +133,13 @@ module front_panel() {
     color(panel_color_holes())
       translate ([front_window_offset().x, front_window_offset().y, side_panel_thickness() / 2])
         rounded_rectangle([front_window_size().x, front_window_size().y, side_panel_thickness() + 2 * epsilon], front_window_radius());
-// IF EXTENDED PANELS AND NEMA23 MOTORS, MAKE A HOLE!
-    if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23")){
 
+// IF EXTENDED PANELS AND NEMA23 MOTORS, MAKE A HOLE!
+    if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23")) {
       echo("NEMAtypeXY()[0]",NEMAtypeXY()[0]);
       translate([288,210, side_panel_thickness() / 2])
-    rounded_rectangle([80,80,side_panel_thickness() + 2 * epsilon], front_window_radius());
-  }
+      rounded_rectangle([80,80,side_panel_thickness() + 2 * epsilon], front_window_radius());
+    }
 
   }
   // DEBUG cube
@@ -170,8 +170,6 @@ module door() {
   door_gap = 1; // How big a gap do we want between doors?
   door_overlap = 10; // How far do we want the doors to overlap the panel edges?
   door_radius_mating_corners = 2.5; // radius of the corners where the panels come together
-
-
   door_radius_outside_corners = front_window_radius() + door_overlap;
 
   difference() {
@@ -194,6 +192,8 @@ module door() {
 translate ([0,-5,0])
 mirror_y()
 translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanelholes();
+translate ([20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
+translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
 //poly_cylinder(1.5, 30);
 //-y / 2 + panel_screw_offset() + (screw_spacing_y * a)
 //
@@ -213,13 +213,13 @@ translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanel
 module doors() {
 translate([0, -frame_size().y / 2 - side_panel_thickness() - epsilon, 0])
   rotate([90, 0, 0])
+  {
     translate(front_window_offset())
-    mirror_x()
+    mirror_x(){
     door();
-}
-
-module side_panel() {
-  panel(frame_size(). y, frame_size().z, 0, extendz());
+    color(printed_part_color()) translate ([10,front_window_size().y/2-15,10]) door_knob();
+  }
+  }
 }
 
 module back_panel() {
@@ -227,6 +227,9 @@ module back_panel() {
 if (back_panel_enclosure() == false) {
     difference(){
     panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
+    translate([0,-frame_size().z/2+100,-epsilon])
+      fan_guard_removal(size = 80,thickness = acrylic_thickness()+epsilon*2);
+
 if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
     translate([288,210, side_panel_thickness() / 2])
     rounded_rectangle([80,80,side_panel_thickness() + 2 * epsilon], front_window_radius());
@@ -250,23 +253,23 @@ if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
 
 module right_panel() {
   difference() {
-   side_panel(); //call side panel then difference all the electronics mounting holes
+   panel(frame_size(). y, frame_size().z, 0, extendz()); //call side panel then difference all the electronics mounting holes
     color(panel_color_holes()) translate ([0,-movedown() ,0]) {
     translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon);
     translate(DuetE_placement())  pcb_holes(DuetE);
     translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
-    translate(Duex5_placement()+[37.5,-36,0]) pcb_holes(Duet3Exp); // Duet3 Expansion
+    translate(Duex5_placement()+[27.5,-36,0]) pcb_holes(Duet3Exp); // Duet3 Expansion
     translate(Duex5_placement())  pcb_holes(Duex5);
     translate(rpi_placement())  rotate([0,0,180])  pcb_holes(RPI3);
     //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
     translate(psu_placement()+[0,115,-10]) rotate([0,0,90]) cylinder(40,3,3);
+//FIXME: use the ssr_hole_position library, not hack it in like this.
     translate(ssr_placement() + [0,0,-20]) rotate ([0,0,90]) {
       mirror_x()
         translate ([47.5/2,0,0])
           cylinder(h=140,d=5);
     }
-    *translate(ssr_placement()) ssr_hole_positions(AQA411VL);
-
+    //translate(ssr_placement()) ssr_hole_positions(AQA411VL);
     // cube ([50,50,50]);
     //ssr_hole_positions(ssrs[0]);
     //*translate(Duet3Exp)  pcb_holes(Duet3Exp);
@@ -295,7 +298,7 @@ module left_panel(){
   bottomx = 0;
   bottomy = -30;
 difference() {
-  side_panel();
+  panel(frame_size(). y, frame_size().z, 0, extendz());
   // remove 3 sets of holes for filament spool holders
   mirror_x ()
     translate ([topx,topy,0])
@@ -338,6 +341,8 @@ module all_side_panels() {
 
       translate([0, 0, frame_size().z / 2 ])
         halo();
+
+  doors();
 }
 /*
 module cheese_spool_assembly_eh(){

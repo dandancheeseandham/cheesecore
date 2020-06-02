@@ -9,7 +9,7 @@ use <demo.scad>
 use <side_panels.scad>
 
 demo() {
-  hinges();
+  * hinges();
   // Standard lostapathy ZL hinge for a 5mm acrylic door
 *  translate([0, 0 ,0])
     panelside_hinge();
@@ -21,7 +21,9 @@ demo() {
     panelside_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3);
 *  translate ([0,-120,0])
     doorside_hinge();
+door_knob();
 }
+
 
 function hole_distance_from_edge() = 7.5 ;
 function rounding() = 1.5 ; // rounding() of edges
@@ -122,6 +124,17 @@ newpanelholes();
 */
 
   }
+}
+
+module door_knob(){
+render() {
+  difference(){
+roundedCube([40,20,12], r=rounding(), x=true, y=true, z=true);
+translate ([0,10,6]) mirror_y() translate ([0,14.5,0]) rotate ([0,90,0]) cylinder (d=12,h=40);
+translate ([10,10,0]) cylinder (d=5,h=5);
+translate ([30,10,0]) cylinder (d=5,h=5);
+}
+}
 }
 
 

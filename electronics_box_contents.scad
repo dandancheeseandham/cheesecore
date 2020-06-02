@@ -9,10 +9,14 @@ module electronics_box_contents() {
   // ask lostapathy "why?"
   translate([frame_size().x / 2 + side_panel_thickness(), 0, -movedown()])
     rotate([90,0,90]) {
+      //Duet 2
       *translate(DuetE_placement()) pcb_assembly(DuetE, 12, 3); // DuetE
       *translate(Duex5_placement()) pcb_assembly(Duex5, 12 , 3); // Duex5
+      //Duet 3
       translate(DuetE_placement()+[7.5,-16,0]) pcb_assembly(Duet3E, 12, 3); // Duet3 Ehternet
-      translate(Duex5_placement()+[37.5,-36,0]) pcb_assembly(Duet3Exp, 12 , 3); // Duet3 Expansion
+      translate(Duex5_placement()+[27.5,-36,0]) pcb_assembly(Duet3Exp, 12 , 3); // Duet3 Expansion
+      translate(rpi_placement()+[0,0,13]) rotate([0,0,180]) pcb(RPI3);
+
       translate(psu_placement()) rotate([0,0,90])   psu(S_250_48);
       translate(psu_placement()) rotate([0,0,90])   psu_screw_positions(S_250_48)
         translate_z(5)
@@ -20,7 +24,7 @@ module electronics_box_contents() {
       //translate(ssr_placement()) rotate([0,0,180]) ssr_assembly(AQA411VL, M3_cap_screw, 3);
       translate(ssr_placement()) rotate([0,0,90]) ssr(AQA411VL);
       //translate(ssr_placement()) rotate([0,0,180]) ssr_shroud_fastened_assembly(AQA411VL, 12,6,AQA411VL);
-      translate(rpi_placement()) rotate([0,0,180]) pcb(RPI3);
+
 /*
 //below is development crap which can be removed later.
 //playing with the idea of a RJ45 coupler for DuetEthernet versions

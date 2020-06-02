@@ -47,6 +47,9 @@ module halo() {
               clearance_hole(nominal_d=3, h=50);
           translate([frame_size().x / 2 - extrusion_width() * 2 , frame_size().y / 2 - extrusion_width() / 2 , 25])
                 clearance_hole(nominal_d=3, h=50);
+//corner to screw in extrusion
+          translate([halo_size().x/2-extrusion_width() * 0.5 , halo_size().y/2-extrusion_width() * 0.5 , 25])
+                    clearance_hole(nominal_d=3, h=50);
 
 //holes
 holes_row_position = 60 ; // modify this to change where the holes are on the halo
@@ -54,6 +57,9 @@ holes_row_position = 60 ; // modify this to change where the holes are on the ha
             clearance_hole(nominal_d=8.5, h=50);  // for  for M10 tap thread
             translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 175 , 25])
               clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
+
+
+
 
 
 
@@ -81,7 +87,7 @@ holes_row_position = 60 ; // modify this to change where the holes are on the ha
   }
   // DEBUG cube
   *translate([-frame_size().x / 2 , -frame_size().z / 2 , halo_size().z])  cube ([10,frame_size().z,10]);
-  shoulder_bolts();
+  *shoulder_bolts();
 }
 
 

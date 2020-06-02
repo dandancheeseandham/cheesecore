@@ -28,8 +28,8 @@ frame_rc300zl4040       = [590, 555, 545];
 panels_imperial_250zl   = ["PANELS",0.25 * inch,  5,      0,0,0,      42.5,          101,       false];
 panels_imperial         = ["PANELS",0.25 * inch,  5,      0,0,0,      50,            100,       true];
 panels_metric           = ["PANELS",6,            5,      0,0,0,      50,            100,       true];
-panels_aluminium        = ["PANELS",3,            5,      0,0,0,      50,            100,       false];
-panels_steel            = ["PANELS",2,            5,      0,0,0,      50,            100,       false];
+panels_aluminium        = ["PANELS",4,            5,      0,0,0,      50,            100,       false];
+panels_steel            = ["PANELS",0.8,            5,      0,0,0,      50,            100,       false];
 //Experimental
 panels_custom           = ["PANELS",6,            5,      150,0,53,   55,            100,       false];
 panels_cheese           = ["PANELS",3,            3,      95*2,0,53, 50,            100,       false];
@@ -42,6 +42,7 @@ function feetheight()               = $feet_depth;
 front_window_original_150mini = ["WINDOW_TYPE", [245, 210], 10,     [0, 5],   0.25 * inch];
 front_window_original_250zl   = ["WINDOW_TYPE", [370, 335], 10,     [0, 5],   0.25 * inch];
 front_window_original_300zl   = ["WINDOW_TYPE", [420, 385], 10,     [0, 5],   6];
+front_window_cheesecore       = ["WINDOW_TYPE", [420, 385], 10,     [0, 5],   0.8];
 front_window_original_300zlt  = ["WINDOW_TYPE", [410, 645], 10,     [0, 0],   6];
 //Experimental
 front_window_custom           = ["WINDOW_TYPE", [420, 385], 10,     [0, 0],   6];
@@ -71,7 +72,7 @@ elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,
 elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
-elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
+elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    1,    25,    true,   [-84,146.5,0], [-85-5,70,0],      [-85-5,-40,0],      [70,30,0],[160,70,0] , [-162,-64,0]] ;
 elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 // Test-ground (can be deleted)
 elec_cheesecore           = ["ELEC.BOX", 350,   290,   59+(95-59),    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
@@ -94,7 +95,7 @@ function back_panel_enclosure()     = false;  // is there an additional electron
 //Standard, halo for 250ZL,300ZL and 300ZLT is the same
 halo_rc150mini                = [125 , 0, 4];
 //halo_rc                       = [75*2 , 0, 4];
-halo_rc                       = [95*2 , 6, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
+halo_rc                       = [(95-20-3)*2 , 6, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
 //Experimental
 halo_rc_NEMA23                = [95*2 ,15, 4];
 halo_rc_cheese                = [125*2 ,0, 4];
@@ -134,7 +135,8 @@ function leadscrew_y_offset() = 30 ; // taken off z yoke in fusion
 //Standard
 bed_standard_rc150mini= ["BED", [150, 167],      100,        [160, 167],        0.25 * inch,  [0, -12.5],   0.9];
 bed_standard_rc250    = ["BED", [275, 281],      205,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
-bed_standard_rc300    = ["BED", [325, 342],      255,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
+bed_standard_rc300    = ["BED", [342, 325],      255,        [342, 335],        0.25 * inch,  [0, -12.5],   0.9];
+bed_new_standard_rc300= ["BED", [325, 342],      255,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
 //Experimental
 bed_custom            = ["BED", [425, 442],      295,        [435, 442],        8,            [0, -12.5],   0.9];
 // bed offset = How far to offset the bed from center of frame

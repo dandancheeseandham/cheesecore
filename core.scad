@@ -47,14 +47,14 @@ module kinematics(position) {
 
 module door_assembly() {
   hinges();
-  %doors();
+  doors();
 }
 
 //FIXME 45 is L height from topenclosure part
 module top_enclosure() {
   translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + halo_size().z + enclosure_height_above_frame()]) {
     enclosure_frame();
-    %enclosure_side_panels();
+    enclosure_side_panels();
     *enclosure_hinges();  //FIXME: Hinges need replacing, or perhaps change to long misumi hinges for neatness.
     enclosure_handle();
   }
@@ -68,11 +68,11 @@ module printer(position = [90, 90, 0]) {
   door_assembly();
   electronics_box_contents();
   electronics_box_assembly(panelon = true);
-  *top_enclosure();
+  top_enclosure();
     report();
 }
 
 module justdoors() {
   hinges();
-  %doors();
+  doors();
 }

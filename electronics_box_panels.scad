@@ -24,7 +24,18 @@ module top_panel() {
 }
 
 module bottom_panel() {
+  difference() {
   electronics_cabinet_side_panel(box_size_y());
+  // STEPPER CABLES HOLES
+  {
+    translate ([box_size_y()/2-20,0,0])
+      mirror_x()
+        translate ([box_size_y()/2 - 110,box_depth(), -15])
+          cylinder(h=30, r1=7.5, r2=7.5, center=false);
+  }
+  translate ([box_size_y()/2 + 20,box_depth(), -15])  cylinder(h=30, r1=7.5, r2=7.5, center=false);
+}
+
   }
 
 module right_side_panel() {
@@ -53,10 +64,11 @@ module left_side_panel() {
       //FANS GUARDS
       translate ([70, box_depth()-22,acrylic_thickness()/2])
         fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
-      translate ([180,box_depth()-22,acrylic_thickness()/2])
+      translate ([140,box_depth()-22,acrylic_thickness()/2])
         fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
-      translate ([210,box_depth()-20,-10])
-          cube([60,21,30]);
+        // Pi cutout
+      translate ([180-2,box_depth()-35,-10])
+          cube([60,60,30]);
     }
   }
 

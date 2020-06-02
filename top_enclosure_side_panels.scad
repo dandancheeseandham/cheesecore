@@ -68,12 +68,12 @@ module panel_mounting_screws(x, y) {
 }
 
 module top_panel_door() {
-color(acrylic2_color())
-
+//color(acrylic2_color())
+color("red")
   intersection() {
     panel(enclosure_size().x, enclosure_size().y );
     translate ([0, -extrusion_width()*2-doorgap/2, side_panel_thickness()/2-epsilon])
-    rounded_rectangle([enclosure_size().x-extrusion_width()*2-doorgap, enclosure_size().y-extrusion_width()-doorgap,side_panel_thickness()+epsilon*4], panel_radius());
+    rounded_rectangle([enclosure_size().x-extrusion_width()*4-doorgap, enclosure_size().y-extrusion_width()-doorgap,side_panel_thickness()+epsilon*4], panel_radius());
   }
 }
 
@@ -95,6 +95,7 @@ union(){
 
 
 module top_panel() {
+color("blue")
   difference() {
     panel(enclosure_size().x, enclosure_size().y);
         translate ([0, -extrusion_width()*2, side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().y-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());
@@ -157,8 +158,8 @@ module enclosure_side_panels() {
   explode = 0;
   translate([0, -explode - side_panel_thickness(), enclosure_size().z / 2 + explode + side_panel_thickness()]) top_panel_door();
   translate([0, 0, enclosure_size().z / 2]) top_panel();
-  translate([0, -(enclosure_size().y)/2 - explode -side_panel_thickness(), extrusion_width()/2 + side_panel_thickness()/2 + explode]) rotate([90,0,0]) front_panel_door();
-  translate([0, -(enclosure_size().y)/2, extrusion_width()/2]) rotate([90,0,0]) front_panel();
+  *translate([0, -(enclosure_size().y)/2 - explode -side_panel_thickness(), extrusion_width()/2 + side_panel_thickness()/2 + explode]) rotate([90,0,0]) front_panel_door();
+  *translate([0, -(enclosure_size().y)/2, extrusion_width()/2]) rotate([90,0,0]) front_panel();
   translate ([-enclosure_size().x /2 - side_panel_thickness(), 0, extrusion_width()/2]) rotate([90,0,90]) left_side_panel();
   translate ([enclosure_size().x / 2, 0, extrusion_width()/2]) rotate([90,0,90]) right_side_panel();
   translate ([0, enclosure_size().y / 2 + side_panel_thickness(),extrusion_width()/2]) rotate([90,0,0]) back_panel();
