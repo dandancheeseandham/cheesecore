@@ -54,7 +54,7 @@ module door_assembly() {
 module top_enclosure() {
   translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + halo_size().z + enclosure_height_above_frame()]) {
     enclosure_frame();
-    render() enclosure_side_panels();
+    enclosure_side_panels();
     *enclosure_hinges();  //FIXME: Hinges need replacing, or perhaps change to long misumi hinges for neatness.
     *enclosure_handle();
   }
