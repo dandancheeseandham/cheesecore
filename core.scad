@@ -31,7 +31,7 @@ if(ver[0]<2019||(ver[0]==2019&&ver[1]<5)) {
 //CORE MODULES
 module enclosure() {
   frame();
-  render() all_side_panels();
+  all_side_panels();
   feet();
  }
 
@@ -54,7 +54,7 @@ module door_assembly() {
 module top_enclosure() {
   translate ([0, 0, frame_size().z / 2 + enclosure_size().z/2 - extrusion_width() + halo_size().z + enclosure_height_above_frame()]) {
     enclosure_frame();
-    render() enclosure_side_panels();
+    enclosure_side_panels();
     *enclosure_hinges();  //FIXME: Hinges need replacing, or perhaps change to long misumi hinges for neatness.
     *enclosure_handle();
   }
@@ -62,16 +62,15 @@ module top_enclosure() {
 }
 
 module printer(position = [90, 90, 0]) {
-  $fn = 20;
   validate();
   enclosure();
   kinematics(position);
   *door_assembly();
-  *electronics_box_contents();
-  *electronics_box_assembly(panelon = true);
+  electronics_box_contents();
+  electronics_box_assembly(panelon = true);
   top_enclosure();
     report();
-    echo ($fn);
+
 }
 
 module justdoors() {
