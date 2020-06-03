@@ -48,6 +48,7 @@ inf = 1e10;      // very big
 eps = 1/128;     // small fudge factor to stop CSG barfing on coincident faces.
 //$fa = 6;
 //$fs = extrusion_width / 2;
+
 $fa = 36;
 $fs = 6;
 
