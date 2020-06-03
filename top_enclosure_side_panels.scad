@@ -68,8 +68,8 @@ module panel_mounting_screws(x, y) {
 }
 
 module top_panel_door() {
-//color(acrylic2_color())
-color("red")
+color(acrylic2_color())
+//color("red")
   intersection() {
     panel(enclosure_size().x, enclosure_size().y );
     translate ([0, -extrusion_width()*2-doorgap/2, side_panel_thickness()/2-epsilon])
@@ -95,7 +95,7 @@ union(){
 
 
 module top_panel() {
-color("blue")
+//color("blue")
   difference() {
     panel(enclosure_size().x, enclosure_size().y);
         translate ([0, -extrusion_width()*2, side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().y-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());

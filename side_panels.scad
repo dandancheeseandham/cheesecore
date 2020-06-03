@@ -215,7 +215,7 @@ translate([0, -frame_size().y / 2 - side_panel_thickness() - epsilon, 0])
   rotate([90, 0, 0])
   {
     translate(front_window_offset())
-    mirror_x(){
+    mirror_x() {
     door();
     color(printed_part_color()) translate ([10,front_window_size().y/2-15,10]) door_knob();
   }
