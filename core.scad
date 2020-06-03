@@ -31,7 +31,7 @@ if(ver[0]<2019||(ver[0]==2019&&ver[1]<5)) {
 //CORE MODULES
 module enclosure() {
   frame();
-  render() all_side_panels();
+  all_side_panels();
   feet();
  }
 

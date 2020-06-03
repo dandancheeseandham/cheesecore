@@ -46,8 +46,10 @@ squeezed_wall = $preview ? 2 * extrusion_width - layer_height * (1 - PI / 4)
 
 inf = 1e10;      // very big
 eps = 1/128;     // small fudge factor to stop CSG barfing on coincident faces.
-$fa = 6;
-$fs = extrusion_width / 2;
+//$fa = 6;
+//$fs = extrusion_width / 2;
+$fa = 36;
+$fs = 6;
 
 function round_to_layer(z) = ceil(z / layer_height) * layer_height;
 // Some additional named colors
