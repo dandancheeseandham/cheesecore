@@ -47,13 +47,13 @@ done
 
 # loop over all .stl.scad files in build build directory
 for source in build/*.stl.scad ; do
-  dest=`basename --suffix=.scad ${source}`
+  dest=`basename --suffix=.scad ${source}`.png
 
   echo "Building artifacts/${dest} from ${source}"
   ${OPENSCAD} --imgsize=1920,1200 -o artifacts/${MODEL}/${dest} ${source}
 done
 
-done < ./artifacts/scripts/list_standard_models.txt
+done < ./build/scripts/list_standard_models.txt
 
 
 

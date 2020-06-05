@@ -227,8 +227,8 @@ module back_panel() {
 if (back_panel_enclosure() == false) {
     difference(){
     panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
-    translate([0,-frame_size().z/2+100,-epsilon])
-      fan_guard_removal(size = 80,thickness = acrylic_thickness()+epsilon*2);
+    translate([0,-frame_size().z/2+100,+side_panel_thickness()-epsilon])
+      fan_guard_removal(size = 80,thickness = side_panel_thickness()*2);
 
 if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
     translate([288,210, side_panel_thickness() / 2])
@@ -306,17 +306,19 @@ difference() {
   translate ([bottomx,bottomy,0])
     bolt_holes();
 }
+
 // Add the 1kg spools at the top
-mirror_x ()
+*mirror_x ()
   translate ([topx,topy,0])
     spool1kg();
 //place filament spool holders
-mirror_x ()
+*mirror_x ()
   translate ([topx,topy,0])
     spool_holder_assembly();
-translate ([bottomx,bottomy,0])
+*translate ([bottomx,bottomy,0])
   spool_holder_assembly(); //central spool holder for larger spools. e.g. This can be swapped with a 2kg spool holder
 //spool1kg();
+
 }
 
 module all_side_panels() {
@@ -342,7 +344,7 @@ module all_side_panels() {
       translate([0, 0, frame_size().z / 2 ])
         halo();
 
-  doors();
+
 }
 /*
 module cheese_spool_assembly_eh(){

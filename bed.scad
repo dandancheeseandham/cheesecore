@@ -32,6 +32,7 @@ module bed(bed_frame_offset)
       //side_mounted_holes();
       strain_relief_holes();  // we can put strain relief on the bed instead of on the Z-yokes.
        *earthing_hole();  // earthing
+      magnets();
     }
   }
 }
@@ -123,6 +124,36 @@ module ear_profile() {
   }
 }
 
+module magnets(){
+sizeofmagnetx = 20;
+sizeofmagnety = 20;
+depthofmagnet = 4;
+no_of_magnets_x = 3;
+no_of_magnets_y = 3;
+magnet_edge_gap_x = 35;
+magnet_edge_gap_y = 35;
+    fudgex = 10;
+    fudgey = 10;
+spacingx = (bed_plate_size().x-(magnet_edge_gap_x-sizeofmagnetx))/no_of_magnets_x+fudgex;
+spacingy = (bed_plate_size().y-(magnet_edge_gap_y-sizeofmagnety))/no_of_magnets_y+fudgey;
+
+for (j = [1:no_of_magnets_x]) {
+for (i = [1:no_of_magnets_y]) {    
+    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+    
+    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+    translate ([-sizeofmagnetx,-sizeofmagnety,0])
+    translate([(j*spacingx), i*spacingy, -1/128]) 
+    //cube([sizeofmagnetx,sizeofmagnety,depthofmagnet+1/128]);
+    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+}
+    
+}
+
+}
+
+
 module flex_plate(bed_frame_offset) {
   ear_width = 50;
   steel_sheet_thickness = 0.7;
@@ -148,6 +179,6 @@ module flex_plate(bed_frame_offset) {
 }
 
 demo() {
-  flex_plate([0,0,0]);
+  //flex_plate([0,0,0]);
   bed ([0,0,0]);
 }

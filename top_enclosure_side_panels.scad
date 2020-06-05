@@ -148,8 +148,8 @@ module back_panel() {
   difference(){
   panel(enclosure_size().x, enclosure_size().z-extrusion_width());
 mirror_x(){
-  translate([-100,0,-epsilon])
-    fan_guard_removal(size = 80,thickness = acrylic_thickness());
+  translate([-100,0,side_panel_thickness()-epsilon])
+    fan_guard_removal(size = 80,thickness = side_panel_thickness()*2);
   }
   }
 }

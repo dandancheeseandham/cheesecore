@@ -64,10 +64,10 @@ module top_enclosure() {
 module printer(position = [90, 90, 0]) {
   validate();
   enclosure();
-  kinematics(position);
+  *kinematics(position);
   *door_assembly();
-  electronics_box_contents();
-  electronics_box_assembly(panelon = true);
+  *electronics_box_contents();
+  *electronics_box_assembly(panelon = true);
   top_enclosure();
     report();
 
