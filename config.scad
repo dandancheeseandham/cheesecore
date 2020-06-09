@@ -29,10 +29,10 @@ panels_imperial_250zl   = ["PANELS",0.25 * inch,  5,      0,0,0,      42.5,     
 panels_imperial         = ["PANELS",0.25 * inch,  5,      0,0,0,      50,            100,       true];
 panels_metric           = ["PANELS",6,            5,      0,0,0,      50,            100,       true];
 panels_aluminium        = ["PANELS",4,            5,      0,0,0,      50,            100,       false];
-panels_steel            = ["PANELS",0.8,            5,      0,0,0,      50,            100,       false];
+panels_steel            = ["PANELS",0.8,          5,      0,0,0,      50,            100,       false];
 //Experimental
 panels_custom           = ["PANELS",6,            5,      150,0,53,   55,            100,       false];
-panels_cheese           = ["PANELS",3,            3,      95*2,0,53, 50,            100,       false];
+panels_cheese           = ["PANELS",3,            3,      95*2,0,53,  50,            100,       false];
 function fitting_error() = 0.25; //reduce panels by this size to account for whatever +- cutting error there may be
 function feetheight()               = $feet_depth;
 
@@ -72,7 +72,7 @@ elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,
 elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
-elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    1,    25,    true,   [-84,146.5,0], [-85-5,70,0],      [-85-5,-40,0],      [70,30,0],[160,70,0] , [-162,-64,0]] ;
+elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    1,    25,    true,   [-84,146.5,0], [-85-15,70,0],      [-85-15,-40,0],      [70,30,0],[160,70,0] , [-162,-96,0]] ;
 elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 // Test-ground (can be deleted)
 elec_cheesecore           = ["ELEC.BOX", 350,   290,   59+(95-59),    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
@@ -82,12 +82,12 @@ elec_rc300zltwithcheese   = ["ELEC.BOX", 445-32,380,   99 ,   6,    60,    true,
 
 filament_box_cheesecore  =  ["ELEC.BOX", 370,   360,   95,   6];
 
-function filament_box_size_y()         = $filament_box[1] ;
-function filament_box_size_z()         = $filament_box[2] ;
-function filament_box_depth()          = $filament_box[3] ;
+function filament_box_size_y()             = $filament_box[1] ;
+function filament_box_size_z()             = $filament_box[2] ;
+function filament_box_depth()              = $filament_box[3] ;
 function filament_box_acrylic_thickness()  = $filament_box[4] ;
 
-function back_panel_enclosure()     = false;  // is there an additional electronics box on the rear panel? FIXME: FInish off and allow conduit holes.
+function back_panel_enclosure()            = false;  // is there an additional electronics box on the rear panel? FIXME: FInish off and allow conduit holes.
 
 // HALO - Just XYZ at the moment. Z is panel thickness
 //                        XY

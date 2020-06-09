@@ -10,12 +10,14 @@ module electronics_box_contents() {
   translate([frame_size().x / 2 + side_panel_thickness(), 0, -movedown()])
     rotate([90,0,90]) {
       //Duet 2
-      *translate(DuetE_placement()) pcb_assembly(DuetE, 12, 3); // DuetE
-      *translate(Duex5_placement()) pcb_assembly(Duex5, 12 , 3); // Duex5
+      translate(DuetE_placement()) pcb_assembly(DuetE, 12, 3); // DuetE
+      translate(Duex5_placement()) pcb_assembly(Duex5, 12 , 3); // Duex5
+      translate(rpi_placement()+[80,-40,13+5]) rotate([0,0,180]) pcb(RPI3);
       //Duet 3
-      translate(DuetE_placement()+[7.5,-16,0]) pcb_assembly(Duet3E, 12, 3); // Duet3 Ehternet
-      translate(Duex5_placement()+[27.5,-36,0]) pcb_assembly(Duet3Exp, 12 , 3); // Duet3 Expansion
-      translate(rpi_placement()+[0,0,13]) rotate([0,0,180]) pcb(RPI3);
+      *translate(DuetE_placement()+[7.5,-16,0]) pcb_assembly(Duet3E, 12, 3); // Duet3 Ehternet
+      *translate(Duex5_placement()+[27.5,-36,0]) pcb_assembly(Duet3Exp, 12 , 3); // Duet3 Expansion
+      *translate(rpi_placement()+[0,0,13+5]) rotate([0,0,180]) pcb(RPI3);
+
 
       translate(psu_placement()) rotate([0,0,90])   psu(S_250_48);
       translate(psu_placement()) rotate([0,0,90])   psu_screw_positions(S_250_48)
