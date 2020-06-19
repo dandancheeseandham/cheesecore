@@ -12,8 +12,8 @@ module x_carriage()
   // FIXME: these x/y/z are defined in terms of how the carriage is extruded up from a rounded_rectangle, not how it exists in space ... which is confusing
   M4tap= 3.3;
   M3tap = 2.5;
-  carriage_x=64.12 ;
-  carriage_y=31.45 ;
+  carriage_x=68 ;
+  carriage_y=31.5 ;
   carriage_z=11 ;   //how thick is the AL?
   rail_pos_x = 13.24 ; // rail width 12/2  (centre of rail)
   carr_pos_x =  rail_pos_x - (11.3 + 12/2 + 20/2 ); //12 = rail width , 20 = carriage spacing width
@@ -30,6 +30,7 @@ module x_carriage()
           rotate([0,0,90])
           carriage_hole_positions(carriage_type) {
             // FIXME: these need counterbores and to be designed with hole()
+            // make the counterbore cap head compatible
             cylinder(d=M3tap,h=100);
           }
 

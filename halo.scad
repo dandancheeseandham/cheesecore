@@ -49,7 +49,7 @@ difference() {
           translate([halo_size().x/2-extrusion_width() * 0.5 , halo_size().y/2-extrusion_width() * 0.5 , 25])
             clearance_hole(nominal_d=3, h=50);
           //holes
-          holes_row_position = 50 ; // modify this to change where the holes are on the halo
+          holes_row_position = 50 ; // modify this to change where the holes are on the halo - 60 for NEMA23 size, less for NEMA17 minimal
           translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 215 , 25])
             clearance_hole(nominal_d=8, h=50);  // - Silicone tubing (OD: 8mm; ID: 5mm) for aquacooling
           translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 195 , 25])
