@@ -18,36 +18,41 @@ mirror_x(){
 }
 
 module x_extrusions() {
-   {
+
     translate([0, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
       rotate([0,90,0])
         extrusion(enclosure_size().x - 2 * extrusion_width());
-  }
+/*
+  *  translate([0, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
+          rotate([0,90,0])
+            extrusion(enclosure_size().x - 2 * extrusion_width()-$halo_size.x);
+
 
   {
    *translate([0, -enclosure_size().y / 2 + extrusion_width() / 2 - side_panel_thickness(), enclosure_size().z / 2 - extrusion_width() / 2 + side_panel_thickness()])
      rotate([0,90,0])
        extrusion(enclosure_size().x - 5 * extrusion_width());
  }
-mirror_x()
+*mirror_xy()
 {
- translate([(-enclosure_size().x + $halo_size.x/2)/ 2 + extrusion_width()/2, -enclosure_size().y / 2 + extrusion_width() / 2 - side_panel_thickness(), enclosure_size().z / 2 - extrusion_width() / 2 + side_panel_thickness()])
+ translate([(-enclosure_size().x + $halo_size.x/2)/ 2 + extrusion_width()/2, -enclosure_size().y / 2 + extrusion_width() / 2 - side_panel_thickness(), enclosure_size().z / 2 - extrusion_width() / 2 ])
    rotate([0,90,0])
      extrusion($halo_size.x/2-extrusion_width());
 //enclosure_size().x / 2 - extrusion_width() / 2, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2
-     translate([enclosure_size().x / 2 - extrusion_width() / 2 - $halo_size.x/2, -enclosure_size().y / 2 + extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
-       rotate([0,0,90])
-         corner_cube();
-}
 
+}
+*/
 
 }
 
 module y_extrusions() {
-    mirror_x() {
+  mirror_x() {
     translate([enclosure_size().x / 2 - extrusion_width() / 2, 0, enclosure_size().z / 2 - extrusion_width() / 2])
-      rotate([90,0,0])
+     rotate([90,0,0]) {
         extrusion(enclosure_size().y - 2 * extrusion_width());
+        *translate ([-$halo_size.x/2,0,0]) extrusion(enclosure_size().y - 2 * extrusion_width());
+      }
+
   }
 }
 
@@ -57,6 +62,11 @@ module corner_cubes() {
       rotate([0,0,90])
         corner_cube();
   }
+
+  mirror_x()
+  translate([enclosure_size().x / 2 - extrusion_width() / 2 - $halo_size.x/2, -enclosure_size().y / 2 + extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
+    rotate([0,0,90])
+      corner_cube();
 
 }
 

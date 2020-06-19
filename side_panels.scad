@@ -209,6 +209,54 @@ translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
   }
 }
 
+// One door - the right side as facing printer
+// Origin is the centerline between the doors at the middle of the height. So not quite on the door, but rather in the gap between where they meet together
+module single_door() {
+  door_gap = 1; // How big a gap do we want between doors?
+  door_overlap = 10; // How far do we want the doors to overlap the panel edges?
+  door_radius_mating_corners = 2.5; // radius of the corners where the panels come together
+  door_radius_outside_corners = front_window_radius() + door_overlap;
+
+  difference() {
+    // Outline of the door
+    color(acrylic2_color()) {
+      difference(){
+      linear_extrude(acrylic_door_thickness()) {
+        hull() {
+           {
+            // The smaller corners where the doors meet
+            translate([door_radius_mating_corners + door_gap / 2, front_window_size().y / 2 + door_overlap - door_radius_mating_corners])
+              circle(r = door_radius_mating_corners);
+            // Larger corners that mirror the opening
+            translate([front_window_size().x / 2 - front_window_radius(), front_window_size().y / 2 - door_overlap])
+              circle(r = door_radius_outside_corners);
+          }
+        }
+      }
+
+translate ([0,-5,0])
+mirror_y()
+translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanelholes();
+translate ([20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
+translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
+//poly_cylinder(1.5, 30);
+//-y / 2 + panel_screw_offset() + (screw_spacing_y * a)
+//
+
+}
+    }
+
+    // Hinge holes
+    // FIXME: add these
+
+    // Door pull holes
+    // FIXME: add these
+  }
+}
+
+
+
+
 // module for calling both doors.
 module doors() {
 translate([0, -frame_size().y / 2 - side_panel_thickness() - epsilon, 0])
@@ -228,7 +276,7 @@ if (back_panel_enclosure() == false) {
     difference(){
     panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
     translate([0,-frame_size().z/2+100,+side_panel_thickness()-epsilon])
-      fan_guard_removal(size = 80,thickness = side_panel_thickness()*2);
+      fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
 
 if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
     translate([288,210, side_panel_thickness() / 2])

@@ -118,6 +118,8 @@ function enclosure_height_above_frame() = 0 ; // For the printed interface arran
 leadscrew_original_rc150mini= ["LEADSCREW_SPECS", 270, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc250zl  = ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc300zl  = ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
+//leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 10,    8,                 22,       34,          3.4];
+leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc300zlt = ["LEADSCREW_SPECS", 700, 8,     4,                 16,       22,          3.4];
 //Experimental
 leadscrew_zl4040            = ["LEADSCREW_SPECS", 500, 8,     4,                 16,       22,          3.4];
@@ -127,7 +129,8 @@ leadscrew_rc_custom         = ["LEADSCREW_SPECS", 420, 8,     4,                
 function leadscrew_clearance() = 2; //central hole leadscrew clearance required for around the leadscrew so it does not hit the printed/milled part.
 // These define how far from the part origin of the z-tower the leadscrew is
 function leadscrew_x_offset() = 20 ; // how far in x the centerline of the leadscrew is from the inside edge of the frame extrusions
-function leadscrew_y_offset() = 30 ; // taken off z yoke in fusion
+function leadscrew_y_offset() = 30 ; // taken off z yoke in fusion ORIGINAL
+//function leadscrew_y_offset() = 35 ; // 35 is required for 10mm lead screw
 
 // BED
 

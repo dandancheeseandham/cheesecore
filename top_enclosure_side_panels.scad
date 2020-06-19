@@ -11,6 +11,7 @@ use <constants.scad>
 use <demo.scad>
 
 
+
 module panel(x, y) {
   assert(x != undef, "Must specify panel x dimension");
   assert(y != undef, "Must specify panel y dimension");
@@ -24,7 +25,7 @@ module panel(x, y) {
     color(panel_color_holes()) {
       panel_mounting_screws(x, y);
       // Access screws to corner cubes
-      mirror_xy() {
+    mirror_xy() {
         translate([x / 2 - extrusion_width() / 2, y / 2 - extrusion_width() / 2, -epsilon])
           cylinder(d=extrusion_width() * 0.5, h = side_panel_thickness() + 2 * epsilon);
       }
@@ -52,6 +53,7 @@ module panel_mounting_screws(x, y) {
 
   {
     for (a =[0:(screws_x - 1)]) {
+      echo ([-x/2 + panel_screw_offset() , (screw_spacing_x ),a , y / 2 , extrusion_width() / 2, -epsilon]);
       translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), y / 2 - extrusion_width() / 2, -epsilon])
         // FIXME - this should be a hole() not a cylinder
         cylinder(h=side_panel_thickness() + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
@@ -67,7 +69,7 @@ module panel_mounting_screws(x, y) {
   }
 }
 
-module top_panel_door() {
+module top_panel_door_old() {
 color(acrylic2_color())
 //color("red")
   intersection() {
@@ -77,13 +79,29 @@ color(acrylic2_color())
   }
 }
 
+module top_panel_door(){
+  doorgap = 0.5;
+  translate([0, 0 - side_panel_thickness(), enclosure_size().z / 2])
+  color(acrylic2_color())
+  intersection() {
+    panel(enclosure_size().x, enclosure_size().y );
+    translate ([0, -extrusion_width()*2-doorgap/2, side_panel_thickness()/2-epsilon*2])
+  *translate ([0, -extrusion_width()-side_panel_thickness()-12, side_panel_thickness()/2-epsilon*2])
+  rounded_rectangle([frame_size().x+extrusion_width()*2, enclosure_size().y-extrusion_width()*3,side_panel_thickness()+epsilon], panel_radius());
+  translate ([0, -$halo_size.x/2+extrusion_width(), 0])
+          rounded_rectangle([frame_size().x-extrusion_width()*2-2, enclosure_size().y-extrusion_width()*3-side_panel_thickness()-1,side_panel_thickness()+epsilon*4], panel_radius());
+}
+}
+
+
+
 module front_panel_door() {
 //color(acrylic2_color())
 color(acrylic2_color())
 union(){
   intersection(){
     panel(enclosure_size().x, enclosure_size().z-extrusion_width()  + side_panel_thickness() );
-       translate ([0, extrusion_width(), side_panel_thickness()/2-epsilon])
+       *translate ([0, extrusion_width(), side_panel_thickness()/2-epsilon])
        rounded_rectangle([enclosure_size().x-extrusion_width()*2,enclosure_size().z-extrusion_width()*2 + side_panel_thickness()*2,side_panel_thickness()+epsilon*4], panel_radius());
 
 
@@ -96,9 +114,28 @@ union(){
 
 module top_panel() {
 //color("blue")
+translate([0, 0, enclosure_size().z / 2])
   difference() {
     panel(enclosure_size().x, enclosure_size().y);
-        translate ([0, -extrusion_width()*2, side_panel_thickness()/2-epsilon]) rounded_rectangle([enclosure_size().x-60, enclosure_size().y-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());
+    translate ([0, -extrusion_width()*2-doorgap/2, side_panel_thickness()/2-epsilon])
+    *translate ([0, -extrusion_width()-side_panel_thickness()-12, side_panel_thickness()/2-epsilon])
+        rounded_rectangle([frame_size().x+extrusion_width()*2, enclosure_size().y-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());
+    translate ([0, -$halo_size.x/2+extrusion_width(), side_panel_thickness()/2-epsilon])
+            rounded_rectangle([frame_size().x-extrusion_width()*2, enclosure_size().y-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());
+          //color(acrylic2_color())
+          //translate ([-(enclosure_size().x-60)/2, (enclosure_size().z-extrusion_width())/2-panel_radius() ,-(+epsilon)])
+            //  cube([enclosure_size().x-60, panel_radius()+epsilon,side_panel_thickness()+epsilon*4]);
+//            panel($halo_size.x/2+extrusion_width(), enclosure_size().z-extrusion_width());
+
+  }
+}
+
+module top_panel_old() {
+//color("blue")
+  difference() {
+    panel(enclosure_size().x, enclosure_size().y);
+        #translate ([0, -extrusion_width()*2, side_panel_thickness()/2-epsilon])
+        rounded_rectangle([enclosure_size().x-60, enclosure_size().y-extrusion_width()*3,side_panel_thickness()+epsilon*4], panel_radius());
 
           color(acrylic2_color())
           *translate ([-(enclosure_size().x-60)/2, (enclosure_size().z-extrusion_width())/2-panel_radius() ,-(+epsilon)])
@@ -106,6 +143,8 @@ module top_panel() {
 
   }
 }
+
+
 
 module front_panel() {
   difference(){
@@ -136,7 +175,11 @@ module enclosure_hinges() {
 
 
 module right_side_panel() {
+difference(){
   panel(enclosure_size().y, enclosure_size().z-extrusion_width());
+  translate([125,0,side_panel_thickness()-epsilon])
+    fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
+}
 }
 
 module left_side_panel() {
@@ -147,19 +190,26 @@ module left_side_panel() {
 module back_panel() {
   difference(){
   panel(enclosure_size().x, enclosure_size().z-extrusion_width());
-mirror_x(){
-  translate([-100,0,side_panel_thickness()-epsilon])
-    fan_guard_removal(size = 80,thickness = side_panel_thickness()*2);
+//mirror_x()
+{
+  translate([-150,0,side_panel_thickness()-epsilon])
+    fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
   }
   }
+
+}
+
+module front_mini_panel() {
+panel($halo_size.x/2+extrusion_width(), enclosure_size().z-extrusion_width());
 }
 
 module enclosure_side_panels() {
   explode = 0;
-  translate([0, -explode - side_panel_thickness(), enclosure_size().z / 2 + explode + side_panel_thickness()]) top_panel_door();
-  translate([0, 0, enclosure_size().z / 2]) top_panel();
+   top_panel_door();
+   top_panel();
   *translate([0, -(enclosure_size().y)/2 - explode -side_panel_thickness(), extrusion_width()/2 + side_panel_thickness()/2 + explode]) rotate([90,0,0]) front_panel_door();
   *translate([0, -(enclosure_size().y)/2, extrusion_width()/2]) rotate([90,0,0]) front_panel();
+  mirror_x() translate([enclosure_size().y/2+$halo_size.x/2-extrusion_width()*2, -(enclosure_size().y)/2 - side_panel_thickness(), extrusion_width()/2]) rotate([90,0,0]) front_mini_panel();
   translate ([-enclosure_size().x /2 - side_panel_thickness(), 0, extrusion_width()/2]) rotate([90,0,90]) left_side_panel();
   translate ([enclosure_size().x / 2, 0, extrusion_width()/2]) rotate([90,0,90]) right_side_panel();
   translate ([0, enclosure_size().y / 2 + side_panel_thickness(),extrusion_width()/2]) rotate([90,0,0]) back_panel();

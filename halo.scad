@@ -6,6 +6,7 @@ use <lib/holes.scad>
 use <lib/layout.scad>
 use <door_hinge.scad>
 use <screwholes.scad>
+use <electronics_box_panels.scad>
 
 include <nopscadlib/vitamins/stepper_motor.scad>
 include <nopscadlib/vitamins/stepper_motors.scad>
@@ -26,14 +27,11 @@ module halo() {
   min_y_gap = (frame_size().z - front_window_size().y) / 2 - abs(front_window_offset().y);
   assert(min_y_gap >= extrusion_width(), "Window cannot overlap extrusion in Z");
 */
-
-
-
+difference() {
   difference() {
-    difference() {
-      color(panel_color())
-        translate ([0, 0, halo_size().z/2])
-          rounded_rectangle([halo_size().x , halo_size().y, halo_size().z], panel_radius());
+    color(panel_color())
+      translate ([0, 0, halo_size().z/2])
+        rounded_rectangle([halo_size().x , halo_size().y, halo_size().z], panel_radius());
       // Color the holes darker for contrast
       color(panel_color_holes()) {
         panel_mounting_screws(frame_size().x, frame_size().y);
@@ -44,38 +42,33 @@ module halo() {
             cylinder(d=extrusion_width() * 0.5, h = halo_size().z + 2 * epsilon);
           // M3 holes near corners - cleanrance hole 3.4mm
           translate([frame_size().x / 2 - extrusion_width() / 2 , frame_size().y / 2 - extrusion_width() * 2 , 25])
-              clearance_hole(nominal_d=3, h=50);
+            clearance_hole(nominal_d=3, h=50);
           translate([frame_size().x / 2 - extrusion_width() * 2 , frame_size().y / 2 - extrusion_width() / 2 , 25])
-                clearance_hole(nominal_d=3, h=50);
-//corner to screw in extrusion
+            clearance_hole(nominal_d=3, h=50);
+          //corner to screw in extrusion
           translate([halo_size().x/2-extrusion_width() * 0.5 , halo_size().y/2-extrusion_width() * 0.5 , 25])
-                    clearance_hole(nominal_d=3, h=50);
-
-//holes
-holes_row_position = 60 ; // modify this to change where the holes are on the halo
+            clearance_hole(nominal_d=3, h=50);
+          //holes
+          holes_row_position = 50 ; // modify this to change where the holes are on the halo
+          translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 215 , 25])
+            clearance_hole(nominal_d=8, h=50);  // - Silicone tubing (OD: 8mm; ID: 5mm) for aquacooling
           translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 195 , 25])
             clearance_hole(nominal_d=8.5, h=50);  // for  for M10 tap thread
-            translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 175 , 25])
-              clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
+          translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 175 , 25])
+            clearance_hole(nominal_d=8.5, h=50);  // for  for M10 tap thread
+          translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 155 , 25])
+            clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
+          *translate([frame_size().x / 2 + holes_row_position , -(frame_size().y / 2)-extrusion_width()+side_panel_thickness() , -5])
+            rotate ([0,0,90]) IEC_hole();
 
-
-
-
-
-
-  *      translate([frame_size().x / 2 + holes_row_position , 0  , -25])
-              cylinder(d=20, h = 50);   // for 3mm tap
-  *        translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 150 , 25])
+          *translate([frame_size().x / 2 + holes_row_position , 0  , -25])
+            cylinder(d=20, h = 50);   // for 3mm tap
+          *translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 150 , 25])
             clearance_hole(nominal_d=3, h=50);  // for 3mm hole
-  *        translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 130 , 25])
+          *translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 130 , 25])
             clearance_hole(nominal_d=4, h=50);  // for 4mm hole for standard PTFE tube
-  *        translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 120 , 25])
+          *translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 120 , 25])
             clearance_hole(nominal_d=4, h=50);  // for 4mm hole for standard PTFE tube
-
-          *translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 90 , 25])
-            clearance_hole(nominal_d=7, h=50);  // for 7mmm hole for M8 tap thread
-
-
         }
       }
     }

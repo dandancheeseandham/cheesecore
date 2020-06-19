@@ -76,7 +76,7 @@ module cheesecore_300zl(position = [0, 0, 0]) {
     $branding_name      = "Cheese 300ZL";
 
     $rail_specs         = rails_original_rc300zl;
-    $leadscrew_specs    = leadscrew_original_rc300zl;
+    $leadscrew_specs    = leadscrew_cheesecore_rc300zl;
     $bed                = bed_standard_rc300;
     $feet_depth         = 50 ;
     $filament_box       = filament_box_cheesecore;

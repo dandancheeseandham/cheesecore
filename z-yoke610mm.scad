@@ -30,7 +30,7 @@ module z_yoke() {
             }
     }
 //fillet rail to leadscrew
-translate([0,-15,-railmount+epsilon/2])
+translate([0,-15.25,-railmount+epsilon/2])
   fillet(1.6, part_thickness, center = true);
 
 //fillet removal for chunk removal
@@ -84,8 +84,8 @@ shrink = 0;
   // around leadscrew out to bed ear
   hull() {
     // FIXME: base this on the leadscrew anti-backlash nut size
-    translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
-      circle(d=leadscrew_y_offset()-shrink);
+    #translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
+      circle(d=leadscrew_y_offset()-shrink+6.5);
 length_of_mount = 5;
     translate([-ear_extent() + length_of_mount / 2, -leadscrew_y_offset()])
       rounded_square([10.1, 30-shrink], r=2.5);

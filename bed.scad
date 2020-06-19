@@ -157,13 +157,13 @@ for (i = [1:no_of_magnets_y]) {
 
 module magnets_staggered(){
   //magbed 9mm dia 2.5mm 6*6 staggered
-sizeofmagnetx = 9;
-sizeofmagnety = 9;
-depthofmagnet = 3;
+sizeofmagnetx = 10.1;
+sizeofmagnety = 10.1;
+depthofmagnet = 5;
 no_of_magnets_x = 6;
 no_of_magnets_y = 6;
-magnet_edge_gap_x = 10;
-magnet_edge_gap_y = 7;
+magnet_edge_gap_x = 8;
+magnet_edge_gap_y = 5;
     fudgex = -1;
     fudgey = -1;
 spacingx = (bed_plate_size().x-(magnet_edge_gap_x-sizeofmagnetx))/no_of_magnets_x+fudgex;
@@ -292,6 +292,12 @@ module flex_plate(bed_frame_offset) {
 }
 
 demo() {
-  //flex_plate([0,0,0]);
-  bed ([0,0,0]);
+difference(){
+  union(){
+    flex_plate([0,0,0]);
+    bed ([0,0,0]);
+  }
+  mirror_xy()
+  translate([165,158,-10]) cylinder (d=3.4,h=20);
+}
 }
