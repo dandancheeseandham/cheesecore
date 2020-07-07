@@ -33,7 +33,8 @@ module x_extrusions() {
      rotate([0,90,0])
        extrusion(enclosure_size().x - 5 * extrusion_width());
  }
-*mirror_xy()
+*/
+mirror_xy()
 {
  translate([(-enclosure_size().x + $halo_size.x/2)/ 2 + extrusion_width()/2, -enclosure_size().y / 2 + extrusion_width() / 2 - side_panel_thickness(), enclosure_size().z / 2 - extrusion_width() / 2 ])
    rotate([0,90,0])
@@ -41,7 +42,7 @@ module x_extrusions() {
 //enclosure_size().x / 2 - extrusion_width() / 2, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2
 
 }
-*/
+
 
 }
 

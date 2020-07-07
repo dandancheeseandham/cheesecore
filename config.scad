@@ -95,7 +95,7 @@ function back_panel_enclosure()            = false;  // is there an additional e
 //Standard, halo for 250ZL,300ZL and 300ZLT is the same
 halo_rc150mini                = [125 , 0, 4];
 //halo_rc                       = [75*2 , 0, 4];
-halo_rc                       = [(95-20-3)*2 , 6, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
+halo_rc                       = [(95-20)*2 , 6, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
 //Experimental
 halo_rc_NEMA23                = [95*2 ,15, 4];
 halo_rc_cheese                = [125*2 ,0, 4];
@@ -119,7 +119,7 @@ leadscrew_original_rc150mini= ["LEADSCREW_SPECS", 270, 8,     8,                
 leadscrew_original_rc250zl  = ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc300zl  = ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
 //leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 10,    8,                 22,       34,          3.4];
-leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
+leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 8,     4,                 16,       22,          3.4];
 leadscrew_original_rc300zlt = ["LEADSCREW_SPECS", 700, 8,     4,                 16,       22,          3.4];
 //Experimental
 leadscrew_zl4040            = ["LEADSCREW_SPECS", 500, 8,     4,                 16,       22,          3.4];

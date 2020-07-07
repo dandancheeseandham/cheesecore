@@ -21,6 +21,29 @@ module 300ZL_420Y(position = [0, 0, 0]) {
   children();
 }
 
+
+// RAILCORE II 300ZL WITH EXTRA 20mm ON Y
+module 300ZLT_420Y_15Z(position = [0, 0, 0]) {
+  $NEMA_XY            = NEMA17;
+  $NEMA_Z             = NEMA17;
+  $extrusion_type     = extrusion15;
+
+  $frame_size         = frame_original_rc300zlt + [0,20,0] ; // extra 20mm for Y
+  $panels             = panels_metric;
+  $enclosure_size     = enclosure_rc_standard;
+  $halo_size          = halo_rc;
+  $front_window_size  = front_window_original_300zlt;
+  $elecbox            = elecbox_300_large;
+  $branding_name      = "300ZL/420Y";
+
+  $rail_specs         = [[400, MGN12], [420, MGN12], [700, MGN15]]; // Y is 420
+  $leadscrew_specs    = leadscrew_original_rc300zlt;
+  $bed                = bed_standard_rc300;
+  $feet_depth         = 50 ;
+  children();
+}
+
+
 // RC300ZL-inspired 2020 420Y
 module 300ZL_2020_420Y(position = [0, 0, 0]) {
     $NEMA_XY            = NEMA17;

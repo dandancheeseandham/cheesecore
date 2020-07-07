@@ -357,16 +357,16 @@ difference() {
 }
 
 // Add the 1kg spools at the top
-*mirror_x ()
+mirror_x ()
   translate ([topx,topy,0])
     spool1kg();
 //place filament spool holders
-*mirror_x ()
+mirror_x ()
   translate ([topx,topy,0])
     spool_holder_assembly();
-*translate ([bottomx,bottomy,0])
+translate ([bottomx,bottomy,0])
   spool_holder_assembly(); //central spool holder for larger spools. e.g. This can be swapped with a 2kg spool holder
-//spool1kg();
+spool2kg();
 
 }
 

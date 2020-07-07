@@ -14,7 +14,7 @@ module x_carriage()
   M3tap = 2.5;
   carriage_x=68 ;
   carriage_y=31.5 ;
-  carriage_z=11 ;   //how thick is the AL?
+  carriage_z=11 ;   //how thick is the AL? +2.5 for 395mm rails
   rail_pos_x = 13.24 ; // rail width 12/2  (centre of rail)
   carr_pos_x =  rail_pos_x - (11.3 + 12/2 + 20/2 ); //12 = rail width , 20 = carriage spacing width
   screw_pos_x = rail_pos_x + 5.91 + (12/2) ; //screw pos from rail pos
@@ -55,8 +55,32 @@ module x_carriage()
   }
 }
 
+module shim()
+{
+   carriage_type = rail_carriage(rail_profiles().z);
+     rail_pos_x = 13.24 ; // rail width 12/2  (centre of rail)
+
+      carriage_x=39 ;
+  carriage_y=31.5 ;
+  carriage_z=1.6 ;   //how thick is the AL?
+      carr_pos_x =  rail_pos_x - (13.3); //12 = rail width , 20 = carriage spacing width
+  M3tap = 3.6;
+
+     difference(){
+        rounded_rectangle([carriage_x,  carriage_y, carriage_z], 5.5);
+        translate([carr_pos_x,0 ,-50])
+          rotate([0,0,90])
+          carriage_hole_positions(carriage_type) {
+            // FIXME: these need counterbores and to be designed with hole()
+            // make the counterbore cap head compatible
+            cylinder(d=M3tap,h=100);
+          }
+          }
+      }
+
 demo() {
   //rotate([-90,-180,0])
-  x_carriage();  //orient for development
+shim();
+   * x_carriage();  //orient for development
   *translate([32,-15.5,16])  rotate([0,-180,0]) import("./railcorestls/Front_X_Carriage.stl");
 }

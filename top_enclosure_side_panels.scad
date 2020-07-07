@@ -208,11 +208,14 @@ panel($halo_size.x/2+extrusion_width(), enclosure_size().z-extrusion_width());
 
 module enclosure_side_panels() {
   explode = 0;
-   top_panel_door();
-   top_panel();
+   *top_panel_door();
+   *top_panel();
   *translate([0, -(enclosure_size().y)/2 - explode -side_panel_thickness(), extrusion_width()/2 + side_panel_thickness()/2 + explode]) rotate([90,0,0]) front_panel_door();
   *translate([0, -(enclosure_size().y)/2, extrusion_width()/2]) rotate([90,0,0]) front_panel();
-  mirror_x() translate([enclosure_size().y/2+$halo_size.x/2-extrusion_width()*2, -(enclosure_size().y)/2 - side_panel_thickness(), extrusion_width()/2]) rotate([90,0,0]) front_mini_panel();
+  mirror_x()
+    translate([enclosure_size().y/2+$halo_size.x/2-extrusion_width()*2, -(enclosure_size().y)/2 - side_panel_thickness(), extrusion_width()/2])
+      rotate([90,0,0])
+        front_mini_panel();
   translate ([-enclosure_size().x /2 - side_panel_thickness(), 0, extrusion_width()/2]) rotate([90,0,90]) left_side_panel();
   translate ([enclosure_size().x / 2, 0, extrusion_width()/2]) rotate([90,0,90]) right_side_panel();
   translate ([0, enclosure_size().y / 2 + side_panel_thickness(),extrusion_width()/2]) rotate([90,0,0]) back_panel();
