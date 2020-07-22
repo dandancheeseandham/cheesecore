@@ -93,12 +93,12 @@ module cheesecore_300zl(position = [0, 0, 0]) {
     $frame_size         = frame_original_rc300zl;
     $panels             = panels_steel;
     $enclosure_size     = enclosure_rc_standard;
-    $halo_size          = halo_rc;
+    $halo_size          = halo_rc_cheese;
     $front_window_size  = front_window_cheesecore;
     $elecbox            = elecbox_300_large;
     $branding_name      = "Cheese 300ZL";
 
-    $rail_specs         = rails_original_rc300zl;
+    $rail_specs         = rails_original_rc300zl; //rails_rc300zlt_high_temp;
     $leadscrew_specs    = leadscrew_cheesecore_rc300zl;
     $bed                = bed_standard_rc300;
     $feet_depth         = 50 ;

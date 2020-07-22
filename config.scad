@@ -58,6 +58,7 @@ rails_original_rc300zlt  = [[400, MGN12], [400, MGN12], [700, MGN12]];
 rails_misumi_395         = [[395, MGN12], [395, MGN12], [395, MGN12]];
 rails_misumi_420         = [[420, MGN12], [420, MGN12], [420, MGN12]];
 rails_misumi_420XY_470Z  = [[420, MGN12], [420, MGN12], [470, MGN12]];
+rails_rc300zlt_high_temp = [[400, MGN12], [400, MGN12], [700, MGN15]];
 // Test-ground (can be deleted)
 rails_300zl_4040         = [[500, MGN15], [500, MGN12], [500, MGN15]];
 rails_custom             = [[420, MGN9] , [445, MGN12], [420, MGN15]];
@@ -95,10 +96,11 @@ function back_panel_enclosure()            = false;  // is there an additional e
 //Standard, halo for 250ZL,300ZL and 300ZLT is the same
 halo_rc150mini                = [125 , 0, 4];
 //halo_rc                       = [75*2 , 0, 4];
-halo_rc                       = [(95-20)*2 , 6, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
+halo_rc                       = [(95-20)*2 , 15, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
 //Experimental
 halo_rc_NEMA23                = [95*2 ,15, 4];
-halo_rc_cheese                = [125*2 ,0, 4];
+halo_rc_cheese                = [80*2 ,15, 4];
+function halo_back_overhang() = true ; //apply Y extra only to the back of the halo for top enclosure mounting
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
 //                             X  Y   Z
@@ -188,6 +190,7 @@ function leadscrew_pcd2()             = $leadscrew_specs[5];
 function leadscrew_nut_screwholes()   = $leadscrew_specs[6];
 
 function halo_size()          = [$halo_size.x + frame_size().x, $halo_size.y + frame_size().y + side_panel_thickness() * 2,$halo_size.z];
+function halo_overhang() = $halo_size.y;
 
 function rail_lengths()  = [$rail_specs.x[0], $rail_specs.y[0], $rail_specs.z[0]];
 function rail_profiles() = [$rail_specs.x[1], $rail_specs.y[1], $rail_specs.z[1]];

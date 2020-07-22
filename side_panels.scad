@@ -342,32 +342,48 @@ module pcb_holes(type) { // Holes for PCB's
 }
 
 module left_panel(){
-  topx = 105;
-  topy = 105;
-  bottomx = 0;
-  bottomy = -30;
+
 difference() {
+  topx = 105;
+  topy = 125;
+  bottomx = 105;
+  bottomy = -90;
   panel(frame_size(). y, frame_size().z, 0, extendz());
   // remove 3 sets of holes for filament spool holders
   mirror_x ()
     translate ([topx,topy,0])
       bolt_holes();
-  translate ([bottomx,bottomy,0])
-    bolt_holes();
+  mirror_x()
+    translate ([bottomx,bottomy,0])
+      bolt_holes();
+}
 }
 
-// Add the 1kg spools at the top
-mirror_x ()
-  translate ([topx,topy,0])
-    spool1kg();
-//place filament spool holders
-mirror_x ()
-  translate ([topx,topy,0])
-    spool_holder_assembly();
-translate ([bottomx,bottomy,0])
-  spool_holder_assembly(); //central spool holder for larger spools. e.g. This can be swapped with a 2kg spool holder
-spool2kg();
-
+module spool_holders(){
+  topx = 105;
+  topy = 125;
+  bottomx = 105;
+  bottomy = -90;
+  translate([-frame_size().x / 2 - side_panel_thickness(), 0, 0])
+    rotate([90,0,90]){
+  // Add the 1kg spools at the top
+  *mirror_x ()
+    translate ([topx,topy,0])
+      spool1kg();
+  //place filament spool holders
+  mirror_x ()
+    translate ([topx,topy,-side_panel_thickness()-2])
+    { spool_holder_assembly();
+      spool1kg();
+    }
+  mirror_x()
+    translate ([bottomx,bottomy,-side_panel_thickness()-2])
+    { spool_holder_assembly();
+      spool1kg();
+    }
+    //  spool_holder_assembly(); //central spool holder for larger spools. e.g. This can be swapped with a 2kg spool holder
+    //spool2kg();
+    }
 }
 
 module all_side_panels() {

@@ -6,68 +6,101 @@ use <lib/layout.scad>
 use <demo.scad>
 use <extrusion_spacers.scad>
 
-module z_extrusions() {
-  mirror_xy() {
-    translate([enclosure_size().x / 2 - extrusion_width() / 2, enclosure_size().y / 2 - extrusion_width() / 2, 0])
-      extrusion(enclosure_size().z - 2 * extrusion_width());
-  }
-mirror_x(){
-  translate([enclosure_size().x / 2 - extrusion_width() / 2 - $halo_size.x/2, -enclosure_size().y / 2 + extrusion_width() / 2, 0])
-  extrusion(enclosure_size().z - 2 * extrusion_width());
-}
-}
 
 module x_extrusions() {
+  translate([0, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
+    rotate([0,90,0])
+      extrusion(enclosure_size().x - 2 * extrusion_width());
 
+  translate([0, -enclosure_size().y / 2 + extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
+    rotate([0,90,0])
+      extrusion(enclosure_size().x - 4 * extrusion_width());
+
+
+  //front and back panel top
+  *mirror_y() {
     translate([0, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
       rotate([0,90,0])
         extrusion(enclosure_size().x - 2 * extrusion_width());
-/*
-  *  translate([0, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
-          rotate([0,90,0])
-            extrusion(enclosure_size().x - 2 * extrusion_width()-$halo_size.x);
+  }
+  //rear bottom extrusion
+  translate([0, enclosure_size().y / 2 - extrusion_width() / 2, -enclosure_size().z / 2 + extrusion_width() / 2])
+    rotate([0,90,0])
+      extrusion(enclosure_size().x - 2 * extrusion_width());
+
+  //front bottom extrusion
+    translate([0, -enclosure_size().y / 2 + extrusion_width() / 2, -enclosure_size().z / 2 + extrusion_width() *1.5])
+      rotate([0,90,0])
+        extrusion(enclosure_size().x - 4 * extrusion_width());
 
 
-  {
-   *translate([0, -enclosure_size().y / 2 + extrusion_width() / 2 - side_panel_thickness(), enclosure_size().z / 2 - extrusion_width() / 2 + side_panel_thickness()])
-     rotate([0,90,0])
-       extrusion(enclosure_size().x - 5 * extrusion_width());
- }
-*/
-mirror_xy()
-{
- translate([(-enclosure_size().x + $halo_size.x/2)/ 2 + extrusion_width()/2, -enclosure_size().y / 2 + extrusion_width() / 2 - side_panel_thickness(), enclosure_size().z / 2 - extrusion_width() / 2 ])
-   rotate([0,90,0])
-     extrusion($halo_size.x/2-extrusion_width());
-//enclosure_size().x / 2 - extrusion_width() / 2, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2
+  mirror_y() {
+    //top-front panel front extrusion and top-back panel back extrusion
+      translate([0, (enclosure_size().y-extrusion_width())/2, (enclosure_size().z+extrusion_width())/2 ])
+        rotate([0,90,0])
+          extrusion(enclosure_size().x- 2*extrusion_width());
 
-}
-
-
-}
+    //top-front panel back extrusion and top-back panel front extrusion(meeting in the middle)
+      translate([0, -extrusion_width()/2, (enclosure_size().z+extrusion_width())/2])
+        rotate([0,90,0])
+          extrusion(enclosure_size().x- 2*extrusion_width());
+    }
+  }
 
 module y_extrusions() {
-  mirror_x() {
+  // left and right panel top&bottom extrusion
+  mirror_xz()
     translate([enclosure_size().x / 2 - extrusion_width() / 2, 0, enclosure_size().z / 2 - extrusion_width() / 2])
-     rotate([90,0,0]) {
+      rotate([90,0,0])
         extrusion(enclosure_size().y - 2 * extrusion_width());
-        *translate ([-$halo_size.x/2,0,0]) extrusion(enclosure_size().y - 2 * extrusion_width());
-      }
 
+  //top panels left and right extrusions
+    mirror_xy(){
+      translate([(enclosure_size().x-extrusion_width()) / 2, enclosure_size().y/4, (enclosure_size().z+ extrusion_width())/2 ])
+        rotate([90,0,0])
+          extrusion(enclosure_size().y/2 - extrusion_width()*2);
+    }
   }
-}
+
+module z_extrusions() {
+    //four corner Z uprights
+    mirror_xy() {
+      translate([enclosure_size().x / 2 - extrusion_width() / 2, enclosure_size().y / 2 - extrusion_width() / 2, 0])
+        extrusion(enclosure_size().z - 2*extrusion_width());
+    }
+
+    mirror_x() {
+      translate([enclosure_size().x / 2 - extrusion_width() * 1.5 , -enclosure_size().y / 2 + extrusion_width() * 0.5, extrusion_width() * 0.5])
+        extrusion(enclosure_size().z - 3*extrusion_width());
+    }
+  }
 
 module corner_cubes() {
+
+//main enclosure corners (8)
+  mirror_xyz() {
+    translate([(enclosure_size().x- extrusion_width())/2, (enclosure_size().y-extrusion_width())/2, (enclosure_size().z-extrusion_width())/2])
+      rotate([0,0,90])
+        corner_cube();
+}
+// top lid corner cubes (corners) (4)
   mirror_xy() {
-    translate([enclosure_size().x / 2 - extrusion_width() / 2, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
+    translate([(enclosure_size().x-extrusion_width())/2, (enclosure_size().y-extrusion_width()) /2, (enclosure_size().z+extrusion_width()) / 2])
+      rotate([0,0,90])
+        corner_cube();
+        }
+//top lid corner cubes (middle) (4)
+  mirror_xy() {
+    translate([(enclosure_size().x-extrusion_width())/ 2, -extrusion_width()/2, (enclosure_size().z+extrusion_width())/2])
       rotate([0,0,90])
         corner_cube();
   }
+  //front panel (4)
+    translate ([0,0,extrusion_width()/2]) mirror_xz()
+      translate([(enclosure_size().x-extrusion_width()*3)/2, (-enclosure_size().y+extrusion_width())/2, (enclosure_size().z-extrusion_width()*2) / 2])
+        rotate([0,0,90])
+          corner_cube();
 
-  mirror_x()
-  translate([enclosure_size().x / 2 - extrusion_width() / 2 - $halo_size.x/2, -enclosure_size().y / 2 + extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
-    rotate([0,0,90])
-      corner_cube();
 
 }
 
@@ -83,5 +116,5 @@ module enclosure_frame() {
 }
 
 demo(){
-enclosure_frame();
-}
+  enclosure_frame();
+  }

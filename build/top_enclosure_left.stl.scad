@@ -3,5 +3,5 @@ use <export_config.scad>
 use <../top_enclosure_side_panels.scad>
 
 export_artifacts() {
-  left_side_panel();
+  left_side_top_enclosure_panel();
 }

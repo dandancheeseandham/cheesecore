@@ -3,5 +3,6 @@ use <export_config.scad>
 use <../side_panels.scad>
 
 export_artifacts() {
-  projection() bottom_panel();
+  projection() rotate ([180,0,0]) bottom_panel();
+
 }

@@ -9,7 +9,7 @@ use <nopscadlib/utils/fillet.scad>
 // The origin of the z-yoke is the center of the mounting point on the linear rail carriage
 module z_yoke() {
   carriage_type = rail_carriage(rail_profiles().z);
-  railmount = 12.5;
+  railmount = 16.65;
   part_thickness = 7.8;
   extra_mount_length = 0; // how much longer to make the mount so we can have the horizontal pieces below the mounting screws
 

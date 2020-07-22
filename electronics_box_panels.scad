@@ -13,6 +13,7 @@ use <demo.scad>
 module top_panel() {
   difference() {
     electronics_cabinet_side_panel(box_size_y());
+    remove_vents_top_panel();
     // STEPPER CABLES HOLES
     {
       translate ([box_size_y()/2,0,0])
@@ -108,6 +109,21 @@ translate ([170,box_depth()-27,acrylic_thickness()/2])
   fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
     }
   }
+
+  module remove_vents_top_panel() {
+    vent_length = 130;
+    vent_height = 1.5;
+    gap_between_vents = 1 ;
+    vent_offset = [-40,26,0];
+
+    rotate ([0,0,0])
+      translate(psu_placement()+vent_offset) {
+        for(vents = [0 : 10])
+          translate ([0,0-(vents*(vent_height + gap_between_vents)),-20])
+            longscrewhole(vent_length,vent_height,0);
+      }
+  }
+
 
 module remove_vents() {
   vent_length = 78;

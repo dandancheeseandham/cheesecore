@@ -4,6 +4,7 @@ use <lib/layout.scad>
 use <lib/holes.scad>
 use <screwholes.scad>
 use <demo.scad>
+use <./nopscadlib/printed/ribbon_clamp.scad>
 
 bed_ear_x = 12.5;
 bed_ear_y = 23.4;
@@ -14,9 +15,9 @@ module bed(bed_frame_offset)
 {
   // Printable area will vary with the printhead setup and isn't an exact dimension at design time.
   translate (bed_frame_offset)
-    color(alum_part_color()) {
+     {
       difference() {
-        union() {
+        color(alum_part_color()) union() {
 
         // Main body of bed
         translate([0, 0, bed_thickness()/2 ])
@@ -29,18 +30,23 @@ module bed(bed_frame_offset)
                 bed_ear();
         }
       *thermistor_channel();
-      side_mounted_holes();
-      *strain_relief_holes();  // we can put strain relief on the bed instead of on the Z-yokes.
+      *side_mounted_holes();
+      strain_relief_holes();  // we can put strain relief on the bed instead of on the Z-yokes.
       *earthing_hole();  // earthing
-      magnets_staggered();
-    }
+      *magnets_staggered();
+      }
+      translate ([bed_plate_size().x / 2 - 5, -69.5, -bed_thickness()/2]) rotate ([0,180,90])
+      ribbon_clamp_fastened_assembly(17, 3);
   }
+
 }
 
 // Mounting holes for wire restraint on the side where cables go.
 module strain_relief_holes() {
-  translate ([bed_plate_size().x / 2 - 5, -35, bed_thickness()+1]) hole(d=3.2, h=20);
-  translate ([bed_plate_size().x / 2 - 5, -55, bed_thickness()+1]) hole(d=3.2, h=20);
+  position = -55;
+  translate ([bed_plate_size().x / 2 - 5, position, bed_thickness()+1]) hole(d=3.2, h=20);
+  translate ([bed_plate_size().x / 2 - 5, position-30, bed_thickness()+1]) hole(d=3.2, h=20);
+
 }
 
 // Top grounding connection hole
@@ -270,13 +276,14 @@ translate ([-(bed_plate_size().x/2-(magnet_edge_gap_x+sizeofmagnetx))+fudgex,(be
 module flex_plate(bed_frame_offset) {
   ear_width = 50;
   steel_sheet_thickness = 0.7;
+  bedxsmaller = 10;
   translate (bed_frame_offset) {
     color([0.7, 0.7, 0.7]) {
-      translate([0, 0, bed_thickness()]) {
+      translate([-bedxsmaller/2, 0, bed_thickness()]) {
         // FIXME: we should draw the whole flex plate in 2d and extrude it once, rather than mixing a bunch of 3d solids
-        rounded_rectangle([bed_plate_size().x, bed_plate_size().y, flex_plate_thickness()], bed_radius);
+        rounded_rectangle([bed_plate_size().x-bedxsmaller, bed_plate_size().y, flex_plate_thickness()], bed_radius);
         mirror_x() {
-          translate([bed_plate_size().x/2 - ear_width/2,-bed_plate_size().y /2, 0]) {
+          translate([bed_plate_size().x/2-bedxsmaller/2 - ear_width/2,-bed_plate_size().y /2, 0]) {
             rounded_rectangle([ear_width, 30, flex_plate_thickness()], bed_radius);
             linear_extrude(steel_sheet_thickness) {
               difference() {
@@ -294,10 +301,10 @@ module flex_plate(bed_frame_offset) {
 demo() {
 difference(){
   union(){
-    flex_plate([0,0,0]);
+    *flex_plate([0,0,0]);
     bed ([0,0,0]);
   }
-  mirror_xy()
+  *mirror_xy()
   translate([165,158,-10]) cylinder (d=3.4,h=20);
 }
 }
