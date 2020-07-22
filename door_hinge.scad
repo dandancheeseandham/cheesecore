@@ -9,7 +9,7 @@ use <demo.scad>
 use <side_panels.scad>
 
 demo() {
-  hinges();
+  * hinges();
   // Standard lostapathy ZL hinge for a 5mm acrylic door
 *  translate([0, 0 ,0])
     panelside_hinge();
@@ -21,7 +21,9 @@ demo() {
     panelside_hinge(screw_distance = 107.5 ,acrylic_door_thickness=6,extension = 5,screw_type=3);
 *  translate ([0,-120,0])
     doorside_hinge();
+door_knob();
 }
+
 
 function hole_distance_from_edge() = 7.5 ;
 function rounding() = 1.5 ; // rounding() of edges
@@ -124,6 +126,17 @@ newpanelholes();
   }
 }
 
+module door_knob(){
+render() {
+  difference(){
+roundedCube([40,20,12], r=rounding(), x=true, y=true, z=true);
+translate ([0,10,6]) mirror_y() translate ([0,14.5,0]) rotate ([0,90,0]) cylinder (d=12,h=40);
+translate ([10,10,0]) cylinder (d=5,h=5);
+translate ([30,10,0]) cylinder (d=5,h=5);
+}
+}
+}
+
 
 module newpanelholes(){
 //holes to attach to door
@@ -218,7 +231,7 @@ Thanks to Sergio Vilches for the initial code inspiration
 
 
 
-module roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef], $fn=128)
+module roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,true], ycorners=[true,true,true,true], zcorners=[true,true,true,true], center=false, rx=[undef, undef, undef, undef], ry=[undef, undef, undef, undef], rz=[undef, undef, undef, undef])
 
 {
 
@@ -235,13 +248,13 @@ module roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,
         translate([0, 0, -0.1])
         {
           if(zcorners[0])
-            translate([0, dim[1]-(rz[0]==undef ? r : rz[0])]) { rotateAround([0, 0, 90], [(rz[0]==undef ? r : rz[0])/2, (rz[0]==undef ? r : rz[0])/2, 0]) { meniscus(h=dim[2], r=(rz[0]==undef ? r : rz[0]), fn=$fn); } }
+            translate([0, dim[1]-(rz[0]==undef ? r : rz[0])]) { rotateAround([0, 0, 90], [(rz[0]==undef ? r : rz[0])/2, (rz[0]==undef ? r : rz[0])/2, 0]) { meniscus(h=dim[2], r=(rz[0]==undef ? r : rz[0])); } }
           if(zcorners[1])
-            translate([dim[0]-(rz[1]==undef ? r : rz[1]), dim[1]-(rz[1]==undef ? r : rz[1])]) { meniscus(h=dim[2], r=(rz[1]==undef ? r : rz[1]), fn=$fn); }
+            translate([dim[0]-(rz[1]==undef ? r : rz[1]), dim[1]-(rz[1]==undef ? r : rz[1])]) { meniscus(h=dim[2], r=(rz[1]==undef ? r : rz[1])); }
           if(zcorners[2])
-            translate([dim[0]-(rz[2]==undef ? r : rz[2]), 0]) { rotateAround([0, 0, -90], [(rz[2]==undef ? r : rz[2])/2, (rz[2]==undef ? r : rz[2])/2, 0]) { meniscus(h=dim[2], r=(rz[2]==undef ? r : rz[2]), fn=$fn); } }
+            translate([dim[0]-(rz[2]==undef ? r : rz[2]), 0]) { rotateAround([0, 0, -90], [(rz[2]==undef ? r : rz[2])/2, (rz[2]==undef ? r : rz[2])/2, 0]) { meniscus(h=dim[2], r=(rz[2]==undef ? r : rz[2])); } }
           if(zcorners[3])
-            rotateAround([0, 0, -180], [(rz[3]==undef ? r : rz[3])/2, (rz[3]==undef ? r : rz[3])/2, 0]) { meniscus(h=dim[2], r=(rz[3]==undef ? r : rz[3]), fn=$fn); }
+            rotateAround([0, 0, -180], [(rz[3]==undef ? r : rz[3])/2, (rz[3]==undef ? r : rz[3])/2, 0]) { meniscus(h=dim[2], r=(rz[3]==undef ? r : rz[3])); }
         }
       }
 
@@ -279,9 +292,9 @@ module roundedCube(dim, r=1, x=false, y=false, z=true, xcorners=[true,true,true,
 }
 }
 
-module meniscus(h, r, fn=128)
+module meniscus(h, r)
 {
-  $fn=fn;
+
 
   difference()
   {

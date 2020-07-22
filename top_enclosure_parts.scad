@@ -195,10 +195,26 @@ module enclosure_fitting(piece_length1,piece_length2,acrylic_thickness,L_height,
   }
 }
 
+module jame_hinge1()
+{
+  import("/home/dan/Documents/GitHub/cheesecore/HINGE_1.stl");
+}
+
+module jame_hinge2()
+{
+  import("/home/dan/Documents/GitHub/cheesecore/HINGE_2.stl");
+}
+
+
 module enclosure_handle()
 
 {
-color(printed_part_color()) render ()  translate ([0 , -enclosure_size().y / 2 - acrylic_thickness() , 0]) rotate ([90,0,0])
-handle_assembly();
+color(printed_part_color())
+render ()
 
+translate ([0 , 0, 7.5])
+mirror_z(){
+translate ([0 , -enclosure_size().y / 2 - acrylic_thickness() , -enclosure_size().z / 2+15]) rotate ([90,0,0])
+handle_assembly();
+}
 }

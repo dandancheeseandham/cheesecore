@@ -26,6 +26,11 @@ Where possible we stay within the RailCore ecosystem in regards to:-
  * Keeping 8mm leadscrews and 12mm rails also can help.
 In order to take advantage of existing parts. However these parameters may also be changed - it should be understood that this especially will break compatibility with current machined parts.
 
+## To Do
+ * top enclosure is not finished.
+ * allow >4040 extrusion e.g. 3060.
+ * allow repositioning of Z extrusions.
+
 
 ### Secondary Goals
 
@@ -57,7 +62,6 @@ Some OpenSCAD experience is useful, but if you're comfortable with code in gener
  * to play with a whole model, use make_customcore.scad and edit the variables in models_experimental.scad and config.scad regarding the custom model and open with make_customcore.scad
  * core.scad is called to render the model, so you can easily omit parts by using a * to stop it being rendered.
  * If you open any individual scad part, it will render as per settings in demo.scad
- * use the scripts in the scripts folder to export the model specified in build/export_config.scad - this will dump dxfs, stls and renders into the artifacts and renders folders. (any files in artifacts and renders may be deleted as they are easily recreated)
+ * use the scripts in the build/scripts folder to export the models - this will dump dxfs, stls and renders into the artifacts and renders folders. (any files in artifacts and renders may be deleted as they are easily recreated)
  * hotend is not part of the model yet. It assumes a 12mm rail on Y and RailCore hotend ecosystem at this time.
- * currently halo is not fully parametric , and can be modified more at the end of side_panels.scad - to be fixed.
- * top enclosure is not finished.
+

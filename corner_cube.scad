@@ -21,5 +21,5 @@ module corner_cube(extrusion_type = $extrusion_type) {
 }
 
 demo() {
-corner_cube(extrusion_type);
+corner_cube(extrusion15);
 }

@@ -46,8 +46,10 @@ squeezed_wall = $preview ? 2 * extrusion_width - layer_height * (1 - PI / 4)
 
 inf = 1e10;      // very big
 eps = 1/128;     // small fudge factor to stop CSG barfing on coincident faces.
-$fa = 6;
-$fs = extrusion_width / 2;
+$fa = 6;        // minimum angle for a fragment. Even a huge circle does not have more fragments than 360 divided by this number. The default value is 12
+$fs = extrusion_width / 2; // minimum size of a fragment. The default value is 2 so very small circles have a smaller number of fragments than specified using $fa.
+//$fn = 16;      // enable for development: $fn is usually the default value of 0. When this variable has a value greater than zero, the other two variables are ignored, and a full circle is rendered using this number of fragments.
+
 
 function round_to_layer(z) = ceil(z / layer_height) * layer_height;
 // Some additional named colors

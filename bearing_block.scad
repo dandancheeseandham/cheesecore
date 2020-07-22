@@ -12,6 +12,7 @@ bearing_radius = 11 + 0.1;  //  0.1 for hole shrinkage use polyholes FIXME: this
 counter_bore_d = 7;
 leadscrew = 8;  //use polyhole
 leg_height = 35;
+// add ability to an extra 5mm for sourcingmap 5mmx8mm Clamp Tight Motor Shaft 2 Diaphragm Coupling Coupler
 block_height = 45;
 block_xy = 39;  // 39 is the existing blocks.  This could probably be 40 and still assemble just fine, assuming panels are cut correctly
 

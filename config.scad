@@ -28,11 +28,11 @@ frame_rc300zl4040       = [590, 555, 545];
 panels_imperial_250zl   = ["PANELS",0.25 * inch,  5,      0,0,0,      42.5,          101,       false];
 panels_imperial         = ["PANELS",0.25 * inch,  5,      0,0,0,      50,            100,       true];
 panels_metric           = ["PANELS",6,            5,      0,0,0,      50,            100,       true];
-panels_aluminium        = ["PANELS",3,            5,      0,0,0,      50,            100,       false];
-panels_steel            = ["PANELS",2,            5,      0,0,0,      50,            100,       false];
+panels_aluminium        = ["PANELS",4,            5,      0,0,0,      50,            100,       false];
+panels_steel            = ["PANELS",0.8,          5,      0,0,0,      50,            100,       false];
 //Experimental
 panels_custom           = ["PANELS",6,            5,      150,0,53,   55,            100,       false];
-panels_cheese           = ["PANELS",3,            3,      95*2,0,53, 50,            100,       false];
+panels_cheese           = ["PANELS",3,            3,      95*2,0,53,  50,            100,       false];
 function fitting_error() = 0.25; //reduce panels by this size to account for whatever +- cutting error there may be
 function feetheight()               = $feet_depth;
 
@@ -42,6 +42,7 @@ function feetheight()               = $feet_depth;
 front_window_original_150mini = ["WINDOW_TYPE", [245, 210], 10,     [0, 5],   0.25 * inch];
 front_window_original_250zl   = ["WINDOW_TYPE", [370, 335], 10,     [0, 5],   0.25 * inch];
 front_window_original_300zl   = ["WINDOW_TYPE", [420, 385], 10,     [0, 5],   6];
+front_window_cheesecore       = ["WINDOW_TYPE", [420, 385], 10,     [0, 5],   0.8];
 front_window_original_300zlt  = ["WINDOW_TYPE", [410, 645], 10,     [0, 0],   6];
 //Experimental
 front_window_custom           = ["WINDOW_TYPE", [420, 385], 10,     [0, 0],   6];
@@ -57,6 +58,7 @@ rails_original_rc300zlt  = [[400, MGN12], [400, MGN12], [700, MGN12]];
 rails_misumi_395         = [[395, MGN12], [395, MGN12], [395, MGN12]];
 rails_misumi_420         = [[420, MGN12], [420, MGN12], [420, MGN12]];
 rails_misumi_420XY_470Z  = [[420, MGN12], [420, MGN12], [470, MGN12]];
+rails_rc300zlt_high_temp = [[400, MGN12], [400, MGN12], [700, MGN15]];
 // Test-ground (can be deleted)
 rails_300zl_4040         = [[500, MGN15], [500, MGN12], [500, MGN15]];
 rails_custom             = [[420, MGN9] , [445, MGN12], [420, MGN15]];
@@ -71,7 +73,7 @@ elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,
 elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
-elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
+elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    1,    25,    true,   [-84,146.5,0], [-85-15,70,0],      [-85-15,-40,0],      [70,30,0],[160,70,0] , [-162,-96,0]] ;
 elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 // Test-ground (can be deleted)
 elec_cheesecore           = ["ELEC.BOX", 350,   290,   59+(95-59),    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
@@ -81,12 +83,12 @@ elec_rc300zltwithcheese   = ["ELEC.BOX", 445-32,380,   99 ,   6,    60,    true,
 
 filament_box_cheesecore  =  ["ELEC.BOX", 370,   360,   95,   6];
 
-function filament_box_size_y()         = $filament_box[1] ;
-function filament_box_size_z()         = $filament_box[2] ;
-function filament_box_depth()          = $filament_box[3] ;
+function filament_box_size_y()             = $filament_box[1] ;
+function filament_box_size_z()             = $filament_box[2] ;
+function filament_box_depth()              = $filament_box[3] ;
 function filament_box_acrylic_thickness()  = $filament_box[4] ;
 
-function back_panel_enclosure()     = false;  // is there an additional electronics box on the rear panel? FIXME: FInish off and allow conduit holes.
+function back_panel_enclosure()            = false;  // is there an additional electronics box on the rear panel? FIXME: FInish off and allow conduit holes.
 
 // HALO - Just XYZ at the moment. Z is panel thickness
 //                        XY
@@ -94,10 +96,11 @@ function back_panel_enclosure()     = false;  // is there an additional electron
 //Standard, halo for 250ZL,300ZL and 300ZLT is the same
 halo_rc150mini                = [125 , 0, 4];
 //halo_rc                       = [75*2 , 0, 4];
-halo_rc                       = [95*2 , 6, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
+halo_rc                       = [(95-20)*2 , 15, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
 //Experimental
 halo_rc_NEMA23                = [95*2 ,15, 4];
-halo_rc_cheese                = [125*2 ,0, 4];
+halo_rc_cheese                = [80*2 ,15, 4];
+function halo_back_overhang() = true ; //apply Y extra only to the back of the halo for top enclosure mounting
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
 //                             X  Y   Z
@@ -117,6 +120,8 @@ function enclosure_height_above_frame() = 0 ; // For the printed interface arran
 leadscrew_original_rc150mini= ["LEADSCREW_SPECS", 270, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc250zl  = ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc300zl  = ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
+//leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 10,    8,                 22,       34,          3.4];
+leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 8,     4,                 16,       22,          3.4];
 leadscrew_original_rc300zlt = ["LEADSCREW_SPECS", 700, 8,     4,                 16,       22,          3.4];
 //Experimental
 leadscrew_zl4040            = ["LEADSCREW_SPECS", 500, 8,     4,                 16,       22,          3.4];
@@ -126,7 +131,8 @@ leadscrew_rc_custom         = ["LEADSCREW_SPECS", 420, 8,     4,                
 function leadscrew_clearance() = 2; //central hole leadscrew clearance required for around the leadscrew so it does not hit the printed/milled part.
 // These define how far from the part origin of the z-tower the leadscrew is
 function leadscrew_x_offset() = 20 ; // how far in x the centerline of the leadscrew is from the inside edge of the frame extrusions
-function leadscrew_y_offset() = 30 ; // taken off z yoke in fusion
+function leadscrew_y_offset() = 30 ; // taken off z yoke in fusion ORIGINAL
+//function leadscrew_y_offset() = 35 ; // 35 is required for 10mm lead screw
 
 // BED
 
@@ -134,7 +140,8 @@ function leadscrew_y_offset() = 30 ; // taken off z yoke in fusion
 //Standard
 bed_standard_rc150mini= ["BED", [150, 167],      100,        [160, 167],        0.25 * inch,  [0, -12.5],   0.9];
 bed_standard_rc250    = ["BED", [275, 281],      205,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
-bed_standard_rc300    = ["BED", [325, 342],      255,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
+bed_standard_rc300    = ["BED", [342, 325],      255,        [342, 335],        0.25 * inch,  [0, -12.5],   0.9];
+bed_new_standard_rc300= ["BED", [325, 342],      255,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
 //Experimental
 bed_custom            = ["BED", [425, 442],      295,        [435, 442],        8,            [0, -12.5],   0.9];
 // bed offset = How far to offset the bed from center of frame
@@ -183,6 +190,7 @@ function leadscrew_pcd2()             = $leadscrew_specs[5];
 function leadscrew_nut_screwholes()   = $leadscrew_specs[6];
 
 function halo_size()          = [$halo_size.x + frame_size().x, $halo_size.y + frame_size().y + side_panel_thickness() * 2,$halo_size.z];
+function halo_overhang() = $halo_size.y;
 
 function rail_lengths()  = [$rail_specs.x[0], $rail_specs.y[0], $rail_specs.z[0]];
 function rail_profiles() = [$rail_specs.x[1], $rail_specs.y[1], $rail_specs.z[1]];

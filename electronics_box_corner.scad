@@ -10,13 +10,13 @@ use <demo.scad>
 module electronics_box_corner() {
   color(printed_part_color())
     rotate ([90,270,0])
-    translate ([elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),-box_depth()]) {
-      union() {
-        difference () {
-          cylinder(h=box_depth(), r1=elec_corner_size(), r2=elec_corner_size(), center=false);
-          translate ([-5,-5,-box_depth()/2])
-            cylinder(h=box_depth()*2, r1=elec_corner_holesize()/2, r2=elec_corner_holesize()/2, center=false);
-        }
+      translate ([elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),-box_depth()]) {
+        union() {
+          difference () {
+            cylinder(h=box_depth(), r1=elec_corner_size(), r2=elec_corner_size(), center=false);
+            translate ([-5,-5,-box_depth()/2])
+              cylinder(h=box_depth()*2, r1=elec_corner_holesize()/2, r2=elec_corner_holesize()/2, center=false);
+          }
 
         // top left cube
         translate ([-elec_corner_size(),0,0])

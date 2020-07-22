@@ -13,36 +13,84 @@ use <demo.scad>
 module top_panel() {
   difference() {
     electronics_cabinet_side_panel(box_size_y());
+    remove_vents_top_panel();
     // STEPPER CABLES HOLES
     {
       translate ([box_size_y()/2,0,0])
         mirror_x()
           translate ([box_size_y()/2 - 20,box_depth(), -15])
             cylinder(h=30, r1=7.5, r2=7.5, center=false);
+
+            //FANS GUARDS
+            *translate ([50, box_depth()-27,acrylic_thickness()/2])
+              fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
+            *translate ([115,box_depth()-27,acrylic_thickness()/2])
+              fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
     }
   }
 }
 
 module bottom_panel() {
+  difference() {
   electronics_cabinet_side_panel(box_size_y());
+  // STEPPER CABLES HOLES
+  {
+    *translate ([box_size_y()/2-20,0,0])
+      mirror_x()
+        translate ([box_size_y()/2 - 110,box_depth(), -15])
+          cylinder(h=30, r1=7.5, r2=7.5, center=false);
+  }
+  *translate ([box_size_y()/2 - 70,box_depth(), -15])  cylinder(h=30, r1=15, r2=15, center=false);
+  translate ([-box_size_y()/2+35,0,0]) IEC_hole();
+}
+
   }
 
-module right_side_panel() {
+module IEC_hole() {
   IEC_cutout_distance=20; // hole starts at this distance from bottom of panel
   cut_out_width=57;
   cut_out_depth=28.5;
+  //IEC hole
+translate ([box_size_z()-IEC_cutout_distance-cut_out_width,15.25,-epsilon/2])
+  cube ([cut_out_width,cut_out_depth,acrylic_thickness()+epsilon+25]);
+// FIXME: this could just as well be a mirror_x of the two holes
+translate ([box_size_z()-IEC_cutout_distance-cut_out_width/2,9.65,0])
+  linear_repeat(extent = [0, 39.7, 0], count = 2)
+    mirror([0, 0, 1]) clearance_hole(nominal_d=3, h=25);
+  }
 
+module RJ45_cutout() {
+//  RJ45 CAT5e Socket to RJ45 CAT5e Socket Feedthrough Connector, Metal, Silver, Plain Holes -  CP30220M3
+// https://cpc.farnell.com/cliff-electronic-components/cp30220m3/feedthru-rj45-cat5e-metal-m3/dp/CN22348
+
+translate ([90,box_depth()-28.5,-10])
+{
+  cylinder (d=24.1,h=30);
+  translate ([12,-8,0]) cylinder (d=3.4,h=30);
+  translate ([-12,8,0]) cylinder (d=3.4,h=30);
+    //cube([26,31,30]);
+}
+}
+
+module emergency_stop_cutout() {
+//  RJ45 CAT5e Socket to RJ45 CAT5e Socket Feedthrough Connector, Metal, Silver, Plain Holes -  CP30220M3
+// https://cpc.farnell.com/cliff-electronic-components/cp30220m3/feedthru-rj45-cat5e-metal-m3/dp/CN22348
+
+translate ([25,box_depth()-28.5,-10])
+{
+  cylinder (d=19.1,h=30);
+  //translate ([12,-8,0]) cylinder (d=3.4,h=30);
+  //translate ([-12,8,0]) cylinder (d=3.4,h=30);
+    //cube([26,31,30]);
+}
+}
+
+
+
+module right_side_panel() {
   difference() {
   electronics_cabinet_side_panel (box_size_z());
-    {
-    //IEC hole
-    translate ([box_size_z()-IEC_cutout_distance-cut_out_width,15.25,-epsilon/2])
-      cube ([cut_out_width,cut_out_depth,acrylic_thickness()+epsilon]);
-    // FIXME: this could just as well be a mirror_x of the two holes
-    translate ([box_size_z()-IEC_cutout_distance-cut_out_width/2,9.65,0])
-      linear_repeat(extent = [0, 39.7, 0], count = 2)
-        mirror([0, 0, 1]) clearance_hole(nominal_d=3, h=25);
-    }
+  IEC_hole();
   }
 }
 
@@ -50,15 +98,32 @@ module left_side_panel() {
   color(acrylic_color())
     difference() {
       electronics_cabinet_side_panel (box_size_z());
-      //FANS GUARDS
-      translate ([70, box_depth()-22,acrylic_thickness()/2])
-        fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
-      translate ([180,box_depth()-22,acrylic_thickness()/2])
-        fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
-      translate ([210,box_depth()-20,-10])
-          cube([60,21,30]);
+IEC_hole();
+RJ45_cutout();
+//emergency_stop_cutout();
+
+//FANS GUARDS
+translate ([50, box_depth()-27,acrylic_thickness()/2])
+  fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
+translate ([170,box_depth()-27,acrylic_thickness()/2])
+  fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
     }
   }
+
+  module remove_vents_top_panel() {
+    vent_length = 130;
+    vent_height = 1.5;
+    gap_between_vents = 1 ;
+    vent_offset = [-40,26,0];
+
+    rotate ([0,0,0])
+      translate(psu_placement()+vent_offset) {
+        for(vents = [0 : 10])
+          translate ([0,0-(vents*(vent_height + gap_between_vents)),-20])
+            longscrewhole(vent_length,vent_height,0);
+      }
+  }
+
 
 module remove_vents() {
   vent_length = 78;

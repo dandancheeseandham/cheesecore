@@ -11,17 +11,17 @@ module anti_backlash_nut(screw_size) {
         translate([0,0,32])
           cylinder(d=16, h=4);
           cylinder(d=12, h=36);
-          cylinder(d=30, h=4);
+          cylinder(d=leadscrew_pcd2()+7, h=4);
         }
 
       // mount bolt pattern
       mirror_xy() {
-        rotate([0,0, 45])
-          translate([0, 11, 4])
-            clearance_hole(nominal_d=3, h=10);
+      rotate([0,0, 45]) //pcd1
+        translate([0, leadscrew_pcd2()/2 , 4])
+            clearance_hole(nominal_d=leadscrew_nut_screwholes(), h=10);
       }
 
-      translate([0,0,-epsilon]) cylinder(d=8+5*epsilon, h=36+2*epsilon);
+      translate([0,0,-epsilon]) cylinder(d=leadscrew_diameter()+5*epsilon, h=36+2*epsilon);
       }
   }
 }

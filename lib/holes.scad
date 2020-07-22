@@ -39,5 +39,6 @@ function clearance_hole_size(nominal_d) = lookup(nominal_d, [
 function button_counterbore_hole_size(nominal_d) = lookup(nominal_d, [
   // Based on diameter of button head screw
   // If there is a better reference for this we should redo it
-  [3, 5.7*1.1],
+  //[3, 5.7*1.1],
+  [3, 8],
 ]);
