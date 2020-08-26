@@ -17,7 +17,7 @@ module top_enclosure_panel_front(x, y) {
 
   difference() {
     //color(acrylic2_color())
-    color(panel_color())
+
       translate ([0, 0, side_panel_thickness()/2])
       rounded_rectangle([x-fitting_error()+extrusion_width()*2, y-fitting_error()+extrusion_width()*2, side_panel_thickness()], panel_radius());
     // Color the holes darker for contrast
@@ -39,7 +39,7 @@ module top_enclosure_panel_sides(x, y,addx=0,addy=0) {
   assert(y != undef, "Must specify panel y dimension");
 
   difference() {
-    color(panel_color())
+
       translate ([0, 0, side_panel_thickness()/2])
       rounded_rectangle([x+addx-fitting_error(), y+addy-fitting_error(), side_panel_thickness()], panel_radius());
     // Color the holes darker for contrast
@@ -63,7 +63,7 @@ module top_enclosure_panel(x, y,long=false) {
 
   difference() {
     //color(acrylic2_color())
-    color(panel_color())
+
       translate ([0, 0, side_panel_thickness()/2])
       rounded_rectangle([x-fitting_error(), y-fitting_error(), side_panel_thickness()], panel_radius());
     // Color the holes darker for contrast
@@ -96,11 +96,11 @@ module top_enclosure_panel_mounting_screws(x, y) {
   // How far between screws
   screw_spacing_x = extent_x / (screws_x - 1);
   screw_spacing_y = extent_y / (screws_y - 1);
-  echo ("top enclosure screw_spacing_x for ", x, " mm ",screw_spacing_x);
-  echo ("top enclosure screw_spacing_y for ", y, " mm ",screw_spacing_y);
+  //echo ("top enclosure screw_spacing_x for ", x, " mm ",screw_spacing_x);
+  //echo ("top enclosure screw_spacing_y for ", y, " mm ",screw_spacing_y);
   {mirror_y()
     for (a =[0:(screws_x - 1)]) {
-      echo ([-x/2 + panel_screw_offset() , (screw_spacing_x ),a , y / 2 , extrusion_width() / 2, -epsilon]);
+      //echo ([-x/2 + panel_screw_offset() , (screw_spacing_x ),a , y / 2 , extrusion_width() / 2, -epsilon]);
       translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), y / 2 - extrusion_width() / 2, -epsilon])
         // FIXME - this should be a hole() not a cylinder
         cylinder(h=side_panel_thickness() + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
@@ -132,11 +132,11 @@ module top_enclosure_panel_long_mounting_screws(x, y) {
   // How far between screws
   screw_spacing_x = extent_x / (screws_x - 1);
   screw_spacing_y = extent_y / (screws_y - 1);
-  echo ("top enclosure screw_spacing_x for ", x, " mm ",screw_spacing_x);
-  echo ("top enclosure screw_spacing_y for ", y, " mm ",screw_spacing_y);
+  //echo ("top enclosure screw_spacing_x for ", x, " mm ",screw_spacing_x);
+  //echo ("top enclosure screw_spacing_y for ", y, " mm ",screw_spacing_y);
   {mirror_y()
     for (a =[0:(screws_x - 1)]) {
-      echo ([-x/2 + panel_screw_offset() , (screw_spacing_x ),a , y / 2 , extrusion_width() / 2, -epsilon]);
+      //echo ([-x/2 + panel_screw_offset() , (screw_spacing_x ),a , y / 2 , extrusion_width() / 2, -epsilon]);
       translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), y / 2 - extrusion_width() / 2, -epsilon])
         // FIXME - this should be a hole() not a cylinder
         //cylinder(h=side_panel_thickness() + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
@@ -254,6 +254,7 @@ module top_panel_half1()
 {
 
   {
+color(panel_color()) render()
     difference(){
     top_enclosure_panel(enclosure_size().x, enclosure_size().y/2-epsilon,long=true);
     *top_enclosure_window();
@@ -266,6 +267,7 @@ module top_panel_half2()
 {
 
     {
+      color(panel_color()) render()
       difference(){
     top_enclosure_panel(enclosure_size().x, enclosure_size().y/2-epsilon,long=true);
     top_enclosure_window();
@@ -278,6 +280,7 @@ module top_panel_half2()
 module full_front_top_enclosure_panel()
 {
    {
+color(panel_color()) render()
       difference () {
         top_enclosure_panel_front(enclosure_size().x-extrusion_width()*2, enclosure_size().z-extrusion_width());
         top_enclosure_window();
@@ -314,22 +317,23 @@ module enclosure_hinges() {
 
 
 module right_side_top_enclosure_panel() {
-
+color(panel_color()) render()
 difference(){
   top_enclosure_panel_sides(enclosure_size().y, enclosure_size().z,addx=0,addy=extrusion_width());
   translate([125,0,side_panel_thickness()-epsilon])
     fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
-  //elp_camera_mount_holes();
+  *elp_camera_mount_holes();
 }
 }
 
 module left_side_top_enclosure_panel() {
+  color(panel_color()) render()
     top_enclosure_panel_sides(enclosure_size().y, enclosure_size().z,addx=0,addy=extrusion_width());
 }
 
 
 module back_top_enclosure_panel() {
-
+color(panel_color()) render()
   difference(){
   top_enclosure_panel_sides (enclosure_size().x, enclosure_size().z,addx=0,addy=extrusion_width());
 //mirror_x()
@@ -337,7 +341,7 @@ module back_top_enclosure_panel() {
   translate([-150,0,side_panel_thickness()-epsilon])
     fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
   }
-  //elp_camera_mount_holes();
+  *elp_camera_mount_holes();
   }
 
 }
@@ -345,6 +349,7 @@ module back_top_enclosure_panel() {
 module elp_camera_mount_holes(){
 // 28mm inside holes , 34mm outside holes
   mirror_xy() {
+     cylinder (d=15.2, h=20);
     translate ([28/2,28/2,0])
       cylinder (d=3.2, h=20);
     translate ([34/2,34/2,0])
@@ -365,12 +370,12 @@ module enclosure_side_panels() {
       rotate([90,0,0])
         front_mini_top_enclosure_panel();
 */
-translate([0, enclosure_size().y/4, enclosure_size().z / 2 + extrusion_width()])
-top_panel_half1();
-
-rotate ([0,0,180])
   translate([0, enclosure_size().y/4, enclosure_size().z / 2 + extrusion_width()])
-top_panel_half2();
+    top_panel_half1();
+
+  rotate ([0,0,180])
+    translate([0, enclosure_size().y/4, enclosure_size().z / 2 + extrusion_width()])
+      top_panel_half2();
 
   translate([0, -(enclosure_size().y)/2, extrusion_width()/2])
     rotate([90,0,0]) full_front_top_enclosure_panel();
@@ -380,8 +385,9 @@ top_panel_half2();
 
   translate ([enclosure_size().x / 2, 0, extrusion_width()/2])
     rotate([90,0,90]) right_side_top_enclosure_panel();
+
   translate ([0, enclosure_size().y / 2 + side_panel_thickness(),extrusion_width()/2]) rotate([90,0,0])
-back_top_enclosure_panel();
+    back_top_enclosure_panel();
 }
 
 demo()

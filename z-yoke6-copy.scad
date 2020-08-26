@@ -9,7 +9,7 @@ use <nopscadlib/utils/fillet.scad>
 // The origin of the z-yoke is the center of the mounting point on the linear rail carriage
 module z_yoke() {
   carriage_type = rail_carriage(rail_profiles().z);
-  railmount = 16.65;
+  railmount = 12.5;
   part_thickness = 7.8;
   extra_mount_length = 0; // how much longer to make the mount so we can have the horizontal pieces below the mounting screws
 
@@ -51,7 +51,7 @@ translate([-part_thickness, 0, -extra_mount_length/2-railmount-3.8])
     fillet(4, carriage_width(carriage_type), center = true);
 
   // flat bed mounting ear
-    translate([0,0,-carriage_length(carriage_type/2) - extra_mount_length+1-4.2]) {
+    translate([0,0,-carriage_length(carriage_type/2) - extra_mount_length+1]) {
       linear_extrude(part_thickness) {
         difference() {
           z_yoke_bed_mount_profile();
@@ -62,9 +62,9 @@ translate([-part_thickness, 0, -extra_mount_length/2-railmount-3.8])
     }
 
     // reinforcing rib (plastic version)
-    hull() {
+    *hull() {
       // top corner
-      translate([- part_thickness, -part_thickness/2, carriage_length(carriage_type) /2-21 - epsilon]) cube([epsilon, part_thickness, epsilon]);
+      translate([- part_thickness, -part_thickness/2, carriage_length(carriage_type) /2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
       // corner near ear
       translate([-ear_extent(), -part_thickness/2, - carriage_length(carriage_type) / 2 +extra_mount_length/2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
       // base/inside corner

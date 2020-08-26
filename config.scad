@@ -73,7 +73,7 @@ elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,
 elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
-elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    1,    25,    true,   [-84,146.5,0], [-85-15,70,0],      [-85-15,-40,0],      [70,30,0],[160,70,0] , [-162,-96,0]] ;
+elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    1,    25,    true,   [-84,146.5,0], [-85-15,70,0],      [-85-15,-40,0],      [70,30,0],[160,70,0] , [-20+80,-86-40,0]] ;
 elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 // Test-ground (can be deleted)
 elec_cheesecore           = ["ELEC.BOX", 350,   290,   59+(95-59),    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
@@ -100,12 +100,13 @@ halo_rc                       = [(95-20)*2 , 15, 4];  // I've made the standard 
 //Experimental
 halo_rc_NEMA23                = [95*2 ,15, 4];
 halo_rc_cheese                = [80*2 ,15, 4];
+halo_rc_dans_ZLT              = [74*2 ,10, 4];
 function halo_back_overhang() = true ; //apply Y extra only to the back of the halo for top enclosure mounting
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
 //                             X  Y   Z
 //Standard
-enclosure_rc_standard          = [0, 0, 200];
+enclosure_rc_standard          = [0, 15, 200];
 //Experimental
 enclosure_large                = [0, 0, 245];
 enclosure_custom               = [0, 0, 200];
@@ -189,7 +190,7 @@ function leadscrew_pcd1()             = $leadscrew_specs[4];
 function leadscrew_pcd2()             = $leadscrew_specs[5];
 function leadscrew_nut_screwholes()   = $leadscrew_specs[6];
 
-function halo_size()          = [$halo_size.x + frame_size().x, $halo_size.y + frame_size().y + side_panel_thickness() * 2,$halo_size.z];
+function halo_size()          = [$halo_size.x + frame_size().x, $halo_size.y + frame_size().y ,$halo_size.z];
 function halo_overhang() = $halo_size.y;
 
 function rail_lengths()  = [$rail_specs.x[0], $rail_specs.y[0], $rail_specs.z[0]];

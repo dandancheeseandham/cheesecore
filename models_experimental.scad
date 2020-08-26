@@ -85,8 +85,30 @@ module 300ZL_2020(position = [0, 0, 0]) {
     children();
   }
 
-module cheesecore_300zl(position = [0, 0, 0]) {
+  module dans_300zlt(position = [0, 0, 0]) {
     $NEMA_XY            = NEMA17;
+    $NEMA_Z             = NEMA17;
+    $extrusion_type     = extrusion15;
+
+    $frame_size         = frame_original_rc300zlt;
+    $panels             = panels_steel;
+    $enclosure_size     = enclosure_rc_standard;
+    $halo_size          = halo_rc_dans_ZLT;
+    $front_window_size  = front_window_original_300zlt;
+    $elecbox            = elecbox_original_rc300zlt;
+    $branding_name      = "Dans 300ZLT";
+
+    $rail_specs         = rails_original_rc300zlt;
+    $leadscrew_specs    = leadscrew_original_rc300zlt;
+    $bed                = bed_standard_rc300;
+    $feet_depth         = 50 ;
+    $filament_box       = filament_box_cheesecore;
+      children();
+    }
+
+
+module cheesecore_300zl(position = [0, 0, 0]) {
+    $NEMA_XY            = NEMA17L;
     $NEMA_Z             = NEMA17;
     $extrusion_type     = extrusion15;
 

@@ -32,7 +32,7 @@ difference() {
     }
     if (halo_back_overhang() == true) {
       translate ([0, halo_overhang()/2, halo_size().z/2])
-        rounded_rectangle([halo_size().x , halo_size().y+halo_overhang(), halo_size().z], 0.5); //radius is 0 due to corner cubes
+        rounded_rectangle([halo_size().x , halo_size().y, halo_size().z], 0.5); //radius is 0 due to corner cubes
     }
     // Color the holes darker for contrast
     color(panel_color_holes()) {
@@ -44,9 +44,9 @@ difference() {
         cylinder(d=extrusion_width() * 0.5, h = halo_size().z + 2 * epsilon);
       // M3 holes near corners - cleanrance hole 3.4mm
       union() {
-        translate([frame_size().x / 2 - extrusion_width() / 2 , frame_size().y / 2 - extrusion_width() * 2 , 25])
+        translate([frame_size().x / 2 - extrusion_width() / 2 , frame_size().y / 2 - extrusion_width() * 2 + 12.5 , 25])
             clearance_hole(nominal_d=3, h=50);
-        translate([frame_size().x / 2 - extrusion_width() * 2 , frame_size().y / 2 - extrusion_width() / 2 , 25])
+        translate([frame_size().x / 2 - extrusion_width() * 2 + 12.5 , frame_size().y / 2 - extrusion_width() / 2 , 25])
             clearance_hole(nominal_d=3, h=50);
       }
 
@@ -106,36 +106,40 @@ module panel_mounting_screws(x, y) {
   screws_y = 4;
 
   // How far between screws
-  screw_spacing_x = extent_x / (screws_x - 1);
-  screw_spacing_y = extent_y / (screws_y - 1);
+  screw_spacing_x = extent_x / (screws_x - 1) - 17;
+  screw_spacing_y = extent_y / (screws_y - 1) - 15;
+  //FIXME change from 3.25mm holes to PARAMETRIC
 
   // long holes on X axis
   mirror_y() {
-    for (a =[0:(screws_x - 2)]) {
-      translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a) + extrusion_width() / 2, y / 2 - extrusion_width() / 2, -epsilon])
+    for (a =[0:(screws_x - 1)]) {
+      translate ([-32,0,0])
+      translate ([(-x/2) + panel_screw_offset() + (screw_spacing_x * a) + extrusion_width() / 2, y / 2 - extrusion_width() / 2, -epsilon])
         // FIXME - this should be a hole() not a cylinder
         //cylinder(h=halo_size().z + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
-        longscrewhole((frame_size().y-130)/3,3,0.25);
+        longscrewhole((frame_size().y-155)/3,3,0.25); // screwhole FIXME
     }
   }
-  if (halo_back_overhang() == true) {
+  //if (halo_back_overhang() == true) {
       {
-        for (a =[0:(screws_x - 2)]) {
-          translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a) + extrusion_width() / 2, y / 2 + extrusion_width(), -epsilon])
+        for (a =[0:(screws_x - 1)]) {
+          translate ([-32,0,0])
+          translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a) + extrusion_width() / 2, y / 2 + extrusion_width()/2 , -epsilon])
             // FIXME - this should be a hole() not a cylinder
             //cylinder(h=halo_size().z + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
-              longscrewhole((frame_size().y-130)/3,3,0.25);
+              longscrewhole((frame_size().y-160)/3,3,0.25); // screwhole FIXME
         }
       }
-    }
+    //}
   // long holes on Y axis
   mirror_x() {
-    for (a =[0:(screws_y - 2)]) {
+    for (a =[0:(screws_y - 1)]) {
+      translate ([0,-30,0])
       translate ([x / 2 - extrusion_width() / 2, -y / 2 + panel_screw_offset() + (screw_spacing_y * a) + extrusion_width() / 2, -epsilon])
         // FIXME - this should be a hole not a cylinder
         //cylinder(h=halo_size().z + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
       rotate ([0,0,90])
-        longscrewhole((frame_size().y-130)/3,3,0.25);
+        longscrewhole((frame_size().y-185)/3,3,0.25);  // screwhole FIXME
         /*
         *translate ([-frame_size().x / 2 + -20 + extrusion_width()/2, motor_pulley_link(),0]) // rear left idler
           cylinder(d=3.3, h=60);

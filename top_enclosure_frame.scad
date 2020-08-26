@@ -8,9 +8,15 @@ use <extrusion_spacers.scad>
 
 
 module x_extrusions() {
+//back-top of main box
   translate([0, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
     rotate([0,90,0])
       extrusion(enclosure_size().x - 2 * extrusion_width());
+echo ("Top enclosure");
+echo ("=============");
+echo ("Top enclosure parts X: Qty 6 of ", enclosure_size().x - 2 * extrusion_width());
+echo ("Top enclosure parts X: Qty 2 of",enclosure_size().x - 4 * extrusion_width() );
+//echo ("Top enclosure parts: ", );
 
   translate([0, -enclosure_size().y / 2 + extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
     rotate([0,90,0])
@@ -23,6 +29,7 @@ module x_extrusions() {
       rotate([0,90,0])
         extrusion(enclosure_size().x - 2 * extrusion_width());
   }
+
   //rear bottom extrusion
   translate([0, enclosure_size().y / 2 - extrusion_width() / 2, -enclosure_size().z / 2 + extrusion_width() / 2])
     rotate([0,90,0])
@@ -39,7 +46,6 @@ module x_extrusions() {
       translate([0, (enclosure_size().y-extrusion_width())/2, (enclosure_size().z+extrusion_width())/2 ])
         rotate([0,90,0])
           extrusion(enclosure_size().x- 2*extrusion_width());
-
     //top-front panel back extrusion and top-back panel front extrusion(meeting in the middle)
       translate([0, -extrusion_width()/2, (enclosure_size().z+extrusion_width())/2])
         rotate([0,90,0])
@@ -49,10 +55,14 @@ module x_extrusions() {
 
 module y_extrusions() {
   // left and right panel top&bottom extrusion
-  mirror_xz()
+  echo ("Top enclosure parts Y: Qty 4 of",enclosure_size().y - 2 * extrusion_width() );
+  echo ("Top enclosure parts Y: Qty 4 of",enclosure_size().y/2 - extrusion_width()*2 );
+  mirror_xz(){
     translate([enclosure_size().x / 2 - extrusion_width() / 2, 0, enclosure_size().z / 2 - extrusion_width() / 2])
       rotate([90,0,0])
         extrusion(enclosure_size().y - 2 * extrusion_width());
+        }
+
 
   //top panels left and right extrusions
     mirror_xy(){
@@ -63,20 +73,24 @@ module y_extrusions() {
   }
 
 module z_extrusions() {
+echo ("Top enclosure parts Z: Qty 4 of",enclosure_size().z - 2*extrusion_width() );
+echo ("Top enclosure parts Z: Qty 2 of",enclosure_size().z - 3*extrusion_width() );
     //four corner Z uprights
     mirror_xy() {
       translate([enclosure_size().x / 2 - extrusion_width() / 2, enclosure_size().y / 2 - extrusion_width() / 2, 0])
         extrusion(enclosure_size().z - 2*extrusion_width());
+
     }
 
     mirror_x() {
       translate([enclosure_size().x / 2 - extrusion_width() * 1.5 , -enclosure_size().y / 2 + extrusion_width() * 0.5, extrusion_width() * 0.5])
         extrusion(enclosure_size().z - 3*extrusion_width());
+
     }
   }
 
 module corner_cubes() {
-
+echo ("Top enclosure parts corner cubes",8+4+4+4 );
 //main enclosure corners (8)
   mirror_xyz() {
     translate([(enclosure_size().x- extrusion_width())/2, (enclosure_size().y-extrusion_width())/2, (enclosure_size().z-extrusion_width())/2])

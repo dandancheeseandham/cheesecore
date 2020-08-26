@@ -8,7 +8,7 @@ use <lib/layout.scad>
 use <demo.scad>
 
 module electronics_box_corner() {
-  color(printed_part_color())
+  color(printed_part_color()) render()
     rotate ([90,270,0])
       translate ([elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),-box_depth()]) {
         union() {
@@ -61,8 +61,8 @@ module electronics_box_corner_hole(){
   rotate ([90,270,0])
     translate ([elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),-box_depth()]) {
       translate ([-5,-5,-box_depth()/2])
-        cylinder(h=box_depth()*2, r1=elec_corner_holesize()/2, r2=elec_corner_holesize()/2, center=false);
-    }
+        cylinder(h=box_depth()*2, d=elec_corner_holesize(), center=false);
+        }
 }
 
 demo() {

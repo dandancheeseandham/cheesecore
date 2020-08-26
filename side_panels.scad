@@ -22,11 +22,11 @@ module panel(x, y,addx=0,addy=0) {
   assert(y != undef, "Must specify panel y dimension");
 
   difference() {
-    color(panel_color())
+
       translate ([0, -addy/2, side_panel_thickness()/2])
       rounded_rectangle([x+addx-fitting_error(), y+addy-fitting_error(), side_panel_thickness()], panel_radius());
     // Color the holes darker for contrast
-    color(panel_color_holes()) {
+    color(panel_color_holes()) render() {
       panel_mounting_screws(x, y);
       // Access screws to corner cubes
       mirror_xy() {
@@ -75,6 +75,7 @@ module panel_mounting_screws(x, y)
 
 // BOTTOM PANEL
 module bottom_panel() {
+  color(panel_color()) render()
   difference() {
     panel(frame_size().x, frame_size().y,extend_bottom_panel_x(),0);
 // make Z motor holes to mount NEMA motors
@@ -126,7 +127,7 @@ module front_panel() {
   min_y_gap = (frame_size().z - front_window_size().y) / 2 - abs(front_window_offset().y);
   assert(min_y_gap >= extrusion_width(), "Window cannot overlap extrusion in Z");
 
-
+color(panel_color()) render()
   difference() {
     panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
     //remove window in front panel
@@ -174,7 +175,7 @@ module door() {
 
   difference() {
     // Outline of the door
-    color(acrylic2_color()) {
+    color(acrylic2_color()) render() {
       difference(){
       linear_extrude(acrylic_door_thickness()) {
         hull() {
@@ -192,6 +193,7 @@ module door() {
 translate ([0,-5,0])
 mirror_y()
 translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanelholes();
+//door knob holes
 translate ([20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
 translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
 //poly_cylinder(1.5, 30);
@@ -219,7 +221,7 @@ module single_door() {
 
   difference() {
     // Outline of the door
-    color(acrylic2_color()) {
+    color(acrylic2_color()) render() {
       difference(){
       linear_extrude(acrylic_door_thickness()) {
         hull() {
@@ -273,8 +275,11 @@ translate([0, -frame_size().y / 2 - side_panel_thickness() - epsilon, 0])
 module back_panel() {
 //if no back electronic box then just create the panel
 if (back_panel_enclosure() == false) {
+  color(panel_color()) render()
     difference(){
     panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
+    translate([0,frame_size().z/2-40,-side_panel_thickness()+epsilon])
+      camera_mount_holes();
     translate([0,-frame_size().z/2+100,+side_panel_thickness()-epsilon])
       fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
 
@@ -285,6 +290,7 @@ if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
   }
 //if back electronic box then make holes
   if (back_panel_enclosure() == true) {
+    color(panel_color()) render()
     difference()
     {
       panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
@@ -300,6 +306,7 @@ if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
 }
 
 module right_panel() {
+  color(panel_color()) render()
   difference() {
    panel(frame_size(). y, frame_size().z, 0, extendz()); //call side panel then difference all the electronics mounting holes
     color(panel_color_holes()) translate ([0,-movedown() ,0]) {
@@ -309,7 +316,7 @@ module right_panel() {
     translate(Duex5_placement()+[27.5,-36,0]) pcb_holes(Duet3Exp); // Duet3 Expansion
     translate(Duex5_placement())  pcb_holes(Duex5);
     translate(rpi_placement())  rotate([0,0,180])  pcb_holes(RPI3);
-    translate(rpi_placement()+[80,-40,13+5]) rotate([0,0,180]) pcb_holes(RPI3);
+    //translate(rpi_placement()+[80,-40,13+5]) rotate([0,0,180]) pcb_holes(RPI3);
     //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
     translate(psu_placement()+[0,115,-10]) rotate([0,0,90]) cylinder(40,3,3);
 //FIXME: use the ssr_hole_position library, not hack it in like this.
@@ -342,7 +349,7 @@ module pcb_holes(type) { // Holes for PCB's
 }
 
 module left_panel(){
-
+color(panel_color()) render()
 difference() {
   topx = 105;
   topy = 125;
@@ -386,6 +393,17 @@ module spool_holders(){
     }
 }
 
+module camera_mount_holes(){
+// 28mm inside holes , 34mm outside holes
+  mirror_xy() {
+     cylinder (d=15.2, h=20);
+    translate ([28/2,28/2,0])
+      cylinder (d=3.2, h=20);
+    translate ([34/2,34/2,0])
+      cylinder (d=3.2, h=20);
+  }
+}
+
 module all_side_panels() {
   translate([0, 0, -frame_size().z / 2 - side_panel_thickness()])
     bottom_panel();
@@ -406,8 +424,8 @@ module all_side_panels() {
     rotate([90,0,0])
       back_panel();
 
-      translate([0, 0, frame_size().z / 2 ])
-        halo();
+  translate([0, 0, frame_size().z / 2 ])
+    halo();
 
 
 }

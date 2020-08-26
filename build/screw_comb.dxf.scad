@@ -1,7 +1,7 @@
 // vim: set nospell:
 use <export_config.scad>
-use <../top_enclosure_side_panels.scad>
+use <../screw_comb.scad>
 
 export_artifacts() {
-  //top_panel();
+  projection() screw_comb();
 }

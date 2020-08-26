@@ -11,7 +11,7 @@ use <electronics_box_assembly.scad>
 use <demo.scad>
 
 module top_panel() {
-  difference() {
+  color(acrylic_color())  difference() {
     electronics_cabinet_side_panel(box_size_y());
     remove_vents_top_panel();
     // STEPPER CABLES HOLES
@@ -31,25 +31,40 @@ module top_panel() {
 }
 
 module bottom_panel() {
-  difference() {
+   difference() {
   electronics_cabinet_side_panel(box_size_y());
   // STEPPER CABLES HOLES
   {
-    *translate ([box_size_y()/2-20,0,0])
+    translate ([box_size_y()/2-30,0,0])
       mirror_x()
-        translate ([box_size_y()/2 - 110,box_depth(), -15])
+        translate ([box_size_y()/2 - 105,box_depth(), -15])
           cylinder(h=30, r1=7.5, r2=7.5, center=false);
   }
+  {
+  //FANS GUARDS
+    translate ([40, box_depth()-27,acrylic_thickness()/2])
+      fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
+    translate ([110,box_depth()-27,acrylic_thickness()/2])
+      fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
+  }
+
   *translate ([box_size_y()/2 - 70,box_depth(), -15])  cylinder(h=30, r1=15, r2=15, center=false);
-  translate ([-box_size_y()/2+35,0,0]) IEC_hole();
+  translate ([-67,0,0]) IEC_hole();
 }
+/*
+//pretend "fans"
+translate ([40-20, box_depth()-27-20,acrylic_thickness()/2])
+  cube ([40,40,15]);
+translate ([110-20,box_depth()-27-20,acrylic_thickness()/2])
+  cube ([40,40,15]);
+*/
 
   }
 
 module IEC_hole() {
   IEC_cutout_distance=20; // hole starts at this distance from bottom of panel
-  cut_out_width=57;
-  cut_out_depth=28.5;
+  cut_out_width=53;
+  cut_out_depth=32;
   //IEC hole
 translate ([box_size_z()-IEC_cutout_distance-cut_out_width,15.25,-epsilon/2])
   cube ([cut_out_width,cut_out_depth,acrylic_thickness()+epsilon+25]);
@@ -88,40 +103,40 @@ translate ([25,box_depth()-28.5,-10])
 
 
 module right_side_panel() {
-  difference() {
+   difference() {
   electronics_cabinet_side_panel (box_size_z());
   IEC_hole();
   }
 }
 
 module left_side_panel() {
-  color(acrylic_color())
+   color(acrylic_color())
     difference() {
       electronics_cabinet_side_panel (box_size_z());
-IEC_hole();
+*IEC_hole();
 RJ45_cutout();
 //emergency_stop_cutout();
 
-//FANS GUARDS
-translate ([50, box_depth()-27,acrylic_thickness()/2])
-  fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
-translate ([170,box_depth()-27,acrylic_thickness()/2])
-  fan_guard_removal(size = 40, thickness = acrylic_thickness()+2*epsilon);
     }
   }
 
-  module remove_vents_top_panel() {
-    vent_length = 130;
+module remove_vents_top_panel() {
+    gap_between_vent_sections = 10;
+    vent_length = (box_size_y()-(30+30+30+gap_between_vent_sections/2))/4;
     vent_height = 1.5;
-    gap_between_vents = 1 ;
-    vent_offset = [-40,26,0];
+    gap_between_vents = 3 ;
+    vent_offset = [-vent_length/2,box_depth()/2,0];
+    number_of_vent_sections_less_one = 3;
 
-    rotate ([0,0,0])
-      translate(psu_placement()+vent_offset) {
-        for(vents = [0 : 10])
-          translate ([0,0-(vents*(vent_height + gap_between_vents)),-20])
+
+for(ventrow = [0 : number_of_vent_sections_less_one]){
+      translate([number_of_vent_sections_less_one*gap_between_vent_sections+2.5,box_depth(),0]) {
+        for(vents = [2 : 11])
+          translate ([ventrow*(vent_length+gap_between_vent_sections),0-(vents*(vent_height + gap_between_vents)),0])
             longscrewhole(vent_length,vent_height,0);
+
       }
+    }
   }
 
 
@@ -147,12 +162,13 @@ module remove_printed_vent_area() {
 module electronics_cover_panel() {
 // FIXME : draw in 2d then extrude
 // vent configuration
-translate([0,-box_depth(),0])
+color(acrylic2_color())
+ translate([0,-box_depth(),0])
 rotate ([180,0,0])
   difference() {
       difference() {
-      color(acrylic2_color())
-      panel_cover([box_size_y() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), box_size_z() + acrylic_thickness()/2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), acrylic_thickness()], acrylic_cover_corner_rounding());
+
+      panel_cover([box_size_y() + acrylic_thickness()*2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), box_size_z() + acrylic_thickness()*2 + expand_acrylic_cover_adjustment()*2 - fitting_error(), acrylic_thickness()], acrylic_cover_corner_rounding());
     }
     place_four_holes_for_electronics_corners();
       if (laser_cut_vents() == true) remove_vents();
@@ -181,7 +197,7 @@ module electronics_cabinet_side_panel(length){
   topscrewhole_x = 4.5 ;
   topscrewhole_y = 15 ;
 
-  color(acrylic_color()) {
+  color(acrylic_color())  {
     difference() {
       cube ([length-fitting_error(),box_depth()-fitting_error(),acrylic_thickness()]);
 

@@ -1,13 +1,14 @@
 #!/bin/bash
 cd ../../
+mkdir -p artifacts/dans_300zlt
 
 # openscad
 OPENSCAD="openscad-nightly"
-MODEL="cheesecore_300zl"
+MODEL="dans_300zlt"
 
 echo Creating a $MODEL
-echo Parts are created in /artifacts/$MODEL
-mkdir -p artifacts/${MODEL}
+echo Parts are created in \artifacts\
+
 echo "creating new script file."
 
 ## create renderfile
@@ -39,21 +40,18 @@ EOF
 for source in build/*.dxf.scad build/*.stl.scad ; do
   dest=`basename --suffix=.scad ${source}`
 
-  echo "Building artifacts/${MODEL}/${dest} from ${source}"
-  ${OPENSCAD} -o artifacts/${MODEL}/${dest} ${source}
+  echo "Building artifacts/${dest} from ${source}"
+  ${OPENSCAD} -o artifacts/dans_300zlt/${dest} ${source}
 done
+
 
 # loop over all .stl.scad files in build build directory
 for source in build/*.stl.scad ; do
-  dest=`basename --suffix=.scad ${source}`.png
+  dest=`basename --suffix=.scad ${source}`
 
   echo "Building artifacts/${dest} from ${source}"
-  ${OPENSCAD} --imgsize=1920,1200 -o artifacts/${MODEL}/${dest} ${source}
+  ${OPENSCAD} --imgsize=1920,1200 -o artifacts/dans_300zlt/${dest} ${source}
 done
-
-
-
-
 
 
 

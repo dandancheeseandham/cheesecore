@@ -1,7 +1,7 @@
 // vim: set nospell:
 use <export_config.scad>
-use <../top_enclosure_side_panels.scad>
+use <../side_panels.scad>
 
 export_artifacts() {
-  //top_panel();
+  rotate([0,180,0]) projection() door();
 }

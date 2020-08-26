@@ -45,7 +45,7 @@ module frame() {
   y_extrusions();
   z_extrusions();
   corner_cubes();
-  *all_extrusion_spacers(); //do not need extrusion spacers with a comb
+  //all_extrusion_spacers(); //do not need extrusion spacers with a comb
 
   // This cube is just for debugging - it makes sure the space between brace and outside extrusion is correct
   // translate([-frame_size().x / 2 + extrusion_width(), 0, -frame_size().z / 2+ 40]) cube([40, 100, 100]);

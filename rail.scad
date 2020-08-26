@@ -8,7 +8,7 @@ use <demo.scad>
 module rail_wrapper(rail_type, length, include_screws=false, position=0)
 {
   assert(length != undef, "Length must be defined");
-  assert(abs(position) <= rail_travel(rail_type, length) / 2, "Carriage cannot go off end of rail");
+  //assert(abs(position) <= rail_travel(rail_type, length) / 2, "Carriage cannot go off end of rail");
 
   screw = rail_screw(rail_type);
   nut = screw_nut(screw);

@@ -187,7 +187,7 @@ module bearing_stack_assembly(){
 }
 
 module spool_holder_assembly(max_spool_thickness){
-    translate ([0,0,-(filament_holder_length+mounting_plate_thickness)/2]) color("DarkRed") {
+    translate ([0,0,-(filament_holder_length+mounting_plate_thickness)/2]) color("DarkRed") render() {
   main_tube(max_spool_thickness);
 	mounting_plate(max_spool_thickness);
 	}
@@ -200,7 +200,7 @@ module spool1kg() {
   spool_diameter = 203.2 ;
   hub_diameter = 52.8 ;
   hub_counterbore_diameter = 88.9;
-  translate ([0,-18,-43])   mirror_z()
+  render() translate ([0,-18,-43])   mirror_z()
   {
     difference () {
       union() {

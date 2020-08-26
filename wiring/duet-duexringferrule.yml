@@ -1,0 +1,33 @@
+connectors:
+  DUET:
+    category: Ring
+    type: Ring#8, crimp
+    pincount: 1
+  SSR: # manually define a ferrule (with unique designator)
+    category: ferrule
+    type: Ferrule, crimp
+    subtype: 2.0 mm²
+    color: YE
+
+cables:
+  DUETCABLE:
+    wirecount: 1
+    length: 0.5
+    gauge: 0.34 mm2
+    show_equiv: true # auto-calculate AWG equivalent
+    colors: [RD]
+
+cables:
+  BED_SSR3:
+    wirecount: 1
+    length: 0.5
+    gauge: 0.34 mm2
+    show_equiv: true # auto-calculate AWG equivalent
+    colors: [RD]
+
+
+connections:
+  -
+    - DUET: [1]
+    - BED_SSR3: [1]
+    - DUETCABLE: [1]

@@ -7,7 +7,10 @@ module report() {
   echo ("Extrusion _screw_size:", extrusion_screw_size());
   echo ("Frame total dimensions: " , frame_size());
   echo ("Extrusions only dimensions: " , frame_size() - [extrusion_width()*2,extrusion_width()*2,extrusion_width()*2]);
+
   echo ("Halo dimensions: " , halo_size());
+  echo ("halo_overhang() :",halo_overhang());
+
   echo ("Top Enclosure total dimensions: ", enclosure_size());
   echo ("Top Enclosure extrusion dimensions: ", enclosure_size() - [extrusion_width()*2,extrusion_width()*2,extrusion_width()*2]);
   echo ("bottom panel in core:",frame_size().x, frame_size().y);
@@ -46,6 +49,7 @@ module report() {
   echo ("extend_bottom_panel_x() : ",extend_bottom_panel_x());
   echo ("extendz() : ",extendz());
   echo ("include_bottom_braces() :",include_bottom_braces() );
+
   echo ("------------------------------------------");
   echo ("");
   echo ("");

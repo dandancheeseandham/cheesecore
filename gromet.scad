@@ -28,7 +28,7 @@ difference(){
   union(){
   difference(){
   translate ([0,0,2]) cylinder (d=28,h=6.4);
-  translate ([0,0,2-epsilon]) cylinder (d=24,h=6.4+2*epsilon);
+  #translate ([0,0,2-epsilon]) cylinder (d=24,h=6.4+2*epsilon);
   }
   }
 
