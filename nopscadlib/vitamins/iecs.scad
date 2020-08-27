@@ -55,7 +55,8 @@ IEC_fused_inlet2= ["IEC_fused_inlet2","IEC fused inlet old",         M3_cs_cap_s
 
 IEC_inlet       = ["IEC_inlet",       "IEC inlet",                   M3_cs_cap_screw, 40, 28, 18, 20, 3, 28,   20.5, 4, 2.5, 37,   23, 1, 2.5, 48, 14, inlet_spades,  false ];
 IEC_inlet_atx   = ["IEC_inlet_atx",   "IEC inlet for ATX",           M3_cs_cap_screw, 40, 27, 18, 19, 3, 30.5, 22,   2, 2.0, 30.5, 22, 2, 4.0, 50, 15, atx_spades,    false ];
+IEC_cheesecore  = ["IEC_inlet_cheese","IEC inlet for cheesecore",    M3_cs_cap_screw, 40, 37, 18, 63, 3, 28,    31,   2, 2.0, 30,   33, 4, 3.0, 44, 15, fused_spades,  false ];
 IEC_outlet      = ["IEC_outlet",      "IEC outlet RS 811-7193",      M3_cs_cap_screw, 40, 32, 18, 24, 3, 28,   20.5, 2, 0.0, 29,   29, 2, 2.8, 50, 23, outlet_spades, true ];
 
-iecs = [IEC_inlet, IEC_inlet_atx, IEC_fused_inlet, IEC_fused_inlet2, IEC_outlet];
+iecs = [IEC_inlet, IEC_inlet_atx, IEC_fused_inlet, IEC_fused_inlet2,IEC_cheesecore, IEC_outlet];
 use <iec.scad>

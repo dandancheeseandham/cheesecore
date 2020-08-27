@@ -275,7 +275,8 @@ translate([0, -frame_size().y / 2 - side_panel_thickness() - epsilon, 0])
 module back_panel() {
 //if no back electronic box then just create the panel
 if (back_panel_enclosure() == false) {
-  color(panel_color()) render()
+  color(panel_color())
+  render()
     difference(){
     panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
     translate([0,frame_size().z/2-40,-side_panel_thickness()+epsilon])
@@ -287,6 +288,8 @@ if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
     translate([288,210, side_panel_thickness() / 2])
     rounded_rectangle([80,80,side_panel_thickness() + 2 * epsilon], front_window_radius());
 }
+translate([0,frame_size().z/2-40,-side_panel_thickness()+epsilon])
+camera_mount_cover();
   }
 //if back electronic box then make holes
   if (back_panel_enclosure() == true) {
@@ -394,14 +397,61 @@ module spool_holders(){
 }
 
 module camera_mount_holes(){
+movedown = 15;
+sizeoflens = 55;
+screwclearance = 3.2;
+translate ([0,-movedown,0]) {
+    mirror_xy() {
+        //ELP
+    translate ([(sizeoflens+3)/2,(sizeoflens+3)/2,0])
+      cylinder (d=screwclearance, h=20);
+  }
+cylinder (d=sizeoflens, h=20);
+}
+
+/*
 // 28mm inside holes , 34mm outside holes
-  mirror_xy() {
-     cylinder (d=15.2, h=20);
-    translate ([28/2,28/2,0])
+  *mirror_xy() {
+    //ELP
+     cylinder (d=14.2, h=20);
+     translate ([28/2,28/2,0])
       cylinder (d=3.2, h=20);
     translate ([34/2,34/2,0])
       cylinder (d=3.2, h=20);
+    }
+
+*translate ([0,12.5/2,0])
+  mirror_xy()
+    {
+      //raspberry pi cam
+      translate ([21/2,12.5/2,0])
+        cylinder (d=2.1, h=20);
+    }
+    //translate ([12.5/2,12.5/2,0])
+      *cylinder (d=14.2, h=20);
+*/
+}
+
+module camera_mount_cover(){
+  movedown = 15;
+  sizeoflens = 55;
+  screwclearance = 3.2;
+color(printed_part_color())
+  translate ([0,-movedown,-1.5]) {
+cylinder (d=sizeoflens-fitting_error()*2, h=2+side_panel_thickness());
+difference(){
+    translate ([-(sizeoflens+8)/2,-(sizeoflens+8)/2,0])
+      cube([sizeoflens+8,sizeoflens+8,2]);
+
+      mirror_xy() {
+          //ELP
+      translate ([(sizeoflens+3)/2,(sizeoflens+3)/2,0])
+        cylinder (d=screwclearance-fitting_error(), h=4+side_panel_thickness());
+    }
+}
+
   }
+
 }
 
 module all_side_panels() {

@@ -3,12 +3,16 @@ include <constants.scad>
 use <config.scad>
 use <screwholes.scad>
 include <nopscadlib/core.scad>
+include <nopscadlib/vitamins/iec.scad>
+include <nopscadlib/vitamins/iecs.scad>
+
 use <lib/holes.scad>
 use <lib/layout.scad>
 use <fan_guard_removal.scad>
 use <electronics_box_corner.scad>
 use <electronics_box_assembly.scad>
 use <demo.scad>
+
 
 module top_panel() {
   color(acrylic_color())  difference() {
@@ -65,14 +69,18 @@ module IEC_hole() {
   IEC_cutout_distance=20; // hole starts at this distance from bottom of panel
   cut_out_width=53;
   cut_out_depth=32;
+  hole = 4;
   //IEC hole
 translate ([box_size_z()-IEC_cutout_distance-cut_out_width,15.25,-epsilon/2])
+{
   cube ([cut_out_width,cut_out_depth,acrylic_thickness()+epsilon+25]);
 // FIXME: this could just as well be a mirror_x of the two holes
-translate ([box_size_z()-IEC_cutout_distance-cut_out_width/2,9.65,0])
-  linear_repeat(extent = [0, 39.7, 0], count = 2)
-    mirror([0, 0, 1]) clearance_hole(nominal_d=3, h=25);
-  }
+//translate ([box_size_z()-IEC_cutout_distance-cut_out_width/2,9.65,0])
+//translate ([+cut_out_width/2,0,0])
+# translate([0, cut_out_depth/2,0])
+    mirror_y() translate([cut_out_width/2,-cut_out_depth/2-hole,5]) clearance_hole(nominal_d=3, h=25);
+    }
+}
 
 module RJ45_cutout() {
 //  RJ45 CAT5e Socket to RJ45 CAT5e Socket Feedthrough Connector, Metal, Silver, Plain Holes -  CP30220M3
@@ -107,6 +115,7 @@ module right_side_panel() {
   electronics_cabinet_side_panel (box_size_z());
   IEC_hole();
   }
+ rotate ([0,0,90]) translate ([box_depth()/2+1.55,-244,0]) iec_assembly(IEC_cheesecore, 3);
 }
 
 module left_side_panel() {
