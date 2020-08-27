@@ -46,7 +46,6 @@ module strain_relief_holes() {
   position = -55;
   translate ([bed_plate_size().x / 2 - 5, position, bed_thickness()+1]) hole(d=3.2, h=20);
   translate ([bed_plate_size().x / 2 - 5, position-30, bed_thickness()+1]) hole(d=3.2, h=20);
-
 }
 
 // Top grounding connection hole
@@ -66,7 +65,7 @@ module side_mounted_holes() {
   translate ([bed_plate_size().x / 2, -50, bed_thickness()/2])
     rotate ([0,90,0])
       hole(d=2, h=5);
-  }
+}
 
 module thermistor_channel() {
   // FIXME: x/y position of origin of this channel is approximate
@@ -121,7 +120,6 @@ module ear_profile() {
         }
       }
     }
-
     // through slot
     hull() {
       translate([5, 0]) circle(d=3.4);
@@ -132,146 +130,118 @@ module ear_profile() {
 
 module magnets(){
   //magbed 9mm dia 2.5mm 6*6 staggered
-sizeofmagnetx = 9;
-sizeofmagnety = 9;
-depthofmagnet = 3;
-no_of_magnets_x = 7;
-no_of_magnets_y = 7;
-magnet_edge_gap_x = 25;
-magnet_edge_gap_y = 20;
-    fudgex = 0;
-    fudgey = 0;
-spacingx = (bed_plate_size().x-(magnet_edge_gap_x-sizeofmagnetx))/no_of_magnets_x+fudgex;
-spacingy = (bed_plate_size().y-(magnet_edge_gap_y-sizeofmagnety))/no_of_magnets_y+fudgey;
+  sizeofmagnetx = 9;
+  sizeofmagnety = 9;
+  depthofmagnet = 3;
+  no_of_magnets_x = 7;
+  no_of_magnets_y = 7;
+  magnet_edge_gap_x = 25;
+  magnet_edge_gap_y = 20;
+  fudgex = 0;
+  fudgey = 0;
+  spacingx = (bed_plate_size().x-(magnet_edge_gap_x-sizeofmagnetx))/no_of_magnets_x+fudgex;
+  spacingy = (bed_plate_size().y-(magnet_edge_gap_y-sizeofmagnety))/no_of_magnets_y+fudgey;
 
-for (j = [1:no_of_magnets_x]) {
-for (i = [1:no_of_magnets_y]) {
-    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
-
-    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
-    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
-    translate ([-sizeofmagnetx,-sizeofmagnety,0])
-    translate([(j*spacingx), i*spacingy, -1/128])
-    //cube([sizeofmagnetx,sizeofmagnety,depthofmagnet+1/128]);
-    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+  for (j = [1:no_of_magnets_x]) {
+    for (i = [1:no_of_magnets_y]) {
+      translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+      translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+      translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+      translate ([-sizeofmagnetx,-sizeofmagnety,0])
+      translate([(j*spacingx), i*spacingy, -1/128])
+      //cube([sizeofmagnetx,sizeofmagnety,depthofmagnet+1/128]);
+        cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+    }
+  }
 }
-
-}
-
-}
-
 
 module magnets_staggered(){
   //magbed 9mm dia 2.5mm 6*6 staggered
-sizeofmagnetx = 10.1;
-sizeofmagnety = 10.1;
-depthofmagnet = 5;
-no_of_magnets_x = 6;
-no_of_magnets_y = 6;
-magnet_edge_gap_x = 8;
-magnet_edge_gap_y = 5;
-    fudgex = -1;
-    fudgey = -1;
-spacingx = (bed_plate_size().x-(magnet_edge_gap_x-sizeofmagnetx))/no_of_magnets_x+fudgex;
-spacingy = (bed_plate_size().y-(magnet_edge_gap_y-sizeofmagnety))/no_of_magnets_y+fudgey;
+  sizeofmagnetx = 10.1;
+  sizeofmagnety = 10.1;
+  depthofmagnet = 5;
+  no_of_magnets_x = 6;
+  no_of_magnets_y = 6;
+  magnet_edge_gap_x = 8;
+  magnet_edge_gap_y = 5;
+  fudgex = -1;
+  fudgey = -1;
+  spacingx = (bed_plate_size().x-(magnet_edge_gap_x-sizeofmagnetx))/no_of_magnets_x+fudgex;
+  spacingy = (bed_plate_size().y-(magnet_edge_gap_y-sizeofmagnety))/no_of_magnets_y+fudgey;
 
-
-for (j = [1:no_of_magnets_x]) {
-for (i = [1:no_of_magnets_y]) {
-    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
-    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
-    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
-    translate ([-sizeofmagnetx,-sizeofmagnety,0])
-    translate([(j*spacingx), i*spacingy, -1/128])
-
-    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-}
-}
-for (j = [1:no_of_magnets_x]) {
-for (i = [1:no_of_magnets_y]) {
-
-    translate([(-spacingx*0.5), (-spacingy*0.5),0])
-    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
-    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
-    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
-    translate ([-sizeofmagnetx,-sizeofmagnety,0])
-    translate([(j*spacingx), i*spacingy, -1/128])
-
-    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-}
-}
-
-// CORNERS
-translate ([(bed_plate_size().x/2-(magnet_edge_gap_x+sizeofmagnetx))-fudgex,(-bed_plate_size().y/2-(-magnet_edge_gap_y-sizeofmagnety))+fudgey,-1/128]) cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-translate ([-(bed_plate_size().x/2-(magnet_edge_gap_x+sizeofmagnetx))+fudgex,(bed_plate_size().y/2-(magnet_edge_gap_y+sizeofmagnety))-fudgey,-1/128]) cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-
-
-
-{
-    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
-    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
-    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
-    translate ([-sizeofmagnetx,-sizeofmagnety,0])
-    translate([(1*spacingx), 0.5*spacingy, -1/128])
-
-    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-}
-
-{
-    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
-    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
-    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
-    translate ([-sizeofmagnetx,-sizeofmagnety,0])
-    translate([(0.5*spacingx), 1*spacingy, -1/128])
-
-    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-}
-
-{
-    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
-    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
-    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
-    translate ([-sizeofmagnetx,-sizeofmagnety,0])
-    translate([((no_of_magnets_x-0.5)*spacingx), 1*spacingy, -1/128])
-
-    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-}
-
-{
-    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
-    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
-    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
-    translate ([-sizeofmagnetx,-sizeofmagnety,0])
-    translate([(1*spacingx), (no_of_magnets_x-0.5)*spacingy, -1/128])
-
-    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-}
-
-{
-    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
-    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
-    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
-    translate ([-sizeofmagnetx,-sizeofmagnety,0])
-    translate([(no_of_magnets_x*spacingx), (no_of_magnets_x-0.5)*spacingy, -1/128])
-
-    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-}
-
-{
-    translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
-    translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
-    translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
-    translate ([-sizeofmagnetx,-sizeofmagnety,0])
-    translate([((no_of_magnets_x-0.5)*spacingx), (no_of_magnets_x)*spacingy, -1/128])
-
-    cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
-}
-
-
-}
-
-
-
+  for (j = [1:no_of_magnets_x]) {
+    for (i = [1:no_of_magnets_y]) {
+      translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+      translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+      translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+      translate ([-sizeofmagnetx,-sizeofmagnety,0])
+      translate([(j*spacingx), i*spacingy, -1/128])
+        cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+    }
+  }
+  for (j = [1:no_of_magnets_x]) {
+    for (i = [1:no_of_magnets_y]) {
+      translate([(-spacingx*0.5), (-spacingy*0.5),0])
+      translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+      translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+      translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+      translate ([-sizeofmagnetx,-sizeofmagnety,0])
+      translate([(j*spacingx), i*spacingy, -1/128])
+        cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+      }
+    }
+    // CORNERS
+    translate ([(bed_plate_size().x/2-(magnet_edge_gap_x+sizeofmagnetx))-fudgex,(-bed_plate_size().y/2-(-magnet_edge_gap_y-sizeofmagnety))+fudgey,-1/128]) cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+    translate ([-(bed_plate_size().x/2-(magnet_edge_gap_x+sizeofmagnetx))+fudgex,(bed_plate_size().y/2-(magnet_edge_gap_y+sizeofmagnety))-fudgey,-1/128]) cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+      {
+        translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+        translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+        translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+        translate ([-sizeofmagnetx,-sizeofmagnety,0])
+        translate([(1*spacingx), 0.5*spacingy, -1/128])
+          cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+      }
+      {
+        translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+        translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+        translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+        translate ([-sizeofmagnetx,-sizeofmagnety,0])
+        translate([(0.5*spacingx), 1*spacingy, -1/128])
+          cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+      }
+      {
+        translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+        translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+        translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+        translate ([-sizeofmagnetx,-sizeofmagnety,0])
+        translate([((no_of_magnets_x-0.5)*spacingx), 1*spacingy, -1/128])
+          cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+      }
+      {
+        translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+        translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+        translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+        translate ([-sizeofmagnetx,-sizeofmagnety,0])
+        translate([(1*spacingx), (no_of_magnets_x-0.5)*spacingy, -1/128])
+          cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+      }
+      {
+        translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+        translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+        translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+        translate ([-sizeofmagnetx,-sizeofmagnety,0])
+        translate([(no_of_magnets_x*spacingx), (no_of_magnets_x-0.5)*spacingy, -1/128])
+          cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+      }
+      {
+        translate([(-spacingx*no_of_magnets_x), (-spacingy*no_of_magnets_y),0])
+        translate ([bed_plate_size().x/2,bed_plate_size().y/2,0])
+        translate ([-magnet_edge_gap_x,-magnet_edge_gap_y,0])
+        translate ([-sizeofmagnetx,-sizeofmagnety,0])
+        translate([((no_of_magnets_x-0.5)*spacingx), (no_of_magnets_x)*spacingy, -1/128])
+          cylinder(d=sizeofmagnetx,h=depthofmagnet+1/128);
+      }
+    }
 
 module flex_plate(bed_frame_offset) {
   ear_width = 50;
@@ -299,12 +269,12 @@ module flex_plate(bed_frame_offset) {
 }
 
 demo() {
-difference(){
-  union(){
-    *flex_plate([0,0,0]);
-    bed ([0,0,0]);
+  difference(){
+    union(){
+      *flex_plate([0,0,0]);
+      bed ([0,0,0]);
+    }
+    *mirror_xy()
+    translate([165,158,-10]) cylinder (d=3.4,h=20);
   }
-  *mirror_xy()
-  translate([165,158,-10]) cylinder (d=3.4,h=20);
-}
 }

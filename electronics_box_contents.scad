@@ -16,7 +16,7 @@ module electronics_box_contents() {
       //Duet 3
       *translate(DuetE_placement()+[7.5,-16,0]) pcb_assembly(Duet3E, 12, 3); // Duet3 Ehternet
       *translate(Duex5_placement()+[27.5,-36,0]) pcb_assembly(Duet3Exp, 12 , 3); // Duet3 Expansion
-      translate(rpi_placement()+[0,0,13+5]) rotate([0,0,180]) pcb(RPI3);
+      *translate(rpi_placement()+[0,0,13+5]) rotate([0,0,180]) pcb(RPI3);
 
 
       translate(psu_placement()) rotate([0,0,90])   psu(S_250_48);

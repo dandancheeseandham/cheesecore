@@ -1,5 +1,28 @@
 include <config.scad>
 
+module cheesecore_300zl(position = [0, 0, 0]) {
+    $NEMA_XY            = NEMA17L;
+    $NEMA_Z             = NEMA17;
+    $extrusion_type     = extrusion15;
+
+    $frame_size         = frame_original_rc300zl;
+    $panels             = panels_steel;
+    $enclosure_size     = enclosure_rc_standard;
+    $halo_size          = halo_rc_cheese;
+    $front_window_size  = front_window_cheesecore;
+    //$elecbox            = elecbox_300_large;
+    $elecbox            = elecbox_original_rc300zl;
+    $branding_name      = "Cheese 300ZL";
+
+    $rail_specs         = rails_original_rc300zl; //rails_rc300zlt_high_temp;
+    $leadscrew_specs    = leadscrew_original_rc300zl;
+    $bed                = bed_standard_rc300;
+    $feet_depth         = 50 ;
+    $filament_box       = filament_box_cheesecore;
+    children();
+  }
+
+
 // RAILCORE II 300ZL WITH EXTRA 20mm ON Y
 module 300ZL_420Y(position = [0, 0, 0]) {
   $NEMA_XY            = NEMA17;
@@ -107,26 +130,7 @@ module 300ZL_2020(position = [0, 0, 0]) {
     }
 
 
-module cheesecore_300zl(position = [0, 0, 0]) {
-    $NEMA_XY            = NEMA17L;
-    $NEMA_Z             = NEMA17;
-    $extrusion_type     = extrusion15;
 
-    $frame_size         = frame_original_rc300zl;
-    $panels             = panels_steel;
-    $enclosure_size     = enclosure_rc_standard;
-    $halo_size          = halo_rc_cheese;
-    $front_window_size  = front_window_cheesecore;
-    $elecbox            = elecbox_300_large;
-    $branding_name      = "Cheese 300ZL";
-
-    $rail_specs         = rails_original_rc300zl; //rails_rc300zlt_high_temp;
-    $leadscrew_specs    = leadscrew_cheesecore_rc300zl;
-    $bed                = bed_standard_rc300;
-    $feet_depth         = 50 ;
-    $filament_box       = filament_box_cheesecore;
-    children();
-  }
 
   module cheesecore_300zl_withsides(position = [0, 0, 0]) {
       $NEMA_XY            = NEMA17;

@@ -16,6 +16,7 @@ use <door_hinge.scad>
 use <filament_holder.scad>
 use <filament_holder2kg.scad>
 use <fan_guard_removal.scad>
+use <mounting_holes.scad>
 
 module panel(x, y,addx=0,addy=0) {
   assert(x != undef, "Must specify panel x dimension");
@@ -381,78 +382,21 @@ module spool_holders(){
     translate ([topx,topy,0])
       spool1kg();
   //place filament spool holders
-  mirror_x ()
+   mirror_x ()
     translate ([topx,topy,-side_panel_thickness()-2])
     { spool_holder_assembly();
-      spool1kg();
+      color("DarkGreen") spool1kg();
     }
   mirror_x()
     translate ([bottomx,bottomy,-side_panel_thickness()-2])
     { spool_holder_assembly();
-      spool1kg();
+      color("DarkGreen") spool1kg();
     }
     //  spool_holder_assembly(); //central spool holder for larger spools. e.g. This can be swapped with a 2kg spool holder
     //spool2kg();
     }
 }
 
-module camera_mount_holes(){
-movedown = 15;
-sizeoflens = 55;
-screwclearance = 3.2;
-translate ([0,-movedown,0]) {
-    mirror_xy() {
-        //ELP
-    translate ([(sizeoflens+3)/2,(sizeoflens+3)/2,0])
-      cylinder (d=screwclearance, h=20);
-  }
-cylinder (d=sizeoflens, h=20);
-}
-
-/*
-// 28mm inside holes , 34mm outside holes
-  *mirror_xy() {
-    //ELP
-     cylinder (d=14.2, h=20);
-     translate ([28/2,28/2,0])
-      cylinder (d=3.2, h=20);
-    translate ([34/2,34/2,0])
-      cylinder (d=3.2, h=20);
-    }
-
-*translate ([0,12.5/2,0])
-  mirror_xy()
-    {
-      //raspberry pi cam
-      translate ([21/2,12.5/2,0])
-        cylinder (d=2.1, h=20);
-    }
-    //translate ([12.5/2,12.5/2,0])
-      *cylinder (d=14.2, h=20);
-*/
-}
-
-module camera_mount_cover(){
-  movedown = 15;
-  sizeoflens = 55;
-  screwclearance = 3.2;
-color(printed_part_color())
-  translate ([0,-movedown,-1.5]) {
-cylinder (d=sizeoflens-fitting_error()*2, h=2+side_panel_thickness());
-difference(){
-    translate ([-(sizeoflens+8)/2,-(sizeoflens+8)/2,0])
-      cube([sizeoflens+8,sizeoflens+8,2]);
-
-      mirror_xy() {
-          //ELP
-      translate ([(sizeoflens+3)/2,(sizeoflens+3)/2,0])
-        cylinder (d=screwclearance-fitting_error(), h=4+side_panel_thickness());
-    }
-}
-
-  }
-
-}
 
 module all_side_panels() {
   translate([0, 0, -frame_size().z / 2 - side_panel_thickness()])

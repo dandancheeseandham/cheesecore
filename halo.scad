@@ -38,7 +38,7 @@ difference() {
     color(panel_color_holes()) {
       panel_mounting_screws(frame_size().x, frame_size().y);
 
-      mirror_xy() {
+      mirror_y() {
       // Access screws to corner cubes
       translate([frame_size().x / 2 - extrusion_width() / 2, frame_size().y / 2 - extrusion_width() / 2, -epsilon])
         cylinder(d=extrusion_width() * 0.5, h = halo_size().z + 2 * epsilon);
@@ -56,16 +56,17 @@ difference() {
         clearance_hole(nominal_d=3, h=50);
       }
       //access/PTFE holes
-      holes_row_position = 55 ; // modify this to change where the holes are on the halo - 60 for NEMA23 size, less for NEMA17 minimal
-      translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 215 , 25])
+      holes_row_position = 67.5-extrusion_width() ; // modify this to change where the holes are on the halo - 60 for NEMA23 size, less for NEMA17 minimal
+      translate([-frame_size().x / 2 - holes_row_position , frame_size().y / 2 - 215 , 25])
+        {
+          clearance_hole(nominal_d=8.5, h=50);  // for M10 tap thread
+      translate([0, 20 , 0])
         clearance_hole(nominal_d=8.5, h=50);  // for M10 tap thread
-      translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 195 , 25])
-        clearance_hole(nominal_d=8.5, h=50);  // for M10 tap thread
-      translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 175 , 25])
+      translate([0, 40 , 0])
         clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
-      translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 155 , 25])
+      translate([0, 60 , 0])
         clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
-
+          }
 //        translate([frame_size().x / 2 + holes_row_position , frame_size().y / 2 - 215 , 25])
   //        clearance_hole(nominal_d=8, h=50);  // - Silicone tubing (OD: 8mm; ID: 5mm) for aquacooling
 
