@@ -70,12 +70,11 @@ module printer(position = [90, 90, 0]) {
   validate();
   enclosure();
   kinematics(position);
-  door_assembly();
-  electronics_box_contents();
-  electronics_box_assembly(panelon = false);
-  translate ([0,halo_overhang()/2,0])
-    top_enclosure();
-  spool_holders();
+  *door_assembly();
+  *electronics_box_contents();
+  *electronics_box_assembly(panelon = false);
+  top_enclosure();
+  *spool_holders();
     report();
 
 }

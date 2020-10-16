@@ -78,11 +78,11 @@ elecbox_300_large         = ["ELEC.BOX", 298,   330,   59,    1,    0,    true, 
 elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 // Test-ground (can be deleted)
 //elec_cheesecore           = ["ELEC.BOX", 350,   290,   59+(95-59),    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
-elec_cheesecore           = ["ELEC.BOX", 290,   290,   59+(95-59),    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
+elec_cheesecore           = ["ELEC.BOX", 290,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
+elec_cheesecore2          = ["ELEC.BOX", 330,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
 elec_miniplaceh           = ["ELEC.BOX", 118.9, 58.9,  59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
 elec_custom               = ["ELEC.BOX", 410,   310,   59 ,   6,    25,    false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
 elec_rc300zltwithcheese   = ["ELEC.BOX", 445-32,380,   99 ,   6,    60,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
-
 filament_box_cheesecore  =  ["ELEC.BOX", 370,   360,   95,   6];
 
 function filament_box_size_y()             = $filament_box[1] ;
@@ -100,10 +100,12 @@ halo_rc150mini                = [125 , 0, 4];
 //halo_rc                       = [75*2 , 0, 4];
 halo_rc                       = [(95-20)*2 , 15, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
 //Experimental
-halo_rc_NEMA23                = [95*2 ,15, 4];
+halo_rc_NEMA23                = [95*2 ,30, 4];
 halo_rc_cheese                = [80*2 ,15, 4];
+//(prechanged) halo_rc_cheese_mod            = [80*2 ,30, 6];
+halo_rc_cheese_mod            = [100*2 ,30, 6];
 halo_rc_dans_ZLT              = [74*2 ,10, 4];
-function halo_back_overhang() = true ; //apply Y extra only to the back of the halo for top enclosure mounting
+function halo_back_overhang() = false ; //apply Y extra only to the back of the halo for top enclosure mounting
 
 // ENCLOSURE BOX - size and shape - can be defined as unconstrained from the frame, or constrained using halo variables.
 //                             X  Y   Z
@@ -131,7 +133,7 @@ leadscrew_zl4040            = ["LEADSCREW_SPECS", 500, 8,     4,                
 leadscrew_rc_custom         = ["LEADSCREW_SPECS", 420, 8,     4,                 16,       22,          3.4];
 
 
-function leadscrew_clearance() = 2; //central hole leadscrew clearance required for around the leadscrew so it does not hit the printed/milled part.
+function leadscrew_clearance() = 3; //central hole leadscrew clearance required for around the leadscrew so it does not hit the printed/milled part.
 // These define how far from the part origin of the z-tower the leadscrew is
 function leadscrew_x_offset() = 20 ; // how far in x the centerline of the leadscrew is from the inside edge of the frame extrusions
 function leadscrew_y_offset() = 30 ; // taken off z yoke in fusion ORIGINAL
@@ -158,7 +160,7 @@ extrusion15 = ["1515 Extrusion", 15, 3];  // standard extrusion for RailCore II
 extrusion20 = ["2020 Extrusion", 20, 4];
 extrusion30 = ["3030 Extrusion", 30, 5];
 extrusion40 = ["4040 Extrusion", 40, 6];
-
+extrusion2080 = ["2080 Extrusion", 40, 6];
 // *************************************************************************************************************************************************
 
 
@@ -231,6 +233,7 @@ function include_bottom_braces()    = $panels[8] ;
 // CONSTRAINTS
 // This sets how far from centerline of the machine the idler stack on the x-carriages is.
 function motor_pulley_link()  = frame_size().y / 2 - rail_height(rail_profiles().x) - carriage_height(rail_profiles().x) - extrusion_width() ;
+function motor_link() = 11;
 function bearing_block()      = false;  ;  // use ZLT-style bearing blocks on the leadscrews - will come on automatically if leadscrew height > 500
 
 // electronics box

@@ -121,7 +121,8 @@ module right_side_panel() {
 module left_side_panel() {
    color(acrylic_color())
     difference() {
-      electronics_cabinet_side_panel (box_size_z());
+      linear_extrude(acrylic_thickness())
+      electronics_cabinet_side_panel_2d (box_size_z());
 *IEC_hole();
 RJ45_cutout();
 //emergency_stop_cutout();
@@ -199,6 +200,25 @@ rotate ([180,0,0])
         }
 
 }
+
+
+module electronics_cabinet_side_panel_2d(length){
+  // FIXME: draw this in 2d then extrude
+  topscrewhole_x = 4.5 ;
+  topscrewhole_y = 15 ;
+
+  color(acrylic_color())  {
+    difference() {
+      square ([length-fitting_error(),box_depth()-fitting_error()]);
+
+      translate ([length/2,box_depth()/2])
+        mirror_xy()
+          translate ([length/2-topscrewhole_x,box_depth()/2-topscrewhole_y,20])
+            clearance_hole_2d(nominal_d=3);
+    }
+  }
+}
+
 
 
 module electronics_cabinet_side_panel(length){

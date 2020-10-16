@@ -9,6 +9,7 @@ use <lib/layout.scad>
 use <extrusion.scad>
 use <top_enclosure_side_panels.scad>
 use <top_enclosure_frame.scad>
+use <core.scad>
 include <config.scad>
 use <validation.scad>
 use <door_hinge.scad>

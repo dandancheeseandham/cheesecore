@@ -18,7 +18,7 @@ module corexy_belts(position = [0, 0]) {
 
   // Location of steppers in x
   // FIXME: the stepper offset works for the stepper, but the idler moves also.
-  gap_for_screws = 6; //
+  gap_for_screws = 10; //
   stepper_offset = NEMA_width(NEMAtypeXY())/2 + side_panel_thickness() + gap_for_screws;
 
 /*
@@ -52,7 +52,7 @@ module corexy_belts(position = [0, 0]) {
     [[carriage_stack.x, -carriage_stack.y ], GT2x20_toothed_idler, false, true], // front idler stack
     [[-frame_size().x / 2 + idler_offset_inner() + extrusion_width()/2, -motor_pulley_link()], GT2x20_toothed_idler, false, true], // front left idler
     [[idler_offset_outer() + extrusion_width()/2 - frame_size().x / 2 - stepper_offset, motor_pulley_link()+pulley_pr(GT2x20_plain_idler)+pulley_pr(GT2x16_pulley)], GT2x20_toothed_idler, false, true], // rear left idler
-    [[frame_size().x / 2  + stepper_offset, carriage_stack.y+pulley_pr(GT2x20_plain_idler) + pulley_pr(GT2x16_pulley)], GT2x20um_pulley, false, true], // rear stepper
+    [[frame_size().x / 2  + stepper_offset, carriage_stack.y+pulley_pr(GT2x20_plain_idler) + pulley_pr(GT2x16_pulley)], GT2x16_pulley, false, true], // rear stepper
     [[carriage_stack.x, carriage_stack.y ], GT2x20_plain_idler, true, true],  // rear idler stack
     [[carriage_stack.x, ypos + 7], GT2x20_plain_idler, true, false],  // fake idler to offset belt
     [[carriage_stack.x, ypos - 7], GT2x20_plain_idler, false, false],  // fake idler to offset belt
@@ -63,7 +63,7 @@ module corexy_belts(position = [0, 0]) {
   translate([0,0,0]) {
     for(p=lower_path) {
       if(p[3])
-        translate(p[0]) rotate ([0,180,0]) pulley_assembly(p[1]);  //FIXME (not sure if a FIXME, highlighting for a check!) rotate 180 so front motor pulley is in correct orientation
+        translate(p[0]) rotate ([0,0,0]) pulley_assembly(p[1]);  //FIXME (not sure if a FIXME, highlighting for a check!) rotate 180 so front motor pulley is in correct orientation
     }
 
     path = [ for(p=lower_path) [p[0].x, p[0].y, p[2] ? -pulley_pr(p[1]) : pulley_pr(p[1])] ];

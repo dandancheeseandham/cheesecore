@@ -41,7 +41,7 @@ difference(){
 
     translate([0, 0, (block_height/2)-7]) cylinder(h=14, r=bearing_radius, center=false);  // bearing
 
-    motor_holes();
+    bearing_block_motor_holes();
   }
 }
 
@@ -77,7 +77,7 @@ difference(){
 
      translate([0, 0, (block_height/2)-7]) cylinder(h=14, r=bearing_radius, center=false);  // bearing
 
-    motor_holes();
+    bearing_block_motor_holes();
   }
 }
 
@@ -111,11 +111,11 @@ difference(){
      //motor holes
     translate([0, 0, -500]) cylinder(h=1000, d = leadscrew);  //lead screw size
     translate([0, 0, (block_height/2)-7]) cylinder(h=14, r=bearing_radius, center=false);  // bearing
-    motor_holes();
+    bearing_block_motor_holes();
   }
 }
 
-module motor_holes()
+module bearing_block_motor_holes()
 {
   translate([0, 0, -(block_height/2)-7]) cylinder(h=20, d=NEMA_boss_radius(NEMA17) * 2 + 1); // motor hole
     mirror_xy() {

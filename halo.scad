@@ -44,7 +44,7 @@ difference() {
         cylinder(d=extrusion_width() * 0.5, h = halo_size().z + 2 * epsilon);
       // M3 holes near corners - cleanrance hole 3.4mm
       union() {
-        translate([frame_size().x / 2 - extrusion_width() / 2 , frame_size().y / 2 - extrusion_width() * 2 + 12.5 , 25])
+        #translate([frame_size().x / 2 - extrusion_width() / 2 , frame_size().y / 2 - extrusion_width() * 2 + 12.5 , 25])
             clearance_hole(nominal_d=3, h=50);
         translate([frame_size().x / 2 - extrusion_width() * 2 + 12.5 , frame_size().y / 2 - extrusion_width() / 2 , 25])
             clearance_hole(nominal_d=3, h=50);

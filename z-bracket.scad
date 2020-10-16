@@ -25,19 +25,20 @@ module z_bracket(extrusion_type) {
           }
 
           // material for fillets
-          translate([-extrusion_width(), 0, 0])
+          *translate([-extrusion_width(), 0, 0])
             cube([2 * extrusion_width(), thickness + extrusion_width(), thickness + extrusion_width()]);
-          translate([-extrusion_width()/2, extrusion_width()/2 - epsilon/2 + thickness, -extrusion_width()/2 + thickness/2])
+          *translate([-extrusion_width()/2, extrusion_width()/2 - epsilon/2 + thickness, -extrusion_width()/2 + thickness/2])
             rotate ([0,90,90])
               rounded_rectangle([extrusion_width() + thickness, extrusion_width() + epsilon, extrusion_width()], 2);
           // vertical leg
           translate([-extrusion_width()/2,thickness/2, leg_length/2-extrusion_width()])
             rotate ([0,90,90])
               rounded_rectangle([leg_length, extrusion_width(), thickness], 2);
+
           }
 
           // fillets
-          translate([extrusion_width(), -epsilon, thickness+extrusion_width()])
+         *translate ([0,0,0]) {translate([extrusion_width(), -epsilon, thickness+extrusion_width()])
             rotate([-90,0,0])
               cylinder(r=extrusion_width(), h=leg_length);
           translate([-extrusion_width(), thickness+ extrusion_width(), -extrusion_width() - epsilon])
@@ -48,6 +49,7 @@ module z_bracket(extrusion_type) {
           translate([extrusion_width() + epsilon, thickness + extrusion_width(), -extrusion_width()])
             rotate([-90,0,90])
               cylinder(r=extrusion_width(), h=leg_length);
+            }
 
         //screwholes removed from entire unioned object
         translate([extrusion_width()/2, extrusion_width()*1.5, thickness])

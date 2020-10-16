@@ -25,10 +25,17 @@ module xy_motion(position = [0, 0, 0]) {
   }
   */
 // MOTORS AND MOTOR MOUNTS
-gap_for_screws = 6;
+gap_for_screws = 10;
 movefortension = 0;  //increase to move NEMA motor out for adjustments
-horizontal_placement = 11 ;
- translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2]){
+horizontal_placement = 11;
+//vertical_placement = 4 ;
+vertical_placement = -6 ;
+
+//translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2])
+//translate([])
+//NEMA(NEMAtypeXY());
+
+translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2 + vertical_placement]){
   mirror_y() {
     translate([side_panel_thickness() + extrusion_width() + NEMA_width(NEMAtypeXY())/2 + movefortension + gap_for_screws, motor_pulley_link() + horizontal_placement , 0])
       rotate([0, 0, 180]) NEMA(NEMAtypeXY());

@@ -9,7 +9,7 @@ use <lib/holes.scad>
 use <lib/layout.scad>
 use <door_hinge.scad>
 use <screwholes.scad>
-use <halo.scad>
+use <halo2.scad>
 use <demo.scad>
 use <electronics_box_panels.scad>
 use <door_hinge.scad>
@@ -17,68 +17,29 @@ use <filament_holder.scad>
 use <filament_holder2kg.scad>
 use <fan_guard_removal.scad>
 use <mounting_holes.scad>
-
-module panel(x, y,addx=0,addy=0) {
-  assert(x != undef, "Must specify panel x dimension");
-  assert(y != undef, "Must specify panel y dimension");
-
-  difference() {
-
-      translate ([0, -addy/2, side_panel_thickness()/2])
-      rounded_rectangle([x+addx-fitting_error(), y+addy-fitting_error(), side_panel_thickness()], panel_radius());
-    // Color the holes darker for contrast
-    color(panel_color_holes()) render() {
-      panel_mounting_screws(x, y);
-      // Access screws to corner cubes
-      mirror_xy() {
-        translate([(x - extrusion_width() ) / 2, (y - extrusion_width() ) / 2, -epsilon])
-          cylinder(d=extrusion_width() / 2, h = side_panel_thickness() + 2 * epsilon);
-      }
-    }
-  }
-}
+use <side_panel.scad>
 
 function panel_screw_extent(panel_length) = panel_length - 2 * panel_screw_offset() ;
 function panel_screw_count(panel_length) = ceil(panel_screw_extent(panel_length) / max_panel_screw_spacing()) + 1 ;
 function panel_screw_spacing(panel_length) = panel_screw_extent(panel_length) / (panel_screw_count(panel_length) - 1);
 
-// Holes to mount panels to extrusion
-module panel_mounting_screws(x, y)
-{
-  // How far from center of first hole to center of last hole
-  extent_x = x - 2 * panel_screw_offset();
-  extent_y = y - 2 * panel_screw_offset();
-
-  // How many screws in each direction
-  screws_x = ceil(extent_x / max_panel_screw_spacing()) + 1;
-  screws_y = ceil(extent_y / max_panel_screw_spacing()) + 1;
-
-  // How far between screws
-  screw_spacing_x = extent_x / (screws_x - 1);
-  screw_spacing_y = extent_y / (screws_y - 1);
-
-  mirror_y() {
-    for (a =[0:(screws_x - 1)]) {
-      translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), y / 2 - extrusion_width() / 2, -epsilon])
-        // FIXME - this should be a hole() not a cylinder
-        cylinder(h=side_panel_thickness() + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
-    }
-  }
-
-  mirror_x() {
-    for (a =[0:(screws_y - 1)]) {
-      translate ([x / 2 - extrusion_width() / 2, -y / 2 + panel_screw_offset() + (screw_spacing_y * a), -epsilon])
-        // FIXME - this should be a hole not a cylinder
-        cylinder(h=side_panel_thickness() + 2 * epsilon, d=clearance_hole_size(extrusion_screw_size()));
-    }
-  }
-}
+function spool_topx() = 105;
+function spool_topy() = 125;
+function spool_bottomx() = 105;
+function spool_bottomy() = -90;
 
 // BOTTOM PANEL
 module bottom_panel() {
-  color(panel_color()) render()
+  color(panel_color())
   difference() {
-    panel(frame_size().x, frame_size().y,extend_bottom_panel_x(),0);
+    //panel(frame_size().x, frame_size().y,extend_bottom_panel_x(),0);
+     //universal_panel(frame_size().x, frame_size().y,extend_bottom_panel_x());
+     linear_extrude(side_panel_thickness())
+       difference() {
+         universal_panel_2d(x= frame_size().x,y= frame_size().y);
+         universal_panel_mounting_screws_2d(x= frame_size().x,y= frame_size().y, cornercubes = true);
+       }
+
 // make Z motor holes to mount NEMA motors
     color(panel_color_holes()) {
       translate([bed_offset().x, bed_offset().y, 0]) {
@@ -128,21 +89,27 @@ module front_panel() {
   min_y_gap = (frame_size().z - front_window_size().y) / 2 - abs(front_window_offset().y);
   assert(min_y_gap >= extrusion_width(), "Window cannot overlap extrusion in Z");
 
-color(panel_color()) render()
+color(panel_color())
+linear_extrude(side_panel_thickness())
   difference() {
-    panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
+    //panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
+    universal_panel_2d(x= frame_size().x,y= frame_size().z);
+    //,addx = extend_front_and_rear_x(),addy = extendz());
+    universal_panel_mounting_screws_2d(x= frame_size().x,y= frame_size().z, cornercubes = true);
     //remove window in front panel
-    color(panel_color_holes())
-      translate ([front_window_offset().x, front_window_offset().y, side_panel_thickness() / 2])
-        rounded_rectangle([front_window_size().x, front_window_size().y, side_panel_thickness() + 2 * epsilon], front_window_radius());
+    //color(panel_color_holes())
+      //translate ([front_window_offset().x, front_window_offset().y, side_panel_thickness() / 2])
+      translate ([front_window_offset().x, front_window_offset().y])
+        rounded_square([front_window_size().x, front_window_size().y], front_window_radius());
 
+/*
 // IF EXTENDED PANELS AND NEMA23 MOTORS, MAKE A HOLE!
     if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23")) {
       echo("NEMAtypeXY()[0]",NEMAtypeXY()[0]);
       translate([288,210, side_panel_thickness() / 2])
       rounded_rectangle([80,80,side_panel_thickness() + 2 * epsilon], front_window_radius());
     }
-
+*/
   }
   // DEBUG cube
   //translate([-frame_size().x / 2 , -frame_size().z / 2 , side_panel_thickness()])  cube ([10,frame_size().z,10]);
@@ -176,7 +143,7 @@ module door() {
 
   difference() {
     // Outline of the door
-    color(acrylic2_color()) render() {
+    color(acrylic2_color())  {
       difference(){
       linear_extrude(acrylic_door_thickness()) {
         hull() {
@@ -222,7 +189,7 @@ module single_door() {
 
   difference() {
     // Outline of the door
-    color(acrylic2_color()) render() {
+    color(acrylic2_color())  {
       difference(){
       linear_extrude(acrylic_door_thickness()) {
         hull() {
@@ -274,17 +241,36 @@ translate([0, -frame_size().y / 2 - side_panel_thickness() - epsilon, 0])
 }
 
 module back_panel() {
+  color(panel_color())
+difference(){
+  linear_extrude(side_panel_thickness())
+    difference() {
+      universal_panel_2d(x= frame_size().x,y= frame_size().z);
+      universal_panel_mounting_screws_2d(x= frame_size().x,y= frame_size().z, cornercubes = true);
+    }
+    translate([0,frame_size().z/2-40,-side_panel_thickness()+epsilon])
+      camera_mount_holes();
+    translate([0,-frame_size().z/2+100,+side_panel_thickness()-epsilon])
+      fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
+    }
+}
+
+
+
+module back_panel_old() {
 //if no back electronic box then just create the panel
 if (back_panel_enclosure() == false) {
   color(panel_color())
-  render()
+
     difference(){
-    panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
+    //panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
+    universal_panel(x= frame_size().x,y= frame_size().z,addx = extend_front_and_rear_x(),addy = extendz());
     translate([0,frame_size().z/2-40,-side_panel_thickness()+epsilon])
       camera_mount_holes();
     translate([0,-frame_size().z/2+100,+side_panel_thickness()-epsilon])
       fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
 
+//MAKE HOLES FOR NEMA23 - PROBABLY UNNEEDED SOON
 if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23"))
     translate([288,210, side_panel_thickness() / 2])
     rounded_rectangle([80,80,side_panel_thickness() + 2 * epsilon], front_window_radius());
@@ -294,10 +280,11 @@ camera_mount_cover();
   }
 //if back electronic box then make holes
   if (back_panel_enclosure() == true) {
-    color(panel_color()) render()
+    color(panel_color())
     difference()
     {
-      panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
+      //panel(frame_size().x, frame_size().z,extend_front_and_rear_x(),extendz());
+      universal_panel(x= frame_size().x,y= frame_size().z,addx = extend_front_and_rear_x(),addy = extendz());
       color(panel_color_holes())
       translate ([0,-movedown() ,0]){
         rotate([90,0,0]) mirror_xz() {
@@ -310,9 +297,40 @@ camera_mount_cover();
 }
 
 module right_panel() {
-  color(panel_color()) render()
+  color(panel_color())
+    difference(){
+      linear_extrude(side_panel_thickness())
+        difference() {
+          universal_panel_2d(x= frame_size().y,y= frame_size().z);
+          universal_panel_mounting_screws_2d(x= frame_size().x,y= frame_size().z, cornercubes = true);
+        }
+        color(panel_color_holes()) translate ([0,-movedown() ,0]) {
+        translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon);
+        translate(DuetE_placement())  pcb_holes(DuetE);
+        translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
+        translate(Duex5_placement()+[27.5,-36,0]) pcb_holes(Duet3Exp); // Duet3 Expansion
+        translate(Duex5_placement())  pcb_holes(Duex5);
+        translate(rpi_placement())  rotate([0,0,180])  pcb_holes(RPI3);
+        //translate(rpi_placement()+[80,-40,13+5]) rotate([0,0,180]) pcb_holes(RPI3);
+        //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
+        translate(psu_placement()+[0,115,-10]) rotate([0,0,90]) cylinder(40,3,3);
+    //FIXME: use the ssr_hole_position library, not hack it in like this.
+        translate(ssr_placement() + [0,0,-20]) rotate ([0,0,90]) {
+          mirror_x()
+            translate ([47.5/2,0,0])
+              cylinder(h=140,d=5);
+        }
+    }
+  }
+}
+
+
+
+module right_panel_old() {
+  color(panel_color())
   difference() {
-   panel(frame_size(). y, frame_size().z, 0, extendz()); //call side panel then difference all the electronics mounting holes
+   //panel(frame_size(). y, frame_size().z, 0, extendz()); //call side panel then difference all the electronics mounting holes
+   universal_panel(x= frame_size().y,y= frame_size().z,addx = 0,addy = extendz());
     color(panel_color_holes()) translate ([0,-movedown() ,0]) {
     translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon);
     translate(DuetE_placement())  pcb_holes(DuetE);
@@ -352,43 +370,56 @@ module pcb_holes(type) { // Holes for PCB's
     }
 }
 
+
 module left_panel(){
-color(panel_color()) render()
+color(panel_color())
+difference(){
+  linear_extrude(side_panel_thickness())
+    difference() {
+      universal_panel_2d(x= frame_size().y,y= frame_size().z);
+      universal_panel_mounting_screws_2d(x= frame_size().x,y= frame_size().z, cornercubes = true);
+    }
+    mirror_x ()
+      translate ([spool_topx(),spool_topy(),0])
+        bolt_holes();
+    mirror_x()
+      translate ([spool_bottomx(),spool_bottomy(),0])
+        bolt_holes();
+      }
+
+}
+
+module left_panel_old(){
+color(panel_color())
 difference() {
-  topx = 105;
-  topy = 125;
-  bottomx = 105;
-  bottomy = -90;
-  panel(frame_size(). y, frame_size().z, 0, extendz());
+
+  //panel(frame_size(). y, frame_size().z, 0, extendz());
+  universal_panel(x= frame_size().y,y= frame_size().z,addx = 0,addy = extendz());
   // remove 3 sets of holes for filament spool holders
   mirror_x ()
-    translate ([topx,topy,0])
+    translate ([spool_topx(),spool_topy(),0])
       bolt_holes();
   mirror_x()
-    translate ([bottomx,bottomy,0])
+    translate ([spool_bottomx(),spool_bottomy(),0])
       bolt_holes();
 }
 }
 
 module spool_holders(){
-  topx = 105;
-  topy = 125;
-  bottomx = 105;
-  bottomy = -90;
   translate([-frame_size().x / 2 - side_panel_thickness(), 0, 0])
     rotate([90,0,90]){
   // Add the 1kg spools at the top
   *mirror_x ()
-    translate ([topx,topy,0])
+    translate ([spool_topx(),spool_topy(),0])
       spool1kg();
   //place filament spool holders
    mirror_x ()
-    translate ([topx,topy,-side_panel_thickness()-2])
+    translate ([spool_topx(),spool_topy(),-side_panel_thickness()-2])
     { spool_holder_assembly();
       color("DarkGreen") spool1kg();
     }
   mirror_x()
-    translate ([bottomx,bottomy,-side_panel_thickness()-2])
+    translate ([spool_bottomx(),spool_bottomy(),-side_panel_thickness()-2])
     { spool_holder_assembly();
       color("DarkGreen") spool1kg();
     }

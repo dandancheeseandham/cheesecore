@@ -15,9 +15,10 @@ module longscrewhole(screwhole_length,Mscrew,screwhole_increase) {
     }
   }
 }
-module motor_holes(type = NEMA17) {
+module motor_holes(type = NEMAtypeXY() , fit = "loose") {
   translate([0, 0, -epsilon])
-    cylinder(h=side_panel_thickness() + 2 * epsilon, d=NEMA_boss_radius(NEMA17) * 2 + 1);
+    cylinder(h=side_panel_thickness() + 2 * epsilon, d=NEMA_boss_radius(NEMAtypeXY()) * 2 + 3);
+
 
   mirror_xy() {
     translate([NEMA_hole_pitch(type)/2, NEMA_hole_pitch(type)/2, -epsilon-30 ])
