@@ -56,7 +56,6 @@ module top_enclosure() {
   translate ([0, 0, (frame_size().z+enclosure_size().z)/2 + enclosure_height_above_frame() + halo_size().z]) {
     enclosure_frame();
     enclosure_side_panels();
-    *enclosure_hinges();  //FIXME: Hinges need replacing, or perhaps change to long misumi hinges for neatness.
     *enclosure_handle();
 
     *translate ([0,0,enclosure_size().z/2+30]) rotate ([90,0,90]) jame_hinge1();
@@ -70,11 +69,11 @@ module printer(position = [90, 90, 0]) {
   validate();
   enclosure();
   kinematics(position);
-  *door_assembly();
-  *electronics_box_contents();
-  *electronics_box_assembly(panelon = false);
+  door_assembly();
+  electronics_box_contents();
+  electronics_box_assembly(panelon = false);
   top_enclosure();
-  *spool_holders();
+  spool_holders();
     report();
 
 }
