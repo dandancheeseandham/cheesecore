@@ -53,7 +53,7 @@ module bottom_panel() {
   }
 
   *translate ([box_size_y()/2 - 70,box_depth(), -15])  cylinder(h=30, r1=15, r2=15, center=false);
-  translate ([-67,0,0]) IEC_hole();
+  *translate ([-67,0,0]) IEC_hole();
 }
 /*
 //pretend "fans"
@@ -115,7 +115,7 @@ module right_side_panel() {
   electronics_cabinet_side_panel (box_size_z());
   IEC_hole();
   }
- rotate ([0,0,90]) translate ([box_depth()/2+1.55,-244,side_panel_thickness()]) iec_assembly(IEC_cheesecore, 3);
+ *rotate ([0,0,90]) translate ([box_depth()/2+1.55,-244,side_panel_thickness()]) iec_assembly(IEC_cheesecore, 3);
 }
 
 module left_side_panel() {
