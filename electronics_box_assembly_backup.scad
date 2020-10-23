@@ -15,7 +15,6 @@ use <nopscadlib/vitamins/fans.scad>
 
 module electronics_box_assembly(panelon = true) {
 
-// if extending the front and rear
 if (extend_front_and_rear_x() == 0)
   {
     electronics_box();
@@ -55,15 +54,13 @@ if (extend_front_and_rear_x() != 0) {
     }
 }
 
-module electronics_box(panelon = true) {
+module electronics_box(panelon) {
   translate([frame_size().x / 2 + side_panel_thickness() , 0, -movedown()])
      rotate ([0,0,90]) {
       {
         place_four_electronics_box_corners();
-        if (panelon == true)
-        translate([0,-box_depth(),0])
-          rotate ([90,0,0])
-        electronics_cover_panel();
+        if (panelon == true) electronics_cover_panel();
+        *electronics_cover_panel();
         }
       translate ([-box_size_y()/2, -box_depth(), box_size_z()/2 + move_panels_outwards_adjust()/2 + (6-acrylic_thickness() ) ])
         top_panel();
@@ -126,7 +123,46 @@ module place_four_electronics_box_corners() {
 }
 
 
+module place_four_holes_for_electronics_corners() {
+  mirror_x() {
+    translate ([-box_size_y()/2 + move_corners_adjust(), -box_depth(), box_size_z() / 2 - move_corners_adjust()])
+    rotate ([90,270,0])
+      translate ([elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),-box_depth()]) {
+        translate ([-5,-5,-box_depth()/2])
+        linear_extrude(box_depth()*2){
 
+translate ([7,0]) circle (d=7);
+hull(){
+circle (d=3.4);
+translate ([7,0]) circle (d=3.4);
+}
+  }
+}
+}
+
+
+mirror_x() {
+translate ([-box_size_y()/2 + move_corners_adjust(), -box_depth(), box_size_z() / 2 - move_corners_adjust()])
+  rotate ([90,270,0])
+    translate ([elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),-box_depth()])
+    translate ([-box_size_y()+38,0,5]) //FIXME HACK FIX FOR PRODUCTION!!!!
+    {
+      translate ([-5,-5,-box_depth()/2])
+      linear_extrude(box_depth()*2){
+
+translate ([7,0]) circle (d=7);
+hull(){
+circle (d=3.4);
+translate ([7,0]) circle (d=3.4);
+}
+}
+}
+}
+
+
+
+
+}
 
 /*
 module place_four_filament_box_corners() {
@@ -145,7 +181,7 @@ module place_four_holes_for_filament_box_corners() {
 */
 
 demo() {
-  electronics_box_assembly(panelon = true);
+  electronics_box_assembly(panelon = false);
   //fan_assembly(2,14,true);
   //echo (fan40x11);
 }

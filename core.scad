@@ -46,7 +46,7 @@ module kinematics(position) {
 }
 
 module door_assembly() {
-  hinges();
+  *hinges();
   //single_door();
   doors();
 }
@@ -71,7 +71,7 @@ module printer(position = [90, 90, 0]) {
   kinematics(position);
   door_assembly();
   electronics_box_contents();
-  electronics_box_assembly(panelon = false);
+  electronics_box_assembly(panelon = true);
   top_enclosure();
   spool_holders();
     report();

@@ -70,7 +70,7 @@ rails_custom             = [[420, MGN9] , [445, MGN12], [420, MGN15]];
 //Standard                                                         down
 elecbox_original_rc150mini= ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-400/2+106.68,390/2-101+25], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
-elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 99 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
+elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
 //elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    1,    25,    true,   [-84,146.5,0], [-85-15,70,0],      [-85-15,-40,0],      [70,30,0],[160,70,0] , [-20+80,-86-40,0]] ;
@@ -98,7 +98,8 @@ function back_panel_enclosure()            = false;  // is there an additional e
 //Standard, halo for 250ZL,300ZL and 300ZLT is the same
 halo_rc150mini                = [125 , 0, 4];
 //halo_rc                       = [75*2 , 0, 4];
-halo_rc                       = [(95-20)*2 , 15, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
+halo_rc_old                    = [(95-20)*2 , 15, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
+halo_rc                       = [100*2 ,30, 6];
 //Experimental
 halo_rc_NEMA23                = [95*2 ,30, 4];
 halo_rc_cheese                = [80*2 ,15, 4];
@@ -237,7 +238,7 @@ function motor_link() = 11;
 function bearing_block()      = false;  ;  // use ZLT-style bearing blocks on the leadscrews - will come on automatically if leadscrew height > 500
 
 // electronics box
-function expand_acrylic_cover_adjustment() = 29 ;  // rounded corners for cover, to match the printed corners.
+function expand_acrylic_cover_adjustment() = 29*2 ;  // rounded corners for cover, to match the printed corners.
 function move_panels_outwards_adjust() = 49 ;  // 48.5 based on existing corners
 function move_corners_adjust() = 9.5 ;  // move the corners by this
 function acrylic_cover_corner_rounding() = 14 ; // rounding acrylic cover to match the corners

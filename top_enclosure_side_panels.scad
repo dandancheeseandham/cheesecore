@@ -156,7 +156,7 @@ module enclosure_side_panels() {
     back_top_enclosure_panel();
 color("silver")
     mirror_x()
-      translate ([enclosure_size().x/2-75,0,enclosure_size().z/2+20])
+      translate ([enclosure_size().x/2-75,0,enclosure_size().z/2+18+side_panel_thickness()])
         rotate ([0,0,90])
           import("/home/dan/Documents/GitHub/cheesecore/B_1075_R.stl");
 color("silver")
