@@ -42,14 +42,10 @@ In order to take advantage of existing parts. However these parameters may also 
  * Automated backups and a simple restore procedure.
 
 2. Include a "advanced user" Duet config and setup.
-
 3. The ability to make modifications and improve the design where appropriate.
 The base RailCore design should always be available, and options can be switched on and off as required.
-
 4. Minimize printed part content - metals behave more predictably, espeicially at higher temperatures.
-
 5. Safety - Add software and hardware means (such as TCO's)
-
 6. Aid and ease assembly - anything that can reduce issues in getting it printing reliably. Such as additional parts to ensure squareness of extrusion and rails.
 
 ## To use
