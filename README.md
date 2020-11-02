@@ -32,6 +32,9 @@ In order to take advantage of existing parts. However these parameters may also 
 
 ## To Do
  * allow >4040 extrusion e.g. 3060 as well as ensuring all screwholes for extrusions are changed.
+ * develop main parts of the hotend ecosystem.
+ * export a BOM from cheesecore.
+ * tidy and optimise the model and code.
 
 ### Secondary Goals
 
@@ -40,7 +43,6 @@ In order to take advantage of existing parts. However these parameters may also 
  * USB and Octoprint (extra features and the ability to communicate with the Duet with a network issue)
  * Extra hardware that a Duet can't support.
  * Automated backups and a simple restore procedure.
-
 2. Include a "advanced user" Duet config and setup.
 3. The ability to make modifications and improve the design where appropriate.
 The base RailCore design should always be available, and options can be switched on and off as required.
