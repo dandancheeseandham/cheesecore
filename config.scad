@@ -33,8 +33,8 @@ panels_steel            = ["PANELS",0.8,          5,      0,0,0,      50,       
 //Experimental
 panels_custom           = ["PANELS",6,            5,      150,0,53,   55,            100,       false];
 panels_cheese           = ["PANELS",3,            3,      95*2,0,53,  50,            100,       false];
-function fitting_error() = 0.25; //reduce panels by this size to account for whatever +- cutting error there may be
-function feetheight()               = $feet_depth;
+function fitting_error()= 0.25; //reduce panels by this size to account for whatever +- cutting error there may be
+function feetheight()   = $feet_depth;
 
 // FRONT WINDOW / DOOR
 //                            name                sizeXY   radius   offset    door thickness
@@ -70,7 +70,7 @@ rails_custom             = [[420, MGN9] , [445, MGN12], [420, MGN15]];
 //Standard                                                         down
 elecbox_original_rc150mini= ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
 elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-400/2+106.68,390/2-101+25], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
-elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
+elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,25,0], [140,60,0] , [0,0,0]] ;
 elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
 //elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    1,    25,    true,   [-84,146.5,0], [-85-15,70,0],      [-85-15,-40,0],      [70,30,0],[160,70,0] , [-20+80,-86-40,0]] ;
@@ -80,9 +80,11 @@ elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,
 //elec_cheesecore           = ["ELEC.BOX", 350,   290,   59+(95-59),    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
 elec_cheesecore           = ["ELEC.BOX", 290,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
 elec_cheesecore2          = ["ELEC.BOX", 330,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
+elec_cheesecore3          = ["ELEC.BOX", 350,   290,   59,    6,    35,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,25,0], [140,60,0] , [0,0,0]] ;
 elec_miniplaceh           = ["ELEC.BOX", 118.9, 58.9,  59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
 elec_custom               = ["ELEC.BOX", 410,   310,   59 ,   6,    25,    false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
 elec_rc300zltwithcheese   = ["ELEC.BOX", 445-32,380,   99 ,   6,    60,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
+
 filament_box_cheesecore  =  ["ELEC.BOX", 370,   360,   95,   6];
 
 function filament_box_size_y()             = $filament_box[1] ;
@@ -96,15 +98,15 @@ function back_panel_enclosure()            = false;  // is there an additional e
 //                        XY
 //                      addition
 //Standard, halo for 250ZL,300ZL and 300ZLT is the same
-halo_rc150mini                = [125 , 0, 4];
-//halo_rc                       = [75*2 , 0, 4];
-halo_rc_old                    = [(95-20)*2 , 15, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
-halo_rc                       = [100*2 ,30, 6];
+halo_rc150mini                = [125  ,0,  4];
+//halo_rc                     = [75*2 ,0,  4];
+halo_rc_old                   = [75*2 ,15, 4];  // I've made the standard size larger than it needs to be by 40mm in order to accommodate NEMA23 and a single enclosure size
+halo_rc                       = [100*2,30, 6];
 //Experimental
 halo_rc_NEMA23                = [95*2 ,30, 4];
 halo_rc_cheese                = [80*2 ,15, 4];
 //(prechanged) halo_rc_cheese_mod            = [80*2 ,30, 6];
-halo_rc_cheese_mod            = [100*2 ,30, 6];
+halo_rc_cheese_mod            = [100*2,30, 6];
 halo_rc_dans_ZLT              = [74*2 ,10, 4];
 function halo_back_overhang() = false ; //apply Y extra only to the back of the halo for top enclosure mounting
 
@@ -121,13 +123,13 @@ function enclosure_height_above_frame() = 0 ; // For the printed interface arran
 
 // LEADSCREW_SPECS
 // PCD holes are for the leadscrew nut diameter to the holes. Two are available on the Z-yoke.
-//                        Name          height diameter   number of holes    PCD hole1 PCD hole2  hole size
+//                        Name                  height diameter   number of holes    PCD hole1 PCD hole2  hole size
 //Standard
 leadscrew_original_rc150mini= ["LEADSCREW_SPECS", 270, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc250zl  = ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc300zl  = ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
 //leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 10,    8,                 22,       34,          3.4];
-leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 8,     4,                 16,       22,          3.4];
+leadscrew_cheesecore_rc300zl= ["LEADSCREW_SPECS", 400, 8,     8,                 16,       22,          3.4];
 leadscrew_original_rc300zlt = ["LEADSCREW_SPECS", 700, 8,     4,                 16,       22,          3.4];
 //Experimental
 leadscrew_zl4040            = ["LEADSCREW_SPECS", 500, 8,     4,                 16,       22,          3.4];
@@ -150,8 +152,12 @@ bed_standard_rc300    = ["BED", [342, 325],      255,        [342, 335],        
 bed_new_standard_rc300= ["BED", [325, 342],      255,        [335, 342],        0.25 * inch,  [0, -12.5],   0.9];
 //Experimental
 bed_custom            = ["BED", [425, 442],      295,        [435, 442],        8,            [0, -12.5],   0.9];
+bed_rc600             = ["BED", [642, 625],      555,        [642, 635],        0.75 * inch,  [0, -12.5],   0.9];
+
 // bed offset = How far to offset the bed from center of frame
 // FIXME: what is the bed_overall_size for? Is it needed?
+
+
 
 // MANUFACTURER DEFINED
 // Extrusion information
@@ -221,6 +227,8 @@ function ssr_placement()    = $elecbox[11] ;
 function rpi_placement()    = $elecbox[12] ;
 
 function enclosure_size()   = [halo_size().x, halo_size().y ,$enclosure_size.z];
+
+
 
 function side_panel_thickness()     = $panels[1] ;
 function panel_radius()             = $panels[2] ;

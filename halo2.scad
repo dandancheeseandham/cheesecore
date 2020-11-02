@@ -20,12 +20,12 @@ function centre_plate_size() = [80,150,halo_size().z];
 function centre_plate_position() = [5,0,0];
 function centre_mounting_plate_screw_gap() = 3;
 
-function motor_mount_size() = [80,100-1+30,halo_size().z];
-function motor_mount_position() = [41+5,195-15-1-30/2,10];
+function motor_mount_size() = [80,129,halo_size().z];
+function motor_mount_position() = [48,174,10];
 function motor_screws() = [3,3,0];
-function overlap() = [3,5,0];
+function overlap() = [3.5,18,0];
 
-module halo() {
+module halo(modular = true) {
 /*
   assert(front_window_size().x <= frame_size().x - 2 * extrusion_width(), str("Window cannot overlap extrusion in X: "));
   assert(front_window_size().y <= frame_size().z - 2 * extrusion_width(), "Window cannot overlap extrusion in Z");
@@ -33,29 +33,46 @@ module halo() {
   assert(min_y_gap >= extrusion_width(), "Window cannot overlap extrusion in Z");
 */
 //raise_plates_up = -2 ;
-raise_plates_up = 9 ;
-if ($preview) {
-    mirror_x()
-      translate([frame_size().x / 2 + centre_plate_size().x/2 + centre_plate_position().x/2, centre_plate_position().y/2 , raise_plates_up+eps])
-        centre_plate();
+  raise_plates_up = 9 ;
+  mirror_x()
+    translate([frame_size().x / 2 + centre_plate_size().x/2 + centre_plate_position().x/2, centre_plate_position().y/2 , raise_plates_up+eps])
+      centre_plate();
+    if (($preview) && (modular == true)) {
       translate([frame_size().x / 2 + motor_mount_position().x , motor_mount_position().y , raise_plates_up+eps])
-          motor_plate();
+        motor_plate(moveX = 18, moveY = 11);
       translate([frame_size().x / 2 + motor_mount_position().x , -motor_mount_position().y , -raise_plates_up+6-eps])
-      rotate([180,0,0])
-          motor_plate();
-    }
+        rotate([180,0,0])
+          motor_plate(moveX = 18, moveY = 11);
+        }
+
 translate ([0, 0, halo_size().z/2])
   color(panel_color())
     difference() {
       difference() {
-        rounded_rectangle([halo_size().x , halo_size().y , halo_size().z], 0.5); //radius is 0 due to corner cubes
+        rounded_rectangle([halo_size().x , halo_size().y , halo_size().z], 3);
         remove_main();
         mirror_x()
           translate([frame_size().x / 2 + centre_plate_size().x/2 + centre_plate_position().x/2, centre_plate_position().y/2 , 28])
             mounting_plate(centre_plate_size(),overlap(),true);
+
+      if (modular == true) {
         mirror_y()
           translate([frame_size().x / 2 + motor_mount_position().x , motor_mount_position().y, 28])
             mounting_plate(motor_mount_size(),overlap(),true);
+            }
+      if (modular == false) {
+        moveX = 18;
+        moveY = 11;
+mirror_y()
+        translate([frame_size().x / 2 + motor_mount_position().x , motor_mount_position().y , raise_plates_up+eps])
+        translate([-motor_mount_position().x -extrusion_width(), -motor_mount_position().y , 0])
+           {
+            translate([side_panel_thickness() + extrusion_width() + NEMA_width(NEMAtypeXY())/2 + moveX, motor_pulley_link() + moveY  , 0])
+              long_motor_holes(NEMAtypeXY());
+            }
+      }
+
+
         // Color the holes darker for contrast
         color(panel_color_holes()) {
           panel_mounting_screws(frame_size().x, frame_size().y);
@@ -99,7 +116,7 @@ module mounting_plate(mounting_plate, mounting_plate_screw_gap = [4,4,0], remove
     {
       mirror_xy()
         translate ([mounting_plate.x/2-mounting_plate_screw_gap.x,mounting_plate.y/2-mounting_plate_screw_gap.y,0])
-          clearance_hole(nominal_d=3, h=50 , fit = "normal");
+          clearance_hole(nominal_d=4, h=50 , fit = "normal");
       }
     translate ([0,0,-25]) rounded_rectangle(mounting_plate-removal+[0,0,50], 3);;
       //translate ([-mounting_plate.x/2,-mounting_plate.y/2,9])
@@ -113,7 +130,7 @@ module mounting_plate(mounting_plate, mounting_plate_screw_gap = [4,4,0], remove
       //translate ([-mounting_plate.x/2,-mounting_plate.y/2,0])
       mirror_xy()
         translate ([mounting_plate.x/2-mounting_plate_screw_gap.x,mounting_plate.y/2-mounting_plate_screw_gap.y,25])
-          clearance_hole(nominal_d=3, h=50 , fit = "normal");
+          clearance_hole(nominal_d=4, h=50 , fit = "normal");
       }
     }
   }
@@ -127,12 +144,12 @@ module PTFE_holes(){
   translate([-frame_size().x / 2 - holes_row_position , frame_size().y / 2 - 215 , 25])
     {
       clearance_hole(nominal_d=8.5, h=50);  // for M10 tap thread
-  translate([0, 20 , 0])
-    clearance_hole(nominal_d=8.5, h=50);  // for M10 tap thread
-  translate([0, 40 , 0])
-    clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
-  translate([0, 60 , 0])
-    clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
+      translate([0, 20 , 0])
+        clearance_hole(nominal_d=8.5, h=50);  // for M10 tap thread
+      translate([0, 40 , 0])
+        clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
+      translate([0, 60 , 0])
+        clearance_hole(nominal_d=4.3, h=50);  // for M6 tap thread
       }
 }
 
@@ -224,13 +241,13 @@ module centre_plate(){
 }
 
 
-module motor_plate(){
+module motor_plate(moveX = 18, moveY = 11){
   difference (){
   mounting_plate(motor_mount_size(),overlap(),false);
   // make motor holes for NEMA motors.
     translate([-motor_mount_position().x -extrusion_width(), -motor_mount_position().y , 0])
        {
-        translate([side_panel_thickness() + extrusion_width() + NEMA_width(NEMAtypeXY())/2 + 10 + 3, motor_pulley_link() + 11  , 0])
+        translate([side_panel_thickness() + extrusion_width() + NEMA_width(NEMAtypeXY())/2 + moveX, motor_pulley_link() + moveY  , 0])
           long_motor_holes(NEMAtypeXY());
         }
 }
@@ -242,8 +259,7 @@ module long_motor_holes(type) {
   function NEMAadjust() = 8 ;
   //translate ([-extrusion_width() - side_panel_thickness() - NEMA_width(type)/2, 0, 0])
 translate([0,0,-part_thickness()/2])
-linear_extrude(part_thickness())
-{
+linear_extrude(part_thickness()) {
   hull() {
     translate([NEMAadjust()/2, 0,-part_thickness()/2])
       circle(d=NEMA_boss_radius(type) * 2 + 3);

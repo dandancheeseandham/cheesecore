@@ -7,21 +7,19 @@ use <nopscadlib/vitamins/rail.scad>
 use <nopscadlib/utils/fillet.scad>
 
 // The origin of the z-yoke is the center of the mounting point on the linear rail carriage
-module z_yoke() {
+module z_yoke(oldham = true, oldham_parts = false, inplastic = false) {
   carriage_type = rail_carriage(rail_profiles().z);
   railmount = 12.5; //move the rail mount part up and down
   part_thickness = 7.8;
   extra_mount_length = 0; // how much longer to make the mount so we can have the horizontal pieces below the mounting screws
 
-
-        placement = 11;
-        movementallowed = 3;
-        sizeofnub = 3;
-        nubslack = 0.2;
-
-   {
-
-     color(printed_part_color()) difference() {
+  placement = 11;
+  movementallowed = 3;
+  sizeofnub = 3;
+  nubslack = 0.2;
+ {
+   color(printed_part_color())
+    difference() {
       // "mounted face" to attach to rail carriage
       translate([-part_thickness/2, 0, -extra_mount_length/2-railmount])
         rotate ([0,90,0])
@@ -35,129 +33,128 @@ module z_yoke() {
             clearance_hole(nominal_d=3, h=100);
             }
     }
-//fillet rail to leadscrew
-*translate([0,-15,-railmount+epsilon/2])
-  fillet(1.6, part_thickness, center = true);
-
-//fillet removal for chunk removal
-  *translate([-16.5,-15,-railmount+epsilon/2])
-  rotate([0,180,0])
+  //fillet rail to leadscrew
+  *translate([0,-15,-railmount+epsilon/2])
     fillet(1.6, part_thickness, center = true);
 
+  //fillet removal for chunk removal
+  *translate([-16.5,-15,-railmount+epsilon/2])
+    rotate([0,180,0])
+      fillet(1.6, part_thickness, center = true);
 
 
-//fillets to connect mounted face to main body
-color(printed_part_color())
-  translate([-part_thickness, 0, -extra_mount_length/2-railmount+3.8])
-    rotate ([90,0,180])
+
+  //fillets to connect mounted face to main body
+  color(printed_part_color())
+    translate([-part_thickness, 0, -extra_mount_length/2-railmount+3.8])
+      rotate ([90,0,180])
+        fillet(4, carriage_width(carriage_type), center = true);
+
+  color(printed_part_color()) translate([-part_thickness, 0, -extra_mount_length/2-railmount-3.8])
+    rotate ([270,0,180])
       fillet(4, carriage_width(carriage_type), center = true);
 
-color(printed_part_color()) translate([-part_thickness, 0, -extra_mount_length/2-railmount-3.8])
-  rotate ([270,0,180])
-    fillet(4, carriage_width(carriage_type), center = true);
-
   // flat bed mounting ear
-     translate([0,0,-carriage_length(carriage_type/2) - extra_mount_length+1]) {
+    translate([0,0,-carriage_length(carriage_type/2) - extra_mount_length+1]) {
       *translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset(),-30])
-      translate ([1,-1,0])
-        cylinder(d=leadscrew_diameter(),h=60) ; // leadscrew nut hole
+        translate ([1,-1,0])
+          cylinder(d=leadscrew_diameter(),h=60) ; // leadscrew nut hole
 
 
-//main section of Z-yoke
-      color(printed_part_color()) linear_extrude(part_thickness) {
-        difference() {
-          z_yoke_bed_mount_profile();
-          z_yoke_holes_profile();
-                //oldham removals
-                        *  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset() , -leadscrew_y_offset()]) {
-                            rotate(45) mirror_xy() {
-                              rotate(45)
-                              hull(){
-                               translate([placement, 0]) circle(d=sizeofnub+nubslack);
-                               translate([placement-movementallowed, 0]) circle(d=sizeofnub+nubslack);
-                             }
-                            }
-                          }
-
-          }
-
-      }
-
-// top circle of oldham
-  *     color(printed_part_color()) translate ([movementallowed/2,-movementallowed/2,36])
-      linear_extrude(part_thickness){
-      difference(){
-            translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
-              circle(d=leadscrew_y_offset()-(movementallowed));
-
-              translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
-                circle(d=leadscrew_diameter()+leadscrew_clearance()); // leadscrew nut hole
-
-      //oldham circle
-                translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset() , -leadscrew_y_offset()]) {
-                  mirror_xy() {
-                    rotate(45)
-                    mirror_xy()  rotate(45) translate([leadscrew_pcd1()/2, 0]) circle(d=leadscrew_nut_screwholes());
-                    rotate(45)
-//wobble spaces
-                    hull(){
-                     translate([placement, 0]) circle(d=sizeofnub+nubslack);
-                     translate([placement-movementallowed, 0]) circle(d=sizeofnub+nubslack);
-
-                   }
-                  }
+  //main section of Z-yoke
+  color(printed_part_color()) linear_extrude(part_thickness) {
+    difference() {
+      z_yoke_bed_mount_profile();
+      z_yoke_holes_profile();
+      //oldham removals
+      if (oldham == true)
+      translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset() , -leadscrew_y_offset()]) {
+        rotate(45) mirror_xy() {
+          rotate(45)
+            hull(){
+              translate([placement, 0])
+                circle(d=sizeofnub+nubslack);
+              translate([placement-movementallowed, 0])
+                circle(d=sizeofnub+nubslack);
                 }
               }
+        }
+      }
+  }
 
+  // top circle of oldham
+translate ([-17.3,-14.5,0]) rotate (45)
+  if (oldham_parts == true) {
+    color(printed_part_color())
+    //translate ([movementallowed/2,-movementallowed/2+1.5,26])
+    translate ([0,0,part_thickness*4])
+      linear_extrude(part_thickness) {
+        difference(){
+          translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
+            circle(d=leadscrew_y_offset()-(movementallowed));
+          translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
+            circle(d=leadscrew_diameter()+leadscrew_clearance()); // leadscrew nut hole
+          //oldham circle
+          translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset() , -leadscrew_y_offset()]) {
+            mirror_xy() {
+              rotate(45)
+                mirror_xy()
+                  rotate(45)
+                    translate([leadscrew_pcd1()/2, 0])
+                      circle(d=leadscrew_nut_screwholes());
+                    rotate(45)
+                    //wobble spaces
+                      hull(){
+                        translate([placement, 0]) circle(d=sizeofnub+nubslack);
+                        translate([placement-movementallowed, 0]) circle(d=sizeofnub+nubslack);
+                      }
+              }
             }
+        }
+    }
+  }
 
-* color ("green")
-            translate ([movementallowed/2,0,18]) {
-            linear_extrude(part_thickness){
-             difference(){
-                  translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
-                    circle(d=leadscrew_y_offset()-(movementallowed));
-
-                    translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
-                      circle(d=leadscrew_diameter()+leadscrew_clearance()); // leadscrew nut hole
-
-            //oldham circle
-
-                      }
-                    }
-            translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset() , -leadscrew_y_offset(),-3]) {
-                    rotate(0)  mirror_xy() {
-                        rotate(0)
-                        translate([placement-movementallowed/2, 0]) cylinder(d=sizeofnub,h=3);
-                       }
-                      }
-
-                      translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset() , -leadscrew_y_offset(),part_thickness]) {
-                              rotate(90)  mirror_x() {
-                                  rotate(0)
-                                  translate([placement-movementallowed/2, 0]) cylinder(d=sizeofnub,h=3);
-                                 }
-
-
-
-
-
-
-
-                                }
-
+  if (oldham_parts == true) {
+    color ("green")
+      translate ([movementallowed/2,0,part_thickness*2]) {
+        linear_extrude(part_thickness){
+          difference(){
+            translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
+              circle(d=leadscrew_y_offset()-(movementallowed));
+            translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset(), -leadscrew_y_offset()])
+              circle(d=leadscrew_diameter()+leadscrew_clearance()); // leadscrew nut hole
+          //oldham circle
+            }
+        }
+        translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset() , -leadscrew_y_offset(),-3]) {
+          rotate(0)
+            mirror_xy() {
+              rotate(0)
+                translate([placement-movementallowed/2, 0])
+                  cylinder(d=sizeofnub,h=3);
+              }
+          }
+        translate([carriage_height(carriage_type) + extrusion_width() - leadscrew_x_offset() , -leadscrew_y_offset(),part_thickness]) {
+          rotate(90)
+            mirror_x() {
+              rotate(0)
+                translate([placement-movementallowed/2, 0])
+                  cylinder(d=sizeofnub,h=3);
+            }
+        }
+      }
+  }
 }
 
-    }
-
-    // reinforcing rib (plastic version)
-    *hull() {
-      // top corner
-      translate([- part_thickness, -part_thickness/2, carriage_length(carriage_type) /2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
-      // corner near ear
-      translate([-ear_extent(), -part_thickness/2, - carriage_length(carriage_type) / 2 +extra_mount_length/2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
-      // base/inside corner
-      translate([- part_thickness, -part_thickness/2, -carriage_length(carriage_type) / 2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
+// reinforcing rib (plastic version)
+  if (inplastic == true)
+  hull() {
+    // top corner
+    translate([- part_thickness, -part_thickness/2, carriage_length(carriage_type) /2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
+    // corner near ear
+    translate([-ear_extent(), -part_thickness/2, - carriage_length(carriage_type) / 2 +extra_mount_length/2 - epsilon + 5]) cube([epsilon, part_thickness, epsilon]);
+    // base/inside corner
+    translate([- part_thickness, -part_thickness/2, -carriage_length(carriage_type) / 2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
     }
   }
 }
@@ -167,10 +164,7 @@ color(printed_part_color()) translate([-part_thickness, 0, -extra_mount_length/2
 function ear_extent() = (frame_size().x - 4 * extrusion_width() - 2 * carriage_height(rail_carriage(rail_profiles().z)) - $bed[1][0]) / 2 - 1;
 
 module oldham(){
-
-
 }
-
 
 module z_yoke_bed_mount_profile() {
   assert(extrusion_width() != undef, "Must specify extrusion_width()");
@@ -192,9 +186,6 @@ length_of_mount = 5;
     translate([-1, carriage_width(carriage_type)/2 - 1]) square(1);
     translate([-ear_extent()+minimise,-leadscrew_y_offset()]) square([ear_extent()-minimise, epsilon]);
   }
-
-
-
 }
 
 module z_yoke_holes_profile() {
@@ -219,9 +210,6 @@ module z_yoke_holes_profile() {
       translate([-ear_extent()+longerhole, 0]) circle(d=3.3);
     }
   }
-
-
-
 holes(leadscrew_number_of_holes());
 
 module holes(number_holes){
@@ -256,12 +244,9 @@ if (number_holes == 8) {
     }
   }
 }
-
 }
-    }
-
-
+}
 
 demo() {
-  z_yoke();
+  z_yoke(oldham = true, oldham_parts = false, inplastic = true);
 }

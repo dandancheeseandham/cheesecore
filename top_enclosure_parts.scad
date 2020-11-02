@@ -206,16 +206,17 @@ module jame_hinge2()
   import("/home/dan/Documents/GitHub/cheesecore/HINGE_2.stl");
 }
 
-
-module enclosure_handle()
-
-{
-color(printed_part_color())
-render ()
-
-translate ([0 , 0, 7.5])
-mirror_z(){
-translate ([0 , -enclosure_size().y / 2 - acrylic_thickness() , -enclosure_size().z / 2+15]) rotate ([90,0,0])
-handle_assembly();
+module enclosure_handle_single() {
+  handle_assembly();
 }
+
+
+module enclosure_handle() {
+  color(printed_part_color())
+    translate ([0 , 0, 7.5])
+      mirror_z(){
+        translate ([0 , -enclosure_size().y / 2 - acrylic_thickness() , -enclosure_size().z / 2 + extrusion_width()*2])
+          rotate ([90,0,0])
+            handle_assembly();
+      }
 }

@@ -18,8 +18,8 @@ module electronics_box_assembly(panelon = true) {
 // if extending the front and rear
 if (extend_front_and_rear_x() == 0)
   {
-    electronics_box();
-    *translate([0, 0, 0])
+    electronics_box(panelon = true);
+    translate([0, 0, 0])
       rotate ([0,0,180])
         cheesecore_filament_box();
   }
@@ -63,7 +63,7 @@ module electronics_box(panelon = true) {
         if (panelon == true)
         translate([0,-box_depth(),0])
           rotate ([90,0,0])
-        electronics_cover_panel();
+            electronics_cover_panel();
         }
       translate ([-box_size_y()/2, -box_depth(), box_size_z()/2 + move_panels_outwards_adjust()/2 + (6-acrylic_thickness() ) ])
         top_panel();
@@ -87,7 +87,7 @@ module electronics_box(panelon = true) {
         }
         translate ([-filament_box_size_y()/2, -filament_box_depth(), filament_box_size_z()/2 + move_panels_outwards_adjust()/2])
           top_panel();
-        translate ([-filament_box_size_y()/2,-filament_box_depth(),-filament_box_size_z()/2 - move_panels_outwards_adjust()/2 - filament_acrylic_thickness()])
+        #translate ([-filament_box_size_y()/2,-filament_box_depth(),-filament_box_size_z()/2 - move_panels_outwards_adjust()/2 - filament_acrylic_thickness()])
           bottom_panel();
         translate ([filament_box_size_y()/2 + filament_move_panels_outwards_adjust()/2, -filament_box_depth(), box_size_z()/2])
           rotate ([0,90,0])
@@ -128,7 +128,6 @@ module place_four_electronics_box_corners() {
 
 
 
-/*
 module place_four_filament_box_corners() {
   mirror_xz() {
     translate ([-filament_box_size_y()/2 + move_corners_adjust(), -filament_box_depth(), filament_box_size_z() / 2 - move_corners_adjust()])
@@ -142,7 +141,7 @@ module place_four_holes_for_filament_box_corners() {
       electronics_box_corner_hole();  //electronics box corners
   }
 }
-*/
+
 
 demo() {
   electronics_box_assembly(panelon = true);

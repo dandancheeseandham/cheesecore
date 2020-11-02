@@ -37,6 +37,9 @@ module top_panel_half1() {
           }
       }
 }
+
+
+
 //translate ([enclosure_size().x/2-140,7.5+gap()/2,enclosure_size().z/2+20])  longscrewhole(80,3,0.15);
 module top_panel_half2() {
   color(panel_color())
@@ -57,6 +60,10 @@ module top_panel_half2() {
                     }
                 }
           }
+          translate([0,0,-acrylic_door_thickness()-side_panel_thickness()+6])
+            color(acrylic2_color())
+              linear_extrude(acrylic_door_thickness())
+                #window_real_2d(enclosure_size().x, enclosure_size().y/2-epsilon);
       }
 
 
@@ -67,11 +74,21 @@ module full_front_top_enclosure_panel() {
             difference(){
               universal_panel_2d(enclosure_size().x, enclosure_size().z+extrusion_width());
                 color(panel_color_holes())
-                  universal_panel_mounting_screws_2d(enclosure_size().x-extrusion_width()*2, enclosure_size().z-extrusion_width());
-                window_2d(enclosure_size().x-extrusion_width()*2, enclosure_size().z-extrusion_width());
-                }
+                  translate ([0,-extrusion_width()/2]) universal_panel_mounting_screws_2d(enclosure_size().x-extrusion_width()*2, enclosure_size().z);
+                    window_2d(enclosure_size().x-extrusion_width()*2, enclosure_size().z-extrusion_width()*2);
+// handle holes
+  mirror_y()
+    translate ([0,-enclosure_size().z / 2+extrusion_width()*2,0])
+      mirror_x()
+        translate([66,0])
+          clearance_hole_2d(nominal_d = 6, fit = "normal");
+              }
           }
       }
+      translate([0,0,-acrylic_door_thickness()-side_panel_thickness()])
+        color(acrylic2_color())
+          linear_extrude(acrylic_door_thickness())
+            window_real_2d(enclosure_size().x-extrusion_width()*2, enclosure_size().z-extrusion_width()*2);
 }
 
 module right_side_top_enclosure_panel() {
@@ -86,7 +103,7 @@ module right_side_top_enclosure_panel() {
               universal_panel_mounting_screws_2d(enclosure_size().y,enclosure_size().z);
             }
       }
-  translate([125,0,side_panel_thickness()-epsilon])
+  translate([enclosure_size().y/4,0,side_panel_thickness()-epsilon])
     fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
     }
 }

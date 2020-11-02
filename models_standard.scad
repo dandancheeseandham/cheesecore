@@ -2,7 +2,7 @@ include <config.scad>
 
 // ORIGINAL RAILCORE II 300ZL
 module railcore_300ZL_compatible(position = [0, 0, 0]) {
-  $NEMA_XY            = NEMA17;
+  $NEMA_XY            = NEMA17L;
   $NEMA_Z             = NEMA17;
   $extrusion_type     = extrusion15;
 

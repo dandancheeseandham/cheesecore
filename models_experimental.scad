@@ -33,10 +33,12 @@ module cheesecore_300zl_mod(position = [0, 0, 0]) {
       $halo_size          = halo_rc_cheese_mod; //halo_rc_NEMA23;
       $front_window_size  = front_window_cheesecore;
       //$elecbox            = elecbox_300_large;
-      $elecbox            = elec_cheesecore2;
+      //$elecbox            = elecbox_original_rc300zl;
+      $elecbox            = elec_cheesecore3;
       $branding_name      = "Cheese 300ZL";
 
-      $rail_specs         = rails_original_rc300zl; //rails_rc300zlt_high_temp;
+      //$rail_specs         = rails_original_rc300zl; //rails_rc300zlt_high_temp;
+      $rail_specs         = rails_300zl_4040;
       $leadscrew_specs    = leadscrew_cheesecore_rc300zl;
       $bed                = bed_standard_rc300;
       $feet_depth         = 50 ;

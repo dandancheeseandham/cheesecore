@@ -27,7 +27,7 @@ module screw_comb()
   spacex = 90;
   spacey = 67.85;
   spacez = 85;
-  clearance_hole = 2.9;
+  clearance_hole = 3.2;
   color(panel_color())
   difference(){
     translate ([-50,0,0])

@@ -20,6 +20,7 @@ use <top_enclosure_frame.scad>
 use <xy_motion.scad>
 use <y_carriage.scad>
 use <door_hinge.scad>
+use <filament_enclosure_frame.scad>
 include <report.scad>
 
 ver = version();
@@ -56,11 +57,7 @@ module top_enclosure() {
   translate ([0, 0, (frame_size().z+enclosure_size().z)/2 + enclosure_height_above_frame() + halo_size().z]) {
     enclosure_frame();
     enclosure_side_panels();
-    *enclosure_handle();
-
-    *translate ([0,0,enclosure_size().z/2+30]) rotate ([90,0,90]) jame_hinge1();
-    *translate ([-5,0,enclosure_size().z/2+33]) rotate ([270,0,90]) jame_hinge2();
-
+    enclosure_handle();
   }
   *printed_interface_arrangement();  // do not need the printed interface arrangement with the cheesecore halo. Left for backwards compatibility.
 }
@@ -71,11 +68,12 @@ module printer(position = [90, 90, 0]) {
   kinematics(position);
   door_assembly();
   electronics_box_contents();
-  electronics_box_assembly(panelon = true);
+  electronics_box_assembly(panelon = false);
   top_enclosure();
   spool_holders();
+  printer_name();
     report();
-
+  //filament_enclosure();
 }
 
 module justdoors() {

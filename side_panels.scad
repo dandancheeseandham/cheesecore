@@ -22,11 +22,17 @@ use <side_panel.scad>
 function panel_screw_extent(panel_length) = panel_length - 2 * panel_screw_offset() ;
 function panel_screw_count(panel_length) = ceil(panel_screw_extent(panel_length) / max_panel_screw_spacing()) + 1 ;
 function panel_screw_spacing(panel_length) = panel_screw_extent(panel_length) / (panel_screw_count(panel_length) - 1);
-
+/*
 function spool_topx() = 105;
 function spool_topy() = 125;
 function spool_bottomx() = 105;
 function spool_bottomy() = -90;
+*/
+function spool_topx() = 105;
+function spool_topy() = 121;
+function spool_bottomx() = 105;
+function spool_bottomy() = -86;
+
 
 // BOTTOM PANEL
 module bottom_panel() {
@@ -52,11 +58,7 @@ module bottom_panel() {
         translate([frame_size().x / 2 - extrusion_width() - leadscrew_x_offset(), 0, 0])
           motor_holes(NEMAtypeZ());
       }
-      // Deboss a name in the bottom panel
-      deboss_depth = 0;
-      translate([0, -frame_size().y/2 + extrusion_width() + 35, side_panel_thickness() - deboss_depth + epsilon])
-        linear_extrude(deboss_depth)
-          text($branding_name, halign="center", size=35, font = "Helvetica");
+      //printer_name();
     }
     x = frame_size().x;
     y = frame_size().y;
@@ -116,7 +118,14 @@ linear_extrude(side_panel_thickness())
 
 }
 
-
+module printer_name(){
+  // Deboss a name in the bottom panel
+  deboss_depth = 10;
+  //translate([0, -frame_size().y/2 + extrusion_width() + 35, side_panel_thickness() - deboss_depth + epsilon]) // place on bottom panel
+   translate([0, -frame_size().y/2-100, -frame_size().z/2 - side_panel_thickness() - feetheight()])
+    linear_extrude(deboss_depth)
+      text($branding_name, halign="center", size=35, font = "Helvetica");
+}
 
 
 module hinges(hinge_extension = 0) {
@@ -301,52 +310,41 @@ module right_panel() {
     difference(){
       linear_extrude(side_panel_thickness())
         difference() {
-          universal_panel_2d(x= frame_size().y,y= frame_size().z);
-          universal_panel_mounting_screws_2d(x= frame_size().x,y= frame_size().z, cornercubes = true);
+          #universal_panel_2d(x= frame_size().y,y= frame_size().z);
+          universal_panel_mounting_screws_2d(x= frame_size().y,y= frame_size().z, cornercubes = true);
+          translate ([0,-movedown() ,0]) mirror_xy() translate([screwy(),screwz()]) circle(d=3.4);  // FIXME: Use polyhole, check mounting fits Meanwell too
         }
-        color(panel_color_holes()) translate ([0,-movedown() ,0]) {
-        translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon);
-        translate(DuetE_placement())  pcb_holes(DuetE);
-        translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
-        translate(Duex5_placement()+[27.5,-36,0]) pcb_holes(Duet3Exp); // Duet3 Expansion
-        translate(Duex5_placement())  pcb_holes(Duex5);
-        translate(rpi_placement())  rotate([0,0,180])  pcb_holes(RPI3);
-        //translate(rpi_placement()+[80,-40,13+5]) rotate([0,0,180]) pcb_holes(RPI3);
-        //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
-        translate(psu_placement()+[0,115,-10]) rotate([0,0,90]) cylinder(40,3,3);
+        color(panel_color_holes())
+          translate ([0,-movedown() ,0]) {
+            translate(cable_bundle_hole_placement())
+              mirror([0,0,1])
+                hole(d=26, h=side_panel_thickness() + epsilon);
+          translate(DuetE_placement())  pcb_holes(DuetE);
+          translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
+          translate(Duex5_placement()+[27.5,-36,0]) pcb_holes(Duet3Exp); // Duet3 Expansion
+          translate(Duex5_placement())  pcb_holes(Duex5);
+          if (rpi_placement() != [0,0,0]) translate(rpi_placement())
+            rotate([0,0,180])
+              pcb_holes(RPI3);
+          //translate(rpi_placement()+[80,-40,13+5]) rotate([0,0,180]) pcb_holes(RPI3);
+          //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
+          translate(psu_placement()+[0,115,-10]) rotate([0,0,90]) cylinder(40,3,3);
     //FIXME: use the ssr_hole_position library, not hack it in like this.
         translate(ssr_placement() + [0,0,-20]) rotate ([0,0,90]) {
           mirror_x()
             translate ([47.5/2,0,0])
               cylinder(h=140,d=5);
+        //electronic corner holes_row_position
+        //#
+         {
+
         }
     }
   }
 }
+}
 
 
-
-module right_panel_old() {
-  color(panel_color())
-  difference() {
-   //panel(frame_size(). y, frame_size().z, 0, extendz()); //call side panel then difference all the electronics mounting holes
-   universal_panel(x= frame_size().y,y= frame_size().z,addx = 0,addy = extendz());
-    color(panel_color_holes()) translate ([0,-movedown() ,0]) {
-    translate(cable_bundle_hole_placement()) mirror([0,0,1]) hole(d=26, h=side_panel_thickness() + epsilon);
-    translate(DuetE_placement())  pcb_holes(DuetE);
-    translate(DuetE_placement()+[7.5,-16,0])  pcb_holes(Duet3E);
-    translate(Duex5_placement()+[27.5,-36,0]) pcb_holes(Duet3Exp); // Duet3 Expansion
-    translate(Duex5_placement())  pcb_holes(Duex5);
-    translate(rpi_placement())  rotate([0,0,180])  pcb_holes(RPI3);
-    //translate(rpi_placement()+[80,-40,13+5]) rotate([0,0,180]) pcb_holes(RPI3);
-    //translate(psu_placement()+[0,0,20]) rotate([0,0,90]) psu_screw_positions(S_250_48) cylinder(40,3,3);  // FIXME: Use polyhole, check mounting fits Meanwell too
-    translate(psu_placement()+[0,115,-10]) rotate([0,0,90]) cylinder(40,3,3);
-//FIXME: use the ssr_hole_position library, not hack it in like this.
-    translate(ssr_placement() + [0,0,-20]) rotate ([0,0,90]) {
-      mirror_x()
-        translate ([47.5/2,0,0])
-          cylinder(h=140,d=5);
-    }
     //translate(ssr_placement()) ssr_hole_positions(AQA411VL);
     // cube ([50,50,50]);
     //ssr_hole_positions(ssrs[0]);
@@ -354,15 +352,14 @@ module right_panel_old() {
 
 
 // ### FIXME : Use technique on acrylic housing
-rotate([90,0,0]) mirror_xz() {
+//rotate([90,0,0]) mirror_xz() {
     //translate([190.5,-5,145.5]) rotate([-90,0,0]) cylinder(d=3,h=40);  // FIXME: Use polyhole, check mounting fits Meanwell too
-    translate([screwy(),-40,screwz()]) rotate([-90,0,0]) cylinder(d=3,h=150);  // FIXME: Use polyhole, check mounting fits Meanwell too
-  }
-  }
-  }
-}
+  //  translate([screwy(),-40,screwz()]) rotate([-90,0,0]) cylinder(d=3,h=150);  // FIXME: Use polyhole, check mounting fits Meanwell too
+//  }
 
-module pcb_holes(type) { // Holes for PCB's
+
+module pcb_holes(type) {
+  // Holes for PCB's
     screw = pcb_screw(type);
     ir = screw_clearance_radius(screw); {
       pcb_screw_positions(type)
@@ -377,7 +374,7 @@ difference(){
   linear_extrude(side_panel_thickness())
     difference() {
       universal_panel_2d(x= frame_size().y,y= frame_size().z);
-      universal_panel_mounting_screws_2d(x= frame_size().x,y= frame_size().z, cornercubes = true);
+      universal_panel_mounting_screws_2d(x= frame_size().y,y= frame_size().z, cornercubes = true);
     }
     mirror_x ()
       translate ([spool_topx(),spool_topy(),0])
@@ -450,7 +447,7 @@ module all_side_panels() {
       back_panel();
 
   translate([0, 0, frame_size().z / 2 ])
-    halo();
+    halo(modular = false);
 
 
 }

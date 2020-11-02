@@ -40,13 +40,23 @@ linear_extrude(side_panel_thickness())
 
 module window_2d(x = 600,y=200){
   holedia = 5;
-  holefromedge = 20;
+  holefromedge = 15;
   overlap = 15;
   window_width = x - 40;
   window_height = y - 40;
 
   rounded_square ([window_width-holefromedge-overlap,window_height-holefromedge-overlap],holedia);
   universal_panel_mounting_screws_2d(window_width,window_height,cornercubes=false);
+}
+
+module window_real_2d(x = 600,y=200){
+  holedia = 5;
+  holefromedge = 20;
+  overlap = 22;
+  window_width = x ;
+  window_height = y ;
+
+  rounded_square ([window_width-holefromedge-overlap,window_height-holefromedge-overlap],holedia);
 }
 
 
@@ -72,8 +82,8 @@ module universal_panel_2d(x = 600,y=200, radius = panel_radius()) {
     //if (window){
     //rounded_square ([window_width-holefromedge-overlap,window_height-holefromedge-overlap],holedia);
     //universal_panel_mounting_screws_2d(window_width,window_height,cornercubes=false);
-    echo ("window_width:", window_width)
-    echo ("window_height:", window_height);
+    *echo ("window_width:", window_width)
+    *echo ("window_height:", window_height);
   //}
   //}
 
@@ -92,6 +102,9 @@ module universal_panel_mounting_screws_2d(x, y, cornercubes = true) {
   // How far between screws
   screw_spacing_x = extent_x / (screws_x - 1);
   screw_spacing_y = extent_y / (screws_y - 1);
+
+
+
   //echo ("top enclosure screw_spacing_x for ", x, " mm ",screw_spacing_x);
   //echo ("top enclosure screw_spacing_y for ", y, " mm ",screw_spacing_y);
   //mirror_y()
@@ -105,6 +118,7 @@ mirror_xy(){
       translate ([x / 2 - extrusion_width() / 2, -y / 2 + panel_screw_offset() + (screw_spacing_y * a)])
         // FIXME - this should be a hole not a cylinder
         circle (d=clearance_hole_size(extrusion_screw_size()));
+
 
     // Access screws to corner cubes
     if (cornercubes)

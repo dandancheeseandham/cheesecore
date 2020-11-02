@@ -9,8 +9,8 @@ use <demo.scad>
 
 module xy_motion(position = [0, 0, 0]) {
   // FIXME: this is not a final height for belts
-  belt_height = 13;
-  pulley_position_on_x_carriage = 208 ;
+  belt_height = 13;  //height - do not change
+  pulley_position_on_x_carriage = 208 ; //constant value until linked properly
   translate ([0, 0, frame_size().z / 2 + belt_height])
     corexy_belts([position.x-  pulley_position_on_x_carriage, position.y]);
 
@@ -25,11 +25,11 @@ module xy_motion(position = [0, 0, 0]) {
   }
   */
 // MOTORS AND MOTOR MOUNTS
-gap_for_screws = 10;
-movefortension = 0;  //increase to move NEMA motor out for adjustments
-horizontal_placement = 11;
-//vertical_placement = 4 ;
-vertical_placement = -6 ;
+gap_for_screws = 15;   //moves motor left and right
+movefortension = 0;  //temp adjustment, move to 0 for closest.
+horizontal_placement = 11; //"right" for NEMA17s
+//vertical_placement = 4 ; //nema motor plates ontop
+vertical_placement = -6 ;  //nema motor plates underneath
 
 //translate([frame_size().x / 2 - extrusion_width(), 0, frame_size().z / 2])
 //translate([])

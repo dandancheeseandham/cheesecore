@@ -24,8 +24,8 @@ include <../core.scad>
 include <../vitamins/screws.scad>
 include <../vitamins/inserts.scad>
 
-dia = 18;
-length = 130; // inside length
+dia = 20;
+length = 112; // inside length
 height = 30; // inside height
 screw = M3_cap_screw;
 insert = screw_insert(screw);

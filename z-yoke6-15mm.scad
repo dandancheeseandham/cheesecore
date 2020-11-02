@@ -9,10 +9,9 @@ use <nopscadlib/utils/fillet.scad>
 // The origin of the z-yoke is the center of the mounting point on the linear rail carriage
 module z_yoke() {
   carriage_type = rail_carriage(rail_profiles().z);
-  railmount = 16.65;
+  railmount = 16.65+4.4;
   part_thickness = 7.8;
   extra_mount_length = 0; // how much longer to make the mount so we can have the horizontal pieces below the mounting screws
-
   color(printed_part_color()) {
 
     difference() {
@@ -30,7 +29,7 @@ module z_yoke() {
             }
     }
 //fillet rail to leadscrew
-translate([0,-15,-railmount+epsilon/2])
+*translate([0,-15,-railmount+epsilon/2])
   fillet(1.6, part_thickness, center = true);
 
 //fillet removal for chunk removal
@@ -62,11 +61,21 @@ translate([-part_thickness, 0, -extra_mount_length/2-railmount-3.8])
     }
 
     // reinforcing rib (plastic version)
+    translate ([0,0,0.2-4.4])
     hull() {
       // top corner
       translate([- part_thickness, -part_thickness/2, carriage_length(carriage_type) /2-21 - epsilon]) cube([epsilon, part_thickness, epsilon]);
       // corner near ear
-      translate([-ear_extent(), -part_thickness/2, - carriage_length(carriage_type) / 2 +extra_mount_length/2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
+      translate([-ear_extent(), -part_thickness/2, - carriage_length(carriage_type) / 2+5 +extra_mount_length/2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
+      // base/inside corner
+      translate([- part_thickness, -part_thickness/2, -carriage_length(carriage_type) / 2  - epsilon]) cube([epsilon, part_thickness, epsilon]);
+    }
+
+    translate ([0,0,-33.6-4.4]) rotate ([180,0,0]) hull() {
+      // top corner
+      translate([- part_thickness, -part_thickness/2, carriage_length(carriage_type) /2-21 - epsilon]) cube([epsilon, part_thickness, epsilon]);
+      // corner near ear
+      translate([-ear_extent(), -part_thickness/2, - carriage_length(carriage_type) / 2+5 +extra_mount_length/2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
       // base/inside corner
       translate([- part_thickness, -part_thickness/2, -carriage_length(carriage_type) / 2 - epsilon]) cube([epsilon, part_thickness, epsilon]);
     }
@@ -80,7 +89,7 @@ function ear_extent() = (frame_size().x - 4 * extrusion_width() - 2 * carriage_h
 module z_yoke_bed_mount_profile() {
   assert(extrusion_width() != undef, "Must specify extrusion_width()");
   carriage_type = rail_carriage(rail_profiles().z);
-shrink = 0;
+shrink = 2;
   // around leadscrew out to bed ear
   hull() {
     // FIXME: base this on the leadscrew anti-backlash nut size

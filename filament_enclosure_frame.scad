@@ -6,7 +6,7 @@ use <lib/layout.scad>
 use <demo.scad>
 use <extrusion_spacers.scad>
 
-
+/*
 module x_extrusions() {
 //back-top of main box
   translate([0, enclosure_size().y / 2 - extrusion_width() / 2, enclosure_size().z / 2 - extrusion_width() / 2])
@@ -132,3 +132,54 @@ module enclosure_frame() {
 demo(){
   enclosure_frame();
   }
+*/
+function filament_enclosure_size() = [100,30,0];
+
+module z_extrusions() {
+//color("Black")  //Colours are for later documentation identification
+  mirror_xy() {
+    translate([filament_enclosure_size().x / 2 - extrusion_width() / 2, frame_size().y / 2 - extrusion_width() / 2, 0])
+      extrusion(frame_size().z - 2 * extrusion_width());
+  }
+}
+
+module x_extrusions() {
+//color("Purple")
+  mirror_yz() {
+    translate([0, frame_size().y / 2 - extrusion_width() / 2, frame_size().z / 2 - extrusion_width() / 2])
+      rotate([0,90,0])
+        extrusion(filament_enclosure_size().x - 2 * extrusion_width());
+  }
+}
+
+module y_extrusions() {
+  //color("Blue")
+  mirror_xz() {
+    translate([filament_enclosure_size().x / 2 - extrusion_width() / 2, 0, frame_size().z / 2 - extrusion_width() / 2])
+      rotate([90,0,0])
+        extrusion(frame_size().y - 2 * extrusion_width());
+  }
+}
+
+module corner_cubes() {
+  mirror_xyz() {
+    translate([filament_enclosure_size().x / 2 - extrusion_width() / 2, frame_size().y / 2 - extrusion_width() / 2, frame_size().z / 2 - extrusion_width() / 2])
+      rotate([0,0,90])
+        corner_cube();
+  }
+}
+
+module filament_enclosure() {
+translate ([-frame_size().x/2-filament_enclosure_size().x/2,0,0]){
+  x_extrusions();
+  y_extrusions();
+  z_extrusions();
+  corner_cubes();
+  }
+    }
+
+
+
+demo() {
+  filament_enclosure();
+}

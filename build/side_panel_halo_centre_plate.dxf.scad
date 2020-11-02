@@ -1,7 +1,7 @@
 // vim: set nospell:
 use <export_config.scad>
-use <../z-yoke6.scad>
+use <../halo2.scad>
 
 export_artifacts() {
-  z_yoke();
+  projection() centre_plate();
 }
