@@ -10,15 +10,17 @@ use <screwholes.scad>
 use <constants.scad>
 use <demo.scad>
 
+function window_radius() = 5;
+function hole_from_edge() = 25;
+function window_overlap() = 10*2;
+function window_smaller_than_panel() = 20*2;
+
 module universal_panel(x = 600,y=200,addx=0,addy=0, moveholex = 0,moveholey = 0, window = false){
 
   assert(x != undef, "Must specify panel x dimension");
   assert(y != undef, "Must specify panel y dimension");
-  holedia = 5;
-  holefromedge = 20;
-  overlap = 15;
-  window_width = x - 40;
-  window_height = y - 40;
+  window_width  = x - window_smaller_than_panel() ;
+  window_height = y - window_smaller_than_panel() ;
 linear_extrude(side_panel_thickness())
   difference() {
     //translate ([0, 0, side_panel_thickness()/2])
@@ -28,35 +30,30 @@ linear_extrude(side_panel_thickness())
     color(panel_color_holes())
       translate ([moveholex/2,moveholey/2])
         universal_panel_mounting_screws_2d(x-(sign(moveholex)*moveholex), y-(sign(moveholey)*moveholey));
-    if (window){
-    rounded_square ([window_width-holefromedge-overlap,window_height-holefromedge-overlap],holedia);
-    universal_panel_mounting_screws_2d(window_width,window_height,cornercubes=false);
-    echo ("window_width:", window_width)
-    echo ("window_height:", window_height);
+    /*if (window){
+      rounded_square ([window_width-hole_from_edge()-window_overlap(),window_height-hole_from_edge()-window_overlap()],window_radius());
+      universal_panel_mounting_screws_2d(window_width,window_height,cornercubes=false);
+      echo ("window_width:", window_width)
+      echo ("window_height:", window_height);
+      }
+      */
+
   }
-  }
-  if (window) #rounded_rectangle ([window_width,window_height,6],holedia);
+  //if (window) rounded_rectangle ([window_width,window_height,100],window_radius());
 }
 
 module window_2d(x = 600,y=200){
-  holedia = 5;
-  holefromedge = 15;
-  overlap = 15;
-  window_width = x - 40;
-  window_height = y - 40;
-
-  rounded_square ([window_width-holefromedge-overlap,window_height-holefromedge-overlap],holedia);
-  universal_panel_mounting_screws_2d(window_width,window_height,cornercubes=false);
+  rounded_square ([x - window_smaller_than_panel() - window_overlap(),y - window_smaller_than_panel() - window_overlap()],window_radius());
+  universal_panel_mounting_screws_2d(x - window_smaller_than_panel() - window_overlap() + hole_from_edge(),y - window_smaller_than_panel() - window_overlap() + hole_from_edge(),cornercubes=false);
 }
 
 module window_real_2d(x = 600,y=200){
-  holedia = 5;
-  holefromedge = 20;
-  overlap = 22;
-  window_width = x ;
-  window_height = y ;
+difference(){
+  rounded_square ([x - window_smaller_than_panel(),y - window_smaller_than_panel()],window_radius());
+  universal_panel_mounting_screws_2d(x - window_smaller_than_panel() - window_overlap() + hole_from_edge(),y - window_smaller_than_panel() - window_overlap() + hole_from_edge(),cornercubes=false);
+  }
+  echo ("WINDOW",x-hole_from_edge()-window_overlap(),y-hole_from_edge()-window_overlap());
 
-  rounded_square ([window_width-holefromedge-overlap,window_height-holefromedge-overlap],holedia);
 }
 
 
@@ -65,23 +62,8 @@ module universal_panel_2d(x = 600,y=200, radius = panel_radius()) {
 
   assert(x != undef, "Must specify panel x dimension");
   assert(y != undef, "Must specify panel y dimension");
-  holedia = 5;
-  holefromedge = 20;
-  overlap = 15;
-  window_width = x - 40;
-  window_height = y - 40;
 
-  //difference() {
-    //translate ([0, 0, side_panel_thickness()/2])
       rounded_square([x-fitting_error(), y-fitting_error()],radius);
-      //rounded_rectangle([x+addx-fitting_error(), y+addy-fitting_error(), side_panel_thickness()], panel_radius());
-    // Color the holes darker for contrast
-//    color(panel_color_holes())
-  //    translate ([moveholex/2,moveholey/2])
-    //    universal_panel_mounting_screws_2d(x-(sign(moveholex)*moveholex), y-(sign(moveholey)*moveholey));
-    //if (window){
-    //rounded_square ([window_width-holefromedge-overlap,window_height-holefromedge-overlap],holedia);
-    //universal_panel_mounting_screws_2d(window_width,window_height,cornercubes=false);
     *echo ("window_width:", window_width)
     *echo ("window_height:", window_height);
   //}

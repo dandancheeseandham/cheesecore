@@ -187,7 +187,7 @@ module bearing_stack_assembly(){
 }
 
 module spool_holder_assembly(max_spool_thickness){
-    translate ([0,0,-(filament_holder_length+mounting_plate_thickness)/2]) color("DarkRed") render() {
+    translate ([0,0,-(filament_holder_length+mounting_plate_thickness)/2]) color(printed_part_color()) render() {
   main_tube(max_spool_thickness);
 	mounting_plate(max_spool_thickness);
 	}

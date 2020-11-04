@@ -12,7 +12,7 @@ module cheesecore_300zl(position = [0, 0, 0]) {
     $front_window_size  = front_window_cheesecore;
     //$elecbox            = elecbox_300_large;
     $elecbox            = elecbox_original_rc300zl;
-    $branding_name      = "Cheese 300ZL";
+    $branding_name      = "cheesecore_300zl";
 
     $rail_specs         = rails_original_rc300zl; //rails_rc300zlt_high_temp;
     $leadscrew_specs    = leadscrew_original_rc300zl;
@@ -35,7 +35,7 @@ module cheesecore_300zl_mod(position = [0, 0, 0]) {
       //$elecbox            = elecbox_300_large;
       //$elecbox            = elecbox_original_rc300zl;
       $elecbox            = elec_cheesecore3;
-      $branding_name      = "Cheese 300ZL";
+      $branding_name      = "cheesecore_300zl_mod";
 
       //$rail_specs         = rails_original_rc300zl; //rails_rc300zlt_high_temp;
       $rail_specs         = rails_300zl_4040;

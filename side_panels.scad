@@ -413,12 +413,12 @@ module spool_holders(){
    mirror_x ()
     translate ([spool_topx(),spool_topy(),-side_panel_thickness()-2])
     { spool_holder_assembly();
-      color("DarkGreen") spool1kg();
+      color(spool_color()) spool1kg();
     }
   mirror_x()
     translate ([spool_bottomx(),spool_bottomy(),-side_panel_thickness()-2])
     { spool_holder_assembly();
-      color("DarkGreen") spool1kg();
+      color(spool_color()) spool1kg();
     }
     //  spool_holder_assembly(); //central spool holder for larger spools. e.g. This can be swapped with a 2kg spool holder
     //spool2kg();

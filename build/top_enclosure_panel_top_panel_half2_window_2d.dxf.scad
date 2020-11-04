@@ -3,5 +3,5 @@ use <export_config.scad>
 use <../top_enclosure_side_panels.scad>
 
 export_artifacts() {
-  //projection() front_panel_door();
+  top_panel_half2_window_2d();
 }

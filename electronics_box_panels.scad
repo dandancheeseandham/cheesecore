@@ -122,7 +122,26 @@ module vents_2d(vent_length = 78 ,vent_height = 3, gap_between_vents = 4.5, vent
 }
 
 module remove_vents_top_panel_2d() {
-  vents_2d(vent_length = (box_size_y()-50)/4 ,vent_height = 1.5,gap_between_vents = 3, vent_offset = [-(box_size_y()-50)/8+8,box_depth()/2-43] , number_of_vents = 7, number_of_vent_sections = 4, gap_between_vent_sections = 10 );
+  nvs = 4; // number_of_vent_sections
+  gbvs = 10;  // gap_between_vent_sections
+  totalgap = (gbvs * (nvs+2) );
+  minimum_side_gap = 15 ;
+  vl = (box_size_y() - totalgap - minimum_side_gap) / nvs ; // vent_length
+
+ vh = 1.5 ;
+ gbv = 4.5 ;
+  nov = 6;
+  tv = (nov * vh) + (gbv * nov) ;
+  vo = [-gbvs , -box_depth()/2+16];  //vent_offset
+  echo ("vl",vl);
+
+  //vl = (box_size_y()-50)/4 ; // vent_length
+  //vl = box_size_y()/2 ;  // vent_length
+  //vo = [-(box_size_y()-50)/8+8,box_depth()/2-43];  //vent_offset
+  // (vl*4 + gap_between_vents*3)/2
+
+
+  #vents_2d(vent_length = vl ,vent_height = vh,gap_between_vents = gbv, vent_offset = vo , number_of_vents = nov, number_of_vent_sections = nvs, gap_between_vent_sections = gbvs );
 }
 
 module electronics_cover_panel_2d() {

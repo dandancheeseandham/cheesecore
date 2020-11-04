@@ -61,7 +61,7 @@ module electronics_box(panelon = true) {
       {
         place_four_electronics_box_corners();
         if (panelon == true)
-        translate([0,-box_depth(),0])
+        translate([0,-box_depth()-eps,0])
           rotate ([90,0,0])
             electronics_cover_panel();
         }
@@ -69,7 +69,7 @@ module electronics_box(panelon = true) {
         top_panel();
       translate ([-box_size_y()/2,-box_depth(),-box_size_z()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness() - (6-acrylic_thickness()) ])
         bottom_panel();
-      translate ([box_size_y()/2 + move_panels_outwards_adjust()/2 + (6-acrylic_thickness()), -box_depth(), box_size_z()/2])
+      translate ([box_size_y()/2 + move_panels_outwards_adjust()/2, -box_depth(), box_size_z()/2])
         rotate ([0,90,0])
           right_side_panel();
       translate ([-box_size_y()/2 - move_panels_outwards_adjust()/2 - acrylic_thickness() - (6-acrylic_thickness() ), -box_depth(), box_size_z()/2])

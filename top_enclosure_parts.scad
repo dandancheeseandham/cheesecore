@@ -14,10 +14,12 @@ include <config.scad>
 use <validation.scad>
 use <door_hinge.scad>
 use <demo.scad>
- use <nopscadlib/printed/handle.scad>
+use <halo2.scad>
+use <nopscadlib/printed/handle.scad>
 
 demo(){
-    top_enclosure();
+    %top_enclosure();
+    translate ([0,0, frame_size().z / 2]) halo(modular = true);
 }
 
 module printed_interface_arrangement(height = 45,acrylic_thickness = 7)
@@ -210,13 +212,17 @@ module enclosure_handle_single() {
   handle_assembly();
 }
 
+module enclosure_handle_misumi() {
+  rotate ([90,0,0])
+    import("/home/dan/Documents/GitHub/cheesecore/HHDS122.stl");
+}
+
 
 module enclosure_handle() {
-  color(printed_part_color())
-    translate ([0 , 0, 7.5])
+  color("White")
       mirror_z(){
-        translate ([0 , -enclosure_size().y / 2 - acrylic_thickness() , -enclosure_size().z / 2 + extrusion_width()*2])
+        translate ([0 , -enclosure_size().y / 2 - side_panel_thickness(), -enclosure_size().z / 2  + extrusion_width()*1.75])
           rotate ([90,0,0])
-            handle_assembly();
+            enclosure_handle_misumi();
       }
 }
