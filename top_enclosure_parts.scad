@@ -200,12 +200,12 @@ module enclosure_fitting(piece_length1,piece_length2,acrylic_thickness,L_height,
 
 module jame_hinge1()
 {
-  import("/home/dan/Documents/GitHub/cheesecore/HINGE_1.stl");
+  import("HINGE_1.stl");
 }
 
 module jame_hinge2()
 {
-  import("/home/dan/Documents/GitHub/cheesecore/HINGE_2.stl");
+  import("HINGE_2.stl");
 }
 
 module enclosure_handle_single() {
@@ -214,7 +214,7 @@ module enclosure_handle_single() {
 
 module enclosure_handle_misumi() {
   rotate ([90,0,0])
-    import("/home/dan/Documents/GitHub/cheesecore/HHDS122.stl");
+    import("HHDS122.stl");
 }
 
 

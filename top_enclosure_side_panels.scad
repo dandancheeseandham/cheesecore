@@ -184,12 +184,12 @@ color("silver")
     mirror_x()
       translate ([enclosure_size().x/2-75,0,enclosure_size().z/2+18+side_panel_thickness()])
         rotate ([0,0,90])
-          import("/home/dan/Documents/GitHub/cheesecore/B_1075_R.stl");
+          import("B_1075_R.stl");
 color("silver")
     mirror_x()
       translate ([enclosure_size().x/2-75,enclosure_size().y/2+5,enclosure_size().z/2+0])
         rotate ([0,90,90])
-          import("/home/dan/Documents/GitHub/cheesecore/B_1075_R.stl");
+          import("B_1075_R.stl");
 
 
 }
