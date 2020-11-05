@@ -153,7 +153,7 @@ module back_top_enclosure_panel() {
     }
 }
 
-
+/*
 module enclosure_hinges() {
   mirror_x()
     translate ([enclosure_size().x/2-extrusion_width()/2-50-86.25/2, enclosure_size().y/2+6,enclosure_size().z/2-extrusion_width()/2])
@@ -164,8 +164,9 @@ module enclosure_hinges() {
     translate ([enclosure_size().x/2-extrusion_width()/2-50-86.25/2, enclosure_size().y/2+30,enclosure_size().z/2-extrusion_width()/2+15])
       rotate([0, 270, 270])
         rotate([0, 90, 0])  doorside_hinge();
-}
 
+}
+*/
 module enclosure_side_panels() {
   translate([0, enclosure_size().y/4, enclosure_size().z / 2 + extrusion_width()])
     top_panel_half1();
@@ -180,19 +181,22 @@ module enclosure_side_panels() {
     rotate([90,0,90]) right_side_top_enclosure_panel();
   translate ([0, enclosure_size().y / 2 + side_panel_thickness(),extrusion_width()/2]) rotate([90,0,0])
     back_top_enclosure_panel();
-color("silver")
+
     mirror_x()
       translate ([enclosure_size().x/2-75,0,enclosure_size().z/2+18+side_panel_thickness()])
         rotate ([0,0,90])
-          import("B_1075_R.stl");
-color("silver")
+          misumi_detachable_hinge();
+
     mirror_x()
       translate ([enclosure_size().x/2-75,enclosure_size().y/2+5,enclosure_size().z/2+0])
         rotate ([0,90,90])
-          import("B_1075_R.stl");
+          misumi_detachable_hinge();
 
 
 }
+
+
+
 
 demo(){
   enclosure_side_panels();

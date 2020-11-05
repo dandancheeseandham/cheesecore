@@ -35,14 +35,23 @@ module cheesecore_300zl_mod(position = [0, 0, 0]) {
       //$elecbox            = elecbox_300_large;
       //$elecbox            = elecbox_original_rc300zl;
       $elecbox            = elec_cheesecore3;
-      $branding_name      = "cheesecore_300zl_mod";
-
       //$rail_specs         = rails_original_rc300zl; //rails_rc300zlt_high_temp;
       $rail_specs         = rails_300zl_4040;
       $leadscrew_specs    = leadscrew_cheesecore_rc300zl;
       $bed                = bed_standard_rc300;
       $feet_depth         = 50 ;
       $filament_box       = filament_box_cheesecore;
+      $branding_name      = "Railcore 300ZL modified";
+      $description        = ["XY steppers = NEMA17L",
+                            "Larger e-box.",
+                            "Modular Halo",
+                            "Detachable Doors",
+                            "Top enclosure with 3 part lid & no interface",
+                            "Duet2/Duex & Duet3 panel holes",
+                            "120mm fan hole & camera mount in back panel",
+                            "Spool holder holes in left panel"
+                            ];
+
       children();
     }
 

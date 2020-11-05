@@ -120,11 +120,26 @@ linear_extrude(side_panel_thickness())
 
 module printer_name(){
   // Deboss a name in the bottom panel
-  deboss_depth = 10;
+  deboss_depth = 5;
   //translate([0, -frame_size().y/2 + extrusion_width() + 35, side_panel_thickness() - deboss_depth + epsilon]) // place on bottom panel
+  color ("Red")
    translate([0, -frame_size().y/2-100, -frame_size().z/2 - side_panel_thickness() - feetheight()])
     linear_extrude(deboss_depth)
-      text($branding_name, halign="center", size=35, font = "Helvetica");
+      text($branding_name, halign="center", size=45, font = "Arial");
+
+  color ("DarkGreen")
+   translate([0, -frame_size().y/2-150, -frame_size().z/2 - side_panel_thickness() - feetheight()])
+    linear_extrude(2)
+      multiLine($description, 25);
+}
+
+
+module multiLine(lines, size){
+  union() {
+    for (i = [0 : len(lines)-1])
+      translate([0 , -i * (size + 4), 0 ])
+        text(lines[i], halign="center",size, font = "Arial");
+  }
 }
 
 
@@ -137,7 +152,8 @@ module hinges(hinge_extension = 0) {
       }
       mirror_xy() {
         translate([hinge_extension-frame_size().x / 2 , frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset(), side_panel_thickness() + acrylic_door_thickness()])
-          doorside_hinge() ;
+          //doorside_hinge() ;
+          misumi_detachable_hinge();
         }
     }
 }

@@ -46,7 +46,7 @@ module halo(modular = true) {
         }
 
 translate ([0, 0, halo_size().z/2])
-  color(panel_color())
+  color(panel_color()) render()
     difference() {
       difference() {
         rounded_rectangle([halo_size().x , halo_size().y , halo_size().z], 3);

@@ -72,6 +72,11 @@ module panelside_hinge(screw_distance = 86.25,acrylic_door_thickness=5,extension
     }
 }
 
+module misumi_detachable_hinge(){
+  color("silver")
+    import("B_1075_R.stl");
+}
+
 module doorside_hinge() {
 
 

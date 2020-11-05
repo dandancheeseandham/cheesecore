@@ -197,7 +197,7 @@ module enclosure_fitting(piece_length1,piece_length2,acrylic_thickness,L_height,
     }
   }
 }
-
+/*
 module jame_hinge1()
 {
   import("HINGE_1.stl");
@@ -207,6 +207,7 @@ module jame_hinge2()
 {
   import("HINGE_2.stl");
 }
+*/
 
 module enclosure_handle_single() {
   handle_assembly();
@@ -215,6 +216,11 @@ module enclosure_handle_single() {
 module enclosure_handle_misumi() {
   rotate ([90,0,0])
     import("HHDS122.stl");
+}
+
+module misumi_detachable_hinge(){
+  color("silver")
+    import("B_1075_R.stl");
 }
 
 
