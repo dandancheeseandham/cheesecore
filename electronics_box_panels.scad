@@ -141,7 +141,7 @@ module remove_vents_top_panel_2d() {
   // (vl*4 + gap_between_vents*3)/2
 
 
-  #vents_2d(vent_length = vl ,vent_height = vh,gap_between_vents = gbv, vent_offset = vo , number_of_vents = nov, number_of_vent_sections = nvs, gap_between_vent_sections = gbvs );
+  vents_2d(vent_length = vl ,vent_height = vh,gap_between_vents = gbv, vent_offset = vo , number_of_vents = nov, number_of_vent_sections = nvs, gap_between_vent_sections = gbvs );
 }
 
 module electronics_cover_panel_2d() {

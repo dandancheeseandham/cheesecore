@@ -47,7 +47,7 @@ module kinematics(position) {
 }
 
 module door_assembly() {
-  misumi_detachable_hinge();
+  hinges();
   //single_door();
   doors();
 }

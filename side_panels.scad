@@ -146,38 +146,46 @@ module multiLine(lines, size){
 module hinges(hinge_extension = 0) {
   translate([0, -frame_size().y/2, 0])
     rotate([90, 0, 0]) {
-      mirror_xy() {
+      *mirror_xy() {
         translate([-frame_size().x / 2 + extrusion_width() /2, frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset() , side_panel_thickness()])
+//misumi_detachable_hinge();
           panelside_hinge(screw_distance = panel_screw_spacing(frame_size().z), acrylic_door_thickness=acrylic_door_thickness(), extension = hinge_extension , screw_type=3);
       }
-      mirror_xy() {
+      *mirror_xy() {
         translate([hinge_extension-frame_size().x / 2 , frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset(), side_panel_thickness() + acrylic_door_thickness()])
           //doorside_hinge() ;
           misumi_detachable_hinge();
         }
-    }
+        #mirror_xy() {
+          translate([-frame_size().x / 2 + extrusion_width() /2 + 8, frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset() + 0, side_panel_thickness()+3+6])
+        misumi_detachable_hinge();
+      }
 }
+    }
+
 
 // One door - the right side as facing printer
 // Origin is the centerline between the doors at the middle of the height. So not quite on the door, but rather in the gap between where they meet together
 module door() {
-  door_gap = 1; // How big a gap do we want between doors?
-  door_overlap = 10; // How far do we want the doors to overlap the panel edges?
+  door_gap = 0.75; // How big a gap do we want between doors?
+  door_overlap = 10 ;
+  door_overlapX = 10; // How far do we want the doors to overlap the panel edges?
+  door_overlapY = 15; // How far do we want the doors to overlap the panel edges?
   door_radius_mating_corners = 2.5; // radius of the corners where the panels come together
-  door_radius_outside_corners = front_window_radius() + door_overlap;
+  door_radius_outside_corners = front_window_radius() + door_overlapY;
 
   difference() {
     // Outline of the door
     color(acrylic2_color())  {
       difference(){
-      linear_extrude(acrylic_door_thickness()) {
+      linear_extrude(acrylic_thickness()) {
         hull() {
           mirror_y() {
             // The smaller corners where the doors meet
             translate([door_radius_mating_corners + door_gap / 2, front_window_size().y / 2 + door_overlap - door_radius_mating_corners])
               circle(r = door_radius_mating_corners);
             // Larger corners that mirror the opening
-            translate([front_window_size().x / 2 - front_window_radius(), front_window_size().y / 2 - door_overlap])
+            translate([front_window_size().x / 2 - front_window_radius(), front_window_size().y / 2 + door_overlap - door_radius_outside_corners])
               circle(r = door_radius_outside_corners);
           }
         }
@@ -231,7 +239,7 @@ module single_door() {
 
 translate ([0,-5,0])
 mirror_y()
-translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanelholes();
+translate ([front_window_size().x/2+door_overlapX-27.5, (86.25*1.5) ,0]) newpanelholes();
 translate ([20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
 translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
 //poly_cylinder(1.5, 30);

@@ -78,8 +78,6 @@ module misumi_detachable_hinge(){
 }
 
 module doorside_hinge() {
-
-
 color(printed_part_color())
 
 //panel_hinge_width() + hinge_arms_x() + extrusion_width()

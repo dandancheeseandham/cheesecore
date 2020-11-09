@@ -248,5 +248,5 @@ if (number_holes == 8) {
 }
 
 demo() {
-  z_yoke(oldham = true, oldham_parts = false, inplastic = true);
+  z_yoke(oldham = true, oldham_parts = true, inplastic = false);
 }
