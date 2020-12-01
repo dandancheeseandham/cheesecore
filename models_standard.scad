@@ -106,7 +106,7 @@ module railcore_300ZL_compatible__production(position = [0, 0, 0]) {
   $leadscrew_specs    = leadscrew_original_rc300zl;
   $bed                = bed_standard_rc300;
   $feet_depth         = 50 ;
-  $branding_name      = "300ZL";
+  $branding_name      = "UK Production 300ZL";
   $description        = ["XY steppers = NEMA17L",
                         "Larger e-box.",
                         "Modular Halo",

@@ -32,7 +32,7 @@ function spool_topx() = 105;
 function spool_topy() = 121;
 function spool_bottomx() = 105;
 function spool_bottomy() = -86;
-function move_hinge() = 0; 
+
 
 // BOTTOM PANEL
 module bottom_panel() {
@@ -222,28 +222,32 @@ module door() {
               circle(r = door_radius_outside_corners);
           }
         }
-        translate ([front_window_size().x /4,0]) window_2d(front_window_size().x /2+20,front_window_size().y);  //WINDOW HOLE
+        // MAIN DOOR WINDOW HOLE
+        door_window_hole();
 
+        // HOLES FOR MISUMI HINGES ON DOOR TO CONNECT
         mirror_y()
-          //translate([-frame_size().x / 2 , frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset() -20])
-            //translate([6+16,40/2])
-
             translate([221.5,124.5])
               mirror_y()
                 translate([0,10])
                   circle(d=3.4);
+mirror_y()
+        translate ([15,-60])
+                clearance_hole_2d(4);
+
+
       }
 
 
       }
 // color(acrylic2_color())
 //OLD HOLES FOR PLASTIC HINGES
-*translate ([0,-5,0])
-mirror_y()
-translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanelholes();
+  *translate ([0,-5,0])
+    mirror_y()
+      translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanelholes();
 //door knob holes
-translate ([20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
-translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
+  *translate ([20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
+  *translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
 //poly_cylinder(1.5, 30);
 //-y / 2 + panel_screw_offset() + (screw_spacing_y * a)
 //
@@ -257,11 +261,23 @@ translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
     // Door pull holes
     // FIXME: add these
   }
+  // DOOR WINDOWS
+door_windows();
+}
+
+
+module door_window_hole(){
+  win_x= 215;
+  translate ([win_x/2+5,0]) window_2d(win_x,400);
+}
+
+module door_windows(){
+  win_x= 215;
   translate([0,0,-acrylic_door_thickness()-side_panel_thickness()])
     color(acrylic2_color())
-    translate ([front_window_size().x /4,0])
+    translate ([win_x/2+5,0])
       linear_extrude(acrylic_door_thickness())
-        window_real_2d(front_window_size().x /2+20,front_window_size().y);  //FIXME: +20 is a hack
+        window_real_2d(win_x,400);  //FIXME: +20 is a hack
 }
 
 /*

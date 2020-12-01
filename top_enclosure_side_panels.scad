@@ -89,8 +89,8 @@ module full_front_top_enclosure_panel() {
   mirror_y()
     translate ([0,-enclosure_size().z / 2+extrusion_width()*1.75])
       mirror_x()
-        translate([66-5,0])
-          clearance_hole_2d(nominal_d = 6, fit = "normal");
+        translate([60,0])
+          clearance_hole_2d(nominal_d = 5, fit = "normal");
           }
               }
           }

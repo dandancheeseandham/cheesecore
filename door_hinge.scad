@@ -131,10 +131,9 @@ newpanelholes();
 
 module door_knob_misumi(){
 color("silver")
-  translate ([15,0,10])
-  rotate([90,0,90])
-  import("UWAN10-80-27.stl");
-
+  translate ([15,-60,side_panel_thickness()])
+    rotate([90,0,90])
+      import("UWAN10-120-27.stl");
 }
 
 module door_knob(){
