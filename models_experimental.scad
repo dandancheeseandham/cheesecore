@@ -29,7 +29,7 @@ module cheesecore_300zl_mod(position = [0, 0, 0]) {
 
       $frame_size         = frame_original_rc300zl;
       $panels             = panels_steel;
-      $enclosure_size     = enclosure_rc_standard;
+      $enclosure_size     = enclosure_large;
       $halo_size          = halo_rc_cheese_mod; //halo_rc_NEMA23;
       $front_window_size  = front_window_cheesecore;
       //$elecbox            = elecbox_300_large;
@@ -118,8 +118,6 @@ module 300ZL_2020_420Y(position = [0, 0, 0]) {
     $halo_size          = halo_rc;
     $front_window_size  = front_window_original_300zl;
     $elecbox            = elecbox_300_large;
-    $branding_name      = "300ZL/420Y/2020";
-
     $rail_specs         = rails_misumi_420;    // Assumes all Misumi 420mm rails.
     $leadscrew_specs    = ["LEADSCREW_SPECS", 420, 8,     4,                 16,       22,          3.4];;
     $bed                = bed_standard_rc300;

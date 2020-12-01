@@ -129,8 +129,18 @@ newpanelholes();
   }
 }
 
+module door_knob_misumi(){
+color("silver")
+  translate ([15,0,10])
+  rotate([90,0,90])
+  import("UWAN10-80-27.stl");
+
+}
+
 module door_knob(){
-render() {
+  color(printed_part_color())
+translate ([10,front_window_size().y/2-15,10])
+ {
   difference(){
 roundedCube([40,20,12], r=rounding(), x=true, y=true, z=true);
 translate ([0,10,6]) mirror_y() translate ([0,14.5,0]) rotate ([0,90,0]) cylinder (d=12,h=40);

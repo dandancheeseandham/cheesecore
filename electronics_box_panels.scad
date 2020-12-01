@@ -37,12 +37,12 @@ module bottom_panel() {
           // STEPPER CABLES HOLES
           translate ([box_size_y()/2,0])
             mirror_x()
-              translate ([box_size_y()/2 - 105,box_depth(), -15])
+              translate ([box_size_y()/2 - 105,box_depth()])
                 circle(d=15);
                 //FANS GUARDS
-                translate ([40, box_depth()-27])
+                translate ([box_size_y()/2 + 80, box_depth()-27])
                   fan_guard_2d_fast(size = 40);
-                translate ([110,box_depth()-27])
+                translate ([box_size_y()/2 - 80,box_depth()-27])
                   fan_guard_2d_fast(size = 40);
         }
       }
@@ -158,7 +158,7 @@ module electronics_cover_panel_2d() {
         translate ([box_size_y()/2, -box_size_z() / 2 ])
           keyhole();
     }
-    translate ([psu_placement().x, psu_placement().y]) vents_2d(vent_length = 100 ,vent_height = 3, gap_between_vents = 4.5, vent_offset = [-53,40] , number_of_vents = 24, number_of_vent_sections = 1, gap_between_vent_sections = 10);
+    *translate ([psu_placement().x, psu_placement().y]) vents_2d(vent_length = 100 ,vent_height = 3, gap_between_vents = 4.5, vent_offset = [-53,40] , number_of_vents = 24, number_of_vent_sections = 1, gap_between_vent_sections = 10);
   }
 }
 
@@ -204,11 +204,12 @@ module filament_cover_panel() {
 
 module electronics_cabinet_side_panel_2d(length){
   topscrewhole_x = 4.5 ;
-  topscrewhole_y = 15 ;
+  topscrewhole_y = 14.5 ;
   color(acrylic_color())  {
     difference() {
       square ([length-fitting_error(),box_depth()-fitting_error()]);
       translate ([length/2,box_depth()/2])
+      translate ([0,1])
         mirror_xy()
           translate ([length/2-topscrewhole_x,box_depth()/2-topscrewhole_y,20])
             clearance_hole_2d(nominal_d=3);

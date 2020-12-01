@@ -215,17 +215,16 @@ module enclosure_handle_single() {
 
 module enclosure_handle_misumi() {
   rotate ([90,0,0])
-    import("HHDS122.stl");
+    //import("HHDS122.stl");
+    translate ([-60 , 0 , 0 ])
+    import("UWAN10-120-27.stl");
 }
 
-module misumi_detachable_hinge(){
-  color("silver")
-    import("B_1075_R.stl");
-}
+
 
 
 module enclosure_handle() {
-  color("White")
+  color("Silver")
       mirror_z(){
         translate ([0 , -enclosure_size().y / 2 - side_panel_thickness(), -enclosure_size().z / 2  + extrusion_width()*1.75])
           rotate ([90,0,0])

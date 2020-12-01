@@ -68,23 +68,23 @@ rails_custom             = [[420, MGN9] , [445, MGN12], [420, MGN15]];
 //                           name        sizeX  sizeZ  depth thick, move lasercut   cable_bundle      DuetE            Duex            PSU        SSR            RPi
 //                                                                  box
 //Standard                                                         down
-elecbox_original_rc150mini= ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
-elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-400/2+106.68,390/2-101+25], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
-elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,25,0], [140,60,0] , [0,0,0]] ;
-elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 59 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
+elecbox_original_rc150mini= ["ELEC.BOX", 298.9, 238.9, 60 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
+elecbox_original_rc250zl  = ["ELEC.BOX", 298.9, 238.9, 60 ,   6,    25,    true,   [-400/2+106.68,390/2-101+25], [-84.82,50.5,0], [-84.82,-59.5,0], [90,30,0], [45,-115,0] , [90,30,0]] ;
+elecbox_original_rc300zl  = ["ELEC.BOX", 298.9, 238.9, 60 ,   6.5,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,25,0], [140,60,0] , [50,-110,0]] ;
+elecbox_original_rc300zlt = ["ELEC.BOX", 298.9, 438.9, 60 ,   6,    25,    true,   [-84,226.5,0], [-84.82,150.5,0],[-84.82,40.5,0],  [80,75,0], [0,-110,0]  , [-90,-140,0]] ;
 //Experimental
 //elecbox_300_large         = ["ELEC.BOX", 350,   290,   59,    1,    25,    true,   [-84,146.5,0], [-85-15,70,0],      [-85-15,-40,0],      [70,30,0],[160,70,0] , [-20+80,-86-40,0]] ;
-elecbox_300_large         = ["ELEC.BOX", 298,   330,   59,    1,    0,    true,   [-84,146.5,0], [-85-15,70,0],      [-85-15,-40,0],      [70,30,0],[160,70,0] , [-20+80,-86-40,0]] ;
-elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
+elecbox_300_large         = ["ELEC.BOX", 298,   330,   60,    1,    0,    true,   [-84,146.5,0], [-85-15,70,0],      [-85-15,-40,0],      [70,30,0],[160,70,0] , [-20+80,-86-40,0]] ;
+elecbox_300_Duet3         = ["ELEC.BOX", 298.9, 238.9, 60 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-69.5,0], [90,30,0], [45,-115,0] , [-70,-60,0]] ;
 // Test-ground (can be deleted)
 //elec_cheesecore           = ["ELEC.BOX", 350,   290,   59+(95-59),    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
-elec_cheesecore           = ["ELEC.BOX", 290,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
-elec_cheesecore2          = ["ELEC.BOX", 330,   290,   59,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
-elec_cheesecore3          = ["ELEC.BOX", 350,   290,   59,    6,    35,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,25,0], [140,60,0] , [0,0,0]] ;
-elec_miniplaceh           = ["ELEC.BOX", 118.9, 58.9,  59 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
-elec_custom               = ["ELEC.BOX", 410,   310,   59 ,   6,    25,    false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
-elec_rc300zltwithcheese   = ["ELEC.BOX", 445-32,380,   99 ,   6,    60,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
-
+elec_cheesecore           = ["ELEC.BOX", 290,   290,   60,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
+elec_cheesecore2          = ["ELEC.BOX", 330,   290,   60,    6,    25,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [70,30,0],[160,70,0] , [-90,-130,0]+[-71,36,0]] ;
+elec_cheesecore3          = ["ELEC.BOX", 350,   290,   60,    6,    35,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,25,0], [140,60,0] , [0,0,0]] ;
+elec_miniplaceh           = ["ELEC.BOX", 118.9, 58.9,  60 ,   6,    25,    true,   [-84,126.5,0], [-84.82,50.5,0], [-84.82,-59.5,0], [60,00,0],  [145,50,0] , [-90,-140,0]] ;
+elec_custom               = ["ELEC.BOX", 410,   310,   60 ,   6,    25,    false,  [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [90,30,0], [70,-130,0] , [-90,-140,0]] ;
+elec_rc300zltwithcheese   = ["ELEC.BOX", 445-32,380,   60 ,   6,    60,    true,   [-84,146.5,0], [-85,70,0],      [-85,-40,0],      [100,50,0],[80,-110,0] , [-90,-130,0]] ;
+// +[80,-40,13+5] pi?
 filament_box_cheesecore  =  ["ELEC.BOX", 370,   360,   95,   6];
 
 function filament_box_size_y()             = $filament_box[1] ;
@@ -246,7 +246,7 @@ function motor_link() = 11;
 function bearing_block()      = false;  ;  // use ZLT-style bearing blocks on the leadscrews - will come on automatically if leadscrew height > 500
 
 // electronics box
-function expand_acrylic_cover_adjustment() = 29*2 ;  // rounded corners for cover, to match the printed corners.
+function expand_acrylic_cover_adjustment() = 27.5*2 ;  // rounded corners for cover, to match the printed corners.
 function move_panels_outwards_adjust() = 49 ;  // 48.5 based on existing corners
 function move_corners_adjust() = 9.5 ;  // move the corners by this
 function acrylic_cover_corner_rounding() = 14 ; // rounding acrylic cover to match the corners
@@ -256,5 +256,9 @@ function screwz() = ( box_size_z()/2 - move_corners_adjust() + 20);
 //ELECTRONICS BOX CORNERS
 function elec_corner_size() = 15;
 function elec_corner_ledge_width() = 10;
-function elec_corner_ledge_thickness() = 7;   //lostapathy setting - 4 is standard
-function elec_corner_holesize() = 4.75;    // lostapathy setting - 3.5 is standard
+//function elec_corner_ledge_thickness() = 7;   //lostapathy setting - 4 is standard
+function elec_corner_ledge_thickness() = 4;   //lostapathy setting - 4 is standard
+//function elec_corner_holesize() = 4.75;    // lostapathy setting - 3.5 is standard
+function elec_corner_holesize() = 3.5;    // lostapathy setting - 3.5 is standard
+
+function move_hinge() = 0;

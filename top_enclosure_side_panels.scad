@@ -39,13 +39,14 @@ module top_panel_half1() {
           }
       }
 }
-
+/*
 module top_panel_half2_window_2d(){
   window_real_2d(enclosure_size().x, enclosure_size().y/2-epsilon);
 }
 module full_front_top_enclosure_panel_window_2d() {
   window_real_2d(enclosure_size().x-extrusion_width()*2, enclosure_size().z-extrusion_width()*2);
 }
+*/
 
 // FRONT TOP HALF OF ENCLOSURE
 module top_panel_half2() {

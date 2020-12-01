@@ -8,7 +8,7 @@ use <lib/layout.scad>
 use <demo.scad>
 
 module electronics_box_corner() {
-  color(printed_part_color()) render()
+  color(printed_part_color())
     rotate ([90,270,0])
       translate ([elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),elec_corner_size()+elec_corner_ledge_width()-(elec_corner_ledge_width()-10),-box_depth()]) {
         union() {
@@ -48,6 +48,7 @@ module electronics_box_corner() {
       difference() {
         translate ([-elec_corner_ledge_thickness()/2,-elec_corner_ledge_width()/2,-box_depth()/2])
           cube ([elec_corner_ledge_thickness(),elec_corner_ledge_width(),box_depth()]);
+
         mirror_z() {
           translate ([-box_depth()/2,0,(box_depth()/2-15)])
             rotate ([0,90,0])
@@ -66,6 +67,8 @@ module electronics_box_corner_hole(){
 }
 
 demo() {
-  electronics_box_corner();
-  electronics_box_corner_hole();
+  #electronics_box_corner();
+  *electronics_box_corner_hole();
+  translate ([105,0,145]) rotate ([-90,90,0]) import("/home/dan/Documents/GitHub/parts-1/STL/ModifiedEBoxCorner.stl");
+
 }

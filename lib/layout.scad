@@ -64,4 +64,3 @@ module linear_repeat(offset=undef, extent=undef, count) {
     translate(true_offset * i) children();
   }
 }
-

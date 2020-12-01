@@ -32,7 +32,7 @@ function spool_topx() = 105;
 function spool_topy() = 121;
 function spool_bottomx() = 105;
 function spool_bottomy() = -86;
-
+function move_hinge() = 0; 
 
 // BOTTOM PANEL
 module bottom_panel() {
@@ -104,6 +104,17 @@ linear_extrude(side_panel_thickness())
       translate ([front_window_offset().x, front_window_offset().y])
         rounded_square([front_window_size().x, front_window_size().y], front_window_radius());
 
+        //hinge_holes
+          translate([-frame_size().x / 2 , frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset() -20])
+            translate([6,40/2,0]) translate([1.5,0])
+          mirror_y()
+            translate([0,10])
+              circle(d=3.4);
+
+
+
+
+
 /*
 // IF EXTENDED PANELS AND NEMA23 MOTORS, MAKE A HOLE!
     if ((extend_front_and_rear_x() != 0)&&(NEMAtypeXY()[0] == "NEMA23")) {
@@ -156,13 +167,34 @@ module hinges(hinge_extension = 0) {
           //doorside_hinge() ;
           misumi_detachable_hinge();
         }
-        #mirror_xy() {
-          translate([-frame_size().x / 2 + extrusion_width() /2 + 8, frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset() + 0, side_panel_thickness()+3+6])
+        mirror_xy() {
+          translate([-frame_size().x / 2 + extrusion_width() /2 + 8, frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset() + move_hinge(), side_panel_thickness()*2 + 3.6])
         misumi_detachable_hinge();
       }
+
+        // hinge booster
+        mirror_xy() {
+          hinger_booster();
+        }
+
 }
     }
 
+module hinger_booster(){
+color (alum_part_color())
+  translate([-frame_size().x / 2 , frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset() -20, side_panel_thickness()])
+  translate([6,40/2,0])
+linear_extrude(side_panel_thickness())
+  {
+    difference(){
+    rounded_square ([11,40],3);
+    translate([1.5,0])
+      mirror_y()
+        translate([0,10])
+          circle(d=3.4);
+    }
+    }
+}
 
 // One door - the right side as facing printer
 // Origin is the centerline between the doors at the middle of the height. So not quite on the door, but rather in the gap between where they meet together
@@ -176,9 +208,10 @@ module door() {
 
   difference() {
     // Outline of the door
-    color(acrylic2_color())  {
+    color(panel_color())  {
       difference(){
-      linear_extrude(acrylic_thickness()) {
+      linear_extrude(side_panel_thickness()) {
+        difference(){
         hull() {
           mirror_y() {
             // The smaller corners where the doors meet
@@ -189,9 +222,23 @@ module door() {
               circle(r = door_radius_outside_corners);
           }
         }
+        translate ([front_window_size().x /4,0]) window_2d(front_window_size().x /2+20,front_window_size().y);  //WINDOW HOLE
+
+        mirror_y()
+          //translate([-frame_size().x / 2 , frame_size().z / 2 - panel_screw_spacing(frame_size().z)/2 - panel_screw_offset() -20])
+            //translate([6+16,40/2])
+
+            translate([221.5,124.5])
+              mirror_y()
+                translate([0,10])
+                  circle(d=3.4);
       }
 
-translate ([0,-5,0])
+
+      }
+// color(acrylic2_color())
+//OLD HOLES FOR PLASTIC HINGES
+*translate ([0,-5,0])
 mirror_y()
 translate ([front_window_size().x/2+door_overlap-27.5, (86.25*1.5) ,0]) newpanelholes();
 //door knob holes
@@ -210,8 +257,14 @@ translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
     // Door pull holes
     // FIXME: add these
   }
+  translate([0,0,-acrylic_door_thickness()-side_panel_thickness()])
+    color(acrylic2_color())
+    translate ([front_window_size().x /4,0])
+      linear_extrude(acrylic_door_thickness())
+        window_real_2d(front_window_size().x /2+20,front_window_size().y);  //FIXME: +20 is a hack
 }
 
+/*
 // One door - the right side as facing printer
 // Origin is the centerline between the doors at the middle of the height. So not quite on the door, but rather in the gap between where they meet together
 module single_door() {
@@ -256,7 +309,7 @@ translate ([20+20,front_window_size().y/2-10,0]) cylinder(d=3,h=30);
     // FIXME: add these
   }
 }
-
+*/
 
 
 
@@ -268,7 +321,7 @@ translate([0, -frame_size().y / 2 - side_panel_thickness() - epsilon, 0])
     translate(front_window_offset())
     mirror_x() {
     door();
-    color(printed_part_color()) translate ([10,front_window_size().y/2-15,10]) door_knob();
+    door_knob_misumi();
   }
   }
 }
