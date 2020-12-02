@@ -350,9 +350,9 @@ difference(){
       universal_panel_2d(x= frame_size().x,y= frame_size().z);
       universal_panel_mounting_screws_2d(x= frame_size().x,y= frame_size().z, cornercubes = true);
     }
-    translate([0,frame_size().z/2-40,-side_panel_thickness()+epsilon])
+    *translate([0,frame_size().z/2-40,-side_panel_thickness()+epsilon])
       camera_mount_holes();
-    translate([0,-frame_size().z/2+100,+side_panel_thickness()-epsilon])
+    *translate([0,-frame_size().z/2+100,+side_panel_thickness()-epsilon])
       fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
     }
 }
@@ -472,27 +472,11 @@ difference(){
     mirror_x ()
       translate ([spool_topx(),spool_topy(),0])
         bolt_holes();
-    mirror_x()
+    *mirror_x()
       translate ([spool_bottomx(),spool_bottomy(),0])
         bolt_holes();
       }
 
-}
-
-module left_panel_old(){
-color(panel_color())
-difference() {
-
-  //panel(frame_size(). y, frame_size().z, 0, extendz());
-  universal_panel(x= frame_size().y,y= frame_size().z,addx = 0,addy = extendz());
-  // remove 3 sets of holes for filament spool holders
-  mirror_x ()
-    translate ([spool_topx(),spool_topy(),0])
-      bolt_holes();
-  mirror_x()
-    translate ([spool_bottomx(),spool_bottomy(),0])
-      bolt_holes();
-}
 }
 
 module spool_holders(){
@@ -508,7 +492,7 @@ module spool_holders(){
     { spool_holder_assembly();
       color(spool_color()) spool1kg();
     }
-  mirror_x()
+  *mirror_x()
     translate ([spool_bottomx(),spool_bottomy(),-side_panel_thickness()-2])
     { spool_holder_assembly();
       color(spool_color()) spool1kg();

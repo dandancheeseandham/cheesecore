@@ -225,9 +225,9 @@ module enclosure_handle_misumi() {
 
 module enclosure_handle() {
   color("Silver")
-      mirror_z(){
+      //mirror_z(){
         translate ([0 , -enclosure_size().y / 2 - side_panel_thickness(), -enclosure_size().z / 2  + extrusion_width()*1.75])
           rotate ([90,0,0])
             enclosure_handle_misumi();
-      }
+      //}
 }

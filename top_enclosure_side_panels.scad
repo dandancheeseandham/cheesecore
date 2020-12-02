@@ -86,7 +86,7 @@ module full_front_top_enclosure_panel() {
                      universal_panel_mounting_screws_2d(enclosure_size().x-extrusion_width()*2, enclosure_size().z);
                      window_2d(enclosure_size().x-extrusion_width()*2, enclosure_size().z-extrusion_width()*2);
 // handle holes
-  mirror_y()
+  //mirror_y()
     translate ([0,-enclosure_size().z / 2+extrusion_width()*1.75])
       mirror_x()
         translate([60,0])
@@ -113,7 +113,7 @@ module right_side_top_enclosure_panel() {
               universal_panel_mounting_screws_2d(enclosure_size().y,enclosure_size().z);
             }
       }
-  translate([enclosure_size().y/4,0,side_panel_thickness()-epsilon])
+  translate([0,0,side_panel_thickness()-epsilon])
     fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
     }
 }
