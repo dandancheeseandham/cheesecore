@@ -1,3 +1,5 @@
+![Image of cheesecore](https://raw.githubusercontent.com/dandancheeseandham/cheesecore/master/image.png)
+
 # cheesecore - a RailCore II inspired build
 
 This OpenSCAD program has been developed to emulate, and be fully compatible with the RailCore II, but to extend it with parametric functionality. 
