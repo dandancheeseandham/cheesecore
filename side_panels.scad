@@ -350,7 +350,8 @@ difference(){
       universal_panel_2d(x= frame_size().x,y= frame_size().z);
       universal_panel_mounting_screws_2d(x= frame_size().x,y= frame_size().z, cornercubes = true);
     }
-    *translate([0,frame_size().z/2-40,-side_panel_thickness()+epsilon])
+    *
+    translate([0,frame_size().z/2-40,-side_panel_thickness()+epsilon])
       camera_mount_holes();
     *translate([0,-frame_size().z/2+100,+side_panel_thickness()-epsilon])
       fan_guard_removal(size = 120,thickness = side_panel_thickness()*2);
@@ -468,8 +469,9 @@ difference(){
     difference() {
       universal_panel_2d(x= frame_size().y,y= frame_size().z);
       universal_panel_mounting_screws_2d(x= frame_size().y,y= frame_size().z, cornercubes = true);
+      single_line_panel_mounting_screws_2d(frame_size().y);
     }
-    mirror_x ()
+    *mirror_x ()
       translate ([spool_topx(),spool_topy(),0])
         bolt_holes();
     *mirror_x()

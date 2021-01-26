@@ -71,6 +71,27 @@ module universal_panel_2d(x = 600,y=200, radius = panel_radius()) {
 
 }
 
+module single_line_panel_mounting_screws_2d(x) {
+  // How far from center of first hole to center of last hole
+  extent_x = x - 2 * panel_screw_offset();
+
+  // How many screws in each direction
+  screws_x = ceil(extent_x / max_panel_screw_spacing()) + 1;
+
+  // How far between screws
+  screw_spacing_x = extent_x / (screws_x - 1);
+
+  //echo ("top enclosure screw_spacing_x for ", x, " mm ",screw_spacing_x);
+  //echo ("top enclosure screw_spacing_y for ", y, " mm ",screw_spacing_y);
+  //mirror_y()
+{
+    for (a =[0:(screws_x - 1)])
+      translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), frame_size().z / 2 - extrusion_width() / 2-60])
+        // FIXME - this should be a hole() not a cylinder
+        circle (d=clearance_hole_size(extrusion_screw_size()));
+}
+}
+
 
 module universal_panel_mounting_screws_2d(x, y, cornercubes = true) {
   // How far from center of first hole to center of last hole
