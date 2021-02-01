@@ -408,6 +408,30 @@ module right_panel() {
           universal_panel_mounting_screws_2d(x= frame_size().y,y= frame_size().z, cornercubes = true);
           translate ([0,-movedown() ,0]) mirror_xy() translate([screwy(),screwz()]) circle(d=3.4);  // FIXME: Use polyhole, check mounting fits Meanwell too
         }
+
+
+        x = frame_size().y;
+        y = frame_size().z;
+        extent_x = x - 2 * panel_screw_offset();
+        extent_y = y - 2 * panel_screw_offset();
+
+        // How many screws in each direction
+        screws_x = ceil(extent_x / max_panel_screw_spacing()) + 1;
+        screws_y = ceil(extent_y / max_panel_screw_spacing()) + 1;
+
+        // How far between screws
+        screw_spacing_x = extent_x / (screws_x - 1);
+        screw_spacing_y = extent_y / (screws_y - 1);
+        if (true) {
+           {
+              for (a =[0:(screws_y - 1)]) {
+                #translate ([-x/2 + panel_screw_offset() + (screw_spacing_x * a), y / 2 - 60, -epsilon])
+                  // FIXME - this should be a hole not a cylinder
+                  cylinder(h=side_panel_thickness() + 2 * epsilon + 20, d=clearance_hole_size(extrusion_screw_size()));
+                }
+              }
+            }
+
         color(panel_color_holes())
           translate ([0,-movedown() ,0]) {
             translate(cable_bundle_hole_placement())

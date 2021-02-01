@@ -90,7 +90,7 @@ mirror_y()
 }
 
 module corner_cube_access() {
-  translate([frame_size().x / 2 - extrusion_width() / 2, frame_size().y / 2 - extrusion_width() / 2, -epsilon])
+  translate([frame_size().x / 2 - extrusion_width() / 2, frame_size().y / 2 - extrusion_width() / 2, -halo_size().z/2-epsilon])
     cylinder(d=extrusion_width() * 0.5, h = halo_size().z + 2 * epsilon);
 }
 
