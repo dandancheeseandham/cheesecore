@@ -29,7 +29,7 @@ module bed(bed_frame_offset)
               rotate([0,0,180])
                 bed_ear();
         }
-      thermistor_channel();
+      *thermistor_channel();
       *side_mounted_holes();
       strain_relief_holes();  // we can put strain relief on the bed instead of on the Z-yokes.
       *earthing_hole();  // earthing
